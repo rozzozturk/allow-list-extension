@@ -3479,6 +3479,12 @@ class KeepnetAssistant {
       
       console.log(`[Keepnet] Executing step ${stepNum}: ${step.title}`)
       
+      // Microsoft formu açıksa uyarı ver
+      const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
+      if (msPanel) {
+        console.log('[Keepnet] ⚠️ Microsoft form açık - Dikkatli çalışılıyor (DOM manipülasyonu minimize)')
+      }
+      
       this.currentStep = stepNum
       await Storage.set(STORAGE_KEYS.CURRENT_STEP, stepNum)
       
@@ -3492,7 +3498,7 @@ class KeepnetAssistant {
         footer.style.display = 'flex'
       }
       
-      // Clear previous highlights
+      // Clear previous highlights (form açıksa atlanıyor)
       this.clearHighlight()
       
       // Summary step?
@@ -3823,6 +3829,15 @@ class KeepnetAssistant {
   }
   
   clearHighlight() {
+    // Microsoft formu açıksa DOM'a DOKUNMA
+    const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
+    if (msPanel) {
+      console.log('[Keepnet] Microsoft form açık - highlight temizlenmiyor (DOM korunuyor)')
+      this.autoClick.stop()
+      this.stopRealTimeValidation()
+      return
+    }
+    
     if (this.highlightedElement) {
       AnimationUtils.removeHighlight(this.highlightedElement)
       this.highlightedElement = null
@@ -3911,8 +3926,17 @@ class KeepnetAssistant {
     
     // OTOMATIK SONRAKI ADIMA GEÇ - Sadece valid ise!
     if (isValid) {
-      console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
+      // Microsoft formu açıksa 15 saniye bekle, sonra otomatik geç
+      const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
+      if (msPanel) {
+        console.log(`[Keepnet] ⏳ Microsoft form açık - 15 saniye beklenecek, sonra otomatik geçilecek...`)
+        this.panel.showSuccess('⏳ Form doldurun - 15 saniye sonra otomatik devam edilecek')
+        await Utils.sleep(15000)
+        console.log(`[Keepnet] ✅ 15 saniye beklendi, sonraki adıma geçiliyor...`)
+      } else {
       await Utils.sleep(500)
+      }
+      console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
       await this.nextStep()
     } else if (step.criticalStep) {
       // Kritik adımda validation başarısızsa uyar
