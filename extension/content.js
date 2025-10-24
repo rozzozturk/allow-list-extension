@@ -1391,8 +1391,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Kural 1: Create a New Rule',
     description: '"Create a new rule" seçeneğine tıklayın',
     target: {
-      selector: 'span.ms-ContextualMenu-itemText.label-685',
+      selector: 'span.ms-ContextualMenu-itemText.label-672',
       fallback: [
+        'span.ms-ContextualMenu-itemText.label-685',
         'button:has-text("Create a new rule")',
         'span:has-text("Create a new rule")',
         '[role="menuitem"]:has-text("Create")'
@@ -1677,8 +1678,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Kural 2: Create a New Rule',
     description: '"Create a new rule" seçeneğine tıklayın',
     target: {
-      selector: 'span.ms-ContextualMenu-itemText:has-text("Create a new rule")',
+      selector: 'span.ms-ContextualMenu-itemText.label-672',
       fallback: [
+        'span.ms-ContextualMenu-itemText:has-text("Create a new rule")',
         'button:has-text("Create a new rule")',
         '[role="menuitem"]:has-text("Create")'
       ]
@@ -1769,8 +1771,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Kural 3: Create a New Rule',
     description: '"Create a new rule" seçeneğine tıklayın',
     target: {
-      selector: 'span.ms-ContextualMenu-itemText:has-text("Create a new rule")',
+      selector: 'span.ms-ContextualMenu-itemText.label-672',
       fallback: [
+        'span.ms-ContextualMenu-itemText:has-text("Create a new rule")',
         'button:has-text("Create a new rule")',
         '[role="menuitem"]:has-text("Create")'
       ]
