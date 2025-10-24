@@ -2633,6 +2633,22 @@ class FloatingPanel {
       })
     }
 
+    // Panel içindeki HER TÜRLÜ tıklamanın dışarı çıkmamasını sağla
+    // Bu sayede Microsoft overlay tıklama algılamaz ve form kapanmaz
+    if (this.container) {
+      this.container.addEventListener('click', (e) => {
+        e.stopPropagation()
+        console.log('[Keepnet] Click stopped from bubbling to overlay')
+      }, true) // capture: true - en erken yakalama
+      
+      this.container.addEventListener('mousedown', (e) => {
+        e.stopPropagation()
+      }, true)
+      
+      this.container.addEventListener('mouseup', (e) => {
+        e.stopPropagation()
+      }, true)
+    }
   }
   
   updatePosition() {
@@ -3415,6 +3431,7 @@ class KeepnetAssistant {
         nextBtn.onclick = (e) => {
           e.preventDefault()
           e.stopPropagation()
+          e.stopImmediatePropagation() // Microsoft overlay'e ulaşmasın
           console.log("[Keepnet] Next button clicked")
           this.nextStep()
         }
