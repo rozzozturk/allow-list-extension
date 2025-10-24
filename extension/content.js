@@ -3506,7 +3506,17 @@ class KeepnetAssistant {
       
       // Navigate if needed - AMA sadece navigation step DEĞİLSE otomatik git
       // Navigation step ise butonu göster, kullanıcı bassın
+      // UYARI: Microsoft formu açıksa ASLA navigate YAPMA!
       if (step.navigate && !step.isNavigation) {
+        // Microsoft formu açık mı kontrol et
+        const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
+        
+        if (msPanel) {
+          console.log(`[Keepnet] ⚠️ Microsoft form açık - Navigation iptal edildi! Form doldurun ve Continue'a basın.`)
+          // Form açıksa navigate YAPMA, kullanıcı formu kapatınca devam eder
+          return
+        }
+        
         const currentUrl = window.location.href
         const targetUrl = step.navigate
         
