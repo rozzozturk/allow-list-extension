@@ -3929,15 +3929,16 @@ class KeepnetAssistant {
     
     // OTOMATIK SONRAKI ADIMA GEÇ - Sadece valid ise!
     if (isValid) {
-      // Microsoft formu açıksa 15 saniye bekle, sonra otomatik geç
+      // Microsoft formu açıksa 10 saniye bekle, sonra otomatik geç
       const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
       if (msPanel) {
-        console.log(`[Keepnet] ⏳ Microsoft form açık - 15 saniye beklenecek, sonra otomatik geçilecek...`)
-        this.panel.showSuccess('⏳ Form doldurun - 15 saniye sonra otomatik devam edilecek')
-        await Utils.sleep(15000)
-        console.log(`[Keepnet] ✅ 15 saniye beklendi, sonraki adıma geçiliyor...`)
+        console.log(`[Keepnet] ⏳ Microsoft form açık - 10 saniye beklenecek, sonra otomatik geçilecek...`)
+        this.panel.showSuccess('⏳ Form doldurun - 10 saniye sonra otomatik devam edilecek')
+        await Utils.sleep(10000)
+        console.log(`[Keepnet] ✅ 10 saniye beklendi, sonraki adıma geçiliyor...`)
       } else {
-      await Utils.sleep(500)
+        await Utils.sleep(10000) // Her step için 10 saniye bekle
+        console.log(`[Keepnet] ⏳ 10 saniye beklendi, sonraki adıma geçiliyor...`)
       }
       console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
       await this.nextStep()
