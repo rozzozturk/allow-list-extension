@@ -1783,19 +1783,21 @@ class FloatingPanel {
       left: ${this.position.x}px !important;
       width: ${PANEL_SIZE.width}px !important;
       height: ${PANEL_SIZE.height}px !important;
-      background: white !important;
-      border-radius: 12px !important;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.1) !important;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+      border: 1px solid rgba(226, 232, 240, 0.8) !important;
+      border-radius: 20px !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
       z-index: 2147483647 !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif !important;
       opacity: 0 !important;
       visibility: visible !important;
       pointer-events: auto !important;
       transform: translateX(100px) scale(0.95) !important;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      backdrop-filter: blur(20px) !important;
     `
     
     console.log("[Keepnet] Panel created at:", this.position)
@@ -1809,50 +1811,61 @@ class FloatingPanel {
     // Header
     this.header = document.createElement('div')
     this.header.style.cssText = `
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
       color: white;
-      padding: 12px 14px;
+      padding: 16px 20px;
       cursor: move;
       display: flex;
       align-items: center;
       justify-content: space-between;
       user-select: none;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      overflow: hidden;
     `
     
     this.header.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="font-size: 16px;">🛡️</div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">K</div>
         <div>
-          <div style="font-size: 13px; font-weight: 600;">Keepnet White List</div>
-          <div style="font-size: 11px; opacity: 0.85;" id="keepnet-step-indicator">Adım 0 / ${TOTAL_STEPS}</div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Keepnet Assistant</div>
+          <div style="font-size: 11px; opacity: 0.8;" id="keepnet-step-indicator">Enterprise Security Configuration</div>
         </div>
       </div>
       <button id="keepnet-close-btn" style="
-        background: rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.1);
         border: none;
         color: white;
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
         cursor: pointer;
         font-size: 16px;
         line-height: 1;
-      ">×</button>
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      " onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">×</button>
     `
     
     // Progress bar
     const progressBar = document.createElement('div')
     progressBar.style.cssText = `
       width: 100%;
-      height: 3px;
-      background: rgba(0,0,0,0.1);
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      position: absolute;
+      bottom: 0;
+      left: 0;
     `
     progressBar.innerHTML = `
       <div id="keepnet-progress-bar" style="
         width: 0%;
         height: 100%;
-        background: #22c55e;
+        background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
         transition: width 0.4s ease;
+        border-radius: 0 0 20px 0;
       "></div>
     `
     this.header.appendChild(progressBar)
@@ -1863,31 +1876,32 @@ class FloatingPanel {
     this.body.style.cssText = `
       flex: 1;
       overflow-y: auto;
-      padding: 16px;
-      background: #f9fafb;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
     `
     
     // Footer
     this.footer = document.createElement('div')
     this.footer.id = 'keepnet-panel-footer'
     this.footer.style.cssText = `
-      padding: 12px 14px;
-      background: white;
-      border-top: 1px solid #e5e7eb;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-top: 1px solid rgba(226, 232, 240, 0.5);
       display: flex;
-      gap: 8px;
+      gap: 10px;
       justify-content: space-between;
+      backdrop-filter: blur(10px);
     `
     
     this.footer.innerHTML = `
       <button id="keepnet-prev-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1;">
-        ← Geri
+        Previous
       </button>
       <button id="keepnet-next-btn" class="keepnet-btn keepnet-btn-primary" style="flex: 2;">
-        Devam Et →
+        Continue
       </button>
-      <button id="keepnet-summary-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1; font-size: 11px;" title="Tamamlanmamış adımları atla ve özet rapora git">
-        📊 Özet
+      <button id="keepnet-summary-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1; font-size: 11px;" title="Skip to summary report">
+        Summary
       </button>
     `
     
@@ -2059,34 +2073,44 @@ class FloatingPanel {
     style.id = 'keepnet-styles'
     style.textContent = `
       .keepnet-btn {
-        padding: 8px 14px;
-        border-radius: 6px;
+        padding: 10px 16px;
+        border-radius: 10px;
         font-size: 13px;
-        font-weight: 500;
+        font-weight: 600;
         border: none;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         font-family: inherit;
+        position: relative;
+        overflow: hidden;
       }
       
       .keepnet-btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
         color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
       }
       
       .keepnet-btn-primary:hover {
-        opacity: 0.9;
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+      }
+      
+      .keepnet-btn-primary:active {
+        transform: translateY(0);
       }
       
       .keepnet-btn-secondary {
-        background: white;
+        background: rgba(255, 255, 255, 0.9);
         color: #374151;
-        border: 1px solid #d1d5db;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        backdrop-filter: blur(10px);
       }
       
       .keepnet-btn-secondary:hover {
-        background: #f3f4f6;
+        background: rgba(248, 250, 252, 0.9);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
       
       #keepnet-panel-body::-webkit-scrollbar {
@@ -2099,19 +2123,20 @@ class FloatingPanel {
       }
       
       .keepnet-highlight {
-        outline: 4px solid #10b981 !important;
-        outline-offset: 4px !important;
-        background-color: rgba(16, 185, 129, 0.15) !important;
+        outline: 3px solid #3b82f6 !important;
+        outline-offset: 3px !important;
+        background-color: rgba(59, 130, 246, 0.08) !important;
         box-shadow: 
-          0 0 0 6px rgba(16, 185, 129, 0.3),
-          0 0 20px rgba(16, 185, 129, 0.5),
-          inset 0 0 20px rgba(16, 185, 129, 0.1) !important;
+          0 0 0 8px rgba(59, 130, 246, 0.2),
+          0 0 30px rgba(59, 130, 246, 0.3),
+          inset 0 0 20px rgba(59, 130, 246, 0.05) !important;
         position: relative !important;
         z-index: 999998 !important;
         animation: keepnet-pulse 2s ease-in-out infinite !important;
         cursor: pointer !important;
-        transform: scale(1.02) !important;
-        transition: all 0.3s ease !important;
+        transform: scale(1.01) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        border-radius: 8px !important;
       }
       
       @keyframes keepnet-pulse {
@@ -2132,35 +2157,37 @@ class FloatingPanel {
       
       .keepnet-tooltip {
         position: fixed;
-        background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
         color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-size: 16px;
+        padding: 16px 24px;
+        border-radius: 16px;
+        font-size: 14px;
         font-weight: 600;
         pointer-events: none;
         z-index: 1000000;
-        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5), 0 0 0 2px rgba(255,255,255,0.8);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
         white-space: nowrap;
         animation: keepnet-tooltip-pulse 2s ease-in-out infinite;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
       
       .keepnet-tooltip::before {
         content: '→';
         display: inline-block;
         margin-right: 8px;
-        font-size: 20px;
+        font-size: 16px;
         animation: keepnet-bounce 1s ease-in-out infinite;
       }
       
       @keyframes keepnet-tooltip-pulse {
         0%, 100% { 
           transform: scale(1);
-          box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5), 0 0 0 2px rgba(255,255,255,0.8);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
         }
         50% { 
           transform: scale(1.05);
-          box-shadow: 0 12px 32px rgba(124, 58, 237, 0.7), 0 0 0 3px rgba(255,255,255,1);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255,255,255,0.2);
         }
       }
     `
@@ -2476,14 +2503,6 @@ class KeepnetAssistant {
           break
         case 'WORKFLOW_4':
           stepsArray = SPAM_FILTER_BYPASS_STEPS
-          baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
-          break
-        case 'WORKFLOW_5':
-          stepsArray = ATP_LINK_BYPASS_STEPS
-          baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
-          break
-        case 'WORKFLOW_6':
-          stepsArray = ATP_ATTACHMENT_BYPASS_STEPS
           baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
           break
       }

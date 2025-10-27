@@ -154,48 +154,42 @@ export function WhitelistWizard() {
   return (
     <motion.div
       ref={panelRef}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-      className="fixed z-50 bg-card border border-border rounded-lg shadow-2xl"
+      initial={{ opacity: 0, scale: 0.9, y: 50 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed z-50 bg-gradient-to-br from-white to-slate-50 border border-slate-200/60 rounded-2xl shadow-2xl backdrop-blur-xl"
       style={{
         left: position.x,
         top: position.y,
         width: PANEL_SIZE.width,
-        height: PANEL_SIZE.height
+        height: PANEL_SIZE.height,
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
       }}
     >
       {/* Draggable Header */}
       <motion.div
         ref={headerRef}
         onMouseDown={handleMouseDown}
-        className="flex items-center justify-between p-4 border-b border-border bg-card/50 backdrop-blur-sm rounded-t-lg cursor-grab active:cursor-grabbing select-none"
-        whileHover={{ backgroundColor: 'rgba(0,0,0,0.05)' }}
+        className="flex items-center justify-between p-5 border-b border-slate-200/50 bg-gradient-to-r from-slate-800 to-slate-700 rounded-t-2xl cursor-grab active:cursor-grabbing select-none"
+        whileHover={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
       >
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-primary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
-            </svg>
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-white font-bold text-lg">K</span>
           </div>
           <div>
-            <h1 className="text-lg font-bold text-foreground">Keepnet Assistant</h1>
-            <p className="text-xs text-muted-foreground">
-              {state.language === "tr" ? "Office 365 Rehberi" : "Office 365 Guide"}
+            <h1 className="text-lg font-bold text-white">Keepnet Assistant</h1>
+            <p className="text-xs text-slate-300">
+              Enterprise Security Configuration
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => updateState({ language: state.language === "tr" ? "en" : "tr" })}
-            className="px-3 py-1 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors text-xs font-medium"
+            className="px-3 py-1.5 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-all duration-200 text-xs font-medium backdrop-blur-sm border border-white/20"
           >
-            {state.language === "tr" ? "🇬🇧" : "🇹🇷"}
+            {state.language === "tr" ? "EN" : "TR"}
           </button>
         </div>
       </motion.div>
@@ -205,19 +199,19 @@ export function WhitelistWizard() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="border-b border-border bg-card/30 backdrop-blur-sm"
+          className="border-b border-slate-200/50 bg-gradient-to-r from-slate-50 to-white backdrop-blur-sm"
         >
-          <div className="px-4 py-3">
-            <div className="flex items-center justify-between mb-3">
+          <div className="px-5 py-4">
+            <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-xs text-muted-foreground mb-1">
+                <p className="text-xs text-slate-500 mb-1 font-medium">
                   {state.language === "tr" ? "İlerleme" : "Progress"}
                 </p>
-                <p className="text-lg font-bold text-foreground">
+                <p className="text-xl font-bold text-slate-800">
                   {state.language === "tr" ? "Adım" : "Step"} {state.currentStep}/{TOTAL_STEPS}
                 </p>
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 {Array.from({ length: TOTAL_STEPS }, (_, i) => (
                   <StepIndicator
                     key={i}
@@ -234,15 +228,15 @@ export function WhitelistWizard() {
       )}
 
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="p-4">
+      <div className="flex-1 overflow-y-auto bg-gradient-to-br from-white to-slate-50">
+        <div className="p-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={state.currentStep}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               {renderStep()}
             </motion.div>
