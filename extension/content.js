@@ -2930,11 +2930,54 @@ class KeepnetAssistant {
             console.log("[Keepnet] Safe Links not found - checking license requirement")
             this.panel.showError(`Safe Links Bulunamadı\n\n${step.licenseCheck.message}\n\n${step.licenseCheck.skipMessage}`)
             
-            // Otomatik olarak bir sonraki adıma geç
+            // 15 saniye Safe Links elementini bekle
+            console.log("[Keepnet] Waiting 15 seconds for Safe Links element...")
+            let safeLinksFound = false
+            
+            // 15 saniye boyunca Safe Links elementini kontrol et
+            const checkInterval = setInterval(() => {
+              const safeLinksElement = document.querySelector('a:contains("Safe Links"), a[href*="safelinks"], [aria-label*="Safe Links"]')
+              if (safeLinksElement) {
+                console.log("[Keepnet] Safe Links element found! Continuing with current step.")
+                safeLinksFound = true
+                clearInterval(checkInterval)
+                // Element bulundu, normal akışa devam et
+                this.highlightElement(safeLinksElement, step.tooltip)
+                
+                // Auto-click?
+                if (step.autoClick) {
+                  this.autoClick.start(safeLinksElement, AUTO_CLICK_TIMEOUT, async () => {
+                    await this.onElementClicked(step)
+                  }, this.workflowName)
+                }
+                
+                // Manual click listener
+                safeLinksElement.addEventListener('click', async () => {
+                  this.autoClick.stop()
+                  await this.onElementClicked(step)
+                }, { once: true })
+              }
+            }, 1000) // Her saniye kontrol et
+            
+            // 15 saniye sonra Safe Links bulunamazsa Workflow 4'e geç
             setTimeout(async () => {
-              console.log("[Keepnet] Auto-skipping Safe Links step due to license requirement")
-              await this.nextStep()
-            }, 3000)
+              if (!safeLinksFound) {
+                clearInterval(checkInterval)
+                console.log("[Keepnet] Safe Links not found after 15 seconds - auto-transitioning to Workflow 4")
+                
+                // Workflow 4'e otomatik geçiş
+                this.panel.showSuccess("Safe Links bulunamadı. Otomatik olarak Workflow 4'e geçiliyor...")
+                
+                // Workflow 4'e geçiş için gerekli ayarlar
+                await Storage.set('keepnet_next_workflow', 'WORKFLOW_4')
+                
+                // Sayfa değiştir
+                setTimeout(() => {
+                  window.location.href = 'https://admin.exchange.microsoft.com/#/transportrules'
+                }, 2000)
+              }
+            }, 15000) // 15 saniye
+            
             return
           }
           
