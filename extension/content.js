@@ -8,8 +8,7 @@ const STORAGE_KEYS = {
   PANEL_STATE: 'keepnet_panel_state_v3',
   STEP_RESULTS: 'keepnet_step_results_v3',
   SCREENSHOTS: 'keepnet_screenshots_v3',
-  CURRENT_STEP: 'keepnet_current_step_v3',
-  LANGUAGE: 'keepnet_language_v3'
+  CURRENT_STEP: 'keepnet_current_step_v3'
 }
 
 const PANEL_SIZE = { width: 340, height: 520 }
@@ -18,673 +17,8 @@ const VALIDATION_INTERVAL = 1000 // 1 saniye
 
 let CURRENT_STEP = 0
 let TOTAL_STEPS = 12  // Third-Party Phishing: 12 adım
-let LANGUAGE = 'en-US' // Default: English (US)
+let LANGUAGE = 'tr'
 let screenshotCounter = 0
-
-/* ========== i18n TRANSLATIONS ========== */
-const TRANSLATIONS = {
-  'en-US': {
-    name: '🇺🇸 English (US)',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Step {current} of {total}',
-    clickToExpand: 'Click to expand',
-    formActive: 'FORM ACTIVE',
-    back: 'BACK',
-    continue: 'CONTINUE',
-    summary: 'SUMMARY',
-    copyAllIPs: 'COPY ALL IPs',
-    copied: 'COPIED',
-    error: 'ERROR',
-    workflow1: 'Advanced Delivery',
-    workflow2: 'Anti-Spam Policies',
-    workflow3: 'Safe Links',
-    workflow4: 'Mail Flow Rules',
-    allWorkflowsCompleted: 'All workflows completed successfully!',
-    elementNotFound: 'Element not found: {title}\n\nPlease continue manually.',
-    pleaseComplete: 'Please complete: {title}',
-    missingIPs: 'Missing IPs: {ips}',
-    allIPsAdded: 'All IPs added successfully ({count}/3)',
-    ipsAutoAdded: 'IPs automatically added',
-    stepIncomplete: 'Step incomplete but continuing...',
-    configCompleted: 'CONFIGURATION COMPLETED SUCCESSFULLY',
-    allStepsSuccessful: '{count} WORKFLOWS COMPLETED • ALL STEPS SUCCESSFUL',
-    summaryReport: 'Summary Report - {workflow}',
-    continueToWorkflow: 'Continue to Workflow {number}: {name}',
-    importantNotice: 'Important Notice',
-    overlayWarning: "Don't click on Microsoft form's gray overlay area! If you do, the form will close and your entries may be lost. Only click on the white form area and Keepnet panel.",
-    completed: 'COMPLETED',
-    mailFlowRulesCompleted: 'MAIL FLOW RULES COMPLETED',
-
-    configDescription: 'You have successfully whitelisted IP addresses in Office 365<br>and configured security simulations, spam filtering,<br>and Advanced Threat Protection (ATP) features!',
-    // Step translations
-    step1_home_title: 'Security Center Homepage',
-    step1_home_desc: 'Make sure you are on Microsoft Security Center and continue.',
-    step2_emailcollab_title: 'Email & Collaboration',
-    step2_emailcollab_desc: 'Open the Email & Collaboration menu',
-    step3_policies_title: 'Policies & Rules',
-    step3_policies_desc: 'Go to Policies & Rules page',
-    antispam_step1_navigate_title: 'Navigate to Anti-Spam',
-    antispam_step1_navigate_desc: 'Navigate to the Anti-Spam policies page'
-    ,
-    // Mail Flow Rules - Rule 1 (SCL -1)
-    mailflow_step1_navigate_title: 'Exchange Admin Portal',
-    mailflow_step1_navigate_desc: 'Go to Exchange Admin → Mail flow → Rules',
-    rule1_step1_add_rule_title: 'Rule 1: Add a Rule',
-    rule1_step1_add_rule_desc: 'Click the + Add a rule button',
-    rule1_step2_create_new_title: 'Rule 1: Create a New Rule',
-    rule1_step2_create_new_desc: 'Click the "Create a new rule" option',
-    rule1_step3_rule_name_title: 'Rule 1: Rule Name',
-    rule1_step3_rule_name_desc: 'Enter a name (e.g., "Keepnet Bypass Spam Filter")',
-    rule1_step4_apply_if_title: 'Rule 1: Apply This Rule If',
-    rule1_step4_apply_if_desc: 'Open "Apply this rule if...", select "The sender"',
-    rule1_step5_the_sender_title: 'Rule 1: The Sender',
-    rule1_step5_the_sender_desc: 'Choose "The sender"',
-    rule1_step6_ip_dropdown_title: 'Rule 1: IP Address Selection',
-    rule1_step6_ip_dropdown_desc: 'Open the second dropdown',
-    rule1_step7_ip_option_title: 'Rule 1: IP Address Option',
-    rule1_step7_ip_option_desc: 'Select "IP address is in any of these ranges or exactly matches"',
-    rule1_step8_enter_ips_title: 'Rule 1: Enter IP Addresses',
-    rule1_step8_enter_ips_desc: 'Enter IPs (149.72.161.59, 149.72.42.201, 149.72.154.87) and click Add for each',
-    rule1_step9_do_following_title: 'Rule 1: Do The Following',
-    rule1_step9_do_following_desc: 'Open "Do the following" and select "Modify the message properties"',
-    rule1_step10_modify_props_title: 'Rule 1: Modify Message Properties',
-    rule1_step10_modify_props_desc: 'Select "Modify the message properties"',
-    rule1_step11_scl_title: 'Rule 1: Set SCL',
-    rule1_step11_scl_desc: 'Select "set the spam confidence level (SCL)"',
-    rule1_step12_bypass_spam_title: 'Rule 1: Bypass Spam Filtering',
-    rule1_step12_bypass_spam_desc: 'From SCL dropdown, choose "Bypass spam filtering" (-1)',
-    rule1_step13_add_action_title: 'Rule 1: Add Action (+)',
-    rule1_step13_add_action_desc: 'Click the + button next to "Do the following"',
-    rule1_step14_set_header_title: 'Rule 1: Set Message Header',
-    rule1_step14_set_header_desc: 'Choose "set a message header"',
-    rule1_step15_header_name_title: 'Rule 1: Header Name',
-    rule1_step15_header_name_desc: 'Enter header name "X-MS-Exchange-Organization-BypassClutter"',
-    rule1_step16_header_value_title: 'Rule 1: Header Value',
-    rule1_step16_header_value_desc: 'Enter header value "true"',
-    rule1_step17_save_title: 'Rule 1: Save',
-    rule1_step17_save_desc: 'Click Save to store the rule',
-    // Mail Flow Rules - Rule 2 (Skip Safe Links)
-    rule2_step1_add_rule_title: 'Rule 2: Add a Rule',
-    rule2_step1_add_rule_desc: 'Click the + Add a rule button',
-    rule2_step2_create_new_title: 'Rule 2: Create a New Rule',
-    rule2_step2_create_new_desc: 'Click the "Create a new rule" option',
-    rule2_step3_rule_name_title: 'Rule 2: Rule Name',
-    rule2_step3_rule_name_desc: 'Enter a name (e.g., "Keepnet Skip Safe Links Processing")',
-    rule2_step4_apply_sender_ip_title: 'Rule 2: Apply This Rule If (Sender IP)',
-    rule2_step4_apply_sender_ip_desc: 'Select "The sender" → IP address is in any of these ranges, then add Keepnet IPs',
-    rule2_step5_set_header_title: 'Rule 2: Set Message Header',
-    rule2_step5_set_header_desc: 'Set header to "X-MS-Exchange-Organization-SkipSafeLinksProcessing" with value "1"',
-    rule2_step6_save_title: 'Rule 2: Save',
-    rule2_step6_save_desc: 'Click Save to store the rule',
-    // Mail Flow Rules - Rule 3 (Skip Safe Attachments)
-    rule3_step1_add_rule_title: 'Rule 3: Add a Rule',
-    rule3_step1_add_rule_desc: 'Click the + Add a rule button',
-    rule3_step2_create_new_title: 'Rule 3: Create a New Rule',
-    rule3_step2_create_new_desc: 'Click the "Create a new rule" option',
-    rule3_step3_rule_name_title: 'Rule 3: Rule Name',
-    rule3_step3_rule_name_desc: 'Enter a name (e.g., "Keepnet Skip Safe Attachments Processing")',
-    rule3_step4_apply_sender_ip_title: 'Rule 3: Apply This Rule If (Sender IP)',
-    rule3_step4_apply_sender_ip_desc: 'Select "The sender" → IP address is in any of these ranges, then add Keepnet IPs',
-    rule3_step5_set_header_title: 'Rule 3: Set Message Header',
-    rule3_step5_set_header_desc: 'Set header to "X-MS-Exchange-Organization-SkipSafeAttachmentProcessing" with value "1"',
-    rule3_step6_save_title: 'Rule 3: Save & Complete',
-    rule3_step6_save_desc: 'Click Save to store the rule. All 3 mail flow rules are complete.',
-    mailflow_summary_title: 'MAIL FLOW RULES COMPLETED',
-    mailflow_summary_desc: '3 rules created successfully: Bypass Spam Filter, Skip Safe Links, Skip Safe Attachments'
-  },
-  'en-GB': {
-    name: '🇬🇧 English (UK)',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Step {current} of {total}',
-    clickToExpand: 'Click to expand',
-    formActive: 'FORM ACTIVE',
-    back: 'BACK',
-    continue: 'CONTINUE',
-    summary: 'SUMMARY',
-    copyAllIPs: 'COPY ALL IPs',
-    copied: 'COPIED',
-    error: 'ERROR',
-    workflow1: 'Advanced Delivery',
-    workflow2: 'Anti-Spam Policies',
-    workflow3: 'Safe Links',
-    workflow4: 'Mail Flow Rules',
-    allWorkflowsCompleted: 'All workflows completed successfully!',
-    elementNotFound: 'Element not found: {title}\n\nPlease continue manually.',
-    pleaseComplete: 'Please complete: {title}',
-    missingIPs: 'Missing IPs: {ips}',
-    allIPsAdded: 'All IPs added successfully ({count}/3)',
-    ipsAutoAdded: 'IPs automatically added',
-    stepIncomplete: 'Step incomplete but continuing...',
-    configCompleted: 'CONFIGURATION COMPLETED SUCCESSFULLY',
-    allStepsSuccessful: '{count} WORKFLOWS COMPLETED • ALL STEPS SUCCESSFUL',
-    summaryReport: 'Summary Report - {workflow}',
-    continueToWorkflow: 'Continue to Workflow {number}: {name}',
-    importantNotice: 'Important Notice',
-    overlayWarning: "Don't click on Microsoft form's grey overlay area! If you do, the form will close and your entries may be lost. Only click on the white form area and Keepnet panel.",
-    completed: 'COMPLETED',
-    mailFlowRulesCompleted: 'MAIL FLOW RULES COMPLETED',
-    configDescription: 'You have successfully whitelisted IP addresses in Office 365<br>and configured security simulations, spam filtering,<br>and Advanced Threat Protection (ATP) features!'
-  },
-  'tr': {
-    name: '🇹🇷 Türkçe',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Adım {current} / {total}',
-    clickToExpand: 'Genişletmek için tıklayın',
-    formActive: 'FORM AKTİF',
-    back: 'GERİ',
-    continue: 'DEVAM ET',
-    summary: 'ÖZET',
-    copyAllIPs: 'TÜM IP\'LERİ KOPYALA',
-    copied: 'KOPYALANDI',
-    error: 'HATA',
-    workflow1: 'Gelişmiş Teslimat',
-    workflow2: 'Anti-Spam Politikaları',
-    workflow3: 'Güvenli Bağlantılar',
-    workflow4: 'Mail Flow Kuralları',
-    allWorkflowsCompleted: 'Tüm iş akışları başarıyla tamamlandı!',
-    elementNotFound: 'Element bulunamadı: {title}\n\nLütfen manuel olarak devam edin.',
-    pleaseComplete: 'Lütfen tamamlayın: {title}',
-    missingIPs: 'Eksik IP\'ler: {ips}',
-    allIPsAdded: 'Tüm IP\'ler başarıyla eklendi ({count}/3)',
-    ipsAutoAdded: 'IP\'ler otomatik olarak eklendi',
-    stepIncomplete: 'Adım tamamlanmadı ama devam ediliyor...',
-    configCompleted: 'YAPILANDIRMA BAŞARIYLA TAMAMLANDI',
-    allStepsSuccessful: '{count} İŞ AKIŞI TAMAMLANDI • TÜM ADIMLAR BAŞARILI',
-    summaryReport: 'Özet Rapor - {workflow}',
-    continueToWorkflow: 'Workflow {number}\'e Devam Et: {name}',
-    importantNotice: 'Önemli Uyarı',
-    overlayWarning: "Microsoft'un açılan form paneline tıklarken overlay'e (gri alana) tıklamayın! Aksi halde panel kapanır ve girdiğiniz bilgiler kaybolabilir. Sadece form alanlarına tıklayın.",
-    completed: 'TAMAMLANDI',
-    mailFlowRulesCompleted: 'MAIL FLOW KURALLARI TAMAMLANDI',
-    configDescription: 'Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve<br>güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini<br>başarıyla yapılandırdınız!',
-    // Adım çevirileri
-    step1_home_title: 'Security Center Ana Sayfası',
-    step1_home_desc: 'Microsoft Security Center\'da olduğunuzdan emin olun ve devam edin.',
-    step2_emailcollab_title: 'E-posta ve İşbirliği',
-    step2_emailcollab_desc: 'E-posta ve işbirliği menüsünü açın',
-    step3_policies_title: 'İlkeler ve Kurallar',
-    step3_policies_desc: 'İlkeler ve kurallar sayfasına gidin',
-    antispam_step1_navigate_title: 'Anti-Spam\'e Git',
-    antispam_step1_navigate_desc: 'Anti-Spam politikaları sayfasına gidin'
-    ,
-    // Mail Flow Rules - Rule 1 (SCL -1)
-    mailflow_step1_navigate_title: 'Exchange Admin Portal',
-    mailflow_step1_navigate_desc: 'Exchange Admin → Mail flow → Rules sayfasına gidin',
-    rule1_step1_add_rule_title: 'Kural 1: Add a Rule',
-    rule1_step1_add_rule_desc: '+ Add a rule butonuna tıklayın',
-    rule1_step2_create_new_title: 'Kural 1: Create a New Rule',
-    rule1_step2_create_new_desc: '"Create a new rule" seçeneğine tıklayın',
-    rule1_step3_rule_name_title: 'Kural 1: Rule Name',
-    rule1_step3_rule_name_desc: 'Kural için bir isim girin (örn: "Keepnet Bypass Spam Filter")',
-    rule1_step4_apply_if_title: 'Kural 1: Apply This Rule If',
-    rule1_step4_apply_if_desc: 'Scroll down ve "Apply this rule if..." dropdown\'ını açın, "The sender" seçin',
-    rule1_step5_the_sender_title: 'Kural 1: The Sender',
-    rule1_step5_the_sender_desc: '"The sender" seçeneğini seçin',
-    rule1_step6_ip_dropdown_title: 'Kural 1: IP Address Selection',
-    rule1_step6_ip_dropdown_desc: 'İkinci dropdown\'u açın',
-    rule1_step7_ip_option_title: 'Kural 1: IP Address Option',
-    rule1_step7_ip_option_desc: '"IP address is in any of these ranges or exactly matches" seçeneğini seçin',
-    rule1_step8_enter_ips_title: 'Kural 1: Enter IP Addresses',
-    rule1_step8_enter_ips_desc: 'IP adreslerini girin (149.72.161.59, 149.72.42.201, 149.72.154.87) ve her biri için Add\'e basın',
-    rule1_step9_do_following_title: 'Kural 1: Do The Following',
-    rule1_step9_do_following_desc: '"Do the following" açın ve "Modify the message properties" seçin',
-    rule1_step10_modify_props_title: 'Kural 1: Modify Message Properties',
-    rule1_step10_modify_props_desc: '"Modify the message properties" seçeneğini seçin',
-    rule1_step11_scl_title: 'Kural 1: Set SCL',
-    rule1_step11_scl_desc: '"set the spam confidence level (SCL)" seçin',
-    rule1_step12_bypass_spam_title: 'Kural 1: Bypass Spam Filtering',
-    rule1_step12_bypass_spam_desc: 'SCL dropdown\'ından "Bypass spam filtering" (-1) seçin',
-    rule1_step13_add_action_title: 'Kural 1: Add Action (+)',
-    rule1_step13_add_action_desc: '"Do the following" yanındaki + butonuna tıklayın',
-    rule1_step14_set_header_title: 'Kural 1: Set Message Header',
-    rule1_step14_set_header_desc: '"set a message header" seçin',
-    rule1_step15_header_name_title: 'Kural 1: Header Name',
-    rule1_step15_header_name_desc: 'Header adı "X-MS-Exchange-Organization-BypassClutter" girin',
-    rule1_step16_header_value_title: 'Kural 1: Header Value',
-    rule1_step16_header_value_desc: 'Header value olarak "true" girin',
-    rule1_step17_save_title: 'Kural 1: Save',
-    rule1_step17_save_desc: 'Kuralı kaydetmek için Save\'e tıklayın',
-    // Mail Flow Rules - Rule 2 (Skip Safe Links)
-    rule2_step1_add_rule_title: 'Kural 2: Add a Rule',
-    rule2_step1_add_rule_desc: 'Tekrar + Add a rule butonuna tıklayın',
-    rule2_step2_create_new_title: 'Kural 2: Create a New Rule',
-    rule2_step2_create_new_desc: '"Create a new rule" seçeneğine tıklayın',
-    rule2_step3_rule_name_title: 'Kural 2: Rule Name',
-    rule2_step3_rule_name_desc: 'İsim girin (örn: "Keepnet Skip Safe Links Processing")',
-    rule2_step4_apply_sender_ip_title: 'Kural 2: Apply This Rule If (Sender IP)',
-    rule2_step4_apply_sender_ip_desc: '"The sender" → IP ranges seçin ve IP\'leri ekleyin',
-    rule2_step5_set_header_title: 'Kural 2: Set Message Header',
-    rule2_step5_set_header_desc: 'Header: "X-MS-Exchange-Organization-SkipSafeLinksProcessing", Value: "1"',
-    rule2_step6_save_title: 'Kural 2: Save',
-    rule2_step6_save_desc: 'Kuralı kaydedin',
-    // Mail Flow Rules - Rule 3 (Skip Safe Attachments)
-    rule3_step1_add_rule_title: 'Kural 3: Add a Rule',
-    rule3_step1_add_rule_desc: 'Tekrar + Add a rule butonuna tıklayın',
-    rule3_step2_create_new_title: 'Kural 3: Create a New Rule',
-    rule3_step2_create_new_desc: '"Create a new rule" seçeneğine tıklayın',
-    rule3_step3_rule_name_title: 'Kural 3: Rule Name',
-    rule3_step3_rule_name_desc: 'İsim girin (örn: "Keepnet Skip Safe Attachments Processing")',
-    rule3_step4_apply_sender_ip_title: 'Kural 3: Apply This Rule If (Sender IP)',
-    rule3_step4_apply_sender_ip_desc: '"The sender" → IP ranges seçin ve IP\'leri ekleyin',
-    rule3_step5_set_header_title: 'Kural 3: Set Message Header',
-    rule3_step5_set_header_desc: 'Header: "X-MS-Exchange-Organization-SkipSafeAttachmentProcessing", Value: "1"',
-    rule3_step6_save_title: 'Kural 3: Save & Complete',
-    rule3_step6_save_desc: 'Kuralı kaydedin. 3 mail flow kuralı tamamlandı!',
-    mailflow_summary_title: 'MAIL FLOW KURALLARI TAMAMLANDI',
-    mailflow_summary_desc: '3 kural başarıyla oluşturuldu: Bypass Spam Filter, Skip Safe Links, Skip Safe Attachments'
-  },
-  'de': {
-    name: '🇩🇪 Deutsch',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Schritt {current} von {total}',
-    clickToExpand: 'Zum Erweitern klicken',
-    formActive: 'FORMULAR AKTIV',
-    back: 'ZURÜCK',
-    continue: 'WEITER',
-    summary: 'ZUSAMMENFASSUNG',
-    copyAllIPs: 'ALLE IPs KOPIEREN',
-    copied: 'KOPIERT',
-    error: 'FEHLER',
-    workflow1: 'Erweiterte Zustellung',
-    workflow2: 'Anti-Spam-Richtlinien',
-    workflow3: 'Sichere Links',
-    workflow4: 'Nachrichtenflussregeln',
-    allWorkflowsCompleted: 'Alle Workflows erfolgreich abgeschlossen!',
-    elementNotFound: 'Element nicht gefunden: {title}\n\nBitte manuell fortfahren.',
-    pleaseComplete: 'Bitte vervollständigen: {title}',
-    missingIPs: 'Fehlende IPs: {ips}',
-    allIPsAdded: 'Alle IPs erfolgreich hinzugefügt ({count}/3)',
-    ipsAutoAdded: 'IPs automatisch hinzugefügt',
-    stepIncomplete: 'Schritt unvollständig, aber fortfahrend...',
-    configCompleted: 'KONFIGURATION ERFOLGREICH ABGESCHLOSSEN',
-    allStepsSuccessful: '{count} WORKFLOWS ABGESCHLOSSEN • ALLE SCHRITTE ERFOLGREICH',
-    summaryReport: 'Zusammenfassungsbericht - {workflow}',
-    continueToWorkflow: 'Weiter zu Workflow {number}: {name}',
-    importantNotice: 'Wichtiger Hinweis',
-    overlayWarning: "Klicken Sie nicht auf den grauen Überlagerungsbereich des Microsoft-Formulars! Wenn Sie das tun, wird das Formular geschlossen und Ihre Eingaben können verloren gehen. Klicken Sie nur auf den weißen Formularbereich und das Keepnet-Panel.",
-    completed: 'ABGESCHLOSSEN',
-    mailFlowRulesCompleted: 'NACHRICHTENFLUSSREGELN ABGESCHLOSSEN',
-    configDescription: 'Sie haben IP-Adressen in Office 365 erfolgreich auf die Whitelist gesetzt<br>und Sicherheitssimulationen, Spamfilterung<br>und erweiterte Bedrohungsschutz (ATP)-Funktionen konfiguriert!',
-    // Schrittübersetzungen
-    step1_home_title: 'Security Center Startseite',
-    step1_home_desc: 'Stellen Sie sicher, dass Sie sich im Microsoft Security Center befinden und fahren Sie fort.',
-    step2_emailcollab_title: 'E-Mail & Zusammenarbeit',
-    step2_emailcollab_desc: 'Öffnen Sie das Menü E-Mail & Zusammenarbeit',
-    step3_policies_title: 'Richtlinien & Regeln',
-    step3_policies_desc: 'Gehen Sie zur Seite Richtlinien & Regeln',
-    antispam_step1_navigate_title: 'Zu Anti-Spam navigieren',
-    antispam_step1_navigate_desc: 'Navigieren Sie zur Anti-Spam-Richtlinienseite'
-  },
-  'fr': {
-    name: '🇫🇷 Français',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Étape {current} sur {total}',
-    clickToExpand: 'Cliquer pour agrandir',
-    formActive: 'FORMULAIRE ACTIF',
-    back: 'RETOUR',
-    continue: 'CONTINUER',
-    summary: 'RÉSUMÉ',
-    copyAllIPs: 'COPIER TOUTES LES IPs',
-    copied: 'COPIÉ',
-    error: 'ERREUR',
-    workflow1: 'Livraison Avancée',
-    workflow2: 'Politiques Anti-Spam',
-    workflow3: 'Liens Sécurisés',
-    workflow4: 'Règles de Flux de Messagerie',
-    allWorkflowsCompleted: 'Tous les flux de travail sont terminés avec succès!',
-    elementNotFound: 'Élément non trouvé: {title}\n\nVeuillez continuer manuellement.',
-    pleaseComplete: 'Veuillez compléter: {title}',
-    missingIPs: 'IPs manquantes: {ips}',
-    allIPsAdded: 'Toutes les IPs ajoutées avec succès ({count}/3)',
-    ipsAutoAdded: 'IPs ajoutées automatiquement',
-    stepIncomplete: 'Étape incomplète mais continuation...',
-    configCompleted: 'CONFIGURATION TERMINÉE AVEC SUCCÈS',
-    allStepsSuccessful: '{count} FLUX DE TRAVAIL TERMINÉS • TOUTES LES ÉTAPES RÉUSSIES',
-    summaryReport: 'Rapport de Synthèse - {workflow}',
-    continueToWorkflow: 'Continuer vers le Flux de travail {number}: {name}',
-    importantNotice: 'Avis Important',
-    overlayWarning: "Ne cliquez pas sur la zone de superposition grise du formulaire Microsoft! Si vous le faites, le formulaire se fermera et vos entrées pourraient être perdues. Cliquez uniquement sur la zone blanche du formulaire et le panneau Keepnet.",
-    completed: 'TERMINÉ',
-    mailFlowRulesCompleted: 'RÈGLES DE FLUX DE MESSAGERIE TERMINÉES',
-    configDescription: 'Vous avez mis en liste blanche les adresses IP dans Office 365 avec succès<br>et configuré les simulations de sécurité, le filtrage du spam<br>et les fonctionnalités de protection avancée contre les menaces (ATP)!'
-  },
-  'es': {
-    name: '🇪🇸 Español',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Paso {current} de {total}',
-    clickToExpand: 'Haga clic para expandir',
-    formActive: 'FORMULARIO ACTIVO',
-    back: 'ATRÁS',
-    continue: 'CONTINUAR',
-    summary: 'RESUMEN',
-    copyAllIPs: 'COPIAR TODAS LAS IPs',
-    copied: 'COPIADO',
-    error: 'ERROR',
-    workflow1: 'Entrega Avanzada',
-    workflow2: 'Políticas Anti-Spam',
-    workflow3: 'Enlaces Seguros',
-    workflow4: 'Reglas de Flujo de Correo',
-    allWorkflowsCompleted: '¡Todos los flujos de trabajo completados con éxito!',
-    elementNotFound: 'Elemento no encontrado: {title}\n\nPor favor continúe manualmente.',
-    pleaseComplete: 'Por favor complete: {title}',
-    missingIPs: 'IPs faltantes: {ips}',
-    allIPsAdded: 'Todas las IPs agregadas con éxito ({count}/3)',
-    ipsAutoAdded: 'IPs agregadas automáticamente',
-    stepIncomplete: 'Paso incompleto pero continuando...',
-    configCompleted: 'CONFIGURACIÓN COMPLETADA CON ÉXITO',
-    allStepsSuccessful: '{count} FLUJOS DE TRABAJO COMPLETADOS • TODOS LOS PASOS EXITOSOS',
-    summaryReport: 'Informe Resumido - {workflow}',
-    continueToWorkflow: 'Continuar al Flujo de trabajo {number}: {name}',
-    importantNotice: 'Aviso Importante',
-    overlayWarning: "¡No haga clic en el área gris superpuesta del formulario de Microsoft! Si lo hace, el formulario se cerrará y sus entradas pueden perderse. Solo haga clic en el área blanca del formulario y el panel de Keepnet.",
-    completed: 'COMPLETADO',
-    mailFlowRulesCompleted: 'REGLAS DE FLUJO DE CORREO COMPLETADAS',
-    configDescription: '¡Ha agregado exitosamente direcciones IP a la lista blanca en Office 365<br>y configurado simulaciones de seguridad, filtrado de spam<br>y funciones de Protección Avanzada contra Amenazas (ATP)!'
-  },
-  'it': {
-    name: '🇮🇹 Italiano',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Passo {current} di {total}',
-    clickToExpand: 'Clicca per espandere',
-    formActive: 'MODULO ATTIVO',
-    back: 'INDIETRO',
-    continue: 'CONTINUA',
-    summary: 'RIEPILOGO',
-    copyAllIPs: 'COPIA TUTTI GLI IP',
-    copied: 'COPIATO',
-    error: 'ERRORE',
-    workflow1: 'Consegna Avanzata',
-    workflow2: 'Criteri Anti-Spam',
-    workflow3: 'Collegamenti Sicuri',
-    workflow4: 'Regole del Flusso di Posta',
-    allWorkflowsCompleted: 'Tutti i flussi di lavoro completati con successo!',
-    elementNotFound: 'Elemento non trovato: {title}\n\nSi prega di continuare manualmente.',
-    pleaseComplete: 'Si prega di completare: {title}',
-    missingIPs: 'IP mancanti: {ips}',
-    allIPsAdded: 'Tutti gli IP aggiunti con successo ({count}/3)',
-    ipsAutoAdded: 'IP aggiunti automaticamente',
-    stepIncomplete: 'Passo incompleto ma continuando...',
-    configCompleted: 'CONFIGURAZIONE COMPLETATA CON SUCCESSO',
-    allStepsSuccessful: '{count} FLUSSI DI LAVORO COMPLETATI • TUTTI I PASSI RIUSCITI',
-    summaryReport: 'Rapporto Riepilogativo - {workflow}',
-    continueToWorkflow: 'Continua al Flusso di lavoro {number}: {name}',
-    importantNotice: 'Avviso Importante',
-    overlayWarning: "Non fare clic sull'area grigia sovrapposta del modulo Microsoft! Se lo fai, il modulo si chiuderà e le tue voci potrebbero andare perse. Fai clic solo sull'area bianca del modulo e sul pannello Keepnet.",
-    completed: 'COMPLETATO',
-    mailFlowRulesCompleted: 'REGOLE DEL FLUSSO DI POSTA COMPLETATE',
-    configDescription: 'Hai inserito con successo gli indirizzi IP nella whitelist in Office 365<br>e configurato simulazioni di sicurezza, filtraggio spam<br>e funzionalità di Advanced Threat Protection (ATP)!'
-  },
-  'pt': {
-    name: '🇵🇹 Português',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Passo {current} de {total}',
-    clickToExpand: 'Clique para expandir',
-    formActive: 'FORMULÁRIO ATIVO',
-    back: 'VOLTAR',
-    continue: 'CONTINUAR',
-    summary: 'RESUMO',
-    copyAllIPs: 'COPIAR TODOS OS IPs',
-    copied: 'COPIADO',
-    error: 'ERRO',
-    workflow1: 'Entrega Avançada',
-    workflow2: 'Políticas Anti-Spam',
-    workflow3: 'Links Seguros',
-    workflow4: 'Regras de Fluxo de Email',
-    allWorkflowsCompleted: 'Todos os fluxos de trabalho concluídos com sucesso!',
-    elementNotFound: 'Elemento não encontrado: {title}\n\nPor favor, continue manualmente.',
-    pleaseComplete: 'Por favor, complete: {title}',
-    missingIPs: 'IPs faltando: {ips}',
-    allIPsAdded: 'Todos os IPs adicionados com sucesso ({count}/3)',
-    ipsAutoAdded: 'IPs adicionados automaticamente',
-    stepIncomplete: 'Passo incompleto mas continuando...',
-    configCompleted: 'CONFIGURAÇÃO CONCLUÍDA COM SUCESSO',
-    allStepsSuccessful: '{count} FLUXOS DE TRABALHO CONCLUÍDOS • TODOS OS PASSOS BEM-SUCEDIDOS',
-    summaryReport: 'Relatório Resumido - {workflow}',
-    continueToWorkflow: 'Continuar para o Fluxo de trabalho {number}: {name}',
-    importantNotice: 'Aviso Importante',
-    overlayWarning: "Não clique na área cinza sobreposta do formulário da Microsoft! Se você fizer isso, o formulário será fechado e suas entradas podem ser perdidas. Clique apenas na área branca do formulário e no painel Keepnet.",
-    completed: 'CONCLUÍDO',
-    mailFlowRulesCompleted: 'REGRAS DE FLUXO DE EMAIL CONCLUÍDAS',
-    configDescription: 'Você adicionou com sucesso endereços IP à lista de permissões no Office 365<br>e configurou simulações de segurança, filtragem de spam<br>e recursos de Proteção Avançada contra Ameaças (ATP)!'
-  },
-  'ar': {
-    name: '🇸🇦 العربية',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'الخطوة {current} من {total}',
-    clickToExpand: 'انقر للتوسيع',
-    formActive: 'النموذج نشط',
-    back: 'رجوع',
-    continue: 'متابعة',
-    summary: 'ملخص',
-    copyAllIPs: 'نسخ جميع عناوين IP',
-    copied: 'تم النسخ',
-    error: 'خطأ',
-    workflow1: 'التسليم المتقدم',
-    workflow2: 'سياسات مكافحة البريد المزعج',
-    workflow3: 'الروابط الآمنة',
-    workflow4: 'قواعد تدفق البريد',
-    allWorkflowsCompleted: 'تم إكمال جميع سير العمل بنجاح!',
-    elementNotFound: 'العنصر غير موجود: {title}\n\nيرجى المتابعة يدويًا.',
-    pleaseComplete: 'يرجى إكمال: {title}',
-    missingIPs: 'عناوين IP مفقودة: {ips}',
-    allIPsAdded: 'تمت إضافة جميع عناوين IP بنجاح ({count}/3)',
-    ipsAutoAdded: 'تمت إضافة عناوين IP تلقائيًا',
-    stepIncomplete: 'الخطوة غير مكتملة ولكن المتابعة...',
-    configCompleted: 'اكتمل التكوين بنجاح',
-    allStepsSuccessful: 'اكتمل {count} سير عمل • جميع الخطوات ناجحة',
-    summaryReport: 'تقرير ملخص - {workflow}',
-    continueToWorkflow: 'المتابعة إلى سير العمل {number}: {name}',
-    importantNotice: 'إشعار هام',
-    overlayWarning: "لا تنقر على منطقة التراكب الرمادية لنموذج Microsoft! إذا فعلت ذلك، سيتم إغلاق النموذج وقد تفقد إدخالاتك. انقر فقط على منطقة النموذج البيضاء ولوحة Keepnet.",
-    completed: 'مكتمل',
-    mailFlowRulesCompleted: 'قواعد تدفق البريد مكتملة',
-    configDescription: 'لقد أضفت بنجاح عناوين IP إلى القائمة البيضاء في Office 365<br>وقمت بتكوين محاكاة الأمان وتصفية البريد المزعج<br>وميزات الحماية المتقدمة من التهديدات (ATP)!'
-  },
-  'nl': {
-    name: '🇳🇱 Nederlands',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Stap {current} van {total}',
-    clickToExpand: 'Klik om uit te breiden',
-    formActive: 'FORMULIER ACTIEF',
-    back: 'TERUG',
-    continue: 'DOORGAAN',
-    summary: 'SAMENVATTING',
-    copyAllIPs: 'ALLE IP\'S KOPIËREN',
-    copied: 'GEKOPIEERD',
-    error: 'FOUT',
-    workflow1: 'Geavanceerde Levering',
-    workflow2: 'Anti-Spam Beleid',
-    workflow3: 'Veilige Links',
-    workflow4: 'E-mailstroom Regels',
-    allWorkflowsCompleted: 'Alle workflows succesvol voltooid!',
-    elementNotFound: 'Element niet gevonden: {title}\n\nGa handmatig verder.',
-    pleaseComplete: 'Voltooi alstublieft: {title}',
-    missingIPs: 'Ontbrekende IP\'s: {ips}',
-    allIPsAdded: 'Alle IP\'s succesvol toegevoegd ({count}/3)',
-    ipsAutoAdded: 'IP\'s automatisch toegevoegd',
-    stepIncomplete: 'Stap onvolledig maar doorgaan...',
-    configCompleted: 'CONFIGURATIE SUCCESVOL VOLTOOID',
-    allStepsSuccessful: '{count} WORKFLOWS VOLTOOID • ALLE STAPPEN SUCCESVOL',
-    summaryReport: 'Samenvattingsrapport - {workflow}',
-    continueToWorkflow: 'Doorgaan naar Workflow {number}: {name}',
-    importantNotice: 'Belangrijke Mededeling',
-    overlayWarning: "Klik niet op het grijze overlay-gebied van het Microsoft-formulier! Als u dat doet, wordt het formulier gesloten en kunnen uw invoeren verloren gaan. Klik alleen op het witte formuliergebied en het Keepnet-paneel.",
-    completed: 'VOLTOOID',
-    mailFlowRulesCompleted: 'E-MAILSTROOM REGELS VOLTOOID',
-    configDescription: 'U heeft met succes IP-adressen op de whitelist gezet in Office 365<br>en beveiligingssimulaties, spamfiltering<br>en Advanced Threat Protection (ATP) functies geconfigureerd!'
-  },
-  'ja': {
-    name: '🇯🇵 日本語',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'ステップ {current} / {total}',
-    clickToExpand: 'クリックして展開',
-    formActive: 'フォームアクティブ',
-    back: '戻る',
-    continue: '続行',
-    summary: '概要',
-    copyAllIPs: 'すべてのIPをコピー',
-    copied: 'コピーしました',
-    error: 'エラー',
-    workflow1: '高度な配信',
-    workflow2: 'スパム対策ポリシー',
-    workflow3: '安全なリンク',
-    workflow4: 'メールフロールール',
-    allWorkflowsCompleted: 'すべてのワークフローが正常に完了しました！',
-    elementNotFound: '要素が見つかりません: {title}\n\n手動で続行してください。',
-    pleaseComplete: '完了してください: {title}',
-    missingIPs: '不足しているIP: {ips}',
-    allIPsAdded: 'すべてのIPが正常に追加されました ({count}/3)',
-    ipsAutoAdded: 'IPが自動的に追加されました',
-    stepIncomplete: 'ステップが不完全ですが続行中...',
-    configCompleted: '構成が正常に完了しました',
-    allStepsSuccessful: '{count}個のワークフローが完了 • すべてのステップが成功',
-    summaryReport: '概要レポート - {workflow}',
-    continueToWorkflow: 'ワークフロー{number}に続行: {name}',
-    importantNotice: '重要なお知らせ',
-    overlayWarning: "Microsoftフォームのグレーオーバーレイエリアをクリックしないでください！クリックすると、フォームが閉じて入力内容が失われる可能性があります。白いフォームエリアとKeepnetパネルのみをクリックしてください。",
-    completed: '完了',
-    mailFlowRulesCompleted: 'メールフロールールが完了',
-    configDescription: 'Office 365でIPアドレスをホワイトリストに正常に追加し<br>セキュリティシミュレーション、スパムフィルタリング<br>Advanced Threat Protection (ATP)機能を構成しました！'
-  },
-  'zh-CN': {
-    name: '🇨🇳 简体中文',
-    brandName: 'KEEPNET LABS',
-    stepOf: '步骤 {current} / {total}',
-    clickToExpand: '点击展开',
-    formActive: '表单激活',
-    back: '返回',
-    continue: '继续',
-    summary: '摘要',
-    copyAllIPs: '复制所有IP',
-    copied: '已复制',
-    error: '错误',
-    workflow1: '高级投递',
-    workflow2: '反垃圾邮件策略',
-    workflow3: '安全链接',
-    workflow4: '邮件流规则',
-    allWorkflowsCompleted: '所有工作流已成功完成！',
-    elementNotFound: '找不到元素: {title}\n\n请手动继续。',
-    pleaseComplete: '请完成: {title}',
-    missingIPs: '缺少IP: {ips}',
-    allIPsAdded: '所有IP已成功添加 ({count}/3)',
-    ipsAutoAdded: 'IP已自动添加',
-    stepIncomplete: '步骤不完整但继续...',
-    configCompleted: '配置成功完成',
-    allStepsSuccessful: '{count}个工作流已完成 • 所有步骤成功',
-    summaryReport: '摘要报告 - {workflow}',
-    continueToWorkflow: '继续到工作流 {number}: {name}',
-    importantNotice: '重要通知',
-    overlayWarning: "不要点击Microsoft表单的灰色覆盖区域！如果这样做，表单将关闭，您的输入可能会丢失。只点击白色表单区域和Keepnet面板。",
-    completed: '已完成',
-    mailFlowRulesCompleted: '邮件流规则已完成',
-    configDescription: '您已成功将IP地址添加到Office 365白名单<br>并配置了安全模拟、垃圾邮件过滤<br>和高级威胁防护 (ATP) 功能！'
-  },
-  'ko': {
-    name: '🇰🇷 한국어',
-    brandName: 'KEEPNET LABS',
-    stepOf: '단계 {current} / {total}',
-    clickToExpand: '클릭하여 확장',
-    formActive: '양식 활성',
-    back: '뒤로',
-    continue: '계속',
-    summary: '요약',
-    copyAllIPs: '모든 IP 복사',
-    copied: '복사됨',
-    error: '오류',
-    workflow1: '고급 배달',
-    workflow2: '스팸 방지 정책',
-    workflow3: '안전한 링크',
-    workflow4: '메일 흐름 규칙',
-    allWorkflowsCompleted: '모든 워크플로가 성공적으로 완료되었습니다!',
-    elementNotFound: '요소를 찾을 수 없음: {title}\n\n수동으로 계속하십시오.',
-    pleaseComplete: '완료하십시오: {title}',
-    missingIPs: '누락된 IP: {ips}',
-    allIPsAdded: '모든 IP가 성공적으로 추가됨 ({count}/3)',
-    ipsAutoAdded: 'IP가 자동으로 추가됨',
-    stepIncomplete: '단계가 불완전하지만 계속 중...',
-    configCompleted: '구성이 성공적으로 완료됨',
-    allStepsSuccessful: '{count}개 워크플로 완료 • 모든 단계 성공',
-    summaryReport: '요약 보고서 - {workflow}',
-    continueToWorkflow: '워크플로 {number}로 계속: {name}',
-    importantNotice: '중요 공지',
-    overlayWarning: "Microsoft 양식의 회색 오버레이 영역을 클릭하지 마십시오! 클릭하면 양식이 닫히고 입력 내용이 손실될 수 있습니다. 흰색 양식 영역과 Keepnet 패널만 클릭하십시오.",
-    completed: '완료됨',
-    mailFlowRulesCompleted: '메일 흐름 규칙 완료됨',
-    configDescription: 'Office 365에서 IP 주소를 성공적으로 화이트리스트에 추가하고<br>보안 시뮬레이션, 스팸 필터링<br>고급 위협 방지 (ATP) 기능을 구성했습니다!'
-  },
-  'ru': {
-    name: '🇷🇺 Русский',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Шаг {current} из {total}',
-    clickToExpand: 'Нажмите, чтобы развернуть',
-    formActive: 'ФОРМА АКТИВНА',
-    back: 'НАЗАД',
-    continue: 'ПРОДОЛЖИТЬ',
-    summary: 'СВОДКА',
-    copyAllIPs: 'КОПИРОВАТЬ ВСЕ IP',
-    copied: 'СКОПИРОВАНО',
-    error: 'ОШИБКА',
-    workflow1: 'Расширенная Доставка',
-    workflow2: 'Политики Защиты от Спама',
-    workflow3: 'Безопасные Ссылки',
-    workflow4: 'Правила Потока Почты',
-    allWorkflowsCompleted: 'Все рабочие процессы успешно завершены!',
-    elementNotFound: 'Элемент не найден: {title}\n\nПожалуйста, продолжите вручную.',
-    pleaseComplete: 'Пожалуйста, завершите: {title}',
-    missingIPs: 'Отсутствующие IP: {ips}',
-    allIPsAdded: 'Все IP успешно добавлены ({count}/3)',
-    ipsAutoAdded: 'IP добавлены автоматически',
-    stepIncomplete: 'Шаг не завершен, но продолжаем...',
-    configCompleted: 'КОНФИГУРАЦИЯ УСПЕШНО ЗАВЕРШЕНА',
-    allStepsSuccessful: '{count} РАБОЧИХ ПРОЦЕССОВ ЗАВЕРШЕНО • ВСЕ ШАГИ УСПЕШНЫ',
-    summaryReport: 'Сводный Отчет - {workflow}',
-    continueToWorkflow: 'Продолжить к Рабочему процессу {number}: {name}',
-    importantNotice: 'Важное Уведомление',
-    overlayWarning: "Не нажимайте на серую область наложения формы Microsoft! Если вы сделаете это, форма закроется, и ваши записи могут быть потеряны. Нажимайте только на белую область формы и панель Keepnet.",
-    completed: 'ЗАВЕРШЕНО',
-    mailFlowRulesCompleted: 'ПРАВИЛА ПОТОКА ПОЧТЫ ЗАВЕРШЕНЫ',
-    configDescription: 'Вы успешно добавили IP-адреса в белый список в Office 365<br>и настроили симуляции безопасности, фильтрацию спама<br>и функции Advanced Threat Protection (ATP)!'
-  },
-  'pl': {
-    name: '🇵🇱 Polski',
-    brandName: 'KEEPNET LABS',
-    stepOf: 'Krok {current} z {total}',
-    clickToExpand: 'Kliknij, aby rozwinąć',
-    formActive: 'FORMULARZ AKTYWNY',
-    back: 'WSTECZ',
-    continue: 'KONTYNUUJ',
-    summary: 'PODSUMOWANIE',
-    copyAllIPs: 'KOPIUJ WSZYSTKIE IP',
-    copied: 'SKOPIOWANO',
-    error: 'BŁĄD',
-    workflow1: 'Zaawansowane Dostarczanie',
-    workflow2: 'Zasady Antyspamowe',
-    workflow3: 'Bezpieczne Linki',
-    workflow4: 'Reguły Przepływu Poczty',
-    allWorkflowsCompleted: 'Wszystkie przepływy pracy zostały pomyślnie zakończone!',
-    elementNotFound: 'Nie znaleziono elementu: {title}\n\nProszę kontynuować ręcznie.',
-    pleaseComplete: 'Proszę uzupełnić: {title}',
-    missingIPs: 'Brakujące IP: {ips}',
-    allIPsAdded: 'Wszystkie IP zostały pomyślnie dodane ({count}/3)',
-    ipsAutoAdded: 'IP zostały automatycznie dodane',
-    stepIncomplete: 'Krok niekompletny, ale kontynuowanie...',
-    configCompleted: 'KONFIGURACJA ZAKOŃCZONA POMYŚLNIE',
-    allStepsSuccessful: '{count} PRZEPŁYWÓW PRACY ZAKOŃCZONYCH • WSZYSTKIE KROKI POMYŚLNE',
-    summaryReport: 'Raport Podsumowujący - {workflow}',
-    continueToWorkflow: 'Kontynuuj do Przepływu pracy {number}: {name}',
-    importantNotice: 'Ważna Informacja',
-    overlayWarning: "Nie klikaj w szary obszar nakładki formularza Microsoft! Jeśli to zrobisz, formularz zostanie zamknięty, a Twoje wpisy mogą zostać utracone. Klikaj tylko w biały obszar formularza i panel Keepnet.",
-    completed: 'ZAKOŃCZONO',
-    mailFlowRulesCompleted: 'REGUŁY PRZEPŁYWU POCZTY ZAKOŃCZONE',
-    configDescription: 'Pomyślnie dodałeś adresy IP do białej listy w Office 365<br>i skonfigurowałeś symulacje bezpieczeństwa, filtrowanie spamu<br>oraz funkcje Advanced Threat Protection (ATP)!'
-  }
-}
-
-// i18n helper function
-function t(key, params = {}) {
-  const translation = TRANSLATIONS[LANGUAGE]?.[key] || TRANSLATIONS['en-US'][key] || key
-  return translation.replace(/\{(\w+)\}/g, (match, paramKey) => params[paramKey] || match)
-}
 
 /* ========== SPESIFIK AKIŞ: Third-Party Phishing Simulations ========== */
 const WORKFLOW_STEPS = [
@@ -834,7 +168,7 @@ const WORKFLOW_STEPS = [
     waitAfterClick: 2000
   },
   {
-    id: 8,
+    id: 7,
     name: 'step8_domains_input',
     title: 'Etki Alanları',
     description: 'Etki alanlarını girin (örn: *.keepnetdomain.com)',
@@ -860,7 +194,7 @@ const WORKFLOW_STEPS = [
     waitAfterClick: 500
   },
   {
-    id: 9,
+    id: 8,
     name: 'step9_ip_input',
     title: 'IP Adresleri',
     description: 'White list IP adreslerini girin',
@@ -883,7 +217,7 @@ const WORKFLOW_STEPS = [
   },
 
   {
-    id: 10,
+    id: 9,
     name: 'step10_simulation_urls_input',
     title: 'Simülasyon URL\'leri',
     description: 'Simülasyon URL\'lerini girin',
@@ -909,7 +243,7 @@ const WORKFLOW_STEPS = [
     waitAfterClick: 500
   },
   {
-    id: 11,
+    id: 10,
     name: 'step11_save',
     title: 'Kaydet',
     description: 'Değişiklikleri kaydedin',
@@ -931,9 +265,9 @@ const WORKFLOW_STEPS = [
     waitAfterClick: 2000
   },
   {
-    id: 12,
+    id: 11,
     name: 'step12_summary',
-    title: 'COMPLETED',
+    title: 'Tamamlandı! ✅',
     description: 'Tüm adımlar başarıyla tamamlandı',
     isSummary: true
   }
@@ -955,8 +289,19 @@ const THREAT_POLICIES_STEPS = [
   {
     id: 2,
     name: 'antispam_step2_select_checkbox',
-    title: 'Connection Filter Policy',
-    description: 'Connection Filter Policy satırının checkbox\'ına tıklayın (satırı seçmek için)',
+    title: 'Connection Filter Policy Checkbox',
+    description: 'Connection Filter Policy satırının checkbox\'ını seçin',
+    target: {
+      selector: 'div.ms-DetailsRow-cellCheck div[role="radio"][data-automationid="DetailsRowCheck"][aria-checked="false"]',
+      fallback: [
+        'div.ms-DetailsRow-cellCheck div[role="radio"][data-automationid="DetailsRowCheck"]',
+        'div.checkCell-938 div[data-automationid="DetailsRowCheck"]',
+        'div.ms-Check-checkHost:nth-of-type(2)',
+        'div[data-automationid="DetailsRowCheck"]:not([aria-checked="true"]):first-of-type'
+      ]
+    },
+    tooltip: 'Connection Filter Policy checkbox\'ını seçin',
+    autoClick: false,
     validation: () => {
       // Seçili checkbox var mı kontrol et
       const checkedBoxes = document.querySelectorAll('div.ms-DetailsRow-cellCheck div[data-automationid="DetailsRowCheck"][aria-checked="true"]')
@@ -1080,9 +425,9 @@ const THREAT_POLICIES_STEPS = [
     waitAfterClick: 2000
   },
   {
-    id: 8,
+    id: 7,
     name: 'antispam_summary',
-    title: 'COMPLETED',
+    title: 'Tamamlandı! ✅',
     description: 'Anti-Spam yapılandırması başarıyla tamamlandı',
     isSummary: true
   }
@@ -1222,7 +567,7 @@ const SAFE_LINKS_STEPS = [
     waitAfterClick: 2000
   },
   {
-    id: 8,
+    id: 7,
     name: 'safelinks_step8_domain',
     title: 'Domain Ekle',
     description: 'Şirket domaininizi ekleyin',
@@ -1243,7 +588,7 @@ const SAFE_LINKS_STEPS = [
     waitAfterClick: 500
   },
   {
-    id: 9,
+    id: 8,
     name: 'safelinks_step9_next2',
     title: 'Next (2)',
     description: 'Next butonuna tıklayın',
@@ -1262,7 +607,7 @@ const SAFE_LINKS_STEPS = [
     waitAfterClick: 2000
   },
   {
-    id: 10,
+    id: 9,
     name: 'safelinks_step10_deselect_options',
     title: 'Seçenekleri Kaldır',
     description: '"Track user clicks" ve "Office 365 Apps" seçeneklerini deselect edin',
@@ -1281,7 +626,7 @@ const SAFE_LINKS_STEPS = [
     waitAfterClick: 500
   },
   {
-    id: 11,
+    id: 10,
     name: 'safelinks_step11_add_urls',
     title: 'Phishing Domain Ekle',
     description: 'Do not rewrite the following URLs kısmına *.domain.com/* formatında ekleyin',
@@ -1303,7 +648,7 @@ const SAFE_LINKS_STEPS = [
     waitAfterClick: 500
   },
   {
-    id: 12,
+    id: 11,
     name: 'safelinks_step12_next3',
     title: 'Next (3)',
     description: 'Next butonuna tıklayın',
@@ -1344,79 +689,123 @@ const SAFE_LINKS_STEPS = [
   {
     id: 14,
     name: 'safelinks_summary',
-    title: 'COMPLETED',
+    title: 'Tamamlandı! ✅',
     description: 'Safe Links yapılandırması tamamlandı. Birkaç saat içinde etkili olacaktır.',
     isSummary: true
   }
 ]
 
 /* ========== WORKFLOW 4: Spam Filter Bypass ========== */
-/* ========== WORKFLOW 4: Mail Flow Rules (3 Kurallar) ========== */
 const SPAM_FILTER_BYPASS_STEPS = [
   {
     id: 1,
-    name: 'mailflow_step1_navigate',
-    title: 'Exchange Admin Portal',
-    description: 'Exchange Admin → Mail flow → Rules sayfasına gidin',
+    name: 'spambypass_step1_navigate',
+    title: 'Admin Portalına Git',
+    description: 'Exchange Admin Portalına gitmek için "Sayfaya Git" butonuna tıklayın',
     navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
     validation: () => {
-      return document.location.href.includes('transportrules')
+      return document.location.href.includes('admin.exchange.microsoft.com')
     },
     isNavigation: true
   },
-  // KURAL 1: Bypass Spam Filter (SCL = -1)
   {
     id: 2,
-    name: 'rule1_step1_add_rule',
-    title: 'Kural 1: Add a Rule',
-    description: '+ Add a rule butonuna tıklayın',
+    name: 'spambypass_step2_mail_flow',
+    title: 'Mail Flow Menüsü',
+    description: 'Mail flow butonuna tıklayın',
     target: {
-      selector: 'button[aria-label*="Add a rule"]',
+      selector: 'button[data-value="mailflownode"]',
+      textMatch: /Mail flow/i,
       fallback: [
-        'button:has-text("Add a rule")',
-        'button.ms-CommandBarItem-link:has-text("Add")',
-        'button[name*="Add"]'
+        'button[aria-label*="mailflownode"]',
+        'button[name="Mail flow"]',
+        'button[data-automation-id*="mailflow"]'
       ]
     },
-    tooltip: '+ Add a rule butonuna tıklayın',
+    tooltip: 'Mail flow menüsünü açın',
     autoClick: false,
     validation: () => {
-      return !!document.querySelector('span.ms-ContextualMenu-itemText')
+      return !!document.querySelector('a[data-value="transportrules"]') || document.location.href.includes('transportrules')
     },
-    waitAfterClick: 1500
+    waitAfterClick: 1000
   },
   {
     id: 3,
-    name: 'rule1_step2_create_new',
-    title: 'Kural 1: Create a New Rule',
-    description: '"Create a new rule" seçeneğine tıklayın',
+    name: 'spambypass_step3_rules',
+    title: 'Rules Sayfası',
+    description: 'Rules kısmına gidin',
     target: {
-      selector: 'span.ms-ContextualMenu-itemText.label-672',
+      selector: 'a[data-value="transportrules"]',
+      textMatch: /Rules/i,
       fallback: [
-        'span.ms-ContextualMenu-itemText.label-685',
-        'button:has-text("Create a new rule")',
-        'span:has-text("Create a new rule")',
-        '[role="menuitem"]:has-text("Create")'
+        'a[name="Rules"]',
+        'a#transportrules',
+        'a[data-automation-id*="transportrules"]'
       ]
     },
-    tooltip: 'Create a new rule seçeneğine tıklayın',
+    tooltip: 'Rules\'e tıklayın',
     autoClick: false,
     validation: () => {
-      return !!document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]')
+      return document.location.href.includes('transportrules')
     },
     waitAfterClick: 2000
   },
   {
     id: 4,
-    name: 'rule1_step3_rule_name',
-    title: 'Kural 1: Rule Name',
-    description: 'Kural için bir isim girin (örn: "Keepnet Bypass Spam Filter")',
+    name: 'spambypass_step4_add_rule',
+    title: 'Yeni Kural Ekle',
+    description: '+ Add a rule butonuna tıklayın',
+    target: {
+      selector: 'button[aria-label*="Add"]',
+      textMatch: /Add a rule/i,
+      fallback: [
+        'button[name*="Add"]',
+        'button:contains("Add a rule")',
+        'button.ms-Button--primary'
+      ]
+    },
+    tooltip: '+  Add a rule butonuna tıklayın',
+    autoClick: false,
+    validation: () => {
+      return !!document.querySelector('button[aria-label*="Bypass"]') || document.location.href.includes('new')
+    },
+    waitAfterClick: 2000
+  },
+  {
+    id: 5,
+    name: 'spambypass_step5_create_rule',
+    title: 'Create A New Rule',
+    description: 'Açılan menüden "Create a new rule" seçeneğini seçin',
+    target: {
+      selector: 'span.ms-ContextualMenu-itemText.label-685',
+      textMatch: /Create a new rule/i,
+      fallback: [
+        'span.ms-ContextualMenu-itemText:contains("Create a new rule")',
+        'a:contains("Create a new rule")',
+        'div[role="menuitem"]:contains("Create a new rule")',
+        'button:contains("Create a new rule")',
+        'a:contains("new rule")'
+      ]
+    },
+    tooltip: '"Create a new rule" seçeneğini tıklayın',
+    autoClick: true,
+    validation: () => {
+      return document.location.href.includes('new') || document.querySelector('input[placeholder*="name"]')
+    },
+    waitAfterClick: 4000
+  },
+  {
+    id: 6,
+    name: 'spambypass_step6_rule_name',
+    title: 'Kural İsmi',
+    description: 'Beyaz liste kuralı için bir isim girin: "Keepnet_Whitelist_AllEdges"',
     target: {
       selector: 'input[data-automation-id="EditTransportRule_Name_TextField"]',
       fallback: [
-        'input[type="text"][maxlength="64"]',
-        'input[aria-labelledby*="TextFieldLabel"]',
-        'input.ms-TextField-field'
+        'input[placeholder*="name"]',
+        'input[aria-label*="name"]',
+        'input[aria-label*="Name"]',
+        'input[type="text"]:first-of-type'
       ]
     },
     tooltip: 'Kural adını girin',
@@ -1425,426 +814,540 @@ const SPAM_FILTER_BYPASS_STEPS = [
       const input = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]')
       return input && input.value && input.value.length > 0
     },
-    realTimeValidation: true,
+    waitAfterClick: 1000,
     criticalStep: true
   },
   {
-    id: 5,
-    name: 'rule1_step4_apply_if',
-    title: 'Kural 1: Apply This Rule If',
-    description: 'Scroll down ve "Apply this rule if..." dropdown\'ını açın, "The sender" seçin',
+    id: 7,
+    name: 'spambypass_step7_apply_rule_if',
+    title: 'Apply This Rule If',
+    description: '"Apply this rule if..." kısmını ayarlayın - The sender > IP address seçeneğini tıklayın',
     target: {
-      selector: 'span.ms-Dropdown-title:has-text("Select one")',
+      selector: 'span.ms-Dropdown-title',
+      textMatch: /Select one/i,
       fallback: [
-        '[id*="Dropdown"][id*="-option"]',
-        'button[role="combobox"]:has-text("Select one")',
-        '.ms-Dropdown'
+        'span[id*="Dropdown"][id*="option"]',
+        'button[aria-label*="Apply this rule"]',
+        'button:contains("Apply this rule")',
+        'button[aria-label*="condition"]'
       ]
     },
-    tooltip: 'Apply this rule if dropdown\'ını açın',
-    autoClick: false
-  },
-  {
-    id: 6,
-    name: 'rule1_step5_the_sender',
-    title: 'Kural 1: The Sender',
-    description: '"The sender" seçeneğini seçin',
-    target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-780:has-text("The sender")',
-      fallback: [
-        '[role="option"]:has-text("The sender")',
-        'span:has-text("The sender")'
-      ]
-    },
-    tooltip: 'The sender seçeneğini tıklayın',
+    tooltip: '"Apply this rule if..." dropdown"ını tıklayın',
     autoClick: false,
+    validation: () => {
+      return true
+    },
     waitAfterClick: 1000
   },
   {
-    id: 7,
-    name: 'rule1_step6_ip_dropdown',
-    title: 'Kural 1: IP Address Selection',
-    description: 'İkinci dropdown\'dan "IP address is in any of these ranges or exactly matches" seçin',
-    target: {
-      selector: 'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder:has-text("Select one")',
-      fallback: [
-        '[id*="Dropdown944"]',
-        'button[role="combobox"]'
-      ]
-    },
-    tooltip: 'IP address dropdown\'ını açın',
-    autoClick: false
-  },
-  {
     id: 8,
-    name: 'rule1_step7_ip_option',
-    title: 'Kural 1: IP Address Option',
-    description: '"IP address is in any of these ranges or exactly matches" seçeneğini seçin',
+    name: 'spambypass_step8_select_sender',
+    title: 'The Sender Seçeneği',
+    description: '"The sender" seçeneğini seçin',
     target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-780:has-text("IP address is in any of these ranges")',
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-777',
+      textMatch: /The sender/i,
       fallback: [
-        '[role="option"]:has-text("IP address")',
-        'span:has-text("exactly matches")'
+        'span.ms-Dropdown-optionText:contains("The sender")',
+        'div[role="option"]:contains("The sender")',
+        'button:contains("The sender")'
       ]
     },
-    tooltip: 'IP address seçeneğini tıklayın',
+    tooltip: '"The sender" seçeneğine tıklayın',
     autoClick: false,
-    waitAfterClick: 1500
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 1000
   },
   {
     id: 9,
-    name: 'rule1_step8_enter_ips',
-    title: 'Kural 1: Enter IP Addresses',
-    description: 'IP adreslerini girin (149.72.161.59, 149.72.42.201, 149.72.154.87) ve her birini Add butonuyla ekleyin',
+    name: 'spambypass_step9_open_dropdown',
+    title: 'İkinci Dropdown Açılsın',
+    description: '"Select one" dropdown"ını açın',
+    target: {
+      selector: 'span.ms-Dropdown-titleIsPlaceHolder',
+      textMatch: /Select one/i,
+      fallback: [
+        'span[id*="Dropdown"][id*="option"]',
+        'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder'
+      ]
+    },
+    tooltip: '"Select one" dropdown"ını tıklayın',
+    autoClick: false,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 10,
+    name: 'spambypass_step10_select_ip_range',
+    title: 'IP Address Condition',
+    description: '"IP address is in any of these ranges or exactly matches" seçeneğini seçin',
+    target: {
+      selector: 'span.ms-Dropdown-optionText:contains("IP address is in any of these ranges or exactly matches")',
+      textMatch: /IP address is in any of these ranges/i,
+      fallback: [
+        'span.ms-Dropdown-optionText.dropdownOptionText-777',
+        'span.ms-Dropdown-optionText:contains("IP address")',
+        'div[role="option"]:contains("IP address")',
+        'button:contains("IP address")'
+      ]
+    },
+    tooltip: 'IP address seçeneğine tıklayın',
+    autoClick: false,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 11,
+    name: 'spambypass_step11_enter_ip',
+    title: 'IP Adreslerini Gir',
+    description: 'IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87',
     target: {
       selector: 'input[data-automation-id="SenderIpRanges_Input"]',
       fallback: [
         'input[placeholder*="IPv4 or IPv6"]',
-        'input.ms-TextField-field[type="text"]'
+        'input.ms-BasePicker-input',
+        'textarea.ms-TextField-field',
+        'input[aria-label*="IP"]',
+        'textarea'
       ]
     },
-    tooltip: 'IP adreslerini girin ve Add butonuna basın',
+    tooltip: 'IP adreslerini girin (Her satıra bir IP)',
     autoClick: false,
+    validation: () => {
+      const input = document.querySelector('input[data-automation-id="SenderIpRanges_Input"]')
+      return input && input.value && input.value.length > 0
+    },
     realTimeValidation: true,
-    criticalStep: true
-  },
-  {
-    id: 10,
-    name: 'rule1_step9_do_following',
-    title: 'Kural 1: Do The Following',
-    description: 'Scroll down, "Do the following" dropdown\'ını açın ve "Modify the message properties" seçin',
-    target: {
-      selector: 'span.ms-Dropdown-title:has-text("Select one")',
-      fallback: [
-        '[id*="Dropdown7373"]',
-        'button[role="combobox"]'
-      ]
-    },
-    tooltip: 'Do the following dropdown\'ını açın',
-    autoClick: false
-  },
-  {
-    id: 11,
-    name: 'rule1_step10_modify_props',
-    title: 'Kural 1: Modify Message Properties',
-    description: '"Modify the message properties" seçeneğini seçin',
-    target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-780:has-text("Modify the message properties")',
-      fallback: [
-        '[role="option"]:has-text("Modify")',
-        'span:has-text("message properties")'
-      ]
-    },
-    tooltip: 'Modify the message properties seçeneğini tıklayın',
-    autoClick: false,
-    waitAfterClick: 1000
+    criticalStep: true,
+    waitAfterClick: 500,
+    isLabelStep: false
   },
   {
     id: 12,
-    name: 'rule1_step11_scl',
-    title: 'Kural 1: Set SCL',
-    description: 'İkinci dropdown\'dan "set the spam confidence level (SCL)" seçin',
+    name: 'spambypass_step12_add_ip',
+    title: 'Add IP',
+    description: 'IP adresini eklemek için "Add" tuşuna basın',
     target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-780:has-text("set the spam confidence level")',
+      selector: 'button[aria-label*="Add"]',
+      textMatch: /Add/i,
       fallback: [
-        '[role="option"]:has-text("SCL")',
-        'span:has-text("spam confidence")'
+        'span.ms-Button-label:contains("Add")',
+        'button:contains("Add")',
+        'button[data-automation-id*="Add"]'
       ]
     },
-    tooltip: 'Set the spam confidence level seçeneğini tıklayın',
-    autoClick: false,
+    tooltip: '"Add" tuşuna tıklayın',
+    autoClick: true,
+    validation: () => {
+      return true
+    },
     waitAfterClick: 1000
   },
   {
     id: 13,
-    name: 'rule1_step12_bypass_spam',
-    title: 'Kural 1: Bypass Spam Filtering',
-    description: 'SCL dropdown\'ından "Bypass spam filtering" (-1) seçin',
+    name: 'spambypass_step13_save_ip',
+    title: 'Save IP',
+    description: 'IP adresini kaydetmek için "Save" tuşuna basın',
     target: {
-      selector: 'span.ms-Dropdown-title:has-text("Bypass spam filtering")',
+      selector: 'span.ms-Button-label:contains("Save")',
+      textMatch: /Save/i,
       fallback: [
-        '[id*="Dropdown11599"]',
-        '[role="option"]:has-text("Bypass spam")',
-        'span:has-text("-1")'
+        'button:contains("Save")',
+        'button[data-automation-id*="Save"]'
       ]
     },
-    tooltip: 'Bypass spam filtering seçeneğini tıklayın',
-    autoClick: false,
-    waitAfterClick: 1000
+    tooltip: '"Save" tuşuna tıklayın',
+    autoClick: true,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 1500
   },
   {
     id: 14,
-    name: 'rule1_step13_add_action',
-    title: 'Kural 1: Add Action (+)',
-    description: '"Do the following" yanındaki + butonuna tıklayın (yeni action eklemek için)',
+    name: 'spambypass_step14_do_following',
+    title: 'Do The Following',
+    description: '"Do the following" kısmında Modify the message properties > Set SCL > -1 ve Bypass spam filtering seçeneğini ayarlayın',
     target: {
-      selector: 'button[aria-label*="Add action"]',
+      selector: 'button[aria-label*="Do the following"]',
+      textMatch: /Do the following/i,
       fallback: [
-        'button:has-text("+")',
-        'button.ms-Button--icon:has-text("Add")',
-        'button[data-automation-id*="AddAction"]'
+        'button:contains("Do the following")',
+        'button[aria-label*="action"]'
       ]
     },
-    tooltip: '+ Add action butonuna tıklayın',
+    tooltip: '"Do the following" ayarlarını yapın',
     autoClick: false,
-    waitAfterClick: 1000
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
   },
   {
     id: 15,
-    name: 'rule1_step14_set_header',
-    title: 'Kural 1: Set Message Header',
-    description: '"Modify the message properties" → "set a message header" seçin',
+    name: 'spambypass_step15_message_header',
+    title: 'Message Header Ayarı',
+    description: 'Modify the message properties > set a message header > X-MS-Exchange-Organization-BypassClutter = true seçeneğini ayarlayın',
     target: {
-      selector: 'span:has-text("set a message header")',
+      selector: 'button[aria-label*="message header"]',
+      textMatch: /message header|set a message/i,
       fallback: [
-        '[role="option"]:has-text("message header")',
-        'span.ms-Dropdown-optionText:has-text("header")'
+        'button:contains("message header")',
+        'button[aria-label*="header"]'
       ]
     },
-    tooltip: 'Set a message header seçeneğini tıklayın',
+    tooltip: 'Message header ayarlarını yapın',
     autoClick: false,
-    waitAfterClick: 1500
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
   },
   {
     id: 16,
-    name: 'rule1_step15_header_name',
-    title: 'Kural 1: Header Name',
-    description: 'Header adı olarak "X-MS-Exchange-Organization-BypassClutter" girin',
+    name: 'spambypass_step16_save_final',
+    title: 'Kaydet',
+    description: 'Tüm ayarları kaydedip kuralı oluşturun',
     target: {
-      selector: 'input[placeholder*="Enter"]',
+      selector: 'button[aria-label*="Save"]',
+      textMatch: /Save|Kaydet/i,
       fallback: [
-        'input.ms-TextField-field',
-        'input[type="text"]'
+        'button.ms-Button--primary',
+        'button[type="button"]:contains("Save")'
       ]
     },
-    tooltip: 'Header adını girin: X-MS-Exchange-Organization-BypassClutter',
+    tooltip: 'Kuralı kaydedin',
     autoClick: false,
-    criticalStep: true
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 3000
   },
   {
     id: 17,
-    name: 'rule1_step16_header_value',
-    title: 'Kural 1: Header Value',
-    description: 'Header value olarak "true" girin',
+    name: 'spambypass_summary',
+    title: 'Tamamlandı! ✅',
+    description: 'Spam Filter Bypass kuralı başarıyla oluşturuldu.',
+    isSummary: true
+  }
+]
+
+/* ========== WORKFLOW 5: ATP Link Bypass (SkipSafeLinksProcessing) ========== */
+const ATP_LINK_BYPASS_STEPS = [
+  {
+    id: 1,
+    name: 'atplink_step1_add_rule',
+    title: 'Yeni Kural Ekle',
+    description: 'Exchange Admin Rules sayfasında + Add a rule butonuna tıklayın',
     target: {
-      selector: 'input[placeholder*="value"]',
+      selector: 'button[aria-label*="Add"]',
+      textMatch: /Add a rule/i,
       fallback: [
-        'input.ms-TextField-field:nth-of-type(2)',
-        'input[type="text"]:last-of-type'
+        'button[name*="Add"]',
+        'button:contains("Add a rule")',
+        'button.ms-Button--primary'
       ]
     },
-    tooltip: 'Header value girin: true',
+    tooltip: '+ Add a rule butonuna tıklayın',
     autoClick: false,
-    criticalStep: true
+    validation: () => {
+      return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
+    },
+    waitAfterClick: 3000
   },
   {
-    id: 18,
-    name: 'rule1_step17_save',
-    title: 'Kural 1: Save',
-    description: 'Save butonuna tıklayarak kuralı kaydedin',
+    id: 2,
+    name: 'atplink_step2_rule_name',
+    title: 'Kural İsmi',
+    description: 'Beyaz liste kuralı için bir isim girin (örn: "ATP Link Bypass")',
     target: {
-      selector: 'button.ms-Button.ms-Button--primary:has-text("Save")',
+      selector: 'input[placeholder*="name"]',
       fallback: [
-        'button[type="button"]:has-text("Save")',
+        'input[aria-label*="name"]',
+        'input[aria-label*="Name"]',
+        'input[type="text"]:first-of-type'
+      ]
+    },
+    tooltip: 'Kural adını girin',
+    autoClick: false,
+    validation: () => {
+      const input = document.querySelector('input[placeholder*="name"]') || document.querySelector('input[aria-label*="name"]')
+      return input && input.value && input.value.length > 0
+    },
+    realTimeValidation: true,
+    criticalStep: true,
+    waitAfterClick: 500
+  },
+  {
+    id: 3,
+    name: 'atplink_step3_apply_rule_if',
+    title: 'Apply This Rule If',
+    description: '"Apply this rule if..." > The sender > IP address is in any of these ranges or exactly matches',
+    target: {
+      selector: 'button[aria-label*="Apply this rule"]',
+      textMatch: /Apply this rule if/i,
+      fallback: [
+        'button:contains("Apply this rule")',
+        'button[aria-label*="condition"]'
+      ]
+    },
+    tooltip: '"Apply this rule if..." ayarlarını yapın',
+    autoClick: false,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
+  },
+  {
+    id: 4,
+    name: 'atplink_step4_sender_ip',
+    title: 'Gönderici IP Adresi',
+    description: 'The sender > IP address is seçeneğini ayarlayın ve IP adreslerini girin',
+    target: {
+      selector: 'input.ms-BasePicker-input',
+      fallback: [
+        'textarea.ms-TextField-field',
+        'input[aria-label*="IP"]',
+        'textarea'
+      ]
+    },
+    tooltip: 'IP adreslerini girin (Her satıra bir IP)',
+    autoClick: false,
+    validation: () => {
+      const input = document.querySelector('input.ms-BasePicker-input') || document.querySelector('textarea')
+      return input && input.value && input.value.length > 0
+    },
+    realTimeValidation: true,
+    criticalStep: true,
+    waitAfterClick: 500
+  },
+  {
+    id: 5,
+    name: 'atplink_step5_do_following',
+    title: 'Do The Following',
+    description: '"Do the following" > Modify the message properties > Set a message header',
+    target: {
+      selector: 'button[aria-label*="Do the following"]',
+      textMatch: /Do the following/i,
+      fallback: [
+        'button:contains("Do the following")',
+        'button[aria-label*="action"]'
+      ]
+    },
+    tooltip: '"Do the following" ayarlarını yapın',
+    autoClick: false,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
+  },
+  {
+    id: 6,
+    name: 'atplink_step6_message_header',
+    title: 'Message Header Ayarı',
+    description: 'X-MS-Exchange-Organization-SkipSafeLinksProcessing başlığını girin ve 1 değeriyle kaydedin',
+    target: {
+      selector: 'input[aria-label*="header name"]',
+      fallback: [
+        'input[placeholder*="header"]',
+        'input.ms-TextField-field'
+      ]
+    },
+    tooltip: 'Header name: X-MS-Exchange-Organization-SkipSafeLinksProcessing, Value: 1',
+    autoClick: false,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
+  },
+  {
+    id: 7,
+    name: 'atplink_step7_save',
+    title: 'Kaydet',
+    description: 'Kuralı kaydetmek için Save butonuna tıklayın',
+    target: {
+      selector: 'button[aria-label*="Save"]',
+      textMatch: /Save|Kaydet/i,
+      fallback: [
         'button.ms-Button--primary',
-        'button[aria-label*="Save"]'
+        'button[type="button"]:contains("Save")'
       ]
     },
     tooltip: 'Kuralı kaydedin',
     autoClick: false,
+    validation: () => {
+      return true
+    },
     waitAfterClick: 2000
   },
-  
-  // KURAL 2: Skip Safe Links Processing
   {
-    id: 19,
-    name: 'rule2_step1_add_rule',
-    title: 'Kural 2: Add a Rule',
-    description: 'Rules sayfasında tekrar + Add a rule butonuna tıklayın',
+    id: 7,
+    name: 'atplink_summary',
+    title: 'Tamamlandı! ✅',
+    description: 'ATP Link Bypass (SkipSafeLinksProcessing) kuralı başarıyla oluşturuldu.',
+    isSummary: true
+  }
+]
+
+/* ========== WORKFLOW 6: ATP Attachment Bypass (SkipSafeAttachmentProcessing) ========== */
+const ATP_ATTACHMENT_BYPASS_STEPS = [
+  {
+    id: 1,
+    name: 'atpattach_step1_add_rule',
+    title: 'Yeni Kural Ekle',
+    description: '+ Add a rule butonuna tıklayın',
     target: {
-      selector: 'button[aria-label*="Add a rule"]',
+      selector: 'button[aria-label*="Add"]',
+      textMatch: /Add a rule/i,
       fallback: [
-        'button:has-text("Add a rule")',
-        'button.ms-CommandBarItem-link'
+        'button[name*="Add"]',
+        'button:contains("Add a rule")',
+        'button.ms-Button--primary'
       ]
     },
     tooltip: '+ Add a rule butonuna tıklayın',
     autoClick: false,
-    waitAfterClick: 1500
-  },
-  {
-    id: 20,
-    name: 'rule2_step2_create_new',
-    title: 'Kural 2: Create a New Rule',
-    description: '"Create a new rule" seçeneğine tıklayın',
-    target: {
-      selector: 'span.ms-ContextualMenu-itemText.label-672',
-      fallback: [
-        'span.ms-ContextualMenu-itemText:has-text("Create a new rule")',
-        'button:has-text("Create a new rule")',
-        '[role="menuitem"]:has-text("Create")'
-      ]
+    validation: () => {
+      return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
     },
-    tooltip: 'Create a new rule seçeneğine tıklayın',
-    autoClick: false,
     waitAfterClick: 2000
   },
   {
-    id: 21,
-    name: 'rule2_step3_rule_name',
-    title: 'Kural 2: Rule Name',
-    description: 'Kural için bir isim girin (örn: "Keepnet Skip Safe Links Processing")',
+    id: 2,
+    name: 'atpattach_step2_rule_name',
+    title: 'Kural İsmi',
+    description: 'Beyaz liste kuralı için bir isim girin (örn: "ATP Attachment Bypass")',
     target: {
-      selector: 'input[data-automation-id="EditTransportRule_Name_TextField"]',
+      selector: 'input[placeholder*="name"]',
       fallback: [
-        'input[type="text"][maxlength="64"]',
-        'input.ms-TextField-field'
+        'input[aria-label*="name"]',
+        'input[aria-label*="Name"]',
+        'input[type="text"]:first-of-type'
       ]
     },
     tooltip: 'Kural adını girin',
     autoClick: false,
+    validation: () => {
+      const input = document.querySelector('input[placeholder*="name"]') || document.querySelector('input[aria-label*="name"]')
+      return input && input.value && input.value.length > 0
+    },
     realTimeValidation: true,
-    criticalStep: true
+    criticalStep: true,
+    waitAfterClick: 500
   },
   {
-    id: 22,
-    name: 'rule2_step4_apply_sender_ip',
-    title: 'Kural 2: Apply This Rule If (Sender IP)',
-    description: '"Apply this rule if..." → "The sender" → "IP address is in any of these ranges" seçin ve Keepnet IP\'lerini ekleyin',
-    tooltip: 'Sender IP ayarını yapın (Kural 1 ile aynı)',
-    autoClick: false,
-    criticalStep: true
-  },
-  {
-    id: 23,
-    name: 'rule2_step5_set_header',
-    title: 'Kural 2: Set Message Header',
-    description: '"Do the following" → "Modify the message properties" → "set a message header" seçin. Header: "X-MS-Exchange-Organization-SkipSafeLinksProcessing", Value: "1"',
+    id: 3,
+    name: 'atpattach_step3_apply_rule_if',
+    title: 'Apply This Rule If',
+    description: '"Apply this rule if..." > The sender > IP address is in any of these ranges or exactly matches',
     target: {
-      selector: 'input[placeholder*="Enter"]',
+      selector: 'button[aria-label*="Apply this rule"]',
+      textMatch: /Apply this rule if/i,
       fallback: [
-        'input.ms-TextField-field',
-        'input[type="text"]'
+        'button:contains("Apply this rule")',
+        'button[aria-label*="condition"]'
       ]
     },
-    tooltip: 'Header: X-MS-Exchange-Organization-SkipSafeLinksProcessing = 1',
+    tooltip: '"Apply this rule if..." ayarlarını yapın',
     autoClick: false,
-    criticalStep: true
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
   },
   {
-    id: 24,
-    name: 'rule2_step6_save',
-    title: 'Kural 2: Save',
-    description: 'Save butonuna tıklayarak kuralı kaydedin',
+    id: 4,
+    name: 'atpattach_step4_sender_ip',
+    title: 'Gönderici IP Adresi',
+    description: 'The sender > IP address is seçeneğini ayarlayın ve IP adreslerini girin',
     target: {
-      selector: 'button.ms-Button--primary:has-text("Save")',
+      selector: 'input.ms-BasePicker-input',
       fallback: [
-        'button[type="button"]:has-text("Save")',
-        'button[aria-label*="Save"]'
+        'textarea.ms-TextField-field',
+        'input[aria-label*="IP"]',
+        'textarea'
+      ]
+    },
+    tooltip: 'IP adreslerini girin (Her satıra bir IP)',
+    autoClick: false,
+    validation: () => {
+      const input = document.querySelector('input.ms-BasePicker-input') || document.querySelector('textarea')
+      return input && input.value && input.value.length > 0
+    },
+    realTimeValidation: true,
+    criticalStep: true,
+    waitAfterClick: 500
+  },
+  {
+    id: 5,
+    name: 'atpattach_step5_do_following',
+    title: 'Do The Following',
+    description: '"Do the following" > Modify the message properties > Set a message header',
+    target: {
+      selector: 'button[aria-label*="Do the following"]',
+      textMatch: /Do the following/i,
+      fallback: [
+        'button:contains("Do the following")',
+        'button[aria-label*="action"]'
+      ]
+    },
+    tooltip: '"Do the following" ayarlarını yapın',
+    autoClick: false,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
+  },
+  {
+    id: 6,
+    name: 'atpattach_step6_message_header',
+    title: 'Message Header Ayarı',
+    description: 'X-MS-Exchange-Organization-SkipSafeAttachmentProcessing başlığını girin ve 1 değeriyle kaydedin',
+    target: {
+      selector: 'input[aria-label*="header name"]',
+      fallback: [
+        'input[placeholder*="header"]',
+        'input.ms-TextField-field'
+      ]
+    },
+    tooltip: 'Header name: X-MS-Exchange-Organization-SkipSafeAttachmentProcessing, Value: 1',
+    autoClick: false,
+    validation: () => {
+      return true
+    },
+    waitAfterClick: 2000
+  },
+  {
+    id: 7,
+    name: 'atpattach_step7_save',
+    title: 'Kaydet',
+    description: 'Kuralı kaydetmek için Save butonuna tıklayın',
+    target: {
+      selector: 'button[aria-label*="Save"]',
+      textMatch: /Save|Kaydet/i,
+      fallback: [
+        'button.ms-Button--primary',
+        'button[type="button"]:contains("Save")'
       ]
     },
     tooltip: 'Kuralı kaydedin',
     autoClick: false,
-    waitAfterClick: 2000
-  },
-  
-  // KURAL 3: Skip Safe Attachments Processing
-  {
-    id: 25,
-    name: 'rule3_step1_add_rule',
-    title: 'Kural 3: Add a Rule',
-    description: 'Rules sayfasında tekrar + Add a rule butonuna tıklayın',
-    target: {
-      selector: 'button[aria-label*="Add a rule"]',
-      fallback: [
-        'button:has-text("Add a rule")',
-        'button.ms-CommandBarItem-link'
-      ]
+    validation: () => {
+      return true
     },
-    tooltip: '+ Add a rule butonuna tıklayın',
-    autoClick: false,
-    waitAfterClick: 1500
-  },
-  {
-    id: 26,
-    name: 'rule3_step2_create_new',
-    title: 'Kural 3: Create a New Rule',
-    description: '"Create a new rule" seçeneğine tıklayın',
-    target: {
-      selector: 'span.ms-ContextualMenu-itemText.label-672',
-      fallback: [
-        'span.ms-ContextualMenu-itemText:has-text("Create a new rule")',
-        'button:has-text("Create a new rule")',
-        '[role="menuitem"]:has-text("Create")'
-      ]
-    },
-    tooltip: 'Create a new rule seçeneğine tıklayın',
-    autoClick: false,
     waitAfterClick: 2000
   },
   {
-    id: 27,
-    name: 'rule3_step3_rule_name',
-    title: 'Kural 3: Rule Name',
-    description: 'Kural için bir isim girin (örn: "Keepnet Skip Safe Attachments Processing")',
-    target: {
-      selector: 'input[data-automation-id="EditTransportRule_Name_TextField"]',
-      fallback: [
-        'input[type="text"][maxlength="64"]',
-        'input.ms-TextField-field'
-      ]
-    },
-    tooltip: 'Kural adını girin',
-    autoClick: false,
-    realTimeValidation: true,
-    criticalStep: true
-  },
-  {
-    id: 28,
-    name: 'rule3_step4_apply_sender_ip',
-    title: 'Kural 3: Apply This Rule If (Sender IP)',
-    description: '"Apply this rule if..." → "The sender" → "IP address is in any of these ranges" seçin ve Keepnet IP\'lerini ekleyin',
-    tooltip: 'Sender IP ayarını yapın (Kural 1 ile aynı)',
-    autoClick: false,
-    criticalStep: true
-  },
-  {
-    id: 29,
-    name: 'rule3_step5_set_header',
-    title: 'Kural 3: Set Message Header',
-    description: '"Do the following" → "Modify the message properties" → "set a message header" seçin. Header: "X-MS-Exchange-Organization-SkipSafeAttachmentProcessing", Value: "1"',
-    target: {
-      selector: 'input[placeholder*="Enter"]',
-      fallback: [
-        'input.ms-TextField-field',
-        'input[type="text"]'
-      ]
-    },
-    tooltip: 'Header: X-MS-Exchange-Organization-SkipSafeAttachmentProcessing = 1',
-    autoClick: false,
-    criticalStep: true
-  },
-  {
-    id: 30,
-    name: 'rule3_step6_save',
-    title: 'Kural 3: Save & Complete',
-    description: 'Save butonuna tıklayarak kuralı kaydedin. 3 mail flow kuralı tamamlandı! ✅',
-    target: {
-      selector: 'button.ms-Button--primary:has-text("Save")',
-      fallback: [
-        'button[type="button"]:has-text("Save")',
-        'button[aria-label*="Save"]'
-      ]
-    },
-    tooltip: 'Kuralı kaydedin - Tamamlandı!',
-    autoClick: false,
-    waitAfterClick: 2000
-  },
-  {
-    id: 31,
-    name: 'mailflow_summary',
-    title: 'MAIL FLOW RULES COMPLETED',
-    description: '3 mail flow kuralı başarıyla oluşturuldu: Bypass Spam Filter, Skip Safe Links Processing, Skip Safe Attachments Processing',
+    id: 7,
+    name: 'atpattach_summary',
+    title: '🎊 Tebrikler! Tüm Adımları Tamamladınız!',
+    description: 'ATP Attachment Bypass kuralı başarıyla oluşturuldu. Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!',
     isSummary: true
   }
 ]
@@ -2256,21 +1759,9 @@ class FloatingPanel {
     this.isDragging = false
     this.dragOffset = { x: 0, y: 0 }
     this.position = { x: 20, y: window.innerHeight - PANEL_SIZE.height - 20 } // SOL-ALT
-    this.observer = null
-    this.isMinimized = false
-    this.wasMsFormOpen = false
-    this.originalZIndex = '2147483647'
-    this.savedSize = null
   }
   
   async init() {
-    // Load saved language
-    const savedLang = await Storage.get(STORAGE_KEYS.LANGUAGE)
-    if (savedLang) {
-      LANGUAGE = savedLang
-      console.log("[Keepnet] Loaded language:", LANGUAGE)
-    }
-    
     const savedState = await Storage.get(STORAGE_KEYS.PANEL_STATE)
     if (savedState?.position) {
       this.position = savedState.position
@@ -2279,51 +1770,6 @@ class FloatingPanel {
     this.createPanel()
     this.attachEventListeners()
     this.injectStyles()
-    this.watchForMicrosoftPanels()
-  }
-  
-  watchForMicrosoftPanels() {
-    // Microsoft'un panel/modal'larını izle - sadece bildirim için
-    this.observer = new MutationObserver((mutations) => {
-      const msPanel = document.querySelector('.ms-Panel-main, .ms-Layer--fixed, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
-      const overlay = document.querySelector('.ms-Overlay, .ms-Layer[class*="Overlay"]')
-      
-      if ((msPanel || overlay) && this.container && !this.wasMsFormOpen) {
-        console.log('[Keepnet] Microsoft panel detected - showing notification')
-        this.showMicrosoftPanelWarning()
-        this.wasMsFormOpen = true
-      } else if (!msPanel && !overlay && this.wasMsFormOpen) {
-        console.log('[Keepnet] Microsoft panel closed')
-        this.wasMsFormOpen = false
-      }
-    })
-    
-    this.observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: false
-    })
-  }
-  
-  showMicrosoftPanelWarning() {
-    // Header'da uyarı göster
-    const indicator = document.getElementById('keepnet-step-indicator')
-    if (indicator && !indicator.dataset.warningShown) {
-      const originalText = indicator.textContent
-      indicator.innerHTML = t('formActive')
-      indicator.style.color = '#10b981'
-      indicator.style.fontWeight = '600'
-      indicator.style.letterSpacing = '0.1em'
-      indicator.dataset.warningShown = 'true'
-      
-      setTimeout(() => {
-        indicator.textContent = originalText
-        indicator.style.color = ''
-        indicator.style.fontWeight = ''
-        indicator.style.letterSpacing = ''
-        delete indicator.dataset.warningShown
-      }, 4000)
-    }
   }
   
   createPanel() {
@@ -2337,202 +1783,111 @@ class FloatingPanel {
       left: ${this.position.x}px !important;
       width: ${PANEL_SIZE.width}px !important;
       height: ${PANEL_SIZE.height}px !important;
-      background: linear-gradient(to bottom right, rgba(255,255,255,0.98), rgba(250,250,255,0.95)) !important;
-      backdrop-filter: blur(20px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-radius: 20px !important;
-      box-shadow: 
-        0 20px 60px rgba(99, 102, 241, 0.15),
-        0 8px 24px rgba(139, 92, 246, 0.12),
-        0 4px 12px rgba(0, 0, 0, 0.08),
-        0 0 0 1px rgba(99, 102, 241, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+      background: white !important;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.1) !important;
       z-index: 2147483647 !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
       opacity: 0 !important;
       visibility: visible !important;
       pointer-events: auto !important;
-      transform: translateY(20px) scale(0.96) !important;
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      transform: translateX(100px) scale(0.95) !important;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
     `
     
-    console.log("[Keepnet] Premium panel created at:", this.position)
+    console.log("[Keepnet] Panel created at:", this.position)
     
     // Trigger entrance animation
     requestAnimationFrame(() => {
       this.container.style.opacity = '1'
-      this.container.style.transform = 'translateY(0) scale(1)'
+      this.container.style.transform = 'translateX(0) scale(1)'
     })
     
-    // Header - Premium gradient with modern design
+    // Header
     this.header = document.createElement('div')
     this.header.style.cssText = `
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-      background-size: 200% 200%;
-      animation: keepnet-gradient-shift 8s ease infinite;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      padding: 16px 18px;
+      padding: 12px 14px;
       cursor: move;
       display: flex;
       align-items: center;
       justify-content: space-between;
       user-select: none;
-      position: relative;
-      overflow: hidden;
     `
     
-    // Glassmorphic overlay on header
-    const headerOverlay = document.createElement('div')
-    headerOverlay.style.cssText = `
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-      pointer-events: none;
-    `
-    this.header.appendChild(headerOverlay)
-    
-    this.header.innerHTML += `
-      <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 1;">
-        <div style="
-          background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08));
-          backdrop-filter: blur(10px);
-          border-radius: 10px;
-          padding: 8px 10px;
-          border: 1px solid rgba(255,255,255,0.3);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        ">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L3 7V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V7L12 2Z" 
-                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                  fill="rgba(255,255,255,0.15)"/>
-            <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+    this.header.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="font-size: 16px;">🛡️</div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600;">Keepnet White List</div>
+          <div style="font-size: 11px; opacity: 0.85;" id="keepnet-step-indicator">Adım 0 / ${TOTAL_STEPS}</div>
         </div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; font-weight: 700; letter-spacing: -0.02em; text-shadow: 0 2px 8px rgba(0,0,0,0.15);">${t('brandName')}</div>
-          <div style="font-size: 10px; opacity: 0.85; font-weight: 500; letter-spacing: 0.05em;" id="keepnet-step-indicator">${t('stepOf', {current: 0, total: TOTAL_STEPS})}</div>
       </div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 10px; position: relative; z-index: 1;">
-        <select id="keepnet-language-selector" style="
-          background: rgba(255,255,255,0.15);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255,255,255,0.25);
-          color: white;
-          padding: 6px 10px;
-          border-radius: 8px;
-          font-size: 11px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          letter-spacing: 0.03em;
-        "
-        onmouseover="this.style.background='rgba(255,255,255,0.25)'"
-        onmouseout="this.style.background='rgba(255,255,255,0.15)'">
-          ${Object.entries(TRANSLATIONS).map(([code, data]) => 
-            `<option value="${code}" ${LANGUAGE === code ? 'selected' : ''}>${data.name}</option>`
-          ).join('')}
-        </select>
       <button id="keepnet-close-btn" style="
-        background: rgba(255,255,255,0.15);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.25);
+        background: rgba(255,255,255,0.2);
+        border: none;
         color: white;
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 16px;
         line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        z-index: 1;
-        font-weight: 300;
-      " 
-      onmouseover="this.style.background='rgba(255,255,255,0.25)'; this.style.transform='scale(1.05)'"
-      onmouseout="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='scale(1)'">×</button>
+      ">×</button>
     `
     
-    // Progress bar - Modern with gradient
+    // Progress bar
     const progressBar = document.createElement('div')
     progressBar.style.cssText = `
       width: 100%;
-      height: 4px;
-      background: rgba(255,255,255,0.2);
-      position: relative;
-      overflow: hidden;
+      height: 3px;
+      background: rgba(0,0,0,0.1);
     `
     progressBar.innerHTML = `
       <div id="keepnet-progress-bar" style="
         width: 0%;
         height: 100%;
-        background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
-        box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
-        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-      ">
-        <div style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-          animation: keepnet-shimmer 2.5s infinite;
+        background: #22c55e;
+        transition: width 0.4s ease;
       "></div>
-      </div>
     `
     this.header.appendChild(progressBar)
     
-    // Body - Premium background
+    // Body
     this.body = document.createElement('div')
     this.body.id = 'keepnet-panel-body'
     this.body.style.cssText = `
       flex: 1;
       overflow-y: auto;
-      overflow-x: hidden;
-      padding: 20px;
-      background: linear-gradient(to bottom, #fafafa 0%, #ffffff 100%);
-      position: relative;
+      padding: 16px;
+      background: #f9fafb;
     `
     
-    // Footer - Glass effect
+    // Footer
     this.footer = document.createElement('div')
     this.footer.id = 'keepnet-panel-footer'
     this.footer.style.cssText = `
-      padding: 16px 18px;
-      background: linear-gradient(to right, rgba(255,255,255,0.8), rgba(250,250,255,0.8));
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(99, 102, 241, 0.1);
+      padding: 12px 14px;
+      background: white;
+      border-top: 1px solid #e5e7eb;
       display: flex;
-      gap: 10px;
+      gap: 8px;
       justify-content: space-between;
-      box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
     `
     
     this.footer.innerHTML = `
-      <button id="keepnet-prev-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1; letter-spacing: 0.03em;">
-        ${t('back')}
+      <button id="keepnet-prev-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1;">
+        ← Geri
       </button>
-      <button id="keepnet-next-btn" class="keepnet-btn keepnet-btn-primary" style="flex: 2; letter-spacing: 0.03em;">
-        ${t('continue')}
+      <button id="keepnet-next-btn" class="keepnet-btn keepnet-btn-primary" style="flex: 2;">
+        Devam Et →
       </button>
-      <button id="keepnet-summary-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1; font-size: 11px; letter-spacing: 0.03em;">
-        ${t('summary')}
+      <button id="keepnet-summary-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1; font-size: 11px;" title="Tamamlanmamış adımları atla ve özet rapora git">
+        📊 Özet
       </button>
     `
     
@@ -2540,9 +1895,9 @@ class FloatingPanel {
     this.container.appendChild(this.body)
     this.container.appendChild(this.footer)
     
-    console.log("[Keepnet] Appending premium panel to body...")
+    console.log("[Keepnet] Appending panel to body...")
     document.body.appendChild(this.container)
-    console.log("[Keepnet] Premium panel appended! Visible:", this.container.offsetWidth > 0)
+    console.log("[Keepnet] Panel appended! Visible:", this.container.offsetWidth > 0)
     
     // Force visibility check
     setTimeout(() => {
@@ -2556,21 +1911,9 @@ class FloatingPanel {
   }
   
   attachEventListeners() {
-    // Header click - restore when minimized
-    this.header.addEventListener('click', (e) => {
-      if (e.target.id === 'keepnet-close-btn') return
-      if (this.isMinimized) {
-        this.restore()
-      }
-    })
-    
     // Dragging
     this.header.addEventListener('mousedown', (e) => {
       if (e.target.id === 'keepnet-close-btn') return
-      if (this.isMinimized) return // Don't drag when minimized
-      // Sadece sol tık ile sürükle
-      if (e.button !== 0) return
-      // Form açıkken de sürüklemeye izin ver
       this.isDragging = true
       this.dragOffset = {
         x: e.clientX - this.position.x,
@@ -2606,52 +1949,6 @@ class FloatingPanel {
         this.container.style.display = 'none'
       })
     }
-    
-    // Language selector
-    const langSelector = document.getElementById('keepnet-language-selector')
-    if (langSelector) {
-      langSelector.addEventListener('change', async (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        const newLang = e.target.value
-        console.log("[Keepnet] Language changed to:", newLang)
-        LANGUAGE = newLang
-        await Storage.set(STORAGE_KEYS.LANGUAGE, newLang)
-        // Reload panel content with new language
-        if (window.keepnetAssistant) {
-          window.keepnetAssistant.panel.updateProgress(
-            window.keepnetAssistant.currentStep,
-            window.keepnetAssistant.currentWorkflow.length
-          )
-          const currentStep = window.keepnetAssistant.currentWorkflow[window.keepnetAssistant.currentStep - 1]
-          if (currentStep) {
-            window.keepnetAssistant.panel.setContent(window.keepnetAssistant.renderStepContent(currentStep))
-          }
-        }
-      })
-      
-      // Stop event propagation to prevent dragging when clicking selector
-      langSelector.addEventListener('mousedown', (e) => {
-        e.stopPropagation()
-      })
-    }
-
-    // Panel içindeki HER TÜRLÜ tıklamanın dışarı çıkmamasını sağla
-    // Bu sayede Microsoft overlay tıklama algılamaz ve form kapanmaz
-    if (this.container) {
-      this.container.addEventListener('click', (e) => {
-        e.stopPropagation()
-        console.log('[Keepnet] Click stopped from bubbling to overlay')
-      }, true) // capture: true - en erken yakalama
-      
-      this.container.addEventListener('mousedown', (e) => {
-        e.stopPropagation()
-      }, true)
-      
-      this.container.addEventListener('mouseup', (e) => {
-        e.stopPropagation()
-      }, true)
-    }
   }
   
   updatePosition() {
@@ -2685,8 +1982,7 @@ class FloatingPanel {
     const indicator = document.getElementById('keepnet-step-indicator')
     if (indicator) {
       indicator.style.transition = 'all 0.3s ease'
-      indicator.textContent = t('stepOf', {current, total})
-      indicator.style.fontSize = '10px' // Reset font size
+      indicator.textContent = `Adım ${current} / ${total}`
       AnimationUtils.animate(indicator, 'pulse', 300)
     }
   }
@@ -2752,228 +2048,75 @@ class FloatingPanel {
     })
   }
   
-  minimize() {
-    if (!this.container || this.isMinimized) return
-    
-    console.log('[Keepnet] Minimizing panel...')
-    
-    // Mevcut boyutu kaydet
-    this.savedSize = {
-      width: this.container.style.width || `${PANEL_SIZE.width}px`,
-      height: this.container.style.height || `${PANEL_SIZE.height}px`
-    }
-    
-    // Body ve footer'ı gizle
-    if (this.body) this.body.style.display = 'none'
-    if (this.footer) this.footer.style.display = 'none'
-    
-    // Container'ı küçült
-    this.container.style.width = '240px'
-    this.container.style.height = '56px'
-    this.container.style.borderRadius = '28px'
-    
-    // Header'ı küçült
-    if (this.header) {
-      this.header.style.padding = '12px 20px'
-      const indicator = document.getElementById('keepnet-step-indicator')
-      if (indicator) {
-        indicator.textContent = t('clickToExpand')
-        indicator.style.fontSize = '10px'
-      }
-    }
-    
-    // Sağ-üste taşı
-    this.container.style.right = '20px'
-    this.container.style.left = 'auto'
-    this.container.style.top = '20px'
-    this.container.style.bottom = 'auto'
-    this.container.style.cursor = 'pointer'
-    
-    this.isMinimized = true
-    
-    console.log('[Keepnet] Panel minimized')
-  }
-  
-  restore() {
-    if (!this.container || !this.isMinimized) return
-    
-    console.log('[Keepnet] Restoring panel...')
-    
-    // Body ve footer'ı göster
-    if (this.body) this.body.style.display = 'block'
-    if (this.footer) this.footer.style.display = 'flex'
-    
-    // Boyutu geri yükle
-    if (this.savedSize) {
-      this.container.style.width = this.savedSize.width
-      this.container.style.height = this.savedSize.height
-    } else {
-      this.container.style.width = `${PANEL_SIZE.width}px`
-      this.container.style.height = `${PANEL_SIZE.height}px`
-    }
-    
-    this.container.style.borderRadius = '20px'
-    this.container.style.cursor = 'default'
-    
-    // Header'ı geri yükle
-    if (this.header) {
-      this.header.style.padding = '16px 18px'
-    }
-    
-    // Pozisyonu geri yükle (sol-alt)
-    this.container.style.left = `${this.position.x}px`
-    this.container.style.right = 'auto'
-    this.container.style.top = `${this.position.y}px`
-    this.container.style.bottom = 'auto'
-    
-    this.isMinimized = false
-    
-    // Step indicator'ı geri yükle (KeepnetAssistant bunu güncelleyecek)
-    
-    console.log('[Keepnet] Panel restored')
-  }
-  
   injectStyles() {
     if (document.getElementById('keepnet-styles')) {
-      console.log("[Keepnet] Premium styles already injected")
+      console.log("[Keepnet] Styles already injected")
       return
     }
     
-    console.log("[Keepnet] Injecting premium styles...")
+    console.log("[Keepnet] Injecting styles...")
     const style = document.createElement('style')
     style.id = 'keepnet-styles'
     style.textContent = `
-      /* Premium Button Styles */
       .keepnet-btn {
-        padding: 10px 18px;
-        border-radius: 12px;
+        padding: 8px 14px;
+        border-radius: 6px;
         font-size: 13px;
-        font-weight: 600;
+        font-weight: 500;
         border: none;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.2s;
         font-family: inherit;
-        position: relative;
-        overflow: hidden;
-        letter-spacing: -0.01em;
-      }
-      
-      .keepnet-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-      }
-      
-      .keepnet-btn:hover::before {
-        left: 100%;
       }
       
       .keepnet-btn-primary {
-        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3), 0 2px 4px rgba(139, 92, 246, 0.2);
       }
       
       .keepnet-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4), 0 4px 8px rgba(139, 92, 246, 0.3);
-      }
-      
-      .keepnet-btn-primary:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        opacity: 0.9;
+        transform: translateY(-1px);
       }
       
       .keepnet-btn-secondary {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(250,250,255,0.9));
-        backdrop-filter: blur(10px);
-        color: #4b5563;
-        border: 1.5px solid rgba(99, 102, 241, 0.15);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
       }
       
       .keepnet-btn-secondary:hover {
-        background: linear-gradient(135deg, rgba(255,255,255,1), rgba(248,248,255,1));
-        border-color: rgba(99, 102, 241, 0.3);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        background: #f3f4f6;
       }
       
-      .keepnet-btn-secondary:active {
-        transform: translateY(0);
-        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-      }
-      
-      /* Premium Scrollbar */
       #keepnet-panel-body::-webkit-scrollbar {
-        width: 8px;
-      }
-      
-      #keepnet-panel-body::-webkit-scrollbar-track {
-        background: rgba(99, 102, 241, 0.03);
-        border-radius: 10px;
+        width: 6px;
       }
       
       #keepnet-panel-body::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #c7d2fe, #ddd6fe);
-        border-radius: 10px;
-        border: 2px solid rgba(255,255,255,0.5);
+        background: #cbd5e1;
+        border-radius: 3px;
       }
       
-      #keepnet-panel-body::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #a5b4fc, #c4b5fd);
-      }
-      
-      /* Premium Highlight Effect */
       .keepnet-highlight {
         outline: 4px solid #10b981 !important;
-        outline-offset: 6px !important;
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.08)) !important;
+        outline-offset: 4px !important;
+        background-color: rgba(16, 185, 129, 0.15) !important;
         box-shadow: 
-          0 0 0 8px rgba(16, 185, 129, 0.15),
-          0 0 24px rgba(16, 185, 129, 0.3),
-          0 8px 32px rgba(6, 182, 212, 0.2),
-          inset 0 0 0 1px rgba(255,255,255,0.5) !important;
+          0 0 0 6px rgba(16, 185, 129, 0.3),
+          0 0 20px rgba(16, 185, 129, 0.5),
+          inset 0 0 20px rgba(16, 185, 129, 0.1) !important;
         position: relative !important;
         z-index: 999998 !important;
-        animation: keepnet-pulse-glow 2s ease-in-out infinite !important;
+        animation: keepnet-pulse 2s ease-in-out infinite !important;
         cursor: pointer !important;
         transform: scale(1.02) !important;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        border-radius: 8px !important;
+        transition: all 0.3s ease !important;
       }
       
-      /* Premium Animations */
-      @keyframes keepnet-pulse-glow {
-        0%, 100% { 
-          opacity: 1;
-          box-shadow: 
-            0 0 0 8px rgba(16, 185, 129, 0.15),
-            0 0 24px rgba(16, 185, 129, 0.3),
-            0 8px 32px rgba(6, 182, 212, 0.2);
-        }
-        50% { 
-          opacity: 0.9;
-          box-shadow: 
-            0 0 0 12px rgba(16, 185, 129, 0.2),
-            0 0 32px rgba(16, 185, 129, 0.4),
-            0 12px 40px rgba(6, 182, 212, 0.3);
-        }
-      }
-      
-      @keyframes keepnet-gradient-shift {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-      }
-      
-      @keyframes keepnet-shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(200%); }
+      @keyframes keepnet-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
       }
       
       @keyframes keepnet-bounce {
@@ -2982,83 +2125,47 @@ class FloatingPanel {
           opacity: 1;
         }
         50% { 
-          transform: translateY(-10px); 
-          opacity: 0.9;
+          transform: translateY(-8px); 
+          opacity: 0.8;
         }
       }
       
-      /* Premium Tooltip */
       .keepnet-tooltip {
         position: fixed;
         background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
         color: white;
-        padding: 14px 24px;
-        border-radius: 16px;
-        font-size: 15px;
-        font-weight: 700;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
         pointer-events: none;
         z-index: 1000000;
-        box-shadow: 
-          0 12px 32px rgba(124, 58, 237, 0.4),
-          0 4px 12px rgba(99, 102, 241, 0.3),
-          0 0 0 1px rgba(255,255,255,0.2),
-          inset 0 1px 0 rgba(255,255,255,0.3);
+        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5), 0 0 0 2px rgba(255,255,255,0.8);
         white-space: nowrap;
-        animation: keepnet-tooltip-float 3s ease-in-out infinite;
-        backdrop-filter: blur(20px);
-        letter-spacing: -0.02em;
+        animation: keepnet-tooltip-pulse 2s ease-in-out infinite;
       }
       
       .keepnet-tooltip::before {
-        content: '';
-        display: none;
-        margin-right: 0;
-        font-size: 22px;
-        animation: keepnet-bounce 1.2s ease-in-out infinite;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        content: '→';
+        display: inline-block;
+        margin-right: 8px;
+        font-size: 20px;
+        animation: keepnet-bounce 1s ease-in-out infinite;
       }
       
-      @keyframes keepnet-tooltip-float {
+      @keyframes keepnet-tooltip-pulse {
         0%, 100% { 
-          transform: translateY(0px) scale(1);
-          box-shadow: 
-            0 12px 32px rgba(124, 58, 237, 0.4),
-            0 4px 12px rgba(99, 102, 241, 0.3),
-            0 0 0 1px rgba(255,255,255,0.2);
+          transform: scale(1);
+          box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5), 0 0 0 2px rgba(255,255,255,0.8);
         }
         50% { 
-          transform: translateY(-6px) scale(1.02);
-          box-shadow: 
-            0 16px 40px rgba(124, 58, 237, 0.5),
-            0 8px 16px rgba(99, 102, 241, 0.4),
-            0 0 0 1px rgba(255,255,255,0.3);
+          transform: scale(1.05);
+          box-shadow: 0 12px 32px rgba(124, 58, 237, 0.7), 0 0 0 3px rgba(255,255,255,1);
         }
-      }
-      
-      /* Glass Card Effect */
-      .keepnet-glass-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(250,250,255,0.85));
-        backdrop-filter: blur(20px);
-        border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.3);
-        box-shadow: 
-          0 8px 24px rgba(99, 102, 241, 0.08),
-          0 2px 8px rgba(0,0,0,0.04),
-          inset 0 1px 0 rgba(255,255,255,0.6);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      
-      .keepnet-glass-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 
-          0 12px 32px rgba(99, 102, 241, 0.12),
-          0 4px 12px rgba(0,0,0,0.06),
-          inset 0 1px 0 rgba(255,255,255,0.8);
       }
     `
     
     document.head.appendChild(style)
-    console.log("[Keepnet] Premium styles injected successfully! ✨")
   }
 }
 
@@ -3084,33 +2191,8 @@ class KeepnetAssistant {
       // Hangi workflow'dayız? URL'ye göre belirle
       const currentUrl = window.location.href
       const nextWorkflowName = await Storage.get('keepnet_next_workflow')
-      const fixingWorkflow = await Storage.get('keepnet_fixing_workflow')
       
-      // Git ve Düzelt modundaysak, kaydedilmiş workflow'ı kullan
-      if (fixingWorkflow) {
-        console.log("[Keepnet] 🔧 Git ve Düzelt mode - restoring workflow:", fixingWorkflow)
-        
-        if (fixingWorkflow === 'WORKFLOW_1') {
-          this.currentWorkflow = WORKFLOW_STEPS
-          this.workflowName = 'WORKFLOW_1'
-        } else if (fixingWorkflow === 'WORKFLOW_2') {
-          this.currentWorkflow = THREAT_POLICIES_STEPS
-          this.workflowName = 'WORKFLOW_2'
-        } else if (fixingWorkflow === 'WORKFLOW_3') {
-          this.currentWorkflow = SAFE_LINKS_STEPS
-          this.workflowName = 'WORKFLOW_3'
-        } else if (fixingWorkflow === 'WORKFLOW_4') {
-          this.currentWorkflow = SPAM_FILTER_BYPASS_STEPS
-          this.workflowName = 'WORKFLOW_4'
-        }
-        
-        // Fixing workflow flag'ini temizle
-        await Storage.set('keepnet_fixing_workflow', null)
-        
-        console.log("[Keepnet] ✅ Workflow restored:", this.workflowName)
-      }
-      // Yeni workflow başlatılıyorsa
-      else if (nextWorkflowName) {
+      if (nextWorkflowName) {
         // Yeni workflow başlatılıyor
         console.log("[Keepnet] 🚀 Starting new workflow from storage:", nextWorkflowName)
         
@@ -3123,7 +2205,15 @@ class KeepnetAssistant {
         } else if (nextWorkflowName === 'WORKFLOW_4') {
           this.currentWorkflow = SPAM_FILTER_BYPASS_STEPS
           this.workflowName = 'WORKFLOW_4'
-          console.log("[Keepnet] ✅ WORKFLOW_4 (Mail Flow Rules - 3 Kurallar) selected!")
+          console.log("[Keepnet] ✅ WORKFLOW_4 (Spam Filter Bypass) selected!")
+        } else if (nextWorkflowName === 'WORKFLOW_5') {
+          this.currentWorkflow = ATP_LINK_BYPASS_STEPS
+          this.workflowName = 'WORKFLOW_5'
+          console.log("[Keepnet] ✅ WORKFLOW_5 (ATP Link Bypass) selected!")
+        } else if (nextWorkflowName === 'WORKFLOW_6') {
+          this.currentWorkflow = ATP_ATTACHMENT_BYPASS_STEPS
+          this.workflowName = 'WORKFLOW_6'
+          console.log("[Keepnet] ✅ WORKFLOW_6 (ATP Attachment Bypass) selected!")
         }
         
         // Workflow değiştiği için tüm state'i temizle
@@ -3135,10 +2225,6 @@ class KeepnetAssistant {
         
         // ⚠️ ÖNEMLI: nextWorkflowName varsa, URL kontrolünü ATLAMA!
         // Workflow zaten yukarıda seçildi, URL'ye bakmaya gerek yok
-        
-        // Flag'i temizle - workflow başarıyla seçildi
-        await Storage.set('keepnet_next_workflow', null)
-        console.log("[Keepnet] ✅ Cleared keepnet_next_workflow flag after workflow selection")
       } else {
         // nextWorkflowName YOK, URL'ye göre workflow belirle
         if (currentUrl.includes('/antispam')) {
@@ -3163,24 +2249,6 @@ class KeepnetAssistant {
       
       console.log("[Keepnet] Current workflow:", this.workflowName)
       
-      // "Git ve Düzelt" modu kontrolü
-      const fixingStep = await Storage.get('keepnet_fixing_step')
-      if (fixingStep) {
-        console.log("[Keepnet] 🔧 Git ve Düzelt mode detected! Jumping to step:", fixingStep)
-        
-        // Flag'i temizle
-        await Storage.set('keepnet_fixing_step', null)
-        
-        // O adıma git
-        this.currentStep = fixingStep
-        await Storage.set(STORAGE_KEYS.CURRENT_STEP, fixingStep)
-        
-        console.log("[Keepnet] 🎯 Executing step", fixingStep, "for fixing...")
-        
-        // Components initialize ettikten sonra step'ı çalıştıracağız
-        // Aşağıda continue edeceğiz
-      } else {
-      
       // Load saved progress (ama sadece yeni workflow değilse)
       if (!nextWorkflowName) {
       const saved = await Storage.get(STORAGE_KEYS.CURRENT_STEP)
@@ -3201,7 +2269,6 @@ class KeepnetAssistant {
         this.currentStep = 1
         console.log("[Keepnet] 🆕 New workflow, starting from step 1")
       }
-      } // Git ve Düzelt kontrolünün sonu
       
       // Initialize components
       this.panel = new FloatingPanel()
@@ -3217,6 +2284,25 @@ class KeepnetAssistant {
       
       // Global fonksiyonları tanımla (summary ekranı için)
       this.setupGlobalFunctions()
+      
+      // ✅ YENİ: "Git ve Düzelt" modunu kontrol et
+      const fixingStep = await Storage.get('keepnet_fixing_step')
+      if (fixingStep) {
+        console.log("[Keepnet] 🔧 Fixing mode detected! Going to step:", fixingStep)
+        
+        // Fixing flag'ini temizle
+        await Storage.set('keepnet_fixing_step', null)
+        
+        // Footer'ı göster
+        const footer = document.getElementById('keepnet-panel-footer')
+        if (footer) {
+          footer.style.display = 'flex'
+        }
+        
+        // Direkt adıma git
+        await this.executeStep(fixingStep)
+        return
+      }
       
       // Start first step (navigation step ise 2. adımdan başla)
       const firstStep = this.currentWorkflow[this.currentStep - 1]
@@ -3246,39 +2332,75 @@ class KeepnetAssistant {
     // Global function - Sonraki workflow'a git
     window.keepnetContinueWorkflow = async () => {
       console.log("[Keepnet] keepnetContinueWorkflow() called!")
-      console.log("[Keepnet] Continuing to next workflow...")
       console.log("[Keepnet] Current workflow:", assistant.workflowName)
       
       try {
-        // Hangi workflow'a geçeceğiz?
         let nextWorkflow = null
         let nextWorkflowName = ''
         
+        console.log("[Keepnet] 🔍 Determining next workflow from:", assistant.workflowName)
+        
+        // ✅ DOĞRU SIRALAMA
         if (assistant.workflowName === 'WORKFLOW_1') {
-          console.log("[Keepnet] Starting WORKFLOW_2 (THREAT_POLICIES_STEPS)...")
+          console.log("[Keepnet] Starting WORKFLOW_2...")
           nextWorkflow = THREAT_POLICIES_STEPS
           nextWorkflowName = 'WORKFLOW_2'
+          
         } else if (assistant.workflowName === 'WORKFLOW_2') {
-          console.log("[Keepnet] Starting WORKFLOW_3 (SAFE_LINKS_STEPS)...")
+          console.log("[Keepnet] Starting WORKFLOW_3...")
           nextWorkflow = SAFE_LINKS_STEPS
           nextWorkflowName = 'WORKFLOW_3'
+          
         } else if (assistant.workflowName === 'WORKFLOW_3') {
-          console.log("[Keepnet] Starting WORKFLOW_4 (SPAM_FILTER_BYPASS_STEPS)...")
+          console.log("[Keepnet] Starting WORKFLOW_4...")
           nextWorkflow = SPAM_FILTER_BYPASS_STEPS
           nextWorkflowName = 'WORKFLOW_4'
+          
         } else if (assistant.workflowName === 'WORKFLOW_4') {
+          console.log("[Keepnet] Starting WORKFLOW_5...")
+          nextWorkflow = ATP_LINK_BYPASS_STEPS
+          nextWorkflowName = 'WORKFLOW_5'
+          
+        } else if (assistant.workflowName === 'WORKFLOW_5') {
+          // 🎯 WORKFLOW_5 -> WORKFLOW_6 AYNI SAYFADA!
+          console.log("[Keepnet] Starting WORKFLOW_6 on SAME PAGE...")
+          nextWorkflow = ATP_ATTACHMENT_BYPASS_STEPS
+          nextWorkflowName = 'WORKFLOW_6'
+          
+          // ⚡ ÖNEMLI: Aynı sayfada workflow değiştir!
+          assistant.currentWorkflow = nextWorkflow
+          assistant.workflowName = nextWorkflowName
+          assistant.currentStep = 0
+          assistant.stepResults = {}
+          
+          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0)
+          await Storage.set(STORAGE_KEYS.STEP_RESULTS, {})
+          await Storage.set('keepnet_next_workflow', null)
+          
+          // Footer'ı göster
+          const footer = document.getElementById('keepnet-panel-footer')
+          if (footer) {
+            footer.style.display = 'flex'
+          }
+          
+          console.log("[Keepnet] 🚀 Starting WORKFLOW_6 Step 1...")
+          await assistant.executeStep(1)
+          console.log("[Keepnet] ✅ WORKFLOW_6 started!")
+          return // 🛑 Burada return et, sayfa değiştirme!
+          
+        } else if (assistant.workflowName === 'WORKFLOW_6') {
           console.log("[Keepnet] 🎉 All workflows completed!")
-          assistant.panel?.showSuccess(t('allWorkflowsCompleted'))
+          assistant.panel?.showSuccess('✅ Tüm workflow\'lar tamamlandı!')
           return
         }
         
-        // ❌ Diğer workflow'lar için normal akış
+        // ❌ WORKFLOW_5 değilse, diğer workflow'lar için normal akış
         if (!nextWorkflow) {
           console.error("[Keepnet] No next workflow found!")
           return
         }
         
-        // Step results temizle
+        // Step results'ı temizle
         assistant.stepResults = {}
         await Storage.set(STORAGE_KEYS.STEP_RESULTS, {})
         
@@ -3289,7 +2411,6 @@ class KeepnetAssistant {
         const firstStep = nextWorkflow[0]
         
         if (firstStep.isNavigation && firstStep.navigate) {
-          // Navigation adımı var - sayfaya git
           console.log("[Keepnet] First step is navigation, going to:", firstStep.navigate)
           
           await Storage.set(STORAGE_KEYS.CURRENT_STEP, 1)
@@ -3297,11 +2418,15 @@ class KeepnetAssistant {
           const currentUrl = window.location.href
           const targetUrl = firstStep.navigate
           
+          console.log("[Keepnet] Current URL:", currentUrl)
+          console.log("[Keepnet] Target URL:", targetUrl)
+          
+          // Farklı sayfaya git
           console.log("[Keepnet] Navigating to:", targetUrl)
           window.location.href = targetUrl
           
         } else {
-          // Navigation yok - aynı sayfada devam
+          // Navigation yoksa aynı sayfada devam et
           console.log("[Keepnet] No navigation step, starting on same page...")
           
           const footer = document.getElementById('keepnet-panel-footer')
@@ -3321,103 +2446,98 @@ class KeepnetAssistant {
         
       } catch (error) {
         console.error("[Keepnet] Error continuing workflow:", error)
-        assistant.panel?.showError(`Error: ${error.message}`)
+        assistant.panel?.showError(`❌ Hata: ${error.message}`)
       }
     }
     
-    // Global function - Git ve Düzelt için
-    window.keepnetGoToStep = async (stepId) => {
-      console.log(`[Keepnet] Git ve Düzelt clicked for step ${stepId}`)
-      console.log(`[Keepnet] Current workflow: ${assistant.workflowName}`)
+    // ✅ YENİ: Akıllı "Git ve Düzelt" sistemi
+    window.keepnetGoToStep = async (stepId, workflowName) => {
+      console.log(`[Keepnet] Git ve Düzelt: Step ${stepId}, Workflow: ${workflowName}`)
       
-      // Hangi workflow'dayız ve hangi adıma gitmek istiyoruz?
-      const currentWorkflow = assistant.currentWorkflow
-      const step = currentWorkflow[stepId - 1]
+      // Hangi workflow'dayız?
+      const targetWorkflow = workflowName || assistant.workflowName
       
-      if (!step) {
-        console.error(`[Keepnet] Step ${stepId} not found in current workflow`)
+      // Workflow'a göre steps array'ini al
+      let stepsArray = null
+      let baseUrl = ''
+      
+      switch (targetWorkflow) {
+        case 'WORKFLOW_1':
+          stepsArray = WORKFLOW_STEPS
+          baseUrl = 'https://security.microsoft.com'
+          break
+        case 'WORKFLOW_2':
+          stepsArray = THREAT_POLICIES_STEPS
+          baseUrl = 'https://security.microsoft.com/antispam'
+          break
+        case 'WORKFLOW_3':
+          stepsArray = SAFE_LINKS_STEPS
+          baseUrl = 'https://security.microsoft.com/threatpolicy'
+          break
+        case 'WORKFLOW_4':
+          stepsArray = SPAM_FILTER_BYPASS_STEPS
+          baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
+          break
+        case 'WORKFLOW_5':
+          stepsArray = ATP_LINK_BYPASS_STEPS
+          baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
+          break
+        case 'WORKFLOW_6':
+          stepsArray = ATP_ATTACHMENT_BYPASS_STEPS
+          baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
+          break
+      }
+      
+      if (!stepsArray) {
+        console.error("[Keepnet] Unknown workflow:", targetWorkflow)
+        alert('Bilinmeyen workflow!')
         return
       }
       
-      console.log(`[Keepnet] Target step:`, step.name, step.title)
-      
-      // Adımın URL'sini belirle
-      let targetUrl = null
-      
-      // WORKFLOW_1: Third-Party Phishing Simulations
-      if (assistant.workflowName === 'WORKFLOW_1') {
-        if (stepId <= 2) {
-          targetUrl = 'https://security.microsoft.com/homepage'
-        } else if (stepId === 3) {
-          targetUrl = 'https://security.microsoft.com/securitypoliciesandrules'
-        } else if (stepId === 4) {
-          targetUrl = 'https://security.microsoft.com/threatpolicy'
-        } else if (stepId >= 5) {
-          targetUrl = 'https://security.microsoft.com/advanceddelivery'
-        }
-      }
-      // WORKFLOW_2: Anti-Spam
-      else if (assistant.workflowName === 'WORKFLOW_2') {
-        if (stepId === 1) {
-          targetUrl = 'https://security.microsoft.com/antispam'
-        } else {
-          targetUrl = 'https://security.microsoft.com/antispam'
-        }
-      }
-      // WORKFLOW_3: Safe Links
-      else if (assistant.workflowName === 'WORKFLOW_3') {
-        if (stepId <= 3) {
-          targetUrl = 'https://security.microsoft.com/threatpolicy'
-        } else {
-          targetUrl = 'https://security.microsoft.com/safelinksv2'
-        }
-      }
-      // WORKFLOW_4: Spam Filter Bypass
-      else if (assistant.workflowName === 'WORKFLOW_4') {
-        targetUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
-      }
-      // WORKFLOW_5: ATP Link Bypass
-      else if (assistant.workflowName === 'WORKFLOW_5') {
-        targetUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
-      }
-      // WORKFLOW_6: ATP Attachment Bypass
-      else if (assistant.workflowName === 'WORKFLOW_6') {
-        targetUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
-      }
-      
-      if (!targetUrl) {
-        console.error(`[Keepnet] No URL mapping for workflow ${assistant.workflowName}, step ${stepId}`)
-        // Fallback - direkt adımı çalıştır
-        assistant.executeStep(stepId)
+      // Target step'i bul
+      const targetStep = stepsArray[stepId - 1]
+      if (!targetStep) {
+        console.error("[Keepnet] Step not found:", stepId)
+        alert('Adım bulunamadı!')
         return
       }
       
+      // Step'in navigate URL'i var mı?
+      const targetUrl = targetStep.navigate || baseUrl
       const currentUrl = window.location.href
-      console.log(`[Keepnet] Current URL: ${currentUrl}`)
+      
       console.log(`[Keepnet] Target URL: ${targetUrl}`)
+      console.log(`[Keepnet] Current URL: ${currentUrl}`)
       
-      // Farklı sayfadaysak, önce doğru sayfaya git
-      const currentBase = currentUrl.split('?')[0].split('#')[0]
-      const targetBase = targetUrl.split('?')[0].split('#')[0]
-      
-      if (!currentBase.includes(targetBase.replace('https://', ''))) {
-        console.log(`[Keepnet] 🚀 Git ve Düzelt: Navigating to ${targetUrl}`)
-        
-        // "Git ve Düzelt" modunu işaretle
+      // Workflow değiştiriyorsak, önce workflow'u kaydet
+      if (targetWorkflow !== assistant.workflowName) {
+        console.log(`[Keepnet] Switching from ${assistant.workflowName} to ${targetWorkflow}`)
+        await Storage.set('keepnet_next_workflow', targetWorkflow)
         await Storage.set('keepnet_fixing_step', stepId)
-        await Storage.set('keepnet_fixing_workflow', assistant.workflowName)
-        // Step'i kaydet
-        await Storage.set(STORAGE_KEYS.CURRENT_STEP, stepId)
-        
-        // Sayfayı değiştir
-        window.location.href = targetUrl
-        return
+      } else {
+        // Aynı workflow içinde adım değiştirme
+        await Storage.set('keepnet_fixing_step', stepId)
       }
       
-      // Aynı sayfadayız, direkt adıma geç
-      console.log(`[Keepnet] ✅ Already on correct page, executing step ${stepId}`)
+      // Step'i kaydet
       await Storage.set(STORAGE_KEYS.CURRENT_STEP, stepId)
-      assistant.executeStep(stepId)
+      
+      // Farklı sayfadaysak yönlendir
+      if (!currentUrl.startsWith(targetUrl.split('?')[0].split('#')[0])) {
+        console.log(`[Keepnet] Git ve Düzelt: Navigating to ${targetUrl}`)
+        window.location.href = targetUrl
+      } else {
+        // Aynı sayfadaysak direkt adıma geç
+        console.log(`[Keepnet] Git ve Düzelt: Same page, executing step ${stepId}`)
+        
+        // Workflow değiştiyse güncelle
+        if (targetWorkflow !== assistant.workflowName) {
+          assistant.currentWorkflow = stepsArray
+          assistant.workflowName = targetWorkflow
+        }
+        
+        await assistant.executeStep(stepId)
+      }
     }
     
     console.log("[Keepnet] Global functions registered")
@@ -3434,7 +2554,6 @@ class KeepnetAssistant {
         nextBtn.onclick = (e) => {
           e.preventDefault()
           e.stopPropagation()
-          e.stopImmediatePropagation() // Microsoft overlay'e ulaşmasın
           console.log("[Keepnet] Next button clicked")
           this.nextStep()
         }
@@ -3482,12 +2601,6 @@ class KeepnetAssistant {
       
       console.log(`[Keepnet] Executing step ${stepNum}: ${step.title}`)
       
-      // Microsoft formu açıksa uyarı ver
-      const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
-      if (msPanel) {
-        console.log('[Keepnet] ⚠️ Microsoft form açık - Dikkatli çalışılıyor (DOM manipülasyonu minimize)')
-      }
-      
       this.currentStep = stepNum
       await Storage.set(STORAGE_KEYS.CURRENT_STEP, stepNum)
       
@@ -3501,7 +2614,7 @@ class KeepnetAssistant {
         footer.style.display = 'flex'
       }
       
-      // Clear previous highlights (form açıksa atlanıyor)
+      // Clear previous highlights
       this.clearHighlight()
       
       // Summary step?
@@ -3515,17 +2628,7 @@ class KeepnetAssistant {
       
       // Navigate if needed - AMA sadece navigation step DEĞİLSE otomatik git
       // Navigation step ise butonu göster, kullanıcı bassın
-      // UYARI: Microsoft formu açıksa ASLA navigate YAPMA!
       if (step.navigate && !step.isNavigation) {
-        // Microsoft formu açık mı kontrol et
-        const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
-        
-        if (msPanel) {
-          console.log(`[Keepnet] ⚠️ Microsoft form açık - Navigation iptal edildi! Form doldurun ve Continue'a basın.`)
-          // Form açıksa navigate YAPMA, kullanıcı formu kapatınca devam eder
-          return
-        }
-        
         const currentUrl = window.location.href
         const targetUrl = step.navigate
         
@@ -3573,7 +2676,7 @@ class KeepnetAssistant {
           }, { once: true })
         } else {
           console.warn("[Keepnet] Element not found:", step.title)
-          this.panel.showError(t('elementNotFound', { title: step.title }))
+          this.panel.showError(`⚠️ Element bulunamadı: ${step.title}\n\nLütfen manuel olarak devam edin.`)
         }
       }
       
@@ -3588,46 +2691,20 @@ class KeepnetAssistant {
       }
     } catch (error) {
       console.error("[Keepnet] executeStep error:", error)
-      this.panel?.showError(`Error: ${error.message}`)
+      this.panel?.showError(`❌ Hata: ${error.message}`)
     }
   }
   
   renderStepContent(step) {
-    // Try to translate step title and description
-    const titleKey = step.name ? `${step.name}_title` : null
-    const descKey = step.name ? `${step.name}_desc` : null
-    
-    const title = titleKey && TRANSLATIONS[LANGUAGE]?.[titleKey] ? t(titleKey) : step.title
-    const description = descKey && TRANSLATIONS[LANGUAGE]?.[descKey] ? t(descKey) : step.description
-    
     let html = `
       <div class="keepnet-step-content">
         <h3 style="margin: 0 0 8px 0; font-size: 15px; color: #111827;">
-          ${titleKey ? (TRANSLATIONS[LANGUAGE]?.[titleKey] || t(titleKey)) : title}
+          ${step.title}
         </h3>
         <p style="margin: 0 0 12px 0; font-size: 13px; color: #6b7280; line-height: 1.5;">
-          ${descKey ? (TRANSLATIONS[LANGUAGE]?.[descKey] || t(descKey)) : description}
+          ${step.description}
         </p>
     `
-    
-    // Mail Flow Rules workflow'ları için özel uyarı (WORKFLOW_4, 5, 6)
-    if (this.workflowName === 'WORKFLOW_4' || this.workflowName === 'WORKFLOW_5' || this.workflowName === 'WORKFLOW_6') {
-      html += `
-        <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(245, 158, 11, 0.08)); border: 1.5px solid rgba(245, 158, 11, 0.3); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
-          <div style="display: flex; align-items: start; gap: 12px;">
-            <div style="width: 4px; height: 100%; background: linear-gradient(180deg, #f59e0b, #d97706); border-radius: 2px; align-self: stretch;"></div>
-            <div style="flex: 1;">
-              <div style="font-size: 12px; font-weight: 700; color: #d97706; margin-bottom: 6px; letter-spacing: 0.03em; text-transform: uppercase;">
-                ${t('importantNotice')}
-              </div>
-              <div style="font-size: 11px; color: #92400e; line-height: 1.6;">
-                ${t('overlayWarning')}
-              </div>
-            </div>
-          </div>
-        </div>
-      `
-    }
     
     // Navigation step için "Sayfaya Git" butonu
     if (step.isNavigation && step.navigate) {
@@ -3709,7 +2786,7 @@ class KeepnetAssistant {
             box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 8px rgba(124, 58, 237, 0.5)'"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(124, 58, 237, 0.3)'">
-            ${t('copyAllIPs')}
+            📋 Tümünü Kopyala
           </button>
         </div>
       `
@@ -3768,17 +2845,17 @@ class KeepnetAssistant {
           copyBtn.addEventListener('click', () => {
             const ips = '149.72.161.59\n149.72.42.201\n149.72.154.87'
             navigator.clipboard.writeText(ips).then(() => {
-              copyBtn.textContent = t('copied')
-              copyBtn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)'
+              copyBtn.textContent = '✅ Kopyalandı!'
+              copyBtn.style.background = 'linear-gradient(135deg, #5b21b6 0%, #4c1d95 100%)'
               setTimeout(() => {
-                copyBtn.textContent = t('copyAllIPs')
+                copyBtn.textContent = '📋 Tümünü Kopyala'
                 copyBtn.style.background = 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)'
               }, 2000)
             }).catch(err => {
               console.error('[Keepnet] Clipboard error:', err)
-              copyBtn.textContent = t('error')
+              copyBtn.textContent = '❌ Hata'
               setTimeout(() => {
-                copyBtn.textContent = t('copyAllIPs')
+                copyBtn.textContent = '📋 Tümünü Kopyala'
               }, 2000)
             })
           })
@@ -3832,15 +2909,6 @@ class KeepnetAssistant {
   }
   
   clearHighlight() {
-    // Microsoft formu açıksa DOM'a DOKUNMA
-    const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
-    if (msPanel) {
-      console.log('[Keepnet] Microsoft form açık - highlight temizlenmiyor (DOM korunuyor)')
-      this.autoClick.stop()
-      this.stopRealTimeValidation()
-      return
-    }
-    
     if (this.highlightedElement) {
       AnimationUtils.removeHighlight(this.highlightedElement)
       this.highlightedElement = null
@@ -3929,22 +2997,12 @@ class KeepnetAssistant {
     
     // OTOMATIK SONRAKI ADIMA GEÇ - Sadece valid ise!
     if (isValid) {
-      // Microsoft formu açıksa 10 saniye bekle, sonra otomatik geç
-      const msPanel = document.querySelector('.ms-Panel-main, .ms-Dialog-main, [role="dialog"][class*="ms-"]')
-      if (msPanel) {
-        console.log(`[Keepnet] ⏳ Microsoft form açık - 10 saniye beklenecek, sonra otomatik geçilecek...`)
-        this.panel.showSuccess('⏳ Form doldurun - 10 saniye sonra otomatik devam edilecek')
-        await Utils.sleep(10000)
-        console.log(`[Keepnet] ✅ 10 saniye beklendi, sonraki adıma geçiliyor...`)
-      } else {
-        await Utils.sleep(10000) // Her step için 10 saniye bekle
-        console.log(`[Keepnet] ⏳ 10 saniye beklendi, sonraki adıma geçiliyor...`)
-      }
       console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
+      await Utils.sleep(500)
       await this.nextStep()
     } else if (step.criticalStep) {
       // Kritik adımda validation başarısızsa uyar
-      this.panel.showError(t('pleaseComplete', { title: step.title }))
+      this.panel.showError(`❌ Lütfen ${step.title} alanını doldurun!`)
     } else {
       // Kritik olmayan adımda da geç
       await Utils.sleep(500)
@@ -3981,9 +3039,9 @@ class KeepnetAssistant {
         const missing = requiredIPs.filter(ip => !text.includes(ip))
         
         if (missing.length > 0) {
-          this.panel.showError(t('missingIPs', { ips: missing.join(', ') }))
+          this.panel.showError(`❌ IP girmeyi unuttunuz: ${missing.join(', ')}`)
         } else {
-          this.panel.showSuccess(t('allIPsAdded', { count: found.length }))
+          this.panel.showSuccess(`✅ Tüm IP'ler eklendi! (${found.length}/3)`)
         }
       }
     }, VALIDATION_INTERVAL)
@@ -4044,7 +3102,7 @@ class KeepnetAssistant {
       await Utils.sleep(500)
     }
     
-    this.panel.showSuccess(t('ipsAutoAdded'))
+    this.panel.showSuccess('✅ IP\'ler otomatik eklendi!')
   }
   
   async captureScreenshot(step, isValid) {
@@ -4067,7 +3125,7 @@ class KeepnetAssistant {
       if (!isValid && currentStepConfig.criticalStep) {
         // Kritik adım tamamlanmamış - sadece uyarı göster
         console.warn("[Keepnet] Critical step not completed, but continuing anyway")
-        this.panel.showError(`Step incomplete but continuing...`)
+        this.panel.showError(`⚠️ Bu adım tamamlanmamış ama devam ediliyor...`)
       }
     }
     
@@ -4103,8 +3161,8 @@ class KeepnetAssistant {
     
     let html = `
       <div class="keepnet-summary">
-        <h2 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 700; color: #111827; letter-spacing: -0.02em; text-transform: uppercase;">
-          ${t('summaryReport', {workflow: this.workflowName})}
+        <h2 style="margin: 0 0 16px 0; font-size: 16px; color: #111827;">
+          📊 Özet Rapor - ${this.workflowName}
         </h2>
         <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
     `
@@ -4114,14 +3172,10 @@ class KeepnetAssistant {
     
     for (let i = 0; i < stepsToShow.length; i++) {
       const step = stepsToShow[i]
-      const stepIndex = i + 1  // Step index (1-based)
       const result = this.stepResults[step.id]
       const screenshot = screenshots[step.name]
       
-      const status = result?.valid ? 
-        '<span style="color: #10b981; font-weight: 600;">✓</span>' : 
-        (result ? '<span style="color: #ef4444; font-weight: 600;">✗</span>' : 
-        '<span style="color: #94a3b8; font-weight: 600;">○</span>')
+      const status = result?.valid ? '✅' : (result ? '❌' : '⏳')
       
       html += `
         <div style="display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f3f4f6;">
@@ -4133,15 +3187,19 @@ class KeepnetAssistant {
             ${screenshot ? `<div style="font-size: 11px; color: #6b7280;">Screenshot: ${step.name}.png</div>` : ''}
           </div>
           ${!result?.valid ? `
-            <button class="keepnet-goto-step-btn" data-step-id="${stepIndex}" style="
-              padding: 4px 8px;
-              font-size: 11px;
-              background: #667eea;
-              color: white;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-            ">${LANGUAGE.startsWith('tr') ? 'Git ve Düzelt' : (LANGUAGE.startsWith('de') ? 'Gehe und behebe' : (LANGUAGE.startsWith('fr') ? 'Aller et corriger' : 'Go & Fix'))}</button>
+            <button 
+              class="keepnet-goto-step-btn" 
+              data-step-id="${step.id}" 
+              data-workflow="${this.workflowName}"
+              style="
+                padding: 4px 8px;
+                font-size: 11px;
+                background: #667eea;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+              ">Git ve Düzelt</button>
           ` : ''}
         </div>
       `
@@ -4150,7 +3208,7 @@ class KeepnetAssistant {
     html += `
         </div>
         <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px; font-size: 12px; color: #1e40af;">
-          ${LANGUAGE.startsWith('tr') ? "Tüm ekran görüntüleri chrome.storage'a kaydedildi" : (LANGUAGE.startsWith('de') ? 'Alle Screenshots wurden in chrome.storage gespeichert' : (LANGUAGE.startsWith('fr') ? 'Toutes les captures sont enregistrées dans chrome.storage' : 'All screenshots have been saved to chrome.storage'))}
+          💾 Tüm screenshot'lar chrome.storage'da kaydedildi
         </div>
     `
     
@@ -4166,14 +3224,17 @@ class KeepnetAssistant {
           text-align: center;
           box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
         ">
-          <div style="font-size: 16px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 16px; text-transform: uppercase;">
-            ${t('configCompleted')}
+          <div style="font-size: 48px; margin-bottom: 12px;">🎊</div>
+          <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">
+            Tebrikler! Tüm Adımları Tamamladınız!
           </div>
-          <div style="font-size: 13px; line-height: 1.7; opacity: 0.95;">
-            ${t('configDescription')}
+          <div style="font-size: 13px; line-height: 1.6; opacity: 0.95;">
+            Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve<br>
+            güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini<br>
+            başarıyla yapılandırdınız!
           </div>
-          <div style="font-size: 13px; font-weight: 600; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.3); opacity: 0.9; letter-spacing: 0.03em;">
-            ${t('allStepsSuccessful', {count: 4})}
+          <div style="font-size: 14px; font-weight: 600; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.3);">
+            ✅ 6 Workflow Tamamlandı • 62 Adım Başarılı • 🎉
           </div>
         </div>
       `
@@ -4183,21 +3244,29 @@ class KeepnetAssistant {
     let nextWorkflowText = ''
     let hasNextWorkflow = false
     
+    console.log("[Keepnet] 🔍 Summary step - Current workflowName:", this.workflowName)
+    
     if (this.workflowName === 'WORKFLOW_1') {
-      nextWorkflowText = t('continueToWorkflow', { number: 2, name: TRANSLATIONS[LANGUAGE]?.workflow2 || 'Anti-Spam' })
+      nextWorkflowText = 'Devam Et (Workflow 2: Anti-Spam)'
       hasNextWorkflow = true
     } else if (this.workflowName === 'WORKFLOW_2') {
-      nextWorkflowText = t('continueToWorkflow', { number: 3, name: TRANSLATIONS[LANGUAGE]?.workflow3 || 'Safe Links' })
+      nextWorkflowText = 'Devam Et (Workflow 3: Safe Links)'
       hasNextWorkflow = true
     } else if (this.workflowName === 'WORKFLOW_3') {
-      nextWorkflowText = t('continueToWorkflow', { number: 4, name: TRANSLATIONS[LANGUAGE]?.workflow4 || 'Mail Flow Rules' })
+      nextWorkflowText = 'Devam Et (Workflow 4: Spam Filter Bypass)'
       hasNextWorkflow = true
     } else if (this.workflowName === 'WORKFLOW_4') {
-      // SON WORKFLOW! Artık devam yok!
-      nextWorkflowText = t('allWorkflowsCompleted')
+      nextWorkflowText = 'Devam Et (Workflow 5: ATP Link Bypass)'
+      hasNextWorkflow = true
+    } else if (this.workflowName === 'WORKFLOW_5') {
+      nextWorkflowText = 'Devam Et (Workflow 6: ATP Attachment Bypass)'
+      hasNextWorkflow = true
+      console.log("[Keepnet] ✅ WORKFLOW_5 summary - hasNextWorkflow:", hasNextWorkflow, "nextWorkflowText:", nextWorkflowText)
+    } else if (this.workflowName === 'WORKFLOW_6') {
+      nextWorkflowText = '🎊 Tebrikler! Tüm Workflow\'lar Tamamlandı'
       hasNextWorkflow = false
     } else {
-      nextWorkflowText = t('allWorkflowsCompleted')
+      nextWorkflowText = '✅ Tüm Workflow\'lar Tamamlandı'
       hasNextWorkflow = false
     }
     
@@ -4224,9 +3293,9 @@ class KeepnetAssistant {
     
     this.panel.setContent(html)
     
-    // Show confetti celebration ONLY on final workflow
-    if (this.workflowName === 'WORKFLOW_4') {
-      console.log("[Keepnet] FINAL WORKFLOW COMPLETED! Showing confetti celebration!")
+    // Show confetti celebration ONLY on final workflow! 🎉
+    if (this.workflowName === 'WORKFLOW_6') {
+      console.log("[Keepnet] 🎊 FINAL WORKFLOW COMPLETED! Showing confetti celebration!")
       setTimeout(() => {
         AnimationUtils.showConfetti(document.body)
       }, 300)
@@ -4284,20 +3353,35 @@ class KeepnetAssistant {
         console.log("[Keepnet] Click handler and hover effects attached successfully")
       }
       
-      // Git ve Düzelt butonları için
+      // ✅ YENİ: Git ve Düzelt butonları için workflow bilgisiyle
       const gotoButtons = document.querySelectorAll('.keepnet-goto-step-btn')
       gotoButtons.forEach(btn => {
         btn.addEventListener('click', async (e) => {
           e.preventDefault()
           e.stopPropagation()
+          
           const stepId = parseInt(btn.getAttribute('data-step-id'))
-          console.log("[Keepnet] Git ve Düzelt clicked for step:", stepId)
+          const workflowName = btn.getAttribute('data-workflow')
+          
+          console.log(`[Keepnet] Git ve Düzelt clicked: Step ${stepId}, Workflow: ${workflowName}`)
           
           if (typeof window.keepnetGoToStep === 'function') {
-            await window.keepnetGoToStep(stepId)
+            await window.keepnetGoToStep(stepId, workflowName)
           } else {
             console.error("[Keepnet] window.keepnetGoToStep is not a function!")
+            alert("Hata: Fonksiyon bulunamadı. Lütfen extension'ı yeniden yükleyin.")
           }
+        })
+        
+        // Hover effect
+        btn.addEventListener('mouseenter', () => {
+          btn.style.background = '#5b21b6'
+          btn.style.transform = 'scale(1.05)'
+        })
+        
+        btn.addEventListener('mouseleave', () => {
+          btn.style.background = '#667eea'
+          btn.style.transform = 'scale(1)'
         })
       })
       console.log("[Keepnet] Git ve Düzelt handlers attached:", gotoButtons.length)
@@ -4350,56 +3434,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return false
       }
       
-    case 'isPanelOpen':
-      console.log("[Keepnet] isPanelOpen check...")
-      const panel = document.getElementById('keepnet-floating-panel')
-      const isOpen = panel && panel.style.display !== 'none' && panel.offsetWidth > 0
-      console.log("[Keepnet] Panel open:", isOpen)
-      sendResponse({ isOpen: isOpen })
-      return false
-      
-    case 'togglePanel':
-      console.log("[Keepnet] togglePanel...")
-      const panelToToggle = document.getElementById('keepnet-floating-panel')
-      if (panelToToggle) {
-        if (panelToToggle.style.display === 'none') {
-          panelToToggle.style.display = 'flex'
-          console.log("[Keepnet] Panel shown")
-        } else {
-          panelToToggle.style.display = 'none'
-          console.log("[Keepnet] Panel hidden")
-        }
-        sendResponse({ ok: true })
-      } else {
-        console.log("[Keepnet] Panel not found")
-        sendResponse({ ok: false })
-      }
-      return false
-      
-    case 'showPanel':
-      console.log("[Keepnet] showPanel...")
-      const panelToShow = document.getElementById('keepnet-floating-panel')
-      if (panelToShow) {
-        panelToShow.style.display = 'flex'
-        panelToShow.style.opacity = '1'
-        console.log("[Keepnet] Panel shown")
-        sendResponse({ ok: true })
-      } else {
-        console.log("[Keepnet] Panel not found, initializing assistant...")
-        if (!assistantInstance) {
-          assistantInstance = new KeepnetAssistant()
-          assistantInstance.init().then(() => {
-            sendResponse({ ok: true })
-          }).catch((error) => {
-            sendResponse({ ok: false, error: error.message })
-          })
-          return true // Async
-        } else {
-          sendResponse({ ok: false })
-        }
-      }
-      return false
-      
     case 'screenshotCaptured':
       console.log("[Keepnet] Screenshot captured notification received")
       sendResponse({ ok: true })
@@ -4417,17 +3451,15 @@ console.log("[Keepnet] Current URL:", location.href)
 window.addEventListener('load', async () => {
   console.log("[Keepnet] Page loaded, checking for active session...")
   
-  // Workflow geçiş modu kontrolü (yeni workflow başlatılacak mı?)
-  const nextWorkflow = await Storage.get('keepnet_next_workflow')
-  if (nextWorkflow) {
-    console.log("[Keepnet] 🚀 New workflow detected:", nextWorkflow)
+  // ✅ ÖNCE: "Git ve Düzelt" modunu kontrol et
+  const fixingStep = await Storage.get('keepnet_fixing_step')
+  if (fixingStep) {
+    console.log("[Keepnet] 🔧 Fixing mode detected on page load! Auto-starting assistant...")
     
-    // NOT: Flag'i temizleme! init() fonksiyonu içinde temizlenecek
-    // await Storage.set('keepnet_next_workflow', null)
+    // NOT: Fixing flag'ini temizleme burada, init() içinde temizlenecek
     
-    // Kısa bekleme, sonra asistan başlat
+    // Asistan başlat
     setTimeout(async () => {
-      console.log("[Keepnet] Starting new workflow after page load...")
       chrome.runtime.sendMessage({ action: 'initAssistant' }, (response) => {
         console.log("[Keepnet] initAssistant response:", response)
         
@@ -4447,16 +3479,17 @@ window.addEventListener('load', async () => {
     return
   }
   
-  // "Git ve Düzelt" modu kontrolü
-  const fixing = await Storage.get('keepnet_fixing_step')
-  if (fixing) {
-    console.log("[Keepnet] 🔧 Fixing mode detected! Auto-starting assistant...")
+  // Workflow geçiş modu kontrolü
+  const nextWorkflow = await Storage.get('keepnet_next_workflow')
+  if (nextWorkflow) {
+    console.log("[Keepnet] 🚀 New workflow detected:", nextWorkflow)
     
-    // Fixing flag'ini temizle
-    await Storage.set('keepnet_fixing_step', null)
+    // Flag'i temizle
+    await Storage.set('keepnet_next_workflow', null)
     
-    // Asistan başlat
+    // Kısa bekleme, sonra asistan başlat
     setTimeout(async () => {
+      console.log("[Keepnet] Starting new workflow after page load...")
       chrome.runtime.sendMessage({ action: 'initAssistant' }, (response) => {
         console.log("[Keepnet] initAssistant response:", response)
         
@@ -4510,8 +3543,7 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
     const nextWorkflow = await Storage.get('keepnet_next_workflow')
     if (nextWorkflow) {
       console.log("[Keepnet] nextWorkflow found, starting assistant...")
-      // NOT: Flag'i temizleme! init() fonksiyonu içinde temizlenecek
-      // await Storage.set('keepnet_next_workflow', null)
+      await Storage.set('keepnet_next_workflow', null)
       chrome.runtime.sendMessage({ action: 'initAssistant' })
     }
   }, 500)
@@ -4526,4 +3558,3 @@ setInterval(() => {
     console.log("[Keepnet] ❌ Panel NOT found in DOM!")
   }
 }, 10000)
-

@@ -7,6 +7,25 @@ let globalState = {
   isActive: false
 }
 
+// Güvenli mesaj gönderme fonksiyonu
+async function safeSendMessage(tabId, message, timeout = 5000) {
+  return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      reject(new Error('Message timeout'))
+    }, timeout)
+    
+    chrome.tabs.sendMessage(tabId, message, (response) => {
+      clearTimeout(timeoutId)
+      
+      if (chrome.runtime.lastError) {
+        reject(new Error(chrome.runtime.lastError.message))
+      } else {
+        resolve(response)
+      }
+    })
+  })
+}
+
 // Extension icon'a tıklama
 chrome.action.onClicked.addListener(async (tab) => {
   console.log("[Keepnet] Extension clicked on tab:", tab.id)
@@ -35,12 +54,12 @@ chrome.action.onClicked.addListener(async (tab) => {
     
     // Panel açık mı kontrol et
     try {
-      const response = await chrome.tabs.sendMessage(tab.id, { action: 'isPanelOpen' })
+      const response = await safeSendMessage(tab.id, { action: 'isPanelOpen' })
       
       if (response && response.isOpen) {
         // Panel açık, kapat
         console.log("[Keepnet] Panel is open, closing...")
-        await chrome.tabs.sendMessage(tab.id, { action: 'togglePanel' })
+        await safeSendMessage(tab.id, { action: 'togglePanel' })
       } else {
         // Panel kapalı veya yok, başlat
         console.log("[Keepnet] Panel is closed, opening...")
@@ -72,7 +91,7 @@ async function startAssistant(tabId) {
     // Önce ping ile kontrol et
     try {
       console.log("[Keepnet] Sending ping to check content script...")
-      const pingResponse = await chrome.tabs.sendMessage(tabId, { action: 'ping' })
+      const pingResponse = await safeSendMessage(tabId, { action: 'ping' })
       console.log("[Keepnet] Ping response:", pingResponse)
     } catch (pingError) {
       console.log("[Keepnet] Ping failed, content script not ready")
@@ -81,7 +100,7 @@ async function startAssistant(tabId) {
     
     // Content script'e mesaj gönder
     console.log("[Keepnet] Sending initAssistant message...")
-    const response = await chrome.tabs.sendMessage(tabId, {
+    const response = await safeSendMessage(tabId, {
       action: 'initAssistant'
     })
     
@@ -102,23 +121,40 @@ async function startAssistant(tabId) {
         files: ['content.css']
       })
       
-      console.log("[Keepnet] Content script injected, waiting 1s...")
+      console.log("[Keepnet] Content script injected, waiting 2s...")
       
       // Flag'i temizle
       await chrome.storage.local.remove('ASSISTANT_AUTO_STARTED')
       
-      // Tekrar dene
+      // Tekrar dene - daha uzun bekleme süresi
       setTimeout(async () => {
-        console.log("[Keepnet] Retrying initAssistant...")
+        console.log("[Keepnet] Retrying initAssistant after injection...")
         try {
-          const response = await chrome.tabs.sendMessage(tabId, {
+          // Önce ping ile kontrol et
+          const pingResponse = await safeSendMessage(tabId, { action: 'ping' }, 3000)
+          console.log("[Keepnet] Ping successful after injection:", pingResponse)
+          
+          // Sonra initialize et
+          const response = await safeSendMessage(tabId, {
             action: 'initAssistant'
-          })
+          }, 5000)
           console.log("[Keepnet] initAssistant response (retry):", response)
         } catch (retryError) {
           console.error("[Keepnet] Retry failed:", retryError)
+          // Son bir deneme daha yap
+          setTimeout(async () => {
+            try {
+              console.log("[Keepnet] Final retry attempt...")
+              const finalResponse = await safeSendMessage(tabId, {
+                action: 'initAssistant'
+              }, 10000)
+              console.log("[Keepnet] Final retry success:", finalResponse)
+            } catch (finalError) {
+              console.error("[Keepnet] Final retry failed:", finalError)
+            }
+          }, 2000)
         }
-      }, 1000)
+      }, 2000)
     } catch (injectError) {
       console.error("[Keepnet] Inject error:", injectError)
     }
@@ -168,11 +204,15 @@ async function handleCaptureScreenshot(tabId, stepName, sendResponse) {
     console.log(`[Keepnet] Screenshot captured: ${stepName}.png (${Math.round(dataUrl.length / 1024)}KB)`)
     
     // Content script'e geri bildir
-    chrome.tabs.sendMessage(tabId, {
-      action: 'screenshotCaptured',
-      stepName: stepName,
-      dataUrl: dataUrl
-    })
+    try {
+      await safeSendMessage(tabId, {
+        action: 'screenshotCaptured',
+        stepName: stepName,
+        dataUrl: dataUrl
+      })
+    } catch (e) {
+      console.log("[Keepnet] Could not send screenshot notification:", e.message)
+    }
     
     sendResponse({ ok: true, dataUrl: dataUrl })
   } catch (error) {
@@ -193,22 +233,22 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       // Content script yüklendi mi kontrol et ve paneli aç
       setTimeout(async () => {
         try {
-          const pingResponse = await chrome.tabs.sendMessage(tabId, { action: 'ping' })
+          const pingResponse = await safeSendMessage(tabId, { action: 'ping' })
           console.log("[Keepnet] Ping successful:", pingResponse)
           
           // Panel açık mı kontrol et
           try {
-            const panelStatus = await chrome.tabs.sendMessage(tabId, { action: 'isPanelOpen' })
+            const panelStatus = await safeSendMessage(tabId, { action: 'isPanelOpen' })
             
             if (!panelStatus || !panelStatus.isOpen) {
               console.log("[Keepnet] Panel is closed, opening...")
-              await chrome.tabs.sendMessage(tabId, { action: 'showPanel' })
+              await safeSendMessage(tabId, { action: 'showPanel' })
             } else {
               console.log("[Keepnet] Panel already open")
             }
           } catch (e) {
             console.log("[Keepnet] Panel check failed, initializing assistant...")
-            await chrome.tabs.sendMessage(tabId, { action: 'initAssistant' })
+            await safeSendMessage(tabId, { action: 'initAssistant' })
           }
         } catch {
           // Content script yok, inject et
@@ -226,14 +266,29 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
             
             console.log("[Keepnet] Content script injected, initializing...")
             
-            // Script yüklendi, 1 saniye bekle ve initialize et
+            // Script yüklendi, 2 saniye bekle ve initialize et
             setTimeout(async () => {
               try {
-                await chrome.tabs.sendMessage(tabId, { action: 'initAssistant' })
+                // Önce ping ile kontrol et
+                const pingResponse = await safeSendMessage(tabId, { action: 'ping' }, 3000)
+                console.log("[Keepnet] Ping successful after tab update:", pingResponse)
+                
+                // Sonra initialize et
+                await safeSendMessage(tabId, { action: 'initAssistant' }, 5000)
+                console.log("[Keepnet] Assistant initialized after tab update")
               } catch (e) {
                 console.error("[Keepnet] Init failed after inject:", e)
+                // Son bir deneme daha yap
+                setTimeout(async () => {
+                  try {
+                    console.log("[Keepnet] Final retry after tab update...")
+                    await safeSendMessage(tabId, { action: 'initAssistant' }, 10000)
+                  } catch (finalError) {
+                    console.error("[Keepnet] Final retry failed after tab update:", finalError)
+                  }
+                }, 2000)
               }
-            }, 1500)
+            }, 2000)
           } catch (e) {
             console.error("[Keepnet] Inject failed:", e)
           }
