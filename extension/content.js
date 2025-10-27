@@ -488,7 +488,7 @@ const SAFE_LINKS_STEPS = [
     id: 4,
     name: 'safelinks_step4_safe_links',
     title: 'Safe Links',
-    description: 'Safe Links\'e tıklayın. Eğer Safe Links görünmüyorsa, Microsoft Defender for Office 365 Plan 1 lisansı eksik olabilir.',
+    description: 'Safe Links\'e tıklayın. Eğer Safe Links görünmüyorsa, Microsoft Defender for Office 365 lisansı eksik olabilir.',
     target: {
       selector: 'a:contains("Safe Links")',
       textMatch: /Safe Links/i,
@@ -505,8 +505,8 @@ const SAFE_LINKS_STEPS = [
     },
     waitAfterClick: 2000,
     licenseCheck: {
-      required: 'Microsoft Defender for Office 365 Plan 1',
-      message: 'Safe Links özelliği için Microsoft Defender for Office 365 Plan 1 lisansı gereklidir. Bu lisans yoksa Safe Links görünmeyecektir.',
+      required: 'Microsoft Defender for Office 365',
+      message: 'Safe Links özelliği yalnızca şu lisanslarda aktif hale gelir:\n\n• Microsoft Defender for Office 365 Plan 1\n• Microsoft Defender for Office 365 Plan 2\n• Microsoft 365 E5 / A5 / G5 (bu planlarda Defender for Office 365 dahil)\n\nBu lisanslardan biri yoksa Safe Links görünmeyecektir.',
       skipMessage: 'Safe Links bulunamadı. Lisans eksikliği nedeniyle bu adım atlanıyor ve diğer adımlara geçiliyor.'
     }
   },
@@ -3032,8 +3032,11 @@ class KeepnetAssistant {
           </div>
           <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 1px solid #e2e8f0;">
             <div style="font-size: 13px; color: #374151; line-height: 1.5;">
-              <strong>Microsoft Defender for Office 365 Plan 1</strong> lisansı gereklidir.<br>
-              Bu lisans yoksa Safe Links özelliği görünmeyecektir.
+              Safe Links özelliği yalnızca şu lisanslarda aktif hale gelir:<br><br>
+              • <strong>Microsoft Defender for Office 365 Plan 1</strong><br>
+              • <strong>Microsoft Defender for Office 365 Plan 2</strong><br>
+              • <strong>Microsoft 365 E5 / A5 / G5</strong> (bu planlarda Defender for Office 365 dahil)<br><br>
+              Bu lisanslardan biri yoksa Safe Links özelliği görünmeyecektir.
             </div>
           </div>
           <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.08)); border: 1px solid #ef4444; border-radius: 8px; padding: 12px;">
