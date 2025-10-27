@@ -267,7 +267,7 @@ const WORKFLOW_STEPS = [
   {
     id: 11,
     name: 'step12_summary',
-    title: 'Tamamlandı',
+    title: 'Tamamlandı! ✅',
     description: 'Tüm adımlar başarıyla tamamlandı',
     isSummary: true
   }
@@ -427,7 +427,7 @@ const THREAT_POLICIES_STEPS = [
   {
     id: 7,
     name: 'antispam_summary',
-    title: 'Tamamlandı',
+    title: 'Tamamlandı! ✅',
     description: 'Anti-Spam yapılandırması başarıyla tamamlandı',
     isSummary: true
   }
@@ -694,7 +694,7 @@ const SAFE_LINKS_STEPS = [
   {
     id: 14,
     name: 'safelinks_summary',
-    title: 'Tamamlandı',
+    title: 'Tamamlandı! ✅',
     description: 'Safe Links yapılandırması tamamlandı. Birkaç saat içinde etkili olacaktır.',
     isSummary: true
   }
@@ -1037,7 +1037,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
   {
     id: 17,
     name: 'spambypass_summary',
-    title: 'Tamamlandı',
+    title: 'Tamamlandı! ✅',
     description: 'Spam Filter Bypass kuralı başarıyla oluşturuldu.',
     isSummary: true
   }
@@ -1194,7 +1194,7 @@ const ATP_LINK_BYPASS_STEPS = [
   {
     id: 7,
     name: 'atplink_summary',
-    title: 'Tamamlandı',
+    title: 'Tamamlandı! ✅',
     description: 'ATP Link Bypass (SkipSafeLinksProcessing) kuralı başarıyla oluşturuldu.',
     isSummary: true
   }
@@ -1351,7 +1351,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
   {
     id: 7,
     name: 'atpattach_summary',
-    title: 'Tebrikler! Tüm Adımları Tamamladınız!',
+    title: '🎊 Tebrikler! Tüm Adımları Tamamladınız!',
     description: 'ATP Attachment Bypass kuralı başarıyla oluşturuldu. Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!',
     isSummary: true
   }
@@ -3625,7 +3625,7 @@ class KeepnetAssistant {
     let html = `
       <div class="keepnet-summary">
         <h2 style="margin: 0 0 16px 0; font-size: 16px; color: #111827;">
-          Özet Rapor - ${this.workflowName}
+          📊 Özet Rapor - ${this.workflowName}
         </h2>
         <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
     `
@@ -3638,7 +3638,7 @@ class KeepnetAssistant {
       const result = this.stepResults[step.id]
       const screenshot = screenshots[step.name]
       
-      const status = result?.valid ? 'Tamamlandı' : (result ? 'Hata' : 'Bekleniyor')
+      const status = result?.valid ? '✅' : (result ? '❌' : '⏳')
       
       html += `
         <div style="display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f3f4f6;">
@@ -3671,7 +3671,7 @@ class KeepnetAssistant {
     html += `
         </div>
         <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px; font-size: 12px; color: #1e40af;">
-          Tüm screenshot'lar chrome.storage'da kaydedildi
+          💾 Tüm screenshot'lar chrome.storage'da kaydedildi
         </div>
     `
     
@@ -3687,7 +3687,7 @@ class KeepnetAssistant {
           text-align: center;
           box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
         ">
-          <div style="font-size: 48px; margin-bottom: 12px;">Tebrikler!</div>
+          <div style="font-size: 48px; margin-bottom: 12px;">🎊</div>
           <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">
             Tebrikler! Tüm Adımları Tamamladınız!
           </div>
@@ -3697,7 +3697,7 @@ class KeepnetAssistant {
             başarıyla yapılandırdınız!
           </div>
           <div style="font-size: 14px; font-weight: 600; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.3);">
-            6 Workflow Tamamlandı • 62 Adım Başarılı • Tamamlandı
+            ✅ 6 Workflow Tamamlandı • 62 Adım Başarılı • 🎉
           </div>
         </div>
       `
@@ -3726,10 +3726,10 @@ class KeepnetAssistant {
       hasNextWorkflow = true
       console.log("[Keepnet] WORKFLOW_5 summary - hasNextWorkflow:", hasNextWorkflow, "nextWorkflowText:", nextWorkflowText)
     } else if (this.workflowName === 'WORKFLOW_6') {
-      nextWorkflowText = 'Tebrikler! Tüm Workflow\'lar Tamamlandı'
+      nextWorkflowText = '🎊 Tebrikler! Tüm Workflow\'lar Tamamlandı'
       hasNextWorkflow = false
     } else {
-      nextWorkflowText = 'Tüm Workflow\'lar Tamamlandı'
+      nextWorkflowText = '✅ Tüm Workflow\'lar Tamamlandı'
       hasNextWorkflow = false
     }
     
@@ -3748,7 +3748,7 @@ class KeepnetAssistant {
             transition: all 0.2s;
             box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           ">
-            ${hasNextWorkflow ? 'Devam Et' : 'Tamamlandı'} ${nextWorkflowText}
+            ${hasNextWorkflow ? '➡️' : '✅'} ${nextWorkflowText}
           </button>
         </div>
       </div>
