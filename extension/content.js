@@ -171,7 +171,7 @@ const WORKFLOW_STEPS = [
     id: 7,
     name: 'step8_domains_input',
     title: 'Etki Alanları',
-    description: 'Etki alanlarını girin (örn: *.keepnetdomain.com)',
+    description: 'Bu domainleri girebilirsiniz: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
     target: {
       selector: 'label.ms-Label:contains("Etki Alanı")',
       textMatch: /Etki Alanı/i,
@@ -2779,6 +2779,52 @@ class KeepnetAssistant {
       `
     }
     
+    // Domain listesi için özel bölüm (Workflow 1 step 8)
+    if (step.id === 7 && step.name === 'step8_domains_input') {
+      const domains = [
+        'signin-authzone.com', 'verifycloudaccess.com', 'akibadem.org', 'isdestek.org', 'gartnerpeer.com',
+        'global-cloud-llc.com', 'cloudverification.online', 'accountaccesses.com', 'shoppingcenter.site',
+        'hesapdogrulama.info', 'banksecure.info', 'meetingonline-us.com', 'digitalsecurelogin.co',
+        'secureloginshop.net', 'encryptedconnections.info', 'trendyoll.club', 'kurumsalgiris.com',
+        'yoursecuregateway.com', 'securemygateway.com', 'hadisendekatil.com', 'updatemyinformation.com',
+        'secure-passchanges.com', 'swift-intel.com', 'hepsibureda.com', 'securely-logout.com',
+        'sigortacilarbirligi.com', 'btyardimmasasi.com', 'sirketiciduyuru.com', 'bilgilerimiguncelle.com',
+        'securelogout.com', 'securelinked-in.com', 'theconnectionsuccess.com', 'sigortacilikhizmetleri.me',
+        'securebankingservices.net', 'guvenlibankacilik.com', 'insurance-services.me', 'btservisleri.com',
+        'secureloginonline.net', 'insan-kaynaklari.me', 'getaccess.store'
+      ]
+      
+      html += `
+        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(29, 78, 216, 0.08)); border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #1e40af; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">D</div>
+            Domain Listesi
+          </div>
+          <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; font-size: 12px; color: #374151;">
+              ${domains.map(domain => `<div style="padding: 2px 4px; background: #f8fafc; border-radius: 4px; border-left: 3px solid #3b82f6;">${domain}</div>`).join('')}
+            </div>
+          </div>
+          <button id="keepnet-copy-domains-btn" style="
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(59, 130, 246, 0.4)'"
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)'">
+            Tümünü Kopyala
+          </button>
+        </div>
+      `
+    }
+    
     // IP Adresleri için özel liste (Workflow 1 step 9 veya Workflow 2 step 5)
     if (step.id === 9 || step.name === 'antispam_step5_add_ips') {
       html += `
@@ -2855,6 +2901,44 @@ class KeepnetAssistant {
           })
         }
       }, 100)
+    
+    // Domain copy butonu için event listener ekle (Workflow 1 step 8)
+    if (step.id === 7 && step.name === 'step8_domains_input') {
+      setTimeout(() => {
+        const copyBtn = document.getElementById('keepnet-copy-domains-btn')
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            const domains = [
+              'signin-authzone.com', 'verifycloudaccess.com', 'akibadem.org', 'isdestek.org', 'gartnerpeer.com',
+              'global-cloud-llc.com', 'cloudverification.online', 'accountaccesses.com', 'shoppingcenter.site',
+              'hesapdogrulama.info', 'banksecure.info', 'meetingonline-us.com', 'digitalsecurelogin.co',
+              'secureloginshop.net', 'encryptedconnections.info', 'trendyoll.club', 'kurumsalgiris.com',
+              'yoursecuregateway.com', 'securemygateway.com', 'hadisendekatil.com', 'updatemyinformation.com',
+              'secure-passchanges.com', 'swift-intel.com', 'hepsibureda.com', 'securely-logout.com',
+              'sigortacilarbirligi.com', 'btyardimmasasi.com', 'sirketiciduyuru.com', 'bilgilerimiguncelle.com',
+              'securelogout.com', 'securelinked-in.com', 'theconnectionsuccess.com', 'sigortacilikhizmetleri.me',
+              'securebankingservices.net', 'guvenlibankacilik.com', 'insurance-services.me', 'btservisleri.com',
+              'secureloginonline.net', 'insan-kaynaklari.me', 'getaccess.store'
+            ]
+            const domainsText = domains.join('\n')
+            navigator.clipboard.writeText(domainsText).then(() => {
+              copyBtn.textContent = 'Kopyalandı!'
+              copyBtn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)'
+              setTimeout(() => {
+                copyBtn.textContent = 'Tümünü Kopyala'
+                copyBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)'
+              }, 2000)
+            }).catch(err => {
+              console.error('[Keepnet] Clipboard error:', err)
+              copyBtn.textContent = 'Hata'
+              setTimeout(() => {
+                copyBtn.textContent = 'Tümünü Kopyala'
+              }, 2000)
+            })
+          })
+        }
+      }, 100)
+    }
     
     // IP copy butonu için event listener ekle (Workflow 1 step 9 veya Workflow 2 step 5)
     if (step.id === 9 || step.name === 'antispam_step5_add_ips') {
