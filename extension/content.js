@@ -1688,7 +1688,7 @@ class AutoClickEngine {
     this.timeout = null
     this.countdown = null
     this.onTimeout = null
-    this.DISABLE_AUTOCLICK_ON_WORKFLOWS_4_6 = true // Flag to disable auto-click on workflows 4-6
+    this.DISABLE_AUTOCLICK_ON_WORKFLOWS_4_6 = true // Feature flag to disable auto-click on workflows 4-6
   }
   
   start(element, delay, callback, workflowName = null) {
@@ -1810,6 +1810,10 @@ class FloatingPanel {
     this.isDragging = false
     this.dragOffset = { x: 0, y: 0 }
     this.position = { x: 20, y: window.innerHeight - PANEL_SIZE.height - 20 } // SOL-ALT
+    
+    // Feature flags for workflow 4-6 behavior
+    this.DISABLE_OUTSIDE_CLOSE_WF_4_6 = true
+    this.DISABLE_AUTOCLICK_ON_WORKFLOWS_4_6 = true
   }
   
   async init() {
@@ -2083,11 +2087,11 @@ class FloatingPanel {
   }
   
   setupGlobalClickProtection() {
-    // Workflow 4-6 için global click koruması
+    // Workflow 4-6 için global click koruması (feature flag ile kontrol edilir)
     document.addEventListener('click', (e) => {
       const isWorkflow4To6 = window.assistant && ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(window.assistant.workflowName)
       
-      if (isWorkflow4To6) {
+      if (isWorkflow4To6 && this.DISABLE_OUTSIDE_CLOSE_WF_4_6) {
         // Microsoft Exchange form'unun açık olduğunu kontrol et
         const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
         
@@ -2754,11 +2758,12 @@ class KeepnetAssistant {
           if (isWorkflow4To6) {
             console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure on next step`)
             
-            // Log next button click
+            // Log next button click (NOT a closure reason - just tracking)
             this.panel?.logPopupClosureReason('nextBtn', this.workflowName, {
               buttonId: 'keepnet-next-btn',
               currentStep: this.currentStep,
-              totalSteps: this.currentWorkflow.length
+              totalSteps: this.currentWorkflow.length,
+              note: 'Next button click - popup should NOT close'
             })
             
             // Microsoft Exchange form'unun açık olduğunu kontrol et
@@ -2792,11 +2797,12 @@ class KeepnetAssistant {
           if (isWorkflow4To6) {
             console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure on prev step`)
             
-            // Log prev button click
+            // Log prev button click (NOT a closure reason - just tracking)
             this.panel?.logPopupClosureReason('prevBtn', this.workflowName, {
               buttonId: 'keepnet-prev-btn',
               currentStep: this.currentStep,
-              totalSteps: this.currentWorkflow.length
+              totalSteps: this.currentWorkflow.length,
+              note: 'Previous button click - popup should NOT close'
             })
             
             // Microsoft Exchange form'unun açık olduğunu kontrol et
@@ -3846,11 +3852,12 @@ class KeepnetAssistant {
           if (isWorkflow4To6) {
             console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure`)
             
-            // Log continue button click
+            // Log continue button click (NOT a closure reason - just tracking)
             this.panel?.logPopupClosureReason('continueBtn', this.workflowName, {
               buttonId: 'keepnet-continue-workflow-btn',
               buttonText: continueBtn.textContent,
-              hasNextWorkflow: hasNextWorkflow
+              hasNextWorkflow: hasNextWorkflow,
+              note: 'Continue button click - popup should NOT close'
             })
             
             // Microsoft Exchange form'unun açık olduğunu kontrol et
