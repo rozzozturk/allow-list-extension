@@ -2584,15 +2584,15 @@ class KeepnetAssistant {
           console.log("[Keepnet] Starting WORKFLOW_6 Step 1...")
           await assistant.executeStep(1)
           console.log("[Keepnet] WORKFLOW_6 started!")
-          return // 🛑 Burada return et, sayfa değiştirme!
+          return // Burada return et, sayfa değiştirme!
           
         } else if (assistant.workflowName === 'WORKFLOW_6') {
-          console.log("[Keepnet] 🎉 All workflows completed!")
-          assistant.panel?.showSuccess('✅ Tüm workflow\'lar tamamlandı!')
+          console.log("[Keepnet] All workflows completed!")
+          assistant.panel?.showSuccess('Tüm workflow\'lar tamamlandı!')
           return
         }
         
-        // ❌ WORKFLOW_5 değilse, diğer workflow'lar için normal akış
+        // WORKFLOW_5 değilse, diğer workflow'lar için normal akış
         if (!nextWorkflow) {
           console.error("[Keepnet] No next workflow found!")
           return
@@ -2637,18 +2637,18 @@ class KeepnetAssistant {
           assistant.currentStep = 0
           await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0)
           
-          console.log("[Keepnet] 🚀 Starting", nextWorkflowName, "...")
+          console.log("[Keepnet] Starting", nextWorkflowName, "...")
           await assistant.executeStep(1)
-          console.log("[Keepnet] ✅ Step 1 executed!")
+          console.log("[Keepnet] Step 1 executed!")
         }
         
       } catch (error) {
         console.error("[Keepnet] Error continuing workflow:", error)
-        assistant.panel?.showError(`❌ Hata: ${error.message}`)
+        assistant.panel?.showError(`Hata: ${error.message}`)
       }
     }
     
-    // ✅ YENİ: Akıllı "Git ve Düzelt" sistemi
+    // YENİ: Akıllı "Git ve Düzelt" sistemi
     window.keepnetGoToStep = async (stepId, workflowName) => {
       console.log(`[Keepnet] Git ve Düzelt: Step ${stepId}, Workflow: ${workflowName}`)
       
@@ -2928,7 +2928,7 @@ class KeepnetAssistant {
           // Safe Links için özel lisans kontrolü
           if (step.name === 'safelinks_step4_safe_links' && step.licenseCheck) {
             console.log("[Keepnet] Safe Links not found - checking license requirement")
-            this.panel.showError(`⚠️ Safe Links Bulunamadı\n\n${step.licenseCheck.message}\n\n${step.licenseCheck.skipMessage}`)
+            this.panel.showError(`Safe Links Bulunamadı\n\n${step.licenseCheck.message}\n\n${step.licenseCheck.skipMessage}`)
             
             // Otomatik olarak bir sonraki adıma geç
             setTimeout(async () => {
@@ -2938,7 +2938,7 @@ class KeepnetAssistant {
             return
           }
           
-          this.panel.showError(`⚠️ Element bulunamadı: ${step.title}\n\nLütfen manuel olarak devam edin.`)
+          this.panel.showError(`Element bulunamadı: ${step.title}\n\nLütfen manuel olarak devam edin.`)
         }
       }
       
@@ -2953,7 +2953,7 @@ class KeepnetAssistant {
       }
     } catch (error) {
       console.error("[Keepnet] executeStep error:", error)
-      this.panel?.showError(`❌ Hata: ${error.message}`)
+      this.panel?.showError(`Hata: ${error.message}`)
     }
   }
   
@@ -3308,17 +3308,17 @@ class KeepnetAssistant {
           copyBtn.addEventListener('click', () => {
             const ips = '149.72.161.59\n149.72.42.201\n149.72.154.87'
             navigator.clipboard.writeText(ips).then(() => {
-              copyBtn.textContent = '✅ Kopyalandı!'
+              copyBtn.textContent = 'Kopyalandı!'
               copyBtn.style.background = 'linear-gradient(135deg, #5b21b6 0%, #4c1d95 100%)'
               setTimeout(() => {
-                copyBtn.textContent = '📋 Tümünü Kopyala'
+                copyBtn.textContent = 'Tümünü Kopyala'
                 copyBtn.style.background = 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)'
               }, 2000)
             }).catch(err => {
               console.error('[Keepnet] Clipboard error:', err)
-              copyBtn.textContent = '❌ Hata'
+              copyBtn.textContent = 'Hata'
               setTimeout(() => {
-                copyBtn.textContent = '📋 Tümünü Kopyala'
+                copyBtn.textContent = 'Tümünü Kopyala'
               }, 2000)
             })
           })
@@ -3465,7 +3465,7 @@ class KeepnetAssistant {
       await this.nextStep()
     } else if (step.criticalStep) {
       // Kritik adımda validation başarısızsa uyar
-      this.panel.showError(`❌ Lütfen ${step.title} alanını doldurun!`)
+      this.panel.showError(`Lütfen ${step.title} alanını doldurun!`)
     } else {
       // Kritik olmayan adımda da geç
       await Utils.sleep(500)
@@ -3502,9 +3502,9 @@ class KeepnetAssistant {
         const missing = requiredIPs.filter(ip => !text.includes(ip))
         
         if (missing.length > 0) {
-          this.panel.showError(`❌ IP girmeyi unuttunuz: ${missing.join(', ')}`)
+          this.panel.showError(`IP girmeyi unuttunuz: ${missing.join(', ')}`)
         } else {
-          this.panel.showSuccess(`✅ Tüm IP'ler eklendi! (${found.length}/3)`)
+          this.panel.showSuccess(`Tüm IP'ler eklendi! (${found.length}/3)`)
         }
       }
     }, VALIDATION_INTERVAL)
@@ -3565,7 +3565,7 @@ class KeepnetAssistant {
       await Utils.sleep(500)
     }
     
-    this.panel.showSuccess('✅ IP\'ler otomatik eklendi!')
+    this.panel.showSuccess('IP\'ler otomatik eklendi!')
   }
   
   async captureScreenshot(step, isValid) {
@@ -3588,7 +3588,7 @@ class KeepnetAssistant {
       if (!isValid && currentStepConfig.criticalStep) {
         // Kritik adım tamamlanmamış - sadece uyarı göster
         console.warn("[Keepnet] Critical step not completed, but continuing anyway")
-        this.panel.showError(`⚠️ Bu adım tamamlanmamış ama devam ediliyor...`)
+        this.panel.showError(`Bu adım tamamlanmamış ama devam ediliyor...`)
       }
     }
     
@@ -3625,7 +3625,7 @@ class KeepnetAssistant {
     let html = `
       <div class="keepnet-summary">
         <h2 style="margin: 0 0 16px 0; font-size: 16px; color: #111827;">
-          📊 Özet Rapor - ${this.workflowName}
+          Özet Rapor - ${this.workflowName}
         </h2>
         <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
     `
@@ -3638,7 +3638,7 @@ class KeepnetAssistant {
       const result = this.stepResults[step.id]
       const screenshot = screenshots[step.name]
       
-      const status = result?.valid ? '✅' : (result ? '❌' : '⏳')
+      const status = result?.valid ? 'Tamamlandı' : (result ? 'Hata' : 'Bekleniyor')
       
       html += `
         <div style="display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f3f4f6;">
@@ -3671,7 +3671,7 @@ class KeepnetAssistant {
     html += `
         </div>
         <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px; font-size: 12px; color: #1e40af;">
-          💾 Tüm screenshot'lar chrome.storage'da kaydedildi
+          Tüm screenshot'lar chrome.storage'da kaydedildi
         </div>
     `
     
@@ -3687,7 +3687,7 @@ class KeepnetAssistant {
           text-align: center;
           box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
         ">
-          <div style="font-size: 48px; margin-bottom: 12px;">🎊</div>
+          <div style="font-size: 48px; margin-bottom: 12px;">Tebrikler!</div>
           <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">
             Tebrikler! Tüm Adımları Tamamladınız!
           </div>
@@ -3697,7 +3697,7 @@ class KeepnetAssistant {
             başarıyla yapılandırdınız!
           </div>
           <div style="font-size: 14px; font-weight: 600; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.3);">
-            ✅ 6 Workflow Tamamlandı • 62 Adım Başarılı • 🎉
+            6 Workflow Tamamlandı • 62 Adım Başarılı • Tamamlandı
           </div>
         </div>
       `
@@ -3707,7 +3707,7 @@ class KeepnetAssistant {
     let nextWorkflowText = ''
     let hasNextWorkflow = false
     
-    console.log("[Keepnet] 🔍 Summary step - Current workflowName:", this.workflowName)
+    console.log("[Keepnet] Summary step - Current workflowName:", this.workflowName)
     
     if (this.workflowName === 'WORKFLOW_1') {
       nextWorkflowText = 'Devam Et (Workflow 2: Anti-Spam)'
@@ -3724,12 +3724,12 @@ class KeepnetAssistant {
     } else if (this.workflowName === 'WORKFLOW_5') {
       nextWorkflowText = 'Devam Et (Workflow 6: ATP Attachment Bypass)'
       hasNextWorkflow = true
-      console.log("[Keepnet] ✅ WORKFLOW_5 summary - hasNextWorkflow:", hasNextWorkflow, "nextWorkflowText:", nextWorkflowText)
+      console.log("[Keepnet] WORKFLOW_5 summary - hasNextWorkflow:", hasNextWorkflow, "nextWorkflowText:", nextWorkflowText)
     } else if (this.workflowName === 'WORKFLOW_6') {
-      nextWorkflowText = '🎊 Tebrikler! Tüm Workflow\'lar Tamamlandı'
+      nextWorkflowText = 'Tebrikler! Tüm Workflow\'lar Tamamlandı'
       hasNextWorkflow = false
     } else {
-      nextWorkflowText = '✅ Tüm Workflow\'lar Tamamlandı'
+      nextWorkflowText = 'Tüm Workflow\'lar Tamamlandı'
       hasNextWorkflow = false
     }
     
@@ -3748,7 +3748,7 @@ class KeepnetAssistant {
             transition: all 0.2s;
             box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           ">
-            ${hasNextWorkflow ? '➡️' : '✅'} ${nextWorkflowText}
+            ${hasNextWorkflow ? 'Devam Et' : 'Tamamlandı'} ${nextWorkflowText}
           </button>
         </div>
       </div>
@@ -3756,9 +3756,9 @@ class KeepnetAssistant {
     
     this.panel.setContent(html)
     
-    // Show confetti celebration ONLY on final workflow! 🎉
+    // Show confetti celebration ONLY on final workflow!
     if (this.workflowName === 'WORKFLOW_6') {
-      console.log("[Keepnet] 🎊 FINAL WORKFLOW COMPLETED! Showing confetti celebration!")
+      console.log("[Keepnet] FINAL WORKFLOW COMPLETED! Showing confetti celebration!")
       setTimeout(() => {
         AnimationUtils.showConfetti(document.body)
       }, 300)
@@ -3844,7 +3844,7 @@ class KeepnetAssistant {
         console.log("[Keepnet] Click handler and hover effects attached successfully")
       }
       
-      // ✅ YENİ: Git ve Düzelt butonları için workflow bilgisiyle
+      // YENİ: Git ve Düzelt butonları için workflow bilgisiyle
       const gotoButtons = document.querySelectorAll('.keepnet-goto-step-btn')
       gotoButtons.forEach(btn => {
         btn.addEventListener('click', async (e) => {
@@ -3942,10 +3942,10 @@ console.log("[Keepnet] Current URL:", location.href)
 window.addEventListener('load', async () => {
   console.log("[Keepnet] Page loaded, checking for active session...")
   
-  // ✅ ÖNCE: "Git ve Düzelt" modunu kontrol et
+  // ÖNCE: "Git ve Düzelt" modunu kontrol et
   const fixingStep = await Storage.get('keepnet_fixing_step')
   if (fixingStep) {
-    console.log("[Keepnet] 🔧 Fixing mode detected on page load! Auto-starting assistant...")
+    console.log("[Keepnet] Fixing mode detected on page load! Auto-starting assistant...")
     
     // NOT: Fixing flag'ini temizleme burada, init() içinde temizlenecek
     
