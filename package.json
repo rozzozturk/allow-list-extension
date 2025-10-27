@@ -1,5 +1,5 @@
 {
-  "name": "keepnet-whitelist-assistant",
+  "name": "keepnet-allow-list-assistant",
   "version": "1.0.0",
   "private": true,
   "scripts": {

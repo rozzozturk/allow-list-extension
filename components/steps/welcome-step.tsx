@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Shield, CheckCircle, Camera, ArrowRight } from "lucide-react"
-import type { WizardState } from "../whitelist-wizard"
+import type { WizardState } from "../allow-list-wizard"
 
 interface WelcomeStepProps {
   state: WizardState
@@ -13,10 +13,10 @@ interface WelcomeStepProps {
 export function WelcomeStep({ state, nextStep }: WelcomeStepProps) {
   const content = {
     tr: {
-      title: "Keepnet Whitelist Yapılandırma Asistanı",
+      title: "Keepnet Allow List Yapılandırma Asistanı",
       subtitle: "Office 365 için adım adım rehberlik",
       description:
-        "Bu asistan, Office 365 hesabınızda Keepnet phishing simülasyonları için gerekli white list ayarlarını yapmanıza yardımcı olacak.",
+        "Bu asistan, Office 365 hesabınızda Keepnet phishing simülasyonları için gerekli allow list ayarlarını yapmanıza yardımcı olacak.",
       features: [
         {
           icon: CheckCircle,
@@ -47,10 +47,10 @@ export function WelcomeStep({ state, nextStep }: WelcomeStepProps) {
       estimatedTime: "Tahmini Süre: 15-20 dakika",
     },
     en: {
-      title: "Keepnet Whitelist Configuration Assistant",
+      title: "Keepnet Allow List Configuration Assistant",
       subtitle: "Step-by-step guidance for Office 365",
       description:
-        "This assistant will help you configure the necessary whitelist settings in your Office 365 account for Keepnet phishing simulations.",
+        "This assistant will help you configure the necessary allow list settings in your Office 365 account for Keepnet phishing simulations.",
       features: [
         {
           icon: CheckCircle,

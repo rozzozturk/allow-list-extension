@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { CheckCircle, Download, ArrowLeft, Trophy, Camera } from "lucide-react"
-import type { WizardState } from "../whitelist-wizard"
+import type { WizardState } from "../allow-list-wizard"
 
 interface CompletionStepProps {
   state: WizardState
@@ -34,7 +34,7 @@ export function CompletionStep({ state, prevStep }: CompletionStepProps) {
     },
     en: {
       title: "Congratulations! Configuration Complete",
-      subtitle: "Your Office 365 whitelist settings have been successfully configured",
+      subtitle: "Your Office 365 allow list settings have been successfully configured",
       completedSteps: "Completed Steps",
       summary: "Summary",
       ipCount: "IP Addresses Added",

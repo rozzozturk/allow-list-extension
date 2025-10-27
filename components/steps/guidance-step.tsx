@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { ArrowRight, ArrowLeft, CheckCircle, Camera, MousePointer, AlertTriangle } from "lucide-react"
-import type { WizardState } from "../whitelist-wizard"
+import type { WizardState } from "../allow-list-wizard"
 import { HighlightDemo } from "../highlight-demo"
 
 interface GuidanceStepProps {

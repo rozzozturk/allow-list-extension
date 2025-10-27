@@ -1,4 +1,4 @@
-// Keepnet Whitelist Assistant - Background Service Worker v3.1
+// Keepnet Allow List Assistant - Background Service Worker v3.1
 console.log("[Keepnet v3.1] Background service worker started")
 
 let globalState = {

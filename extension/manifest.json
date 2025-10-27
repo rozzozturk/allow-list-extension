@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Keepnet Whitelist Assistant for Office 365",
+  "name": "Keepnet Allow List Assistant for Office 365",
   "version": "3.1.0",
-  "description": "Office 365'te Keepnet phishing simülasyonları için otomatik white list yapılandırma asistanı - Akıllı navigasyon, gerçek zamanlı doğrulama ve kanıt toplama",
+  "description": "Office 365'te Keepnet phishing simülasyonları için otomatik allow list yapılandırma asistanı - Akıllı navigasyon, gerçek zamanlı doğrulama ve kanıt toplama",
   "permissions": [
     "storage",
     "tabs",
@@ -30,7 +30,7 @@
     }
   ],
   "action": {
-    "default_title": "Keepnet Whitelist Assistant - Click to Start"
+    "default_title": "Keepnet Allow List Assistant - Click to Start"
   },
   "icons": {
     "16": "icons/icon16.jpg",

@@ -1,6 +1,6 @@
-# Keepnet Whitelist Assistant for Office 365
+# Keepnet Allow List Assistant for Office 365
 
-Office 365'te Keepnet phishing simülasyonları için otomatik white list yapılandırma asistanı. Akıllı navigasyon, gerçek zamanlı doğrulama ve kanıt toplama özellikleri ile Office 365 güvenlik ayarlarını kolayca yapılandırın.
+Office 365'te Keepnet phishing simülasyonları için otomatik allow list yapılandırma asistanı. Akıllı navigasyon, gerçek zamanlı doğrulama ve kanıt toplama özellikleri ile Office 365 güvenlik ayarlarını kolayca yapılandırın.
 
 ## 🚀 Özellikler
 
@@ -25,11 +25,11 @@ Office 365'te Keepnet phishing simülasyonları için otomatik white list yapıl
 - Tehdit İlkeleri
 - Advanced Delivery
 - Phishing Simulation sekmesi
-- Domain ve IP whitelist yapılandırması
+- Domain ve IP allow list yapılandırması
 
 ### 2. Anti-Spam Policies
 - Connection Filter Policy yapılandırması
-- IP adresi whitelist'i
+- IP adresi allow list'i
 - Safe List aktivasyonu
 
 ### 3. Safe Links
@@ -53,8 +53,8 @@ Office 365'te Keepnet phishing simülasyonları için otomatik white list yapıl
 
 1. Bu repository'yi klonlayın:
 ```bash
-git clone https://github.com/yourusername/keepnet-whitelist-assistant.git
-cd keepnet-whitelist-assistant
+git clone https://github.com/yourusername/keepnet-allow-list-assistant.git
+cd keepnet-allow-list-assistant
 ```
 
 2. Chrome'da `chrome://extensions/` sayfasına gidin
@@ -122,7 +122,7 @@ pnpm dev
 ## 📁 Proje Yapısı
 
 ```
-keepnet-whitelist-assistant/
+keepnet-allow-list-assistant/
 ├── app/                    # Next.js app directory
 │   ├── globals.css
 │   ├── layout.tsx
@@ -130,7 +130,7 @@ keepnet-whitelist-assistant/
 ├── components/             # React components
 │   ├── ui/                 # UI components
 │   ├── steps/              # Step components
-│   └── whitelist-wizard.tsx
+│   └── allow-list-wizard.tsx
 ├── extension/              # Chrome extension
 │   ├── manifest.json
 │   ├── background.js

@@ -1,9 +1,9 @@
-import { WhitelistWizard } from "@/components/whitelist-wizard"
+import { AllowListWizard } from "@/components/allow-list-wizard"
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      <WhitelistWizard />
+      <AllowListWizard />
     </main>
   )
 }

@@ -33,9 +33,9 @@ interface PanelPosition {
 
 const TOTAL_STEPS = 8
 const PANEL_SIZE = { width: 400, height: 600 }
-const STORAGE_KEY = 'whitelist_wizard_position'
+const STORAGE_KEY = 'allow_list_wizard_position'
 
-export function WhitelistWizard() {
+export function AllowListWizard() {
   const [state, setState] = useState<WizardState>({
     currentStep: 0,
     language: "tr",

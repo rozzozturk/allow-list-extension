@@ -1,4 +1,4 @@
-// Keepnet Whitelist Assistant v3.1 - Third-Party Phishing Simulations Only
+// Keepnet Allow List Assistant v3.1 - Third-Party Phishing Simulations Only
 // Tek panel (sol-alt), otomatik tıklama, gerçek zamanlı validation, screenshot kanıt sistemi
 
 console.log("[Keepnet v3.1] Content script loaded on", location.href)
@@ -798,7 +798,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     id: 6,
     name: 'spambypass_step6_rule_name',
     title: 'Kural İsmi',
-    description: 'Beyaz liste kuralı için bir isim girin: "Keepnet_Whitelist_AllEdges"',
+    description: 'Beyaz liste kuralı için bir isim girin: "Keepnet_AllowList_AllEdges"',
     target: {
       selector: 'input[data-automation-id="EditTransportRule_Name_TextField"]',
       fallback: [

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Server, Globe, Plus, X, ArrowRight, ArrowLeft, AlertCircle } from "lucide-react"
-import type { WizardState } from "../whitelist-wizard"
+import type { WizardState } from "../allow-list-wizard"
 
 interface ConfigurationStepProps {
   state: WizardState
