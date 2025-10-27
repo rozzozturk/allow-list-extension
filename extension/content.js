@@ -488,7 +488,7 @@ const SAFE_LINKS_STEPS = [
     id: 4,
     name: 'safelinks_step4_safe_links',
     title: 'Safe Links',
-    description: 'Safe Links\'e tıklayın',
+    description: 'Safe Links\'e tıklayın. Eğer Safe Links görünmüyorsa, Microsoft Defender for Office 365 Plan 1 lisansı eksik olabilir.',
     target: {
       selector: 'a:contains("Safe Links")',
       textMatch: /Safe Links/i,
@@ -503,7 +503,12 @@ const SAFE_LINKS_STEPS = [
       return document.location.href.includes('safelinks') || 
              document.querySelector('[aria-label*="Safe Links"]')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    licenseCheck: {
+      required: 'Microsoft Defender for Office 365 Plan 1',
+      message: 'Safe Links özelliği için Microsoft Defender for Office 365 Plan 1 lisansı gereklidir. Bu lisans yoksa Safe Links görünmeyecektir.',
+      skipMessage: 'Safe Links bulunamadı. Lisans eksikliği nedeniyle bu adım atlanıyor ve diğer adımlara geçiliyor.'
+    }
   },
   {
     id: 5,
@@ -1683,13 +1688,21 @@ class AutoClickEngine {
     this.timeout = null
     this.countdown = null
     this.onTimeout = null
+    this.DISABLE_AUTOCLICK_ON_WORKFLOWS_4_6 = true // Flag to disable auto-click on workflows 4-6
   }
   
-  start(element, delay, callback) {
+  start(element, delay, callback, workflowName = null) {
     this.stop()
     
     let remaining = delay
     this.onTimeout = callback
+    this.currentWorkflowName = workflowName
+    
+    // Workflow 4-6 için auto-click'i devre dışı bırak
+    if (workflowName && ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(workflowName) && this.DISABLE_AUTOCLICK_ON_WORKFLOWS_4_6) {
+      console.log(`[Keepnet] Auto-click disabled for ${workflowName} - manual interaction required`)
+      return
+    }
     
     // Countdown göster
     this.countdown = setInterval(() => {
@@ -1704,7 +1717,7 @@ class AutoClickEngine {
     // Timeout
     this.timeout = setTimeout(() => {
       console.log("[Keepnet] Auto-clicking element:", element)
-      this.clickElement(element)
+      this.clickElement(element, workflowName)
       if (callback) callback()
     }, delay)
   }
@@ -1720,10 +1733,29 @@ class AutoClickEngine {
     }
   }
   
-  clickElement(el) {
+  clickElement(el, workflowName = null) {
     if (!el) return
     
     try {
+      // Workflow 4-6 için özel event handling
+      const isWorkflow4To6 = workflowName && ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(workflowName)
+      
+      if (isWorkflow4To6 && this.DISABLE_AUTOCLICK_ON_WORKFLOWS_4_6) {
+        console.log(`[Keepnet] Auto-click disabled for ${workflowName} - manual interaction required`)
+        
+        // Log auto-click attempt
+        if (window.assistant && window.assistant.panel) {
+          window.assistant.panel.logPopupClosureReason('autoClick', workflowName, {
+            elementTag: element.tagName,
+            elementClass: element.className,
+            elementId: element.id,
+            disabled: true
+          })
+        }
+        
+        return
+      }
+      
       // Mouse events dispatch et
       const rect = el.getBoundingClientRect()
       const centerX = rect.left + rect.width / 2
@@ -1731,7 +1763,7 @@ class AutoClickEngine {
       
       const clickEvent = new MouseEvent('click', {
         view: window,
-        bubbles: true,
+        bubbles: isWorkflow4To6 ? false : true, // Workflow 4-6 için event bubbling'i engelle
         cancelable: true,
         clientX: centerX,
         clientY: centerY
@@ -1742,6 +1774,25 @@ class AutoClickEngine {
       // Fallback
       if (el.click) {
         el.click()
+      }
+      
+      // Workflow 4-6 için focus koruması
+      if (isWorkflow4To6) {
+        setTimeout(() => {
+          if (el && typeof el.focus === 'function') {
+            el.focus()
+            
+            // Log focus restoration
+            if (window.assistant && window.assistant.panel) {
+              window.assistant.panel.logPopupClosureReason('focusLoss', workflowName, {
+                elementTag: el.tagName,
+                elementClass: el.className,
+                elementId: el.id,
+                restored: true
+              })
+            }
+          }
+        }, 100)
       }
     } catch (e) {
       console.error("[Keepnet] Click error:", e)
@@ -1770,6 +1821,7 @@ class FloatingPanel {
     this.createPanel()
     this.attachEventListeners()
     this.injectStyles()
+    this.setupGlobalClickProtection()
   }
   
   createPanel() {
@@ -2028,6 +2080,125 @@ class FloatingPanel {
     
     // Animate entrance
     AnimationUtils.animate(errorEl, 'fadeInUp', 400)
+  }
+  
+  setupGlobalClickProtection() {
+    // Workflow 4-6 için global click koruması
+    document.addEventListener('click', (e) => {
+      const isWorkflow4To6 = window.assistant && ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(window.assistant.workflowName)
+      
+      if (isWorkflow4To6) {
+        // Microsoft Exchange form'unun açık olduğunu kontrol et
+        const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
+        
+        if (exchangeForm) {
+          // Keepnet panel'i dışında bir yere tıklanıyorsa
+          const keepnetPanel = document.getElementById('keepnet-panel')
+          if (keepnetPanel && !keepnetPanel.contains(e.target)) {
+            console.log("[Keepnet] Global click protection - preventing outside click on Exchange form")
+            
+            // Log popup closure attempt
+            this.logPopupClosureReason('outsideClick', window.assistant.workflowName, {
+              targetElement: e.target.tagName,
+              targetClass: e.target.className,
+              targetId: e.target.id,
+              clickPosition: { x: e.clientX, y: e.clientY }
+            })
+            
+            // Exchange form'un kapanmasını engelle
+            e.preventDefault()
+            e.stopPropagation()
+            e.stopImmediatePropagation()
+            
+            // Form'a focus'u geri ver
+            setTimeout(() => {
+              if (exchangeForm && typeof exchangeForm.focus === 'function') {
+                exchangeForm.focus()
+              }
+            }, 10)
+            
+            return false
+          }
+        }
+      }
+    }, true) // Capture phase'de dinle
+    
+    // ESC tuşu koruması
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const isWorkflow4To6 = window.assistant && ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(window.assistant.workflowName)
+        
+        if (isWorkflow4To6) {
+          const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
+          
+          if (exchangeForm) {
+            console.log("[Keepnet] ESC key protection - preventing Exchange form closure")
+            
+            // Log popup closure attempt
+            this.logPopupClosureReason('esc', window.assistant.workflowName, {
+              keyCode: e.keyCode,
+              key: e.key,
+              ctrlKey: e.ctrlKey,
+              altKey: e.altKey,
+              shiftKey: e.shiftKey
+            })
+            
+            e.preventDefault()
+            e.stopPropagation()
+            e.stopImmediatePropagation()
+            
+            // Form'a focus'u geri ver
+            setTimeout(() => {
+              if (exchangeForm && typeof exchangeForm.focus === 'function') {
+                exchangeForm.focus()
+              }
+            }, 10)
+            
+            return false
+          }
+        }
+      }
+    }, true) // Capture phase'de dinle
+  }
+  
+  logPopupClosureReason(reason, workflowName, additionalInfo = {}) {
+    const timestamp = new Date().toISOString()
+    const logData = {
+      timestamp,
+      reason,
+      workflowName,
+      url: window.location.href,
+      userAgent: navigator.userAgent,
+      ...additionalInfo
+    }
+    
+    console.log(`[Keepnet] Popup closure detected:`, logData)
+    
+    // Development ortamında detaylı log
+    if (window.location.hostname === 'localhost' || window.location.hostname.includes('dev')) {
+      console.group(`[Keepnet] 🔍 Popup Closure Analysis`)
+      console.log('Reason:', reason)
+      console.log('Workflow:', workflowName)
+      console.log('URL:', window.location.href)
+      console.log('Additional Info:', additionalInfo)
+      console.log('Exchange Form Present:', !!document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal'))
+      console.groupEnd()
+    }
+    
+    // Storage'a kaydet (opsiyonel)
+    try {
+      const existingLogs = JSON.parse(localStorage.getItem('keepnet_popup_logs') || '[]')
+      existingLogs.push(logData)
+      
+      // Son 50 log'u tut
+      if (existingLogs.length > 50) {
+        existingLogs.splice(0, existingLogs.length - 50)
+      }
+      
+      localStorage.setItem('keepnet_popup_logs', JSON.stringify(existingLogs))
+    } catch (e) {
+      console.warn('[Keepnet] Could not save popup closure log:', e)
+    }
   }
   
   showSuccess(message) {
@@ -2573,7 +2744,36 @@ class KeepnetAssistant {
         nextBtn.onclick = (e) => {
           e.preventDefault()
           e.stopPropagation()
+          e.stopImmediatePropagation()
+          
           console.log("[Keepnet] Next button clicked")
+          console.log("[Keepnet] Current workflow:", this.workflowName)
+          
+          // Workflow 4-6 için popup kapanma koruması
+          const isWorkflow4To6 = ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(this.workflowName)
+          if (isWorkflow4To6) {
+            console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure on next step`)
+            
+            // Log next button click
+            this.panel?.logPopupClosureReason('nextBtn', this.workflowName, {
+              buttonId: 'keepnet-next-btn',
+              currentStep: this.currentStep,
+              totalSteps: this.currentWorkflow.length
+            })
+            
+            // Microsoft Exchange form'unun açık olduğunu kontrol et
+            const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
+            if (exchangeForm) {
+              console.log("[Keepnet] Exchange form detected - maintaining focus")
+              // Form'a focus'u geri ver
+              setTimeout(() => {
+                if (exchangeForm && typeof exchangeForm.focus === 'function') {
+                  exchangeForm.focus()
+                }
+              }, 50)
+            }
+          }
+          
           this.nextStep()
         }
       }
@@ -2582,7 +2782,36 @@ class KeepnetAssistant {
         prevBtn.onclick = (e) => {
           e.preventDefault()
           e.stopPropagation()
+          e.stopImmediatePropagation()
+          
           console.log("[Keepnet] Prev button clicked")
+          console.log("[Keepnet] Current workflow:", this.workflowName)
+          
+          // Workflow 4-6 için popup kapanma koruması
+          const isWorkflow4To6 = ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(this.workflowName)
+          if (isWorkflow4To6) {
+            console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure on prev step`)
+            
+            // Log prev button click
+            this.panel?.logPopupClosureReason('prevBtn', this.workflowName, {
+              buttonId: 'keepnet-prev-btn',
+              currentStep: this.currentStep,
+              totalSteps: this.currentWorkflow.length
+            })
+            
+            // Microsoft Exchange form'unun açık olduğunu kontrol et
+            const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
+            if (exchangeForm) {
+              console.log("[Keepnet] Exchange form detected - maintaining focus")
+              // Form'a focus'u geri ver
+              setTimeout(() => {
+                if (exchangeForm && typeof exchangeForm.focus === 'function') {
+                  exchangeForm.focus()
+                }
+              }, 50)
+            }
+          }
+          
           this.prevStep()
         }
       }
@@ -2685,7 +2914,7 @@ class KeepnetAssistant {
           if (step.autoClick) {
             this.autoClick.start(element, AUTO_CLICK_TIMEOUT, async () => {
               await this.onElementClicked(step)
-            })
+            }, this.workflowName)
           }
           
           // Manual click listener
@@ -2695,6 +2924,20 @@ class KeepnetAssistant {
           }, { once: true })
         } else {
           console.warn("[Keepnet] Element not found:", step.title)
+          
+          // Safe Links için özel lisans kontrolü
+          if (step.name === 'safelinks_step4_safe_links' && step.licenseCheck) {
+            console.log("[Keepnet] Safe Links not found - checking license requirement")
+            this.panel.showError(`⚠️ Safe Links Bulunamadı\n\n${step.licenseCheck.message}\n\n${step.licenseCheck.skipMessage}`)
+            
+            // Otomatik olarak bir sonraki adıma geç
+            setTimeout(async () => {
+              console.log("[Keepnet] Auto-skipping Safe Links step due to license requirement")
+              await this.nextStep()
+            }, 3000)
+            return
+          }
+          
           this.panel.showError(`⚠️ Element bulunamadı: ${step.title}\n\nLütfen manuel olarak devam edin.`)
         }
       }
@@ -2775,6 +3018,34 @@ class KeepnetAssistant {
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(124, 58, 237, 0.3)'">
             🌐 Sayfaya Git
           </button>
+        </div>
+      `
+    }
+    
+    // Safe Links lisans uyarısı için özel bölüm (Workflow 3 step 4)
+    if (step.id === 4 && step.name === 'safelinks_step4_safe_links') {
+      html += `
+        <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.08)); border: 2px solid #f59e0b; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">⚠</div>
+            Lisans Gerekliliği
+          </div>
+          <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 1px solid #e2e8f0;">
+            <div style="font-size: 13px; color: #374151; line-height: 1.5;">
+              <strong>Microsoft Defender for Office 365 Plan 1</strong> lisansı gereklidir.<br>
+              Bu lisans yoksa Safe Links özelliği görünmeyecektir.
+            </div>
+          </div>
+          <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.08)); border: 1px solid #ef4444; border-radius: 8px; padding: 12px;">
+            <div style="font-size: 12px; color: #dc2626; font-weight: 600; margin-bottom: 8px;">
+              Safe Links Bulunamazsa:
+            </div>
+            <div style="font-size: 12px; color: #7f1d1d; line-height: 1.4;">
+              • Bu adım otomatik olarak atlanacak<br>
+              • Diğer adımlara geçilecek<br>
+              • Workflow devam edecek
+            </div>
+          </div>
         </div>
       `
     }
@@ -3516,7 +3787,35 @@ class KeepnetAssistant {
         continueBtn.addEventListener('click', async (e) => {
           e.preventDefault()
           e.stopPropagation()
+          e.stopImmediatePropagation()
+          
           console.log("[Keepnet] Continue workflow button clicked!")
+          console.log("[Keepnet] Current workflow:", this.workflowName)
+          
+          // Workflow 4-6 için popup kapanma koruması
+          const isWorkflow4To6 = ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(this.workflowName)
+          if (isWorkflow4To6) {
+            console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure`)
+            
+            // Log continue button click
+            this.panel?.logPopupClosureReason('continueBtn', this.workflowName, {
+              buttonId: 'keepnet-continue-workflow-btn',
+              buttonText: continueBtn.textContent,
+              hasNextWorkflow: hasNextWorkflow
+            })
+            
+            // Microsoft Exchange form'unun açık olduğunu kontrol et
+            const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
+            if (exchangeForm) {
+              console.log("[Keepnet] Exchange form detected - maintaining focus")
+              // Form'a focus'u geri ver
+              setTimeout(() => {
+                if (exchangeForm && typeof exchangeForm.focus === 'function') {
+                  exchangeForm.focus()
+                }
+              }, 50)
+            }
+          }
           
           if (typeof window.keepnetContinueWorkflow === 'function') {
             await window.keepnetContinueWorkflow()
