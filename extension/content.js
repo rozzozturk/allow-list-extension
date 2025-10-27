@@ -267,7 +267,7 @@ const WORKFLOW_STEPS = [
   {
     id: 11,
     name: 'step12_summary',
-    title: 'Tamamlandı! ✅',
+    title: 'Tamamlandı',
     description: 'Tüm adımlar başarıyla tamamlandı',
     isSummary: true
   }
@@ -427,7 +427,7 @@ const THREAT_POLICIES_STEPS = [
   {
     id: 7,
     name: 'antispam_summary',
-    title: 'Tamamlandı! ✅',
+    title: 'Tamamlandı',
     description: 'Anti-Spam yapılandırması başarıyla tamamlandı',
     isSummary: true
   }
@@ -694,7 +694,7 @@ const SAFE_LINKS_STEPS = [
   {
     id: 14,
     name: 'safelinks_summary',
-    title: 'Tamamlandı! ✅',
+    title: 'Tamamlandı',
     description: 'Safe Links yapılandırması tamamlandı. Birkaç saat içinde etkili olacaktır.',
     isSummary: true
   }
@@ -1037,7 +1037,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
   {
     id: 17,
     name: 'spambypass_summary',
-    title: 'Tamamlandı! ✅',
+    title: 'Tamamlandı',
     description: 'Spam Filter Bypass kuralı başarıyla oluşturuldu.',
     isSummary: true
   }
@@ -1194,7 +1194,7 @@ const ATP_LINK_BYPASS_STEPS = [
   {
     id: 7,
     name: 'atplink_summary',
-    title: 'Tamamlandı! ✅',
+    title: 'Tamamlandı',
     description: 'ATP Link Bypass (SkipSafeLinksProcessing) kuralı başarıyla oluşturuldu.',
     isSummary: true
   }
@@ -1351,7 +1351,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
   {
     id: 7,
     name: 'atpattach_summary',
-    title: '🎊 Tebrikler! Tüm Adımları Tamamladınız!',
+    title: 'Tebrikler! Tüm Adımları Tamamladınız!',
     description: 'ATP Attachment Bypass kuralı başarıyla oluşturuldu. Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!',
     isSummary: true
   }
@@ -2176,7 +2176,7 @@ class FloatingPanel {
     
     // Development ortamında detaylı log
     if (window.location.hostname === 'localhost' || window.location.hostname.includes('dev')) {
-      console.group(`[Keepnet] 🔍 Popup Closure Analysis`)
+      console.group(`[Keepnet] Popup Closure Analysis`)
       console.log('Reason:', reason)
       console.log('Workflow:', workflowName)
       console.log('URL:', window.location.href)
@@ -2392,7 +2392,7 @@ class KeepnetAssistant {
       
       if (nextWorkflowName) {
         // Yeni workflow başlatılıyor
-        console.log("[Keepnet] 🚀 Starting new workflow from storage:", nextWorkflowName)
+        console.log("[Keepnet] Starting new workflow from storage:", nextWorkflowName)
         
         if (nextWorkflowName === 'WORKFLOW_2') {
           this.currentWorkflow = THREAT_POLICIES_STEPS
@@ -2403,25 +2403,25 @@ class KeepnetAssistant {
         } else if (nextWorkflowName === 'WORKFLOW_4') {
           this.currentWorkflow = SPAM_FILTER_BYPASS_STEPS
           this.workflowName = 'WORKFLOW_4'
-          console.log("[Keepnet] ✅ WORKFLOW_4 (Spam Filter Bypass) selected!")
+          console.log("[Keepnet] WORKFLOW_4 (Spam Filter Bypass) selected!")
         } else if (nextWorkflowName === 'WORKFLOW_5') {
           this.currentWorkflow = ATP_LINK_BYPASS_STEPS
           this.workflowName = 'WORKFLOW_5'
-          console.log("[Keepnet] ✅ WORKFLOW_5 (ATP Link Bypass) selected!")
+          console.log("[Keepnet] WORKFLOW_5 (ATP Link Bypass) selected!")
         } else if (nextWorkflowName === 'WORKFLOW_6') {
           this.currentWorkflow = ATP_ATTACHMENT_BYPASS_STEPS
           this.workflowName = 'WORKFLOW_6'
-          console.log("[Keepnet] ✅ WORKFLOW_6 (ATP Attachment Bypass) selected!")
+          console.log("[Keepnet] WORKFLOW_6 (ATP Attachment Bypass) selected!")
         }
         
         // Workflow değiştiği için tüm state'i temizle
-        console.log("[Keepnet] 🧹 Clearing all state for new workflow...")
+        console.log("[Keepnet] Clearing all state for new workflow...")
         this.currentStep = 0
         this.stepResults = {}
         await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0)
         await Storage.set(STORAGE_KEYS.STEP_RESULTS, {})
         
-        // ⚠️ ÖNEMLI: nextWorkflowName varsa, URL kontrolünü ATLAMA!
+        // ÖNEMLI: nextWorkflowName varsa, URL kontrolünü ATLAMA!
         // Workflow zaten yukarıda seçildi, URL'ye bakmaya gerek yok
       } else {
         // nextWorkflowName YOK, URL'ye göre workflow belirle
@@ -2483,10 +2483,10 @@ class KeepnetAssistant {
       // Global fonksiyonları tanımla (summary ekranı için)
       this.setupGlobalFunctions()
       
-      // ✅ YENİ: "Git ve Düzelt" modunu kontrol et
+      // YENİ: "Git ve Düzelt" modunu kontrol et
       const fixingStep = await Storage.get('keepnet_fixing_step')
       if (fixingStep) {
-        console.log("[Keepnet] 🔧 Fixing mode detected! Going to step:", fixingStep)
+        console.log("[Keepnet] Fixing mode detected! Going to step:", fixingStep)
         
         // Fixing flag'ini temizle
         await Storage.set('keepnet_fixing_step', null)
@@ -2536,9 +2536,9 @@ class KeepnetAssistant {
         let nextWorkflow = null
         let nextWorkflowName = ''
         
-        console.log("[Keepnet] 🔍 Determining next workflow from:", assistant.workflowName)
+        console.log("[Keepnet] Determining next workflow from:", assistant.workflowName)
         
-        // ✅ DOĞRU SIRALAMA
+        // DOĞRU SIRALAMA
         if (assistant.workflowName === 'WORKFLOW_1') {
           console.log("[Keepnet] Starting WORKFLOW_2...")
           nextWorkflow = THREAT_POLICIES_STEPS
@@ -2560,12 +2560,12 @@ class KeepnetAssistant {
           nextWorkflowName = 'WORKFLOW_5'
           
         } else if (assistant.workflowName === 'WORKFLOW_5') {
-          // 🎯 WORKFLOW_5 -> WORKFLOW_6 AYNI SAYFADA!
+          // WORKFLOW_5 -> WORKFLOW_6 AYNI SAYFADA!
           console.log("[Keepnet] Starting WORKFLOW_6 on SAME PAGE...")
           nextWorkflow = ATP_ATTACHMENT_BYPASS_STEPS
           nextWorkflowName = 'WORKFLOW_6'
           
-          // ⚡ ÖNEMLI: Aynı sayfada workflow değiştir!
+          // ÖNEMLI: Aynı sayfada workflow değiştir!
           assistant.currentWorkflow = nextWorkflow
           assistant.workflowName = nextWorkflowName
           assistant.currentStep = 0
@@ -2581,9 +2581,9 @@ class KeepnetAssistant {
             footer.style.display = 'flex'
           }
           
-          console.log("[Keepnet] 🚀 Starting WORKFLOW_6 Step 1...")
+          console.log("[Keepnet] Starting WORKFLOW_6 Step 1...")
           await assistant.executeStep(1)
-          console.log("[Keepnet] ✅ WORKFLOW_6 started!")
+          console.log("[Keepnet] WORKFLOW_6 started!")
           return // 🛑 Burada return et, sayfa değiştirme!
           
         } else if (assistant.workflowName === 'WORKFLOW_6') {
@@ -3050,76 +3050,46 @@ class KeepnetAssistant {
       `
     }
     
-    // Simülasyon URL'leri için özel bölüm (Workflow 1 step 10)
+        // Simülasyon URL'leri için özel bölüm (Workflow 1 step 10) - Note: "Tümünü Kopyala" removed, moved to IP step
     if (step.id === 9 && step.name === 'step10_simulation_urls_input') {
-      const domains = [
-        'signin-authzone.com', 'verifycloudaccess.com', 'akibadem.org', 'isdestek.org', 'gartnerpeer.com',
-        'global-cloud-llc.com', 'cloudverification.online', 'accountaccesses.com', 'shoppingcenter.site',
-        'hesapdogrulama.info', 'banksecure.info', 'meetingonline-us.com', 'digitalsecurelogin.co',
-        'secureloginshop.net', 'encryptedconnections.info', 'trendyoll.club', 'kurumsalgiris.com',
-        'yoursecuregateway.com', 'securemygateway.com', 'hadisendekatil.com', 'updatemyinformation.com',
-        'secure-passchanges.com', 'swift-intel.com', 'hepsibureda.com', 'securely-logout.com',
-        'sigortacilarbirligi.com', 'btyardimmasasi.com', 'sirketiciduyuru.com', 'bilgilerimiguncelle.com',
-        'securelogout.com', 'securelinked-in.com', 'theconnectionsuccess.com', 'sigortacilikhizmetleri.me',
-        'securebankingservices.net', 'guvenlibankacilik.com', 'insurance-services.me', 'btservisleri.com',
-        'secureloginonline.net', 'insan-kaynaklari.me', 'getaccess.store'
-      ]
-      
+      // Sadece bilgi göster, kopyalama butonu yok (IP adımına taşındı)
       html += `
-        <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.08)); border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-          <div style="font-size: 14px; font-weight: 600; color: #047857; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">S</div>
-            Simülasyon URL Listesi
+        <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.08)); border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-bottom: 16px;">                                               
+          <div style="font-size: 14px; font-weight: 600; color: #047857; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">                   
+            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">S</div>                                                                   
+            Simülasyon URL Bilgisi
           </div>
-          <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; font-size: 12px; color: #374151;">
-              ${domains.map(domain => `<div style="padding: 2px 4px; background: #f0fdf4; border-radius: 4px; border-left: 3px solid #10b981;">${domain}</div>`).join('')}
-            </div>
+          <div style="font-size: 12px; color: #065f46; line-height: 1.5;">
+            Bu adımda simülasyon URL'lerini elle girmeniz gerekmektedir.
           </div>
-          <button id="keepnet-copy-simulation-urls-btn" style="
-            width: 100%;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(16, 185, 129, 0.4)'"
-             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.3)'">
-            Tümünü Kopyala
-          </button>
         </div>
       `
     }
     
-    // Domain listesi için özel bölüm (Workflow 1 step 8)
+        // Domain listesi için özel bölüm (Workflow 1 step 8)
     if (step.id === 7 && step.name === 'step8_domains_input') {
       const domains = [
-        'signin-authzone.com', 'verifycloudaccess.com', 'akibadem.org', 'isdestek.org', 'gartnerpeer.com',
-        'global-cloud-llc.com', 'cloudverification.online', 'accountaccesses.com', 'shoppingcenter.site',
-        'hesapdogrulama.info', 'banksecure.info', 'meetingonline-us.com', 'digitalsecurelogin.co',
-        'secureloginshop.net', 'encryptedconnections.info', 'trendyoll.club', 'kurumsalgiris.com',
-        'yoursecuregateway.com', 'securemygateway.com', 'hadisendekatil.com', 'updatemyinformation.com',
-        'secure-passchanges.com', 'swift-intel.com', 'hepsibureda.com', 'securely-logout.com',
-        'sigortacilarbirligi.com', 'btyardimmasasi.com', 'sirketiciduyuru.com', 'bilgilerimiguncelle.com',
-        'securelogout.com', 'securelinked-in.com', 'theconnectionsuccess.com', 'sigortacilikhizmetleri.me',
-        'securebankingservices.net', 'guvenlibankacilik.com', 'insurance-services.me', 'btservisleri.com',
+        'signin-authzone.com', 'verifycloudaccess.com', 'akibadem.org', 'isdestek.org', 'gartnerpeer.com',                                                      
+        'global-cloud-llc.com', 'cloudverification.online', 'accountaccesses.com', 'shoppingcenter.site',                                                       
+        'hesapdogrulama.info', 'banksecure.info', 'meetingonline-us.com', 'digitalsecurelogin.co',                                                              
+        'secureloginshop.net', 'encryptedconnections.info', 'trendyoll.club', 'kurumsalgiris.com',                                                              
+        'yoursecuregateway.com', 'securemygateway.com', 'hadisendekatil.com', 'updatemyinformation.com',                                                        
+        'secure-passchanges.com', 'swift-intel.com', 'hepsibureda.com', 'securely-logout.com',                                                                  
+        'sigortacilarbirligi.com', 'btyardimmasasi.com', 'sirketiciduyuru.com', 'bilgilerimiguncelle.com',                                                      
+        'securelogout.com', 'securelinked-in.com', 'theconnectionsuccess.com', 'sigortacilikhizmetleri.me',                                                     
+        'securebankingservices.net', 'guvenlibankacilik.com', 'insurance-services.me', 'btservisleri.com',                                                      
         'secureloginonline.net', 'insan-kaynaklari.me', 'getaccess.store'
       ]
       
       html += `
-        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(29, 78, 216, 0.08)); border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-          <div style="font-size: 14px; font-weight: 600; color: #1e40af; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">D</div>
+        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(29, 78, 216, 0.08)); border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; margin-bottom: 16px;">                                               
+          <div style="font-size: 14px; font-weight: 600; color: #1e40af; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">                   
+            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">D</div>                                                                   
             Domain Listesi
           </div>
-          <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; font-size: 12px; color: #374151;">
-              ${domains.map(domain => `<div style="padding: 2px 4px; background: #f8fafc; border-radius: 4px; border-left: 3px solid #3b82f6;">${domain}</div>`).join('')}
+          <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0;">                                                                              
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; font-size: 12px; color: #374151;">                     
+              ${domains.map(domain => `<div style="padding: 2px 4px; background: #f8fafc; border-radius: 4px; border-left: 3px solid #3b82f6;">${domain}</div>`).join('')}                                                                      
             </div>
           </div>
           <button id="keepnet-copy-domains-btn" style="
@@ -3134,8 +3104,43 @@ class KeepnetAssistant {
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(59, 130, 246, 0.4)'"
-             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)'">
+          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(59, 130, 246, 0.4)'"                                    
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)'">                                      
+            Tümünü Kopyala
+          </button>
+        </div>
+      `
+    }
+    
+    // IP Adresleri için özel bölüm - Tümünü Kopyala butonu (Workflow 1 step 8 - IP Ekle)
+    if (step.id === 8 && step.name === 'step9_ip_input') {
+      const ips = ['149.72.161.59', '149.72.42.201', '149.72.154.87']
+      
+      html += `
+        <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(99, 102, 241, 0.08)); border: 2px solid #7c3aed; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #5b21b6; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">IP</div>
+            IP Adresi Listesi
+          </div>
+          <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 4px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; font-size: 12px; color: #374151;">
+              ${ips.map(ip => `<div style="padding: 2px 4px; background: #faf5ff; border-radius: 4px; border-left: 3px solid #7c3aed;">${ip}</div>`).join('')}
+            </div>
+          </div>
+          <button id="keepnet-copy-ips-btn" style="
+            width: 100%;
+            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(124, 58, 237, 0.4)'"
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(124, 58, 237, 0.3)'">
             Tümünü Kopyala
           </button>
         </div>
