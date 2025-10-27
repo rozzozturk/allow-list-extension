@@ -3738,15 +3738,15 @@ class KeepnetAssistant {
           <button id="keepnet-continue-workflow-btn" ${!hasNextWorkflow ? 'disabled' : ''} class="keepnet-workflow-btn" style="
             flex: 1;
             padding: 10px 16px;
-            background: ${hasNextWorkflow ? 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)' : '#9ca3af'};
+            background: ${hasNextWorkflow ? 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)' : 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)'};
             color: white;
             border: none;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
-            cursor: ${hasNextWorkflow ? 'pointer' : 'not-allowed'};
+            cursor: ${hasNextWorkflow ? 'pointer' : 'default'};
             transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
+            box-shadow: ${hasNextWorkflow ? '0 2px 4px rgba(124, 58, 237, 0.3)' : '0 2px 8px rgba(167, 139, 250, 0.4)'};
           ">
             ${hasNextWorkflow ? '➡️' : '✅'} ${nextWorkflowText}
           </button>
