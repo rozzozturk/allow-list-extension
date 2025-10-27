@@ -1498,7 +1498,7 @@ const AnimationUtils = {
   
   // Confetti effect for completion
   showConfetti(container) {
-    const colors = ['#7c3aed', '#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd']
+    const colors = ['#4a9eff', '#5dade2', '#ffffff', '#2d2d4a', '#3a3a5c']
     const confettiCount = 50
     
     for (let i = 0; i < confettiCount; i++) {
@@ -1839,10 +1839,10 @@ class FloatingPanel {
       left: ${this.position.x}px !important;
       width: ${PANEL_SIZE.width}px !important;
       height: ${PANEL_SIZE.height}px !important;
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
-      border: 1px solid rgba(226, 232, 240, 0.8) !important;
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%) !important;
+      border: 2px solid #4a9eff !important;
       border-radius: 20px !important;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 0 30px rgba(74, 158, 255, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
       z-index: 2147483647 !important;
       display: flex !important;
       flex-direction: column !important;
@@ -1867,7 +1867,7 @@ class FloatingPanel {
     // Header
     this.header = document.createElement('div')
     this.header.style.cssText = `
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      background: linear-gradient(135deg, #2d2d4a 0%, #3a3a5c 100%);
       color: white;
       padding: 16px 20px;
       cursor: move;
@@ -1882,7 +1882,7 @@ class FloatingPanel {
     
     this.header.innerHTML = `
       <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">K</div>
+        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e 0%, #4a9eff 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">K</div>
         <div>
           <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Keepnet Assistant</div>
           <div style="font-size: 11px; opacity: 0.8;" id="keepnet-step-indicator">Enterprise Security Configuration</div>
@@ -1919,7 +1919,7 @@ class FloatingPanel {
       <div id="keepnet-progress-bar" style="
         width: 0%;
         height: 100%;
-        background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+        background: linear-gradient(90deg, #4a9eff 0%, #5dade2 100%);
         transition: width 0.4s ease;
         border-radius: 0 0 20px 0;
       "></div>
@@ -1933,7 +1933,7 @@ class FloatingPanel {
       flex: 1;
       overflow-y: auto;
       padding: 20px;
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%);
     `
     
     // Footer
@@ -1941,8 +1941,8 @@ class FloatingPanel {
     this.footer.id = 'keepnet-panel-footer'
     this.footer.style.cssText = `
       padding: 16px 20px;
-      background: rgba(255, 255, 255, 0.8);
-      border-top: 1px solid rgba(226, 232, 240, 0.5);
+      background: rgba(26, 26, 46, 0.8);
+      border-top: 1px solid rgba(74, 158, 255, 0.3);
       display: flex;
       gap: 10px;
       justify-content: space-between;
@@ -2261,14 +2261,17 @@ class FloatingPanel {
       }
       
       .keepnet-btn-primary {
-        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-        color: white;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        background: #FFFFFF;
+        color: #000000;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        font-weight: 600;
       }
       
       .keepnet-btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
       }
       
       .keepnet-btn-primary:active {
@@ -2276,16 +2279,18 @@ class FloatingPanel {
       }
       
       .keepnet-btn-secondary {
-        background: rgba(255, 255, 255, 0.9);
-        color: #374151;
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        background: rgba(255, 255, 255, 0.1);
+        color: #FFFFFF;
+        border: 1px solid rgba(74, 158, 255, 0.3);
+        border-radius: 12px;
         backdrop-filter: blur(10px);
+        font-weight: 500;
       }
       
       .keepnet-btn-secondary:hover {
-        background: rgba(248, 250, 252, 0.9);
+        background: rgba(255, 255, 255, 0.2);
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
       }
       
       #keepnet-panel-body::-webkit-scrollbar {
@@ -2293,18 +2298,18 @@ class FloatingPanel {
       }
       
       #keepnet-panel-body::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
+        background: linear-gradient(135deg, #4a9eff 0%, #5dade2 100%);
         border-radius: 3px;
       }
       
       .keepnet-highlight {
-        outline: 3px solid #3b82f6 !important;
+        outline: 3px solid #4a9eff !important;
         outline-offset: 3px !important;
-        background-color: rgba(59, 130, 246, 0.08) !important;
+        background-color: rgba(74, 158, 255, 0.08) !important;
         box-shadow: 
-          0 0 0 8px rgba(59, 130, 246, 0.2),
-          0 0 30px rgba(59, 130, 246, 0.3),
-          inset 0 0 20px rgba(59, 130, 246, 0.05) !important;
+          0 0 0 8px rgba(74, 158, 255, 0.2),
+          0 0 30px rgba(74, 158, 255, 0.3),
+          inset 0 0 20px rgba(74, 158, 255, 0.05) !important;
         position: relative !important;
         z-index: 999998 !important;
         animation: keepnet-pulse 2s ease-in-out infinite !important;
@@ -2332,7 +2337,7 @@ class FloatingPanel {
       
       .keepnet-tooltip {
         position: fixed;
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        background: linear-gradient(135deg, #2d2d4a 0%, #3a3a5c 100%);
         color: white;
         padding: 16px 24px;
         border-radius: 16px;
@@ -3009,10 +3014,10 @@ class KeepnetAssistant {
   renderStepContent(step) {
     let html = `
       <div class="keepnet-step-content">
-        <h3 style="margin: 0 0 8px 0; font-size: 15px; color: #111827;">
+        <h3 style="margin: 0 0 8px 0; font-size: 15px; color: #FFFFFF;">
           ${step.title}
         </h3>
-        <p style="margin: 0 0 12px 0; font-size: 13px; color: #6b7280; line-height: 1.5;">
+        <p style="margin: 0 0 12px 0; font-size: 13px; color: #E2E8F0; line-height: 1.5;">
           ${step.description}
         </p>
     `
@@ -3020,13 +3025,13 @@ class KeepnetAssistant {
     // Navigation step için "Sayfaya Git" butonu
     if (step.isNavigation && step.navigate) {
       html += `
-        <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(99, 102, 241, 0.08)); border: 2px solid #7c3aed; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-          <div style="font-size: 13px; font-weight: 600; color: #5b21b6; margin-bottom: 8px;">
+        <div style="background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(45, 45, 74, 0.8)); border: 2px solid #4a9eff; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+          <div style="font-size: 13px; font-weight: 600; color: #4a9eff; margin-bottom: 8px;">
             ${step.title}
           </div>
           <button id="keepnet-navigate-btn" data-url="${step.navigate}" style="
             width: 100%;
-            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            background: linear-gradient(135deg, #4a9eff 0%, #5dade2 100%);
             color: white;
             border: none;
             border-radius: 6px;
@@ -3047,13 +3052,13 @@ class KeepnetAssistant {
     // Step 1 Workflow 1 için eski buton (geriye dönük uyumluluk)
     if (step.id === 1 && step.name === 'step1_home') {
       html += `
-        <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(99, 102, 241, 0.08)); border: 2px solid #7c3aed; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-          <div style="font-size: 13px; font-weight: 600; color: #5b21b6; margin-bottom: 8px;">
+        <div style="background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(45, 45, 74, 0.8)); border: 2px solid #4a9eff; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+          <div style="font-size: 13px; font-weight: 600; color: #4a9eff; margin-bottom: 8px;">
             Microsoft Security Center'a git
           </div>
           <button id="keepnet-go-to-security-btn" style="
             width: 100%;
-            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            background: linear-gradient(135deg, #4a9eff 0%, #5dade2 100%);
             color: white;
             border: none;
             border-radius: 6px;
@@ -3167,19 +3172,19 @@ class KeepnetAssistant {
       const ips = ['149.72.161.59', '149.72.42.201', '149.72.154.87']
       
       html += `
-        <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(99, 102, 241, 0.08)); border: 2px solid #7c3aed; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-          <div style="font-size: 14px; font-weight: 600; color: #5b21b6; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">IP</div>
+        <div style="background: linear-gradient(135deg, rgba(107, 114, 128, 0.08), rgba(75, 85, 99, 0.08)); border: 2px solid #6b7280; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">IP</div>
             IP Adresi Listesi
           </div>
           <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 4px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; font-size: 12px; color: #374151;">
-              ${ips.map(ip => `<div style="padding: 2px 4px; background: #faf5ff; border-radius: 4px; border-left: 3px solid #7c3aed;">${ip}</div>`).join('')}
+              ${ips.map(ip => `<div style="padding: 2px 4px; background: #f3f4f6; border-radius: 4px; border-left: 3px solid #6b7280;">${ip}</div>`).join('')}
             </div>
           </div>
           <button id="keepnet-copy-ips-btn" style="
             width: 100%;
-            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -3188,9 +3193,9 @@ class KeepnetAssistant {
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
-          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(124, 58, 237, 0.4)'"
-             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(124, 58, 237, 0.3)'">
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(107, 114, 128, 0.4)'"
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(107, 114, 128, 0.3)'">
             Tümünü Kopyala
           </button>
         </div>
@@ -3200,18 +3205,18 @@ class KeepnetAssistant {
     // IP Adresleri için özel liste (Workflow 1 step 9 veya Workflow 2 step 5)
     if (step.id === 9 || step.name === 'antispam_step5_add_ips') {
       html += `
-        <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(99, 102, 241, 0.08)); border: 2px solid #7c3aed; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-          <div style="font-size: 13px; font-weight: 600; color: #5b21b6; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+        <div style="background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(45, 45, 74, 0.8)); border: 2px solid #4a9eff; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+          <div style="font-size: 13px; font-weight: 600; color: #4a9eff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
             📋 White List IP Adresleri
           </div>
-          <div style="background: white; border-radius: 6px; padding: 8px; margin-bottom: 8px; font-family: 'Courier New', monospace; font-size: 13px; color: #1f2937;">
+          <div style="background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 8px; margin-bottom: 8px; font-family: 'Courier New', monospace; font-size: 13px; color: #E2E8F0;">
             <div style="padding: 4px 0;">149.72.161.59</div>
             <div style="padding: 4px 0;">149.72.42.201</div>
             <div style="padding: 4px 0;">149.72.154.87</div>
           </div>
           <button id="keepnet-copy-ips-btn" style="
             width: 100%;
-            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+            background: linear-gradient(135deg, #4a9eff 0%, #5dade2 100%);
             color: white;
             border: none;
             border-radius: 6px;
@@ -3359,10 +3364,10 @@ class KeepnetAssistant {
             const ips = '149.72.161.59\n149.72.42.201\n149.72.154.87'
             navigator.clipboard.writeText(ips).then(() => {
               copyBtn.textContent = 'Kopyalandı!'
-              copyBtn.style.background = 'linear-gradient(135deg, #5b21b6 0%, #4c1d95 100%)'
+              copyBtn.style.background = 'linear-gradient(135deg, #5dade2 0%, #4a9eff 100%)'
               setTimeout(() => {
                 copyBtn.textContent = 'Tümünü Kopyala'
-                copyBtn.style.background = 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)'
+                copyBtn.style.background = 'linear-gradient(135deg, #4a9eff 0%, #5dade2 100%)'
               }, 2000)
             }).catch(err => {
               console.error('[Keepnet] Clipboard error:', err)
@@ -3729,7 +3734,7 @@ class KeepnetAssistant {
     if (this.workflowName === 'WORKFLOW_6') {
       html += `
         <div style="
-          background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+          background: linear-gradient(135deg,rgb(49, 47, 54) 0%,rgb(144, 177, 234) 100%);
           border-radius: 12px;
           padding: 20px;
           margin-top: 16px;
@@ -3788,7 +3793,7 @@ class KeepnetAssistant {
           <button id="keepnet-continue-workflow-btn" ${!hasNextWorkflow ? 'disabled' : ''} class="keepnet-workflow-btn" style="
             flex: 1;
             padding: 10px 16px;
-            background: ${hasNextWorkflow ? 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)' : 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)'};
+            background: ${hasNextWorkflow ? 'linear-gradient(135deg,rgb(35, 30, 58) 0%,rgb(21, 51, 64) 100%)' : 'linear-gradient(135deg,rgb(85, 83, 223) 0%,rgb(48, 74, 221) 100%)'};
             color: white;
             border: none;
             border-radius: 6px;
