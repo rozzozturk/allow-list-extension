@@ -3022,31 +3022,29 @@ class KeepnetAssistant {
       `
     }
     
-    // Safe Links lisans uyarısı için özel bölüm (Workflow 3 step 4)
+    // Safe Links lisans bilgilendirmesi için özel bölüm (Workflow 3 step 4)
     if (step.id === 4 && step.name === 'safelinks_step4_safe_links') {
       html += `
-        <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.08)); border: 2px solid #f59e0b; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-          <div style="font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">⚠</div>
-            Lisans Gerekliliği
+        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(37, 99, 235, 0.08)); border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 600; color: #1e40af; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">ℹ</div>
+            Bilgilendirme: Safe Links Özelliği için Gerekli Lisanslar
           </div>
           <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 1px solid #e2e8f0;">
             <div style="font-size: 13px; color: #374151; line-height: 1.5;">
-              Safe Links özelliği yalnızca şu lisanslarda aktif hale gelir:<br><br>
+              Safe Links özelliği yalnızca aşağıdaki lisanslarla aktif hale gelir:<br><br>
               • <strong>Microsoft Defender for Office 365 Plan 1</strong><br>
               • <strong>Microsoft Defender for Office 365 Plan 2</strong><br>
-              • <strong>Microsoft 365 E5 / A5 / G5</strong> (bu planlarda Defender for Office 365 dahil)<br><br>
+              • <strong>Microsoft 365 E5 / A5 / G5</strong> <br><br>
               Bu lisanslardan biri yoksa Safe Links özelliği görünmeyecektir.
             </div>
           </div>
-          <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.08)); border: 1px solid #ef4444; border-radius: 8px; padding: 12px;">
-            <div style="font-size: 12px; color: #dc2626; font-weight: 600; margin-bottom: 8px;">
-              Safe Links Bulunamazsa:
+          <div style="background: linear-gradient(135deg, rgba(107, 114, 128, 0.08), rgba(75, 85, 99, 0.08)); border: 1px solid #6b7280; border-radius: 8px; padding: 12px;">
+            <div style="font-size: 12px; color: #4b5563; font-weight: 600; margin-bottom: 8px;">
+              🔹 Safe Links görünmüyorsa:
             </div>
-            <div style="font-size: 12px; color: #7f1d1d; line-height: 1.4;">
-              • Bu adım otomatik olarak atlanacak<br>
-              • Diğer adımlara geçilecek<br>
-              • Workflow devam edecek
+            <div style="font-size: 12px; color: #374151; line-height: 1.4;">
+              Bu adımı atlayabilir ve sonraki adımlara geçebilirsiniz.
             </div>
           </div>
         </div>
