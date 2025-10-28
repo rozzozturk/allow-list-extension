@@ -1506,10 +1506,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'BypassClutter Header',
     description: '20) Header name alanına "X-MS-Exchange-Organization-BypassClutter" girin.',
     target: {
-      selector: 'input[placeholder*="header"]',
+      selector: 'input#TextField930[data-automation-id="SetHeader_TextField"]',
       fallback: [
-        'input[aria-label*="header"]',
-        'input.ms-TextField-field'
+        'input.ms-TextField-field.field-681',
+        'input[data-automation-id="SetHeader_TextField"]',
+        'input[placeholder*="header"]'
       ]
     },
     tooltip: 'X-MS-Exchange-Organization-BypassClutter girin',
@@ -1562,13 +1563,13 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Final Save',
     description: '22) Save butonuna tıklayarak tüm kuralları kaydedin.',
     target: {
-      selector: 'button[aria-label*="Save"]',
+      selector: 'span.ms-Button-label.label-722#id__935',
       textMatch: /Save|Kaydet/i,
       fallback: [
-        'button.ms-Button--primary',
-        'button[type="button"]:contains("Save")',
+        'span:contains("Save")',
+        'span.ms-Button-label:contains("Save")',
         'button:contains("Save")',
-        'span.ms-Button-label:contains("Save")'
+        'button.ms-Button--primary'
       ]
     },
     tooltip: 'Tüm kuralları kaydedin',
