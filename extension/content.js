@@ -1370,7 +1370,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return true
     },
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 500,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
