@@ -1538,9 +1538,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
   },
