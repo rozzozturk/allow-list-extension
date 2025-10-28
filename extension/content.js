@@ -1375,13 +1375,13 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Yeni Kural Ekle',
     description: '16) "Do the following" alanının yanındaki + (artı) butonuna tıklayın.',
     target: {
-      selector: 'i[data-icon-name="Add"].ms-Icon.ms-Button-icon',
+      selector: 'button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]',
       fallback: [
-        'i[data-icon-name="Add"]',
-        'i.ms-Icon[data-icon-name="Add"]',
-        'i.ms-Button-icon[data-icon-name="Add"]',
-        'button:contains("+")',
-        '[aria-label*="add"]'
+        'button[title="Add action"]',
+        'button[aria-label="Add action"]',
+        'button.ms-Button--icon[aria-label="Add action"]',
+        'i[data-icon-name="Add"].ms-Button-icon',
+        'button:contains("+")'
       ]
     },
     tooltip: 'Yeni kural eklemek için + butonuna tıklayın',
