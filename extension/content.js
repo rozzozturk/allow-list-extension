@@ -1134,7 +1134,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return true
     },
     realTimeValidation: true,
-    realTimeValidationInterval: 500,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1187,7 +1187,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return true
     },
     realTimeValidation: true,
-    realTimeValidationInterval: 500,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1233,7 +1233,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     manualStep: true,
     autoAdvance: true,
-    autoAdvanceDelay: 30000,
+    autoAdvanceDelay: 5000,
     hideCopyButton: true,
     validation: () => {
       // 3 tane checkbox var mı kontrolü (seçili olmasına gerek yok)
@@ -1244,9 +1244,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return checkboxes && checkboxes.length >= 3
     },
     realTimeValidation: true,
-    realTimeValidationInterval: 3000,
+    realTimeValidationInterval: 500,
     criticalStep: true,
-    waitAfterClick: 3000,
+    waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
