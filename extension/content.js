@@ -1357,13 +1357,13 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvance: true,
     autoAdvanceDelay: 5000,
     validation: () => {
-      // Spesifik Add action butonunu bul
-      const addButton = document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]') ||
-                       document.querySelector('button[title="Add action"]') ||
-                       document.querySelector('button[aria-label="Add action"]') ||
-                       document.querySelector('i[data-icon-name="Add"]') ||
-                       document.querySelector('button.ms-Button--icon[aria-label*="Add"]')
-      console.log('[Keepnet] Step 16 validation - Add Action button found:', !!addButton)
+      // Spesifik Add action butonunu tam HTML ile bul
+      const addButton = document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"][title="Add action"]') ||
+                       document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]') ||
+                       document.querySelector('button[title="Add action"][aria-label="Add action"]') ||
+                       document.querySelector('button.ms-Button.ms-Button--icon[aria-label="Add action"]') ||
+                       document.querySelector('i[data-icon-name="Add"].ms-Button-icon')
+      console.log('[Keepnet] Step 16 validation - Spesifik Add Action button found:', !!addButton)
       return !!addButton
     },
     waitAfterClick: 2000,
