@@ -1354,10 +1354,16 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'İlk kuralı kaydedin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => {
-      return !!document.querySelector('i[data-icon-name="Add"]') || 
-             !!document.querySelector('button:contains("+")')
+      // + butonunu daha güçlü validation ile bul
+      const addIcon = document.querySelector('i[data-icon-name="Add"]') ||
+                     document.querySelector('i.ms-Icon[data-icon-name="Add"]') ||
+                     document.querySelector('i.ms-Button-icon[data-icon-name="Add"]') ||
+                     document.querySelector('button:contains("+")') ||
+                     document.querySelector('[aria-label*="add"]')
+      console.log('[Keepnet] Step 16 validation - Add button found:', !!addIcon)
+      return !!addIcon
     },
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
@@ -1368,11 +1374,13 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Yeni Kural Ekle',
     description: '16) "Do the following" alanının yanındaki + (artı) butonuna tıklayın.',
     target: {
-      selector: 'i[data-icon-name="Add"]',
+      selector: 'i[data-icon-name="Add"].ms-Icon.ms-Button-icon',
       fallback: [
-        'button:contains("+")',
+        'i[data-icon-name="Add"]',
         'i.ms-Icon[data-icon-name="Add"]',
-        'i.ms-Button-icon[data-icon-name="Add"]'
+        'i.ms-Button-icon[data-icon-name="Add"]',
+        'button:contains("+")',
+        '[aria-label*="add"]'
       ]
     },
     tooltip: 'Yeni kural eklemek için + butonuna tıklayın',
