@@ -1163,7 +1163,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     id: 10,
     name: 'spambypass_step10_enter_ip',
     title: 'IP Adreslerini Manuel Girin',
-    description: '9) Lütfen IP adreslerini manuel olarak girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). Bu adımı manuel olarak tamamlamanız gerekiyor.',
+    description: '9) Lütfen IP adreslerini manuel olarak girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). Bu adım 20 saniye sonra otomatik olarak ilerleyecek.',
     target: {
       selector: 'input#TextField637',
       fallback: [
@@ -1177,7 +1177,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     manualStep: true,
     autoAdvance: true,
-    autoAdvanceDelay: 10000,
+    autoAdvanceDelay: 20000,
     hideCopyButton: true,
     validation: () => {
       const input = document.querySelector('input#TextField637') || 
