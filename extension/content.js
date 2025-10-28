@@ -1580,10 +1580,14 @@ const ATP_LINK_BYPASS_STEPS = [
     description: 'Exchange Admin Center Transport Rules sayfasına git.',
     navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
     isNavigation: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return document.location.href.includes('admin.exchange.microsoft.com') && 
              document.location.href.includes('transportrules')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1603,9 +1607,13 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     tooltip: '+ Add a rule butonuna tıklayın',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1756,10 +1764,14 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     description: 'Exchange Admin Center Transport Rules sayfasına git.',
     navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
     isNavigation: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return document.location.href.includes('admin.exchange.microsoft.com') && 
              document.location.href.includes('transportrules')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1779,9 +1791,13 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     tooltip: '+ Add a rule butonuna tıklayın',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
