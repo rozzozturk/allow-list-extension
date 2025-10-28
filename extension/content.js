@@ -3529,6 +3529,11 @@ class KeepnetAssistant {
       // Panel position control
       if (step.panelPosition === 'top-left') {
         this.panel.setPosition('top-left')
+      } else if (step.panelPosition === 'left') {
+        this.panel.setPosition('left')
+      } else if (this.workflowName === 'WORKFLOW_4' && this.currentStep >= 5) {
+        // Workflow 4'te step 5'ten sonra hep sol tarafta kal
+        this.panel.setPosition('left')
       } else {
         this.panel.setPosition('bottom-right') // default
       }
