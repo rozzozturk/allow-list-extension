@@ -1378,18 +1378,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     id: 16,
     name: 'spambypass_step16_save_first_rule',
     title: 'İlk Kuralı Kaydet',
-    description: '15) Save butonuna tıklayarak ilk kuralı kaydedin.',
-    target: {
-      selector: 'span.ms-Button-label',
-      textMatch: /Save/i,
-      fallback: [
-        'button[aria-label*="Save"]',
-        'button.ms-Button--primary',
-        'button[type="button"]:contains("Save")',
-        'button:contains("Save")'
-      ]
-    },
-    tooltip: 'İlk kuralı kaydedin',
+    description: '15) Save butonuna manuel olarak tıklayın. 5 saniye sonra otomatik ilerleyecek.',
+    tooltip: 'Save butonuna manuel tıklayın',
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 5000,
