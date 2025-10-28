@@ -1410,12 +1410,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Yeni Kural Ekle',
     description: '16) "Do the following" alanının yanındaki + (artı) butonuna tıklayın.',
     target: {
-      selector: '.css-675 i[data-icon-name="Add"]',
+      selector: 'span[data-automationid="splitbuttonprimary"] i[data-icon-name="Add"]',
       fallback: [
-        'div.css-675 i[data-icon-name="Add"].ms-Button-icon',
-        '.css-675 i.ms-Icon[data-icon-name="Add"]',
-        'button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]',
+        'span.ms-Button-flexContainer i[data-icon-name="Add"]',
         'i[data-icon-name="Add"].ms-Button-icon',
+        'button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]',
         'button:contains("+")'
       ]
     },
@@ -1435,11 +1434,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Modify Message Properties (2. Kez)',
     description: '17) Tekrar "Modify the message properties" seçeneğini seçin.',
     target: {
-      selector: 'span[id*="Dropdown674-option"]',
-      textMatch: /Modify the message properties/i,
+      selector: 'span#Dropdown470-option',
       fallback: [
-        'span:contains("Modify the message properties")',
-        'span.ms-Dropdown-optionText:contains("Modify the message properties")'
+        'span.ms-Dropdown-title.title-725:contains("Select one")',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'span[id*="Dropdown470"]:contains("Select one")'
       ]
     },
     tooltip: 'Modify the message properties seçin',
@@ -1460,10 +1459,10 @@ const SPAM_FILTER_BYPASS_STEPS = [
     description: '18) "Select one" dropdown\'ından "set a message header" seçeneğini seçin.',
     target: {
       selector: 'span.ms-Dropdown-optionText.dropdownOptionText-706',
-      textMatch: /set a message header/i,
+      textMatch: /Modify the message properties/i,
       fallback: [
-        'span:contains("set a message header")',
-        'span.ms-Dropdown-optionText:contains("set a message header")'
+        'span:contains("Modify the message properties")',
+        'span.ms-Dropdown-optionText:contains("Modify the message properties")'
       ]
     },
     tooltip: 'Set a message header seçin',
@@ -1483,11 +1482,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Enter Text',
     description: '19) "Enter text" butonuna tıklayın.',
     target: {
-      selector: 'button[data-automation-id*="Link_SetHeader"]',
-      textMatch: /Enter text/i,
+      selector: 'span#Dropdown471-option',
       fallback: [
-        'button:contains("Enter text")',
-        'button.ms-Link:contains("Enter text")'
+        'span.ms-Dropdown-titleIsPlaceHolder.title-692:contains("Select one")',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'span[id*="Dropdown471"]:contains("Select one")'
       ]
     },
     tooltip: 'Enter text butonuna tıklayın',
