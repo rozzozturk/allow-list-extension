@@ -20,13 +20,290 @@ let TOTAL_STEPS = 12  // Third-Party Phishing: 12 adım
 let LANGUAGE = 'tr'
 let screenshotCounter = 0
 
+/* ========== i18n SYSTEM ========== */
+// Messages for different languages
+const MESSAGES = {
+  tr: {
+    extensionName: 'Keepnet Allow List Assistant for Office 365',
+    assistantTitle: 'Keepnet Assistant',
+    step: 'Adım',
+    of: '/',
+    continue: 'Continue',
+    previous: 'Previous',
+    summary: 'Summary',
+    summaryReport: '📊 Özet Rapor',
+    goToPage: '🌐 Sayfaya Git',
+    copyAll: 'Tümünü Kopyala',
+    copied: 'Kopyalandı!',
+    error: 'Hata',
+    goAndFix: 'Git ve Düzelt',
+    workflowStep1Title: 'Security Center Ana Sayfası',
+    workflowStep1Description: 'Microsoft Security Center\'da olduğunuzdan emin olun ve devam edin.',
+    workflowStep2Title: 'E-posta ve İşbirliği',
+    workflowStep2Description: 'E-posta ve işbirliği menüsünü açın',
+    workflowStep3Title: 'İlkeler ve Kurallar',
+    workflowStep3Description: 'İlkeler ve kurallar sayfasına gidin',
+    workflowStep4Title: 'Tehdit İlkeleri',
+    workflowStep4Description: 'Tehdit ilkeleri\'ne tıklayın',
+    workflowStep5Title: 'Advanced Delivery',
+    workflowStep5Description: 'Advanced delivery butonuna tıklayın',
+    workflowStep6Title: 'Phishing Simulation Tab',
+    workflowStep6Description: 'Phishing simulation sekmesine tıklayın',
+    workflowStep7Title: 'Düzenle Butonu',
+    workflowStep7Description: 'Düzenle butonuna tıklayın',
+    workflowStep8Title: 'Etki Alanları',
+    workflowStep8Description: 'Bu domainleri girebilirsiniz: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep9Title: 'IP Adresleri',
+    workflowStep9Description: 'White list IP adreslerini girin',
+    workflowStep10Title: 'Simülasyon URL\'leri',
+    workflowStep10Description: 'Bu domainleri girebilirsiniz: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep11Title: 'Kaydet',
+    workflowStep11Description: 'Değişiklikleri kaydedin',
+    workflowStep12Title: 'Tamamlandı! ✅',
+    workflowStep12Description: 'Tüm adımlar başarıyla tamamlandı'
+  },
+  en: {
+    extensionName: 'Keepnet Allow List Assistant for Office 365',
+    assistantTitle: 'Keepnet Assistant',
+    step: 'Step',
+    of: 'of',
+    continue: 'Continue',
+    previous: 'Previous',
+    summary: 'Summary',
+    summaryReport: '📊 Summary Report',
+    goToPage: '🌐 Go to Page',
+    copyAll: 'Copy All',
+    copied: 'Copied!',
+    error: 'Error',
+    goAndFix: 'Go & Fix',
+    workflowStep1Title: 'Security Center Home Page',
+    workflowStep1Description: 'Make sure you are on Microsoft Security Center and proceed.',
+    workflowStep2Title: 'Email & Collaboration',
+    workflowStep2Description: 'Open the Email & Collaboration menu',
+    workflowStep3Title: 'Policies & Rules',
+    workflowStep3Description: 'Go to Policies & Rules page',
+    workflowStep4Title: 'Threat Policies',
+    workflowStep4Description: 'Click on Threat Policies',
+    workflowStep5Title: 'Advanced Delivery',
+    workflowStep5Description: 'Click on Advanced delivery button',
+    workflowStep6Title: 'Phishing Simulation Tab',
+    workflowStep6Description: 'Click on Phishing simulation tab',
+    workflowStep7Title: 'Edit Button',
+    workflowStep7Description: 'Click on the Edit button',
+    workflowStep8Title: 'Domains',
+    workflowStep8Description: 'You can enter these domains: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep9Title: 'IP Addresses',
+    workflowStep9Description: 'Enter white list IP addresses',
+    workflowStep10Title: 'Simulation URLs',
+    workflowStep10Description: 'You can enter these domains: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep11Title: 'Save',
+    workflowStep11Description: 'Save the changes',
+    workflowStep12Title: 'Completed! ✅',
+    workflowStep12Description: 'All steps successfully completed'
+  },
+  de: {
+    extensionName: 'Keepnet Allow List Assistant for Office 365',
+    assistantTitle: 'Keepnet Assistant',
+    step: 'Schritt',
+    of: 'von',
+    continue: 'Weiter',
+    previous: 'Zurück',
+    summary: 'Zusammenfassung',
+    summaryReport: '📊 Zusammenfassungsbericht',
+    goToPage: '🌐 Zur Seite gehen',
+    copyAll: 'Alles kopieren',
+    copied: 'Kopiert!',
+    error: 'Fehler',
+    goAndFix: 'Gehen & Reparieren',
+    workflowStep1Title: 'Security Center Startseite',
+    workflowStep1Description: 'Stellen Sie sicher, dass Sie sich im Microsoft Security Center befinden und fahren Sie fort.',
+    workflowStep2Title: 'E-Mail & Zusammenarbeit',
+    workflowStep2Description: 'Öffnen Sie das E-Mail & Zusammenarbeit-Menü',
+    workflowStep3Title: 'Richtlinien & Regeln',
+    workflowStep3Description: 'Gehen Sie zur Seite "Richtlinien & Regeln"',
+    workflowStep4Title: 'Bedrohungsrichtlinien',
+    workflowStep4Description: 'Klicken Sie auf Bedrohungsrichtlinien',
+    workflowStep5Title: 'Erweiterte Zustellung',
+    workflowStep5Description: 'Klicken Sie auf die Schaltfläche "Erweiterte Zustellung"',
+    workflowStep6Title: 'Phishing-Simulation Tab',
+    workflowStep6Description: 'Klicken Sie auf den Phishing-Simulation Tab',
+    workflowStep7Title: 'Bearbeiten-Schaltfläche',
+    workflowStep7Description: 'Klicken Sie auf die Bearbeiten-Schaltfläche',
+    workflowStep8Title: 'Domänen',
+    workflowStep8Description: 'Sie können diese Domänen eingeben: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep9Title: 'IP-Adressen',
+    workflowStep9Description: 'Geben Sie Whitelist-IP-Adressen ein',
+    workflowStep10Title: 'Simulations-URLs',
+    workflowStep10Description: 'Sie können diese Domänen eingeben: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep11Title: 'Speichern',
+    workflowStep11Description: 'Speichern Sie die Änderungen',
+    workflowStep12Title: 'Abgeschlossen! ✅',
+    workflowStep12Description: 'Alle Schritte erfolgreich abgeschlossen',
+    elementNotFound: 'Element nicht gefunden',
+    pleaseComplete: 'Bitte füllen Sie dieses Feld aus!',
+    allScreenshotsSaved: 'Alle Screenshots in chrome.storage gespeichert'
+  },
+  fr: {
+    extensionName: 'Keepnet Allow List Assistant for Office 365',
+    assistantTitle: 'Keepnet Assistant',
+    step: 'Étape',
+    of: 'de',
+    continue: 'Continuer',
+    previous: 'Précédent',
+    summary: 'Résumé',
+    summaryReport: '📊 Rapport de résumé',
+    goToPage: '🌐 Aller à la page',
+    copyAll: 'Tout copier',
+    copied: 'Copié!',
+    error: 'Erreur',
+    goAndFix: 'Aller & Corriger',
+    workflowStep1Title: 'Page d\'accueil du Security Center',
+    workflowStep1Description: 'Assurez-vous d\'être sur Microsoft Security Center et continuez.',
+    workflowStep2Title: 'E-mail et Collaboration',
+    workflowStep2Description: 'Ouvrez le menu E-mail et Collaboration',
+    workflowStep3Title: 'Politiques et Règles',
+    workflowStep3Description: 'Allez à la page Politiques et Règles',
+    workflowStep4Title: 'Politiques de Menace',
+    workflowStep4Description: 'Cliquez sur Politiques de Menace',
+    workflowStep5Title: 'Livraison Avancée',
+    workflowStep5Description: 'Cliquez sur le bouton Livraison Avancée',
+    workflowStep6Title: 'Onglet Simulation de Phishing',
+    workflowStep6Description: 'Cliquez sur l\'onglet Simulation de Phishing',
+    workflowStep7Title: 'Bouton Modifier',
+    workflowStep7Description: 'Cliquez sur le bouton Modifier',
+    workflowStep8Title: 'Domaines',
+    workflowStep8Description: 'Vous pouvez saisir ces domaines: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep9Title: 'Adresses IP',
+    workflowStep9Description: 'Entrez les adresses IP de la liste blanche',
+    workflowStep10Title: 'URLs de Simulation',
+    workflowStep10Description: 'Vous pouvez saisir ces domaines: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep11Title: 'Enregistrer',
+    workflowStep11Description: 'Enregistrez les modifications',
+    workflowStep12Title: 'Terminé! ✅',
+    workflowStep12Description: 'Toutes les étapes terminées avec succès',
+    elementNotFound: 'Élément non trouvé',
+    pleaseComplete: 'Veuillez compléter ce champ!',
+    allScreenshotsSaved: 'Toutes les captures d\'écran sauvegardées dans chrome.storage'
+  },
+  es: {
+    extensionName: 'Keepnet Allow List Assistant for Office 365',
+    assistantTitle: 'Keepnet Assistant',
+    step: 'Paso',
+    of: 'de',
+    continue: 'Continuar',
+    previous: 'Anterior',
+    summary: 'Resumen',
+    summaryReport: '📊 Informe de Resumen',
+    goToPage: '🌐 Ir a la Página',
+    copyAll: 'Copiar Todo',
+    copied: '¡Copiado!',
+    error: 'Error',
+    goAndFix: 'Ir y Arreglar',
+    workflowStep1Title: 'Página de Inicio del Security Center',
+    workflowStep1Description: 'Asegúrese de estar en Microsoft Security Center y continúe.',
+    workflowStep2Title: 'Correo Electrónico y Colaboración',
+    workflowStep2Description: 'Abra el menú de Correo Electrónico y Colaboración',
+    workflowStep3Title: 'Políticas y Reglas',
+    workflowStep3Description: 'Vaya a la página de Políticas y Reglas',
+    workflowStep4Title: 'Políticas de Amenazas',
+    workflowStep4Description: 'Haga clic en Políticas de Amenazas',
+    workflowStep5Title: 'Entrega Avanzada',
+    workflowStep5Description: 'Haga clic en el botón de Entrega Avanzada',
+    workflowStep6Title: 'Pestaña de Simulación de Phishing',
+    workflowStep6Description: 'Haga clic en la pestaña de Simulación de Phishing',
+    workflowStep7Title: 'Botón Editar',
+    workflowStep7Description: 'Haga clic en el botón Editar',
+    workflowStep8Title: 'Dominios',
+    workflowStep8Description: 'Puede ingresar estos dominios: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep9Title: 'Direcciones IP',
+    workflowStep9Description: 'Ingrese las direcciones IP de la lista blanca',
+    workflowStep10Title: 'URLs de Simulación',
+    workflowStep10Description: 'Puede ingresar estos dominios: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep11Title: 'Guardar',
+    workflowStep11Description: 'Guarde los cambios',
+    workflowStep12Title: '¡Completado! ✅',
+    workflowStep12Description: 'Todos los pasos completados exitosamente',
+    elementNotFound: 'Elemento no encontrado',
+    pleaseComplete: '¡Por favor complete este campo!',
+    allScreenshotsSaved: 'Todas las capturas de pantalla guardadas en chrome.storage'
+  },
+  it: {
+    extensionName: 'Keepnet Allow List Assistant for Office 365',
+    assistantTitle: 'Keepnet Assistant',
+    step: 'Passo',
+    of: 'di',
+    continue: 'Continua',
+    previous: 'Precedente',
+    summary: 'Riepilogo',
+    summaryReport: '📊 Rapporto di Riepilogo',
+    goToPage: '🌐 Vai alla Pagina',
+    copyAll: 'Copia Tutto',
+    copied: 'Copiato!',
+    error: 'Errore',
+    goAndFix: 'Vai e Correggi',
+    workflowStep1Title: 'Pagina Iniziale del Security Center',
+    workflowStep1Description: 'Assicurati di essere su Microsoft Security Center e continua.',
+    workflowStep2Title: 'Email e Collaborazione',
+    workflowStep2Description: 'Apri il menu Email e Collaborazione',
+    workflowStep3Title: 'Politiche e Regole',
+    workflowStep3Description: 'Vai alla pagina Politiche e Regole',
+    workflowStep4Title: 'Politiche delle Minacce',
+    workflowStep4Description: 'Clicca su Politiche delle Minacce',
+    workflowStep5Title: 'Consegna Avanzata',
+    workflowStep5Description: 'Clicca sul pulsante Consegna Avanzata',
+    workflowStep6Title: 'Tab Simulazione Phishing',
+    workflowStep6Description: 'Clicca sul tab Simulazione Phishing',
+    workflowStep7Title: 'Pulsante Modifica',
+    workflowStep7Description: 'Clicca sul pulsante Modifica',
+    workflowStep8Title: 'Domini',
+    workflowStep8Description: 'Puoi inserire questi domini: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep9Title: 'Indirizzi IP',
+    workflowStep9Description: 'Inserisci gli indirizzi IP della whitelist',
+    workflowStep10Title: 'URL di Simulazione',
+    workflowStep10Description: 'Puoi inserire questi domini: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    workflowStep11Title: 'Salva',
+    workflowStep11Description: 'Salva le modifiche',
+    workflowStep12Title: 'Completato! ✅',
+    workflowStep12Description: 'Tutti i passaggi completati con successo',
+    elementNotFound: 'Elemento non trovato',
+    pleaseComplete: 'Si prega di completare questo campo!',
+    allScreenshotsSaved: 'Tutti gli screenshot salvati in chrome.storage'
+  }
+}
+
+// Current language (will be loaded from storage)
+let CURRENT_LANGUAGE = 'tr'
+
+// Load language preference from storage
+async function loadLanguagePreference() {
+  try {
+    const result = await chrome.storage.local.get(['keepnet_language'])
+    CURRENT_LANGUAGE = result.keepnet_language || 'tr'
+    console.log('[i18n] Language loaded from storage:', CURRENT_LANGUAGE)
+  } catch (error) {
+    console.warn('[i18n] Error loading language preference:', error)
+    CURRENT_LANGUAGE = 'tr'
+  }
+}
+
+// i18n helper function
+function i18n(key) {
+  try {
+    const message = MESSAGES[CURRENT_LANGUAGE]?.[key] || MESSAGES.tr[key] || key;
+    return message;
+  } catch (error) {
+    console.warn('[i18n] Error getting message for key:', key, error);
+    return key;
+  }
+}
+
 /* ========== SPESIFIK AKIŞ: Third-Party Phishing Simulations ========== */
 const WORKFLOW_STEPS = [
   {
     id: 1,
     name: 'step1_home',
-    title: 'Security Center Ana Sayfası',
-    description: 'Microsoft Security Center\'da olduğunuzdan emin olun ve devam edin.',
+    title: 'workflowStep1Title',
+    description: 'workflowStep1Description',
     navigate: 'https://security.microsoft.com/homepage',
     validation: () => {
       return document.location.href.startsWith('https://security.microsoft.com')
@@ -35,8 +312,8 @@ const WORKFLOW_STEPS = [
   {
     id: 2,
     name: 'step2_emailcollab',
-    title: 'E-posta ve İşbirliği',
-    description: 'E-posta ve işbirliği menüsünü açın',
+    title: 'workflowStep2Title',
+    description: 'workflowStep2Description',
     target: {
       selector: 'button[aria-label="E-posta ve işbirliği"]',
       fallback: [
@@ -59,8 +336,8 @@ const WORKFLOW_STEPS = [
   {
     id: 3,
     name: 'step3_policies',
-    title: 'İlkeler ve Kurallar',
-    description: 'İlkeler ve kurallar sayfasına gidin',
+    title: 'workflowStep3Title',
+    description: 'workflowStep3Description',
     target: {
       selector: 'a[href*="securitypoliciesandrules"]',
       textMatch: /İlkeler ve kurallar|Policies & rules/i,
@@ -76,13 +353,13 @@ const WORKFLOW_STEPS = [
       return document.location.href.includes('/securitypoliciesandrules') || 
              document.location.href.includes('/policy')
     },
-    waitAfterClick: 3000
+    waitAfterClick: 1000
   },
   {
     id: 4,
     name: 'step4_threat_policies',
-    title: 'Tehdit İlkeleri',
-    description: 'Tehdit ilkeleri\'ne tıklayın',
+    title: 'workflowStep4Title',
+    description: 'workflowStep4Description',
     target: {
       selector: 'a[href*="threatpolicy"]',
       textMatch: /Tehdit ilkeleri|Threat policies/i,
@@ -97,13 +374,13 @@ const WORKFLOW_STEPS = [
     validation: () => {
       return document.location.href.includes('/threatpolicy')
     },
-    waitAfterClick: 3000
+    waitAfterClick: 1000
   },
   {
     id: 5,
     name: 'step5_advanced_delivery',
-    title: 'Advanced Delivery',
-    description: 'Advanced delivery butonuna tıklayın',
+    title: 'workflowStep5Title',
+    description: 'workflowStep5Description',
     target: {
       selector: 'button[aria-label*="Advanced delivery"]',
       textMatch: /Advanced delivery/i,
@@ -118,13 +395,13 @@ const WORKFLOW_STEPS = [
     validation: () => {
       return document.location.href.includes('/advanceddelivery')
     },
-    waitAfterClick: 3000
+    waitAfterClick: 1000
   },
   {
     id: 6,
     name: 'step6_phishing_simulation',
-    title: 'Phishing Simulation Tab',
-    description: 'Phishing simulation sekmesine tıklayın',
+    title: 'workflowStep6Title',
+    description: 'workflowStep6Description',
     target: {
       selector: 'button[name="Phishing simulation"]',
       textMatch: /Phishing simulation/i,
@@ -143,13 +420,13 @@ const WORKFLOW_STEPS = [
       )
       return tab && (tab.getAttribute('aria-selected') === 'true' || tab.classList.contains('is-selected'))
     },
-    waitAfterClick: 1500
+    waitAfterClick: 2000
   },
   {
     id: 7,
     name: 'step7_edit_button',
-    title: 'Düzenle Butonu',
-    description: 'Düzenle butonuna tıklayın',
+    title: 'workflowStep7Title',
+    description: 'workflowStep7Description',
     target: {
       selector: 'button[aria-label*="Düzenle"]',
       textMatch: /Düzenle/i,
@@ -165,13 +442,13 @@ const WORKFLOW_STEPS = [
       // Panel veya modal açıldı mı kontrol et
       return !!document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"]')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 7,
     name: 'step8_domains_input',
-    title: 'Etki Alanları',
-    description: 'Bu domainleri girebilirsiniz: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    title: 'workflowStep8Title',
+    description: 'workflowStep8Description',
     target: {
       selector: 'label.ms-Label:contains("Etki Alanı")',
       textMatch: /Etki Alanı/i,
@@ -196,8 +473,8 @@ const WORKFLOW_STEPS = [
   {
     id: 8,
     name: 'step9_ip_input',
-    title: 'IP Adresleri',
-    description: 'White list IP adreslerini girin',
+    title: 'workflowStep9Title',
+    description: 'workflowStep9Description',
     target: {
       selector: 'input[aria-label="IP picker"]',
       fallback: [
@@ -219,8 +496,8 @@ const WORKFLOW_STEPS = [
   {
     id: 9,
     name: 'step10_simulation_urls_input',
-    title: 'Simülasyon URL\'leri',
-    description: 'Bu domainleri girebilirsiniz: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store',
+    title: 'workflowStep10Title',
+    description: 'workflowStep10Description',
     target: {
       selector: 'label.ms-Label.root-985',
       textMatch: /İzin verilen simülasyon URL/i,
@@ -240,13 +517,13 @@ const WORKFLOW_STEPS = [
     },
     realTimeValidation: true,
     criticalStep: false,
-    waitAfterClick: 500
+    waitAfterClick: 2000
   },
   {
     id: 10,
     name: 'step11_save',
-    title: 'Kaydet',
-    description: 'Değişiklikleri kaydedin',
+    title: 'workflowStep11Title',
+    description: 'workflowStep11Description',
     target: {
       selector: 'button:has(span.ms-Button-label:contains("Save"))',
       textMatch: /Save|Kaydet/i,
@@ -262,13 +539,13 @@ const WORKFLOW_STEPS = [
       // Save işlemi başarılı mı kontrol et
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 11,
     name: 'step12_summary',
-    title: 'Tamamlandı! ✅',
-    description: 'Tüm adımlar başarıyla tamamlandı',
+    title: 'workflowStep12Title',
+    description: 'workflowStep12Description',
     isSummary: true
   }
 ]
@@ -328,7 +605,7 @@ const THREAT_POLICIES_STEPS = [
     validation: () => {
       return !!document.querySelector('button[aria-label*="Edit connection filter"]')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 4,
@@ -348,7 +625,7 @@ const THREAT_POLICIES_STEPS = [
     validation: () => {
       return !!document.querySelector('textarea[aria-label*="IP"], input[aria-label*="IP"]')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 5,
@@ -401,7 +678,7 @@ const THREAT_POLICIES_STEPS = [
       })
       return checkbox && checkbox.checked
     },
-    waitAfterClick: 500
+    waitAfterClick: 2000
   },
   {
     id: 7,
@@ -422,7 +699,7 @@ const THREAT_POLICIES_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 7,
@@ -482,7 +759,7 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return document.location.href.includes('/threatpolicy')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 4,
@@ -503,7 +780,7 @@ const SAFE_LINKS_STEPS = [
       return document.location.href.includes('safelinks') || 
              document.querySelector('[aria-label*="Safe Links"]')
     },
-    waitAfterClick: 2000,
+    waitAfterClick: 1000,
     licenseCheck: {
       required: 'Microsoft Defender for Office 365',
       message: 'Safe Links özelliği yalnızca şu lisanslarda aktif hale gelir:\n\n• Microsoft Defender for Office 365 Plan 1\n• Microsoft Defender for Office 365 Plan 2\n• Microsoft 365 E5 / A5 / G5 (bu planlarda Defender for Office 365 dahil)\n\nBu lisanslardan biri yoksa Safe Links görünmeyecektir.',
@@ -528,7 +805,7 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return !!document.querySelector('[role="dialog"], .ms-Panel')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 6,
@@ -549,7 +826,7 @@ const SAFE_LINKS_STEPS = [
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
-    waitAfterClick: 500
+    waitAfterClick: 2000
   },
   {
     id: 7,
@@ -569,7 +846,7 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 7,
@@ -590,7 +867,7 @@ const SAFE_LINKS_STEPS = [
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
-    waitAfterClick: 500
+    waitAfterClick: 2000
   },
   {
     id: 8,
@@ -609,7 +886,7 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 9,
@@ -628,7 +905,7 @@ const SAFE_LINKS_STEPS = [
       const checkbox = document.querySelector('input[type="checkbox"][aria-label*="Track"]')
       return checkbox && !checkbox.checked
     },
-    waitAfterClick: 500
+    waitAfterClick: 2000
   },
   {
     id: 10,
@@ -669,7 +946,7 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 13,
@@ -689,7 +966,7 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
     id: 14,
@@ -704,62 +981,32 @@ const SAFE_LINKS_STEPS = [
 const SPAM_FILTER_BYPASS_STEPS = [
   {
     id: 1,
-    name: 'spambypass_step1_navigate',
-    title: 'Admin Portalına Git',
-    description: 'Exchange Admin Portalına gitmek için "Sayfaya Git" butonuna tıklayın',
-    navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
-    validation: () => {
-      return document.location.href.includes('admin.exchange.microsoft.com')
-    },
-    isNavigation: true
+    name: 'spambypass_step1_info',
+    title: 'Başlangıç Bilgisi',
+    description: 'Spam Filter Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var.',
+    isInfoCard: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 2000,
+    waitAfterClick: 0
   },
   {
     id: 2,
-    name: 'spambypass_step2_mail_flow',
-    title: 'Mail Flow Menüsü',
-    description: 'Mail flow butonuna tıklayın',
-    target: {
-      selector: 'button[data-value="mailflownode"]',
-      textMatch: /Mail flow/i,
-      fallback: [
-        'button[aria-label*="mailflownode"]',
-        'button[name="Mail flow"]',
-        'button[data-automation-id*="mailflow"]'
-      ]
-    },
-    tooltip: 'Mail flow menüsünü açın',
-    autoClick: false,
+    name: 'spambypass_step2_navigate',
+    title: 'Exchange Admin Center',
+    description: 'Exchange Admin Center Transport Rules sayfasına git.',
+    navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
+    isNavigation: true,
     validation: () => {
-      return !!document.querySelector('a[data-value="transportrules"]') || document.location.href.includes('transportrules')
+      return document.location.href.includes('admin.exchange.microsoft.com') && 
+             document.location.href.includes('transportrules')
     },
     waitAfterClick: 1000
   },
   {
     id: 3,
-    name: 'spambypass_step3_rules',
-    title: 'Rules Sayfası',
-    description: 'Rules kısmına gidin',
-    target: {
-      selector: 'a[data-value="transportrules"]',
-      textMatch: /Rules/i,
-      fallback: [
-        'a[name="Rules"]',
-        'a#transportrules',
-        'a[data-automation-id*="transportrules"]'
-      ]
-    },
-    tooltip: 'Rules\'e tıklayın',
-    autoClick: false,
-    validation: () => {
-      return document.location.href.includes('transportrules')
-    },
-    waitAfterClick: 2000
-  },
-  {
-    id: 4,
-    name: 'spambypass_step4_add_rule',
-    title: 'Yeni Kural Ekle',
-    description: '+ Add a rule butonuna tıklayın',
+    name: 'spambypass_step3_add_rule',
+    title: 'Add a rule',
+    description: '2) Add a rule\'a tıklayın.',
     target: {
       selector: 'button[aria-label*="Add"]',
       textMatch: /Add a rule/i,
@@ -769,262 +1016,268 @@ const SPAM_FILTER_BYPASS_STEPS = [
         'button.ms-Button--primary'
       ]
     },
-    tooltip: '+  Add a rule butonuna tıklayın',
+    tooltip: '+ Add a rule butonuna tıklayın',
     autoClick: false,
     validation: () => {
-      return !!document.querySelector('button[aria-label*="Bypass"]') || document.location.href.includes('new')
+      return !!document.querySelector('span.ms-ContextualMenu-itemText') || !!document.querySelector('div[role="menuitem"]')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 5,
-    name: 'spambypass_step5_create_rule',
-    title: 'Create A New Rule',
-    description: 'Açılan menüden "Create a new rule" seçeneğini seçin',
+    id: 4,
+    name: 'spambypass_step4_create_rule',
+    title: 'Create a new rule',
+    description: '3) Create a new rule seçeneğini seçin.',
     target: {
-      selector: 'span.ms-ContextualMenu-itemText.label-685',
+      selector: 'span.ms-ContextualMenu-itemText',
       textMatch: /Create a new rule/i,
       fallback: [
         'span.ms-ContextualMenu-itemText:contains("Create a new rule")',
-        'a:contains("Create a new rule")',
         'div[role="menuitem"]:contains("Create a new rule")',
         'button:contains("Create a new rule")',
-        'a:contains("new rule")'
+        'a:contains("Create a new rule")'
       ]
     },
-    tooltip: '"Create a new rule" seçeneğini tıklayın',
-    autoClick: true,
+    tooltip: 'Create a new rule seçeneğini seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
-      return document.location.href.includes('new') || document.querySelector('input[placeholder*="name"]')
+      return document.location.href.includes('new') || !!document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]')
     },
-    waitAfterClick: 4000
+    waitAfterClick: 1000,
+    panelPosition: 'top-left'
   },
   {
-    id: 6,
-    name: 'spambypass_step6_rule_name',
-    title: 'Kural İsmi',
-    description: 'Beyaz liste kuralı için bir isim girin: "Keepnet_AllowList_AllEdges"',
+    id: 5,
+    name: 'spambypass_step5_rule_name',
+    title: 'Name',
+    description: '4) Kural adı girin (ör. \'Keepnet Whitelist Rule\').',
     target: {
       selector: 'input[data-automation-id="EditTransportRule_Name_TextField"]',
       fallback: [
-        'input[placeholder*="name"]',
-        'input[aria-label*="name"]',
-        'input[aria-label*="Name"]',
-        'input[type="text"]:first-of-type'
+        'div.ms-TextField-fieldGroup input[type="text"]',
+        'input[maxlength="64"]',
+        'input[aria-labelledby*="TextFieldLabel"]',
+        'input.ms-TextField-field'
       ]
     },
     tooltip: 'Kural adını girin',
     autoClick: false,
     validation: () => {
-      const input = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]')
-      return input && input.value && input.value.length > 0
+      const input = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]') || 
+                   document.querySelector('div.ms-TextField-fieldGroup input[type="text"]')
+      return input && (input.value.length > 0 || document.activeElement === input)
     },
     waitAfterClick: 1000,
+    panelPosition: 'top-left',
     criticalStep: true
   },
   {
-    id: 7,
-    name: 'spambypass_step7_apply_rule_if',
-    title: 'Apply This Rule If',
-    description: '"Apply this rule if..." kısmını ayarlayın - The sender > IP address seçeneğini tıklayın',
+    id: 6,
+    name: 'spambypass_step6_apply_rule_if',
+    title: 'Apply this rule if',
+    description: '5) Apply this rule if dropdown\'ını açın.',
     target: {
-      selector: 'span.ms-Dropdown-title',
-      textMatch: /Select one/i,
+      selector: 'div[data-automation-id="EditTransportRule_GroupCondition_0_Dropdown"]',
       fallback: [
-        'span[id*="Dropdown"][id*="option"]',
-        'button[aria-label*="Apply this rule"]',
-        'button:contains("Apply this rule")',
-        'button[aria-label*="condition"]'
+        'div[role="combobox"][aria-label*="Select a group condition"]',
+        'div.ms-Dropdown',
+        'span.ms-Dropdown-title:contains("Select one")'
       ]
     },
-    tooltip: '"Apply this rule if..." dropdown"ını tıklayın',
+    tooltip: 'Apply this rule if dropdown\'ını açın',
     autoClick: false,
     validation: () => {
-      return true
+      return !!document.querySelector('button[data-index="1"] span:contains("The sender")') || 
+             !!document.querySelector('div[role="option"]:contains("The sender")')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 7,
+    name: 'spambypass_step7_select_sender',
+    title: 'The Sender',
+    description: '6) \'The sender\' seçeneğini seçin.',
+    target: {
+      selector: 'button[data-index="1"]',
+      textMatch: /The sender/i,
+      fallback: [
+        'button[role="option"]:contains("The sender")',
+        'div[role="option"]:contains("The sender")',
+        'span.ms-Dropdown-optionText:contains("The sender")'
+      ]
+    },
+    tooltip: '"The sender" seçeneğini seçin',
+    autoClick: false,
+    validation: () => {
+      const selectedText = document.querySelector('div[data-automation-id="EditTransportRule_GroupCondition_0_Dropdown"] span.ms-Dropdown-title')
+      return selectedText && selectedText.textContent.includes('The sender')
     },
     waitAfterClick: 1000
   },
   {
     id: 8,
-    name: 'spambypass_step8_select_sender',
-    title: 'The Sender Seçeneği',
-    description: '"The sender" seçeneğini seçin',
+    name: 'spambypass_step8_select_one_ip',
+    title: 'IP Condition Dropdown',
+    description: '7) "Select one" dropdown\'ını açın (IP condition için).',
     target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-777',
-      textMatch: /The sender/i,
+      selector: 'span[id*="Dropdown"][id*="option"].ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder',
+      textMatch: /Select one/i,
       fallback: [
-        'span.ms-Dropdown-optionText:contains("The sender")',
-        'div[role="option"]:contains("The sender")',
-        'button:contains("The sender")'
+        'span#Dropdown323-option',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'span.ms-Dropdown-titleIsPlaceHolder'
       ]
     },
-    tooltip: '"The sender" seçeneğine tıklayın',
+    tooltip: 'IP condition için Select one dropdown\'ını açın',
     autoClick: false,
     validation: () => {
-      return true
+      return !!document.querySelector('span.ms-Dropdown-optionText:contains("IP address is in any of these ranges")')
     },
     waitAfterClick: 1000
   },
   {
     id: 9,
-    name: 'spambypass_step9_open_dropdown',
-    title: 'İkinci Dropdown Açılsın',
-    description: '"Select one" dropdown"ını açın',
+    name: 'spambypass_step9_select_ip_range',
+    title: 'IP Address Condition',
+    description: '8) "IP address is in any of these ranges or exactly matches" seçeneğini seçin.',
     target: {
-      selector: 'span.ms-Dropdown-titleIsPlaceHolder',
-      textMatch: /Select one/i,
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-617',
+      textMatch: /IP address is in any of these ranges/i,
       fallback: [
-        'span[id*="Dropdown"][id*="option"]',
-        'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder'
+        'span.ms-Dropdown-optionText:contains("IP address is in any of these ranges or exactly matches")',
+        'span.ms-Dropdown-optionText:contains("IP address")',
+        'div[role="option"]:contains("IP address")'
       ]
     },
-    tooltip: '"Select one" dropdown"ını tıklayın',
+    tooltip: 'IP address ranges seçeneğini seçin',
     autoClick: false,
     validation: () => {
-      return true
+      return !!document.querySelector('input[data-automation-id="SenderIpRanges_Input"]') || 
+             !!document.querySelector('input[placeholder*="IPv4 or IPv6"]')
     },
     waitAfterClick: 1000
   },
   {
     id: 10,
-    name: 'spambypass_step10_select_ip_range',
-    title: 'IP Address Condition',
-    description: '"IP address is in any of these ranges or exactly matches" seçeneğini seçin',
-    target: {
-      selector: 'span.ms-Dropdown-optionText:contains("IP address is in any of these ranges or exactly matches")',
-      textMatch: /IP address is in any of these ranges/i,
-      fallback: [
-        'span.ms-Dropdown-optionText.dropdownOptionText-777',
-        'span.ms-Dropdown-optionText:contains("IP address")',
-        'div[role="option"]:contains("IP address")',
-        'button:contains("IP address")'
-      ]
-    },
-    tooltip: 'IP address seçeneğine tıklayın',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
-    waitAfterClick: 1000
-  },
-  {
-    id: 11,
-    name: 'spambypass_step11_enter_ip',
+    name: 'spambypass_step10_enter_ip',
     title: 'IP Adreslerini Gir',
-    description: 'IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87',
+    description: '9) IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87',
     target: {
-      selector: 'input[data-automation-id="SenderIpRanges_Input"]',
+      selector: 'input#TextField637',
       fallback: [
-        'input[placeholder*="IPv4 or IPv6"]',
-        'input.ms-BasePicker-input',
-        'textarea.ms-TextField-field',
-        'input[aria-label*="IP"]',
-        'textarea'
+        'input[data-automation-id="SenderIpRanges_Input"]',
+        'input[placeholder*="Enter an IPv4 or IPv6 address"]',
+        'input.ms-TextField-field',
+        'input[aria-label*="IP"]'
       ]
     },
     tooltip: 'IP adreslerini girin (Her satıra bir IP)',
     autoClick: false,
     validation: () => {
-      const input = document.querySelector('input[data-automation-id="SenderIpRanges_Input"]')
+      const input = document.querySelector('input#TextField637') || 
+                   document.querySelector('input[data-automation-id="SenderIpRanges_Input"]')
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 500,
-    isLabelStep: false
+    waitAfterClick: 5000
+  },
+  {
+    id: 11,
+    name: 'spambypass_step11_do_following_dropdown',
+    title: 'Do The Following',
+    description: '10) "Do the following" dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown327-option',
+      textMatch: /Select one/i,
+      fallback: [
+        'span[id*="Dropdown327"].ms-Dropdown-title',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'button[aria-label*="Do the following"]'
+      ]
+    },
+    tooltip: 'Do the following dropdown\'ını açın',
+    autoClick: false,
+    validation: () => {
+      return !!document.querySelector('span.ms-Dropdown-optionText:contains("Modify the message properties")')
+    },
+    waitAfterClick: 1000
   },
   {
     id: 12,
-    name: 'spambypass_step12_add_ip',
-    title: 'Add IP',
-    description: 'IP adresini eklemek için "Add" tuşuna basın',
+    name: 'spambypass_step12_modify_message_properties',
+    title: 'Modify Message Properties',
+    description: '11) "Modify the message properties" seçeneğini seçin.',
     target: {
-      selector: 'button[aria-label*="Add"]',
-      textMatch: /Add/i,
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-617',
+      textMatch: /Modify the message properties/i,
       fallback: [
-        'span.ms-Button-label:contains("Add")',
-        'button:contains("Add")',
-        'button[data-automation-id*="Add"]'
+        'span.ms-Dropdown-optionText:contains("Modify the message properties")',
+        'div[role="option"]:contains("Modify the message properties")'
       ]
     },
-    tooltip: '"Add" tuşuna tıklayın',
-    autoClick: true,
+    tooltip: 'Modify the message properties seçin',
+    autoClick: false,
+    validation: () => {
+      return !!document.querySelector('span#Dropdown328-option') || 
+             !!document.querySelector('span.ms-Dropdown-titleIsPlaceHolder:contains("Select one")')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 13,
+    name: 'spambypass_step13_second_select_one',
+    title: 'Second Select One',
+    description: '12) İkinci "Select one" dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown328-option.ms-Dropdown-titleIsPlaceHolder',
+      textMatch: /Select one/i,
+      fallback: [
+        'span[id*="Dropdown328"].ms-Dropdown-title',
+        'span.ms-Dropdown-titleIsPlaceHolder:contains("Select one")'
+      ]
+    },
+    tooltip: 'İkinci Select one dropdown\'ını açın',
+    autoClick: false,
+    validation: () => {
+      return !!document.querySelector('span:contains("set the spam confidence level")')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 14,
+    name: 'spambypass_step14_set_scl',
+    title: 'Set SCL',
+    description: '13) "set the spam confidence level (SCL)" seçeneğini seçin.',
+    target: {
+      selector: 'span#Dropdown328-option.ms-Dropdown-title',
+      textMatch: /set the spam confidence level/i,
+      fallback: [
+        'span:contains("set the spam confidence level (SCL)")',
+        'span.ms-Dropdown-optionText:contains("spam confidence level")'
+      ]
+    },
+    tooltip: 'Set the spam confidence level (SCL) seçin',
+    autoClick: false,
     validation: () => {
       return true
     },
     waitAfterClick: 1000
   },
   {
-    id: 13,
-    name: 'spambypass_step13_save_ip',
-    title: 'Save IP',
-    description: 'IP adresini kaydetmek için "Save" tuşuna basın',
-    target: {
-      selector: 'span.ms-Button-label:contains("Save")',
-      textMatch: /Save/i,
-      fallback: [
-        'button:contains("Save")',
-        'button[data-automation-id*="Save"]'
-      ]
-    },
-    tooltip: '"Save" tuşuna tıklayın',
-    autoClick: true,
-    validation: () => {
-      return true
-    },
-    waitAfterClick: 1500
-  },
-  {
-    id: 14,
-    name: 'spambypass_step14_do_following',
-    title: 'Do The Following',
-    description: '"Do the following" kısmında Modify the message properties > Set SCL > -1 ve Bypass spam filtering seçeneğini ayarlayın',
-    target: {
-      selector: 'button[aria-label*="Do the following"]',
-      textMatch: /Do the following/i,
-      fallback: [
-        'button:contains("Do the following")',
-        'button[aria-label*="action"]'
-      ]
-    },
-    tooltip: '"Do the following" ayarlarını yapın',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
-    waitAfterClick: 2000
-  },
-  {
     id: 15,
-    name: 'spambypass_step15_message_header',
-    title: 'Message Header Ayarı',
-    description: 'Modify the message properties > set a message header > X-MS-Exchange-Organization-BypassClutter = true seçeneğini ayarlayın',
-    target: {
-      selector: 'button[aria-label*="message header"]',
-      textMatch: /message header|set a message/i,
-      fallback: [
-        'button:contains("message header")',
-        'button[aria-label*="header"]'
-      ]
-    },
-    tooltip: 'Message header ayarlarını yapın',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
-    waitAfterClick: 2000
-  },
-  {
-    id: 16,
-    name: 'spambypass_step16_save_final',
+    name: 'spambypass_step15_save_final',
     title: 'Kaydet',
-    description: 'Tüm ayarları kaydedip kuralı oluşturun',
+    description: '14) Tüm ayarları kaydedip kuralı oluşturun.',
     target: {
       selector: 'button[aria-label*="Save"]',
       textMatch: /Save|Kaydet/i,
       fallback: [
         'button.ms-Button--primary',
-        'button[type="button"]:contains("Save")'
+        'button[type="button"]:contains("Save")',
+        'button:contains("Save")'
       ]
     },
     tooltip: 'Kuralı kaydedin',
@@ -1032,10 +1285,10 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 3000
+    waitAfterClick: 1000
   },
   {
-    id: 17,
+    id: 16,
     name: 'spambypass_summary',
     title: 'Tamamlandı! ✅',
     description: 'Spam Filter Bypass kuralı başarıyla oluşturuldu.',
@@ -1047,7 +1300,20 @@ const SPAM_FILTER_BYPASS_STEPS = [
 const ATP_LINK_BYPASS_STEPS = [
   {
     id: 1,
-    name: 'atplink_step1_add_rule',
+    name: 'atplink_step1_navigate',
+    title: 'Exchange Admin Center',
+    description: 'Exchange Admin Center Transport Rules sayfasına git.',
+    navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
+    isNavigation: true,
+    validation: () => {
+      return document.location.href.includes('admin.exchange.microsoft.com') && 
+             document.location.href.includes('transportrules')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 2,
+    name: 'atplink_step2_add_rule',
     title: 'Yeni Kural Ekle',
     description: 'Exchange Admin Rules sayfasında + Add a rule butonuna tıklayın',
     target: {
@@ -1064,11 +1330,11 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
     },
-    waitAfterClick: 3000
+    waitAfterClick: 1000
   },
   {
-    id: 2,
-    name: 'atplink_step2_rule_name',
+    id: 3,
+    name: 'atplink_step3_rule_name',
     title: 'Kural İsmi',
     description: 'Beyaz liste kuralı için bir isim girin (örn: "ATP Link Bypass")',
     target: {
@@ -1087,11 +1353,11 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 500
+    waitAfterClick: 5000
   },
   {
-    id: 3,
-    name: 'atplink_step3_apply_rule_if',
+    id: 4,
+    name: 'atplink_step4_apply_rule_if',
     title: 'Apply This Rule If',
     description: '"Apply this rule if..." > The sender > IP address is in any of these ranges or exactly matches',
     target: {
@@ -1107,11 +1373,11 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 4,
-    name: 'atplink_step4_sender_ip',
+    id: 5,
+    name: 'atplink_step5_sender_ip',
     title: 'Gönderici IP Adresi',
     description: 'The sender > IP address is seçeneğini ayarlayın ve IP adreslerini girin',
     target: {
@@ -1130,11 +1396,11 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 500
+    waitAfterClick: 5000
   },
   {
-    id: 5,
-    name: 'atplink_step5_do_following',
+    id: 6,
+    name: 'atplink_step6_do_following',
     title: 'Do The Following',
     description: '"Do the following" > Modify the message properties > Set a message header',
     target: {
@@ -1150,11 +1416,11 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 6,
-    name: 'atplink_step6_message_header',
+    id: 7,
+    name: 'atplink_step7_message_header',
     title: 'Message Header Ayarı',
     description: 'X-MS-Exchange-Organization-SkipSafeLinksProcessing başlığını girin ve 1 değeriyle kaydedin',
     target: {
@@ -1169,11 +1435,11 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 7,
-    name: 'atplink_step7_save',
+    id: 8,
+    name: 'atplink_step8_save',
     title: 'Kaydet',
     description: 'Kuralı kaydetmek için Save butonuna tıklayın',
     target: {
@@ -1189,10 +1455,10 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 7,
+    id: 9,
     name: 'atplink_summary',
     title: 'Tamamlandı! ✅',
     description: 'ATP Link Bypass (SkipSafeLinksProcessing) kuralı başarıyla oluşturuldu.',
@@ -1204,7 +1470,20 @@ const ATP_LINK_BYPASS_STEPS = [
 const ATP_ATTACHMENT_BYPASS_STEPS = [
   {
     id: 1,
-    name: 'atpattach_step1_add_rule',
+    name: 'atpattach_step1_navigate',
+    title: 'Exchange Admin Center',
+    description: 'Exchange Admin Center Transport Rules sayfasına git.',
+    navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
+    isNavigation: true,
+    validation: () => {
+      return document.location.href.includes('admin.exchange.microsoft.com') && 
+             document.location.href.includes('transportrules')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 2,
+    name: 'atpattach_step2_add_rule',
     title: 'Yeni Kural Ekle',
     description: '+ Add a rule butonuna tıklayın',
     target: {
@@ -1221,11 +1500,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 2,
-    name: 'atpattach_step2_rule_name',
+    id: 3,
+    name: 'atpattach_step3_rule_name',
     title: 'Kural İsmi',
     description: 'Beyaz liste kuralı için bir isim girin (örn: "ATP Attachment Bypass")',
     target: {
@@ -1244,11 +1523,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 500
+    waitAfterClick: 5000
   },
   {
-    id: 3,
-    name: 'atpattach_step3_apply_rule_if',
+    id: 4,
+    name: 'atpattach_step4_apply_rule_if',
     title: 'Apply This Rule If',
     description: '"Apply this rule if..." > The sender > IP address is in any of these ranges or exactly matches',
     target: {
@@ -1264,11 +1543,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 4,
-    name: 'atpattach_step4_sender_ip',
+    id: 5,
+    name: 'atpattach_step5_sender_ip',
     title: 'Gönderici IP Adresi',
     description: 'The sender > IP address is seçeneğini ayarlayın ve IP adreslerini girin',
     target: {
@@ -1287,11 +1566,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 500
+    waitAfterClick: 5000
   },
   {
-    id: 5,
-    name: 'atpattach_step5_do_following',
+    id: 6,
+    name: 'atpattach_step6_do_following',
     title: 'Do The Following',
     description: '"Do the following" > Modify the message properties > Set a message header',
     target: {
@@ -1307,11 +1586,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 6,
-    name: 'atpattach_step6_message_header',
+    id: 7,
+    name: 'atpattach_step7_message_header',
     title: 'Message Header Ayarı',
     description: 'X-MS-Exchange-Organization-SkipSafeAttachmentProcessing başlığını girin ve 1 değeriyle kaydedin',
     target: {
@@ -1326,11 +1605,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 7,
-    name: 'atpattach_step7_save',
+    id: 8,
+    name: 'atpattach_step8_save',
     title: 'Kaydet',
     description: 'Kuralı kaydetmek için Save butonuna tıklayın',
     target: {
@@ -1346,10 +1625,10 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 1000
   },
   {
-    id: 7,
+    id: 9,
     name: 'atpattach_summary',
     title: '🎊 Tebrikler! Tüm Adımları Tamamladınız!',
     description: 'ATP Attachment Bypass kuralı başarıyla oluşturuldu. Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!',
@@ -1884,25 +2163,45 @@ class FloatingPanel {
       <div style="display: flex; align-items: center; gap: 12px;">
         <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e 0%, #4a9eff 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">K</div>
         <div>
-          <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">Keepnet Assistant</div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">${i18n('assistantTitle')}</div>
           <div style="font-size: 11px; opacity: 0.8;" id="keepnet-step-indicator">Enterprise Security Configuration</div>
         </div>
       </div>
-      <button id="keepnet-close-btn" style="
-        background: rgba(255,255,255,0.1);
-        border: none;
-        color: white;
-        width: 28px;
-        height: 28px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
-      " onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">×</button>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <select id="keepnet-language-selector" style="
+          background: rgba(255,255,255,0.1);
+          color: white;
+          border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 6px;
+          padding: 4px 8px;
+          font-size: 11px;
+          cursor: pointer;
+          backdrop-filter: blur(10px);
+          transition: all 0.2s ease;
+        " onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+          <option value="tr">🇹🇷 TR</option>
+          <option value="en">🇬🇧 EN</option>
+          <option value="de">🇩🇪 DE</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="es">🇪🇸 ES</option>
+          <option value="it">🇮🇹 IT</option>
+        </select>
+        <button id="keepnet-close-btn" style="
+          background: rgba(255,255,255,0.1);
+          border: none;
+          color: white;
+          width: 28px;
+          height: 28px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 16px;
+          line-height: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        " onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">×</button>
+      </div>
     `
     
     // Progress bar
@@ -1951,13 +2250,13 @@ class FloatingPanel {
     
     this.footer.innerHTML = `
       <button id="keepnet-prev-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1;">
-        Previous
+        ${i18n('previous')}
       </button>
       <button id="keepnet-next-btn" class="keepnet-btn keepnet-btn-primary" style="flex: 2;">
-        Continue
+        ${i18n('continue')}
       </button>
       <button id="keepnet-summary-btn" class="keepnet-btn keepnet-btn-secondary" style="flex: 1; font-size: 11px;" title="Skip to summary report">
-        Summary
+        ${i18n('summary')}
       </button>
     `
     
@@ -2019,6 +2318,45 @@ class FloatingPanel {
         this.container.style.display = 'none'
       })
     }
+    
+    // Language selector
+    const langSelector = document.getElementById('keepnet-language-selector')
+    if (langSelector) {
+      // Load current language from storage
+      chrome.storage.local.get(['keepnet_language'], (result) => {
+        const currentLang = result.keepnet_language || 'tr'
+        langSelector.value = currentLang
+        console.log("[Keepnet] Current language loaded:", currentLang)
+      })
+      
+      langSelector.addEventListener('change', async (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const selectedLang = e.target.value
+        console.log("[Keepnet] Language changed to:", selectedLang)
+        
+        try {
+          // Save selected language to storage
+          await chrome.storage.local.set({ keepnet_language: selectedLang })
+          console.log("[Keepnet] Language saved to storage:", selectedLang)
+          
+          // Show loading indicator
+          langSelector.style.opacity = '0.6'
+          langSelector.style.pointerEvents = 'none'
+          
+          // Reload page after short delay
+          setTimeout(() => {
+            console.log("[Keepnet] Reloading page for language change")
+            location.reload()
+          }, 300)
+          
+        } catch (error) {
+          console.error("[Keepnet] Error saving language:", error)
+          langSelector.style.opacity = '1'
+          langSelector.style.pointerEvents = 'auto'
+        }
+      })
+    }
   }
   
   updatePosition() {
@@ -2052,7 +2390,7 @@ class FloatingPanel {
     const indicator = document.getElementById('keepnet-step-indicator')
     if (indicator) {
       indicator.style.transition = 'all 0.3s ease'
-      indicator.textContent = `Adım ${current} / ${total}`
+      indicator.textContent = `${i18n('step')} ${current} ${i18n('of')} ${total}`
       AnimationUtils.animate(indicator, 'pulse', 300)
     }
   }
@@ -2237,6 +2575,37 @@ class FloatingPanel {
     })
   }
   
+  setPosition(positionType) {
+    if (!this.container) return
+    
+    let newPosition = { x: 20, y: 20 }
+    
+    switch (positionType) {
+      case 'top-left':
+        newPosition = { x: 20, y: 20 }
+        break
+      case 'top-right':
+        newPosition = { x: window.innerWidth - PANEL_SIZE.width - 20, y: 20 }
+        break
+      case 'bottom-left':
+        newPosition = { x: 20, y: window.innerHeight - PANEL_SIZE.height - 20 }
+        break
+      case 'bottom-right':
+      default:
+        newPosition = { x: window.innerWidth - PANEL_SIZE.width - 20, y: window.innerHeight - PANEL_SIZE.height - 20 }
+        break
+    }
+    
+    this.position = newPosition
+    this.container.style.left = `${newPosition.x}px`
+    this.container.style.top = `${newPosition.y}px`
+    
+    console.log(`[Keepnet] Panel position changed to: ${positionType}`, newPosition)
+    
+    // Save new position
+    this.saveState()
+  }
+  
   injectStyles() {
     if (document.getElementById('keepnet-styles')) {
       console.log("[Keepnet] Styles already injected")
@@ -2394,6 +2763,10 @@ class KeepnetAssistant {
   async init() {
     try {
       console.log("[Keepnet] Initializing assistant...")
+      
+      // Load language preferences first
+      await loadLanguagePreference()
+      console.log("[Keepnet] Language loaded:", CURRENT_LANGUAGE)
       
       // Hangi workflow'dayız? URL'ye göre belirle
       const currentUrl = window.location.href
@@ -2858,7 +3231,7 @@ class KeepnetAssistant {
         return
       }
       
-      console.log(`[Keepnet] Executing step ${stepNum}: ${step.title}`)
+      console.log(`[Keepnet] Executing step ${stepNum}: ${i18n(step.title)}`)
       
       this.currentStep = stepNum
       await Storage.set(STORAGE_KEYS.CURRENT_STEP, stepNum)
@@ -2880,6 +3253,27 @@ class KeepnetAssistant {
       if (step.isSummary) {
         await this.showSummary()
         return
+      }
+      
+      // Info card step?
+      if (step.isInfoCard) {
+        this.renderStepContent(step)
+        
+        // Auto advance after delay
+        if (step.autoAdvance && step.autoAdvanceDelay) {
+          setTimeout(async () => {
+            console.log(`[Keepnet] Auto advancing after ${step.autoAdvanceDelay}ms`)
+            await this.nextStep()
+          }, step.autoAdvanceDelay)
+        }
+        return
+      }
+      
+      // Panel position control
+      if (step.panelPosition === 'top-left') {
+        this.panel.setPosition('top-left')
+      } else {
+        this.panel.setPosition('bottom-right') // default
       }
       
       // Render step content
@@ -2934,7 +3328,7 @@ class KeepnetAssistant {
             await this.onElementClicked(step)
           }, { once: true })
         } else {
-          console.warn("[Keepnet] Element not found:", step.title)
+          console.warn("[Keepnet] Element not found:", i18n(step.title))
           
           // Safe Links için özel lisans kontrolü
           if (step.name === 'safelinks_step4_safe_links' && step.licenseCheck) {
@@ -2992,7 +3386,7 @@ class KeepnetAssistant {
             return
           }
           
-          this.panel.showError(`Element bulunamadı: ${step.title}\n\nLütfen manuel olarak devam edin.`)
+          this.panel.showError(`${i18n('elementNotFound')}: ${i18n(step.title)}\n\nLütfen manuel olarak devam edin.`)
         }
       }
       
@@ -3015,10 +3409,10 @@ class KeepnetAssistant {
     let html = `
       <div class="keepnet-step-content">
         <h3 style="margin: 0 0 8px 0; font-size: 15px; color: #FFFFFF;">
-          ${step.title}
+          ${i18n(step.title)}
         </h3>
         <p style="margin: 0 0 12px 0; font-size: 13px; color: #E2E8F0; line-height: 1.5;">
-          ${step.description}
+          ${i18n(step.description)}
         </p>
     `
     
@@ -3027,7 +3421,7 @@ class KeepnetAssistant {
       html += `
         <div style="background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(45, 45, 74, 0.8)); border: 2px solid #4a9eff; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
           <div style="font-size: 13px; font-weight: 600; color: #4a9eff; margin-bottom: 8px;">
-            ${step.title}
+            ${i18n(step.title)}
           </div>
           <button id="keepnet-navigate-btn" data-url="${step.navigate}" style="
             width: 100%;
@@ -3043,7 +3437,7 @@ class KeepnetAssistant {
             box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 8px rgba(124, 58, 237, 0.5)'"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(124, 58, 237, 0.3)'">
-            🌐 Sayfaya Git
+            ${i18n('goToPage')}
           </button>
         </div>
       `
@@ -3070,7 +3464,7 @@ class KeepnetAssistant {
             box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 8px rgba(124, 58, 237, 0.5)'"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(124, 58, 237, 0.3)'">
-            🌐 Sayfaya Git
+            ${i18n('goToPage')}
           </button>
         </div>
       `
@@ -3093,11 +3487,11 @@ class KeepnetAssistant {
               Bu lisanslardan biri yoksa Safe Links özelliği görünmeyecektir.
             </div>
           </div>
-          <div style="background: linear-gradient(135deg, rgba(107, 114, 128, 0.08), rgba(75, 85, 99, 0.08)); border: 1px solid #6b7280; border-radius: 8px; padding: 12px;">
-            <div style="font-size: 12px; color: #4b5563; font-weight: 600; margin-bottom: 8px;">
+          <div style="background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(249, 115, 22, 0.15)); border: 2px solid #fb923c; border-radius: 8px; padding: 12px;">
+            <div style="font-size: 12px; color: #ea580c; font-weight: 600; margin-bottom: 8px;">
               🔹 Safe Links görünmüyorsa:
             </div>
-            <div style="font-size: 12px; color: #374151; line-height: 1.4;">
+            <div style="font-size: 12px; color: #FFFFFF; font-weight: 600; line-height: 1.4;">
               Bu adımı atlayabilir ve sonraki adımlara geçebilirsiniz.
             </div>
           </div>
@@ -3161,7 +3555,7 @@ class KeepnetAssistant {
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
           " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(59, 130, 246, 0.4)'"                                    
              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)'">                                      
-            Tümünü Kopyala
+            ${i18n('copyAll')}
           </button>
         </div>
       `
@@ -3196,7 +3590,7 @@ class KeepnetAssistant {
             box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
           " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(107, 114, 128, 0.4)'"
              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(107, 114, 128, 0.3)'">
-            Tümünü Kopyala
+            ${i18n('copyAll')}
           </button>
         </div>
       `
@@ -3228,7 +3622,7 @@ class KeepnetAssistant {
             box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 8px rgba(124, 58, 237, 0.5)'"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(124, 58, 237, 0.3)'">
-            📋 Tümünü Kopyala
+            📋 ${i18n('copyAll')}
           </button>
         </div>
       `
@@ -3299,17 +3693,17 @@ class KeepnetAssistant {
             ]
             const domainsText = domains.join('\n')
             navigator.clipboard.writeText(domainsText).then(() => {
-              copyBtn.textContent = 'Kopyalandı!'
+              copyBtn.textContent = i18n('copied')
               copyBtn.style.background = 'linear-gradient(135deg, #047857 0%, #065f46 100%)'
               setTimeout(() => {
-                copyBtn.textContent = 'Tümünü Kopyala'
+                copyBtn.textContent = i18n('copyAll')
                 copyBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
               }, 2000)
             }).catch(err => {
               console.error('[Keepnet] Clipboard error:', err)
-              copyBtn.textContent = 'Hata'
+              copyBtn.textContent = i18n('error')
               setTimeout(() => {
-                copyBtn.textContent = 'Tümünü Kopyala'
+                copyBtn.textContent = i18n('copyAll')
               }, 2000)
             })
           })
@@ -3337,17 +3731,17 @@ class KeepnetAssistant {
             ]
             const domainsText = domains.join('\n')
             navigator.clipboard.writeText(domainsText).then(() => {
-              copyBtn.textContent = 'Kopyalandı!'
+              copyBtn.textContent = i18n('copied')
               copyBtn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)'
               setTimeout(() => {
-                copyBtn.textContent = 'Tümünü Kopyala'
+                copyBtn.textContent = i18n('copyAll')
                 copyBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)'
               }, 2000)
             }).catch(err => {
               console.error('[Keepnet] Clipboard error:', err)
-              copyBtn.textContent = 'Hata'
+              copyBtn.textContent = i18n('error')
               setTimeout(() => {
-                copyBtn.textContent = 'Tümünü Kopyala'
+                copyBtn.textContent = i18n('copyAll')
               }, 2000)
             })
           })
@@ -3363,17 +3757,17 @@ class KeepnetAssistant {
           copyBtn.addEventListener('click', () => {
             const ips = '149.72.161.59\n149.72.42.201\n149.72.154.87'
             navigator.clipboard.writeText(ips).then(() => {
-              copyBtn.textContent = 'Kopyalandı!'
+              copyBtn.textContent = i18n('copied')
               copyBtn.style.background = 'linear-gradient(135deg, #5dade2 0%, #4a9eff 100%)'
               setTimeout(() => {
-                copyBtn.textContent = 'Tümünü Kopyala'
+                copyBtn.textContent = i18n('copyAll')
                 copyBtn.style.background = 'linear-gradient(135deg, #4a9eff 0%, #5dade2 100%)'
               }, 2000)
             }).catch(err => {
               console.error('[Keepnet] Clipboard error:', err)
-              copyBtn.textContent = 'Hata'
+              copyBtn.textContent = i18n('error')
               setTimeout(() => {
-                copyBtn.textContent = 'Tümünü Kopyala'
+                copyBtn.textContent = i18n('copyAll')
               }, 2000)
             })
           })
@@ -3502,7 +3896,7 @@ class KeepnetAssistant {
     
     // Save result
     this.stepResults[step.id] = {
-      title: step.title,
+      title: i18n(step.title),
       valid: isValid,
       timestamp: new Date().toISOString()
     }
@@ -3513,6 +3907,29 @@ class KeepnetAssistant {
       this.clearHighlight()
     }
     
+    // NextTarget varsa, ikinci elementi bul ve highlight et
+    if (step.nextTarget && isValid) {
+      console.log(`[Keepnet] Looking for nextTarget...`)
+      await Utils.sleep(1000) // Menünün açılması için bekle
+      
+      const nextElement = Utils.findElement(step.nextTarget)
+      if (nextElement) {
+        console.log(`[Keepnet] NextTarget found, highlighting...`)
+        this.clearHighlight()
+        this.highlightElement(nextElement, `Şimdi "${step.nextTarget.textMatch?.source || 'bu seçeneği'}" seçin`)
+        
+        // NextTarget'a click listener ekle
+        nextElement.addEventListener('click', async () => {
+          console.log(`[Keepnet] NextTarget clicked`)
+          this.clearHighlight()
+          await Utils.sleep(step.waitAfterClick || 500)
+          await this.nextStep()
+        }, { once: true })
+        
+        return // Normal nextStep'i atla
+      }
+    }
+    
     // OTOMATIK SONRAKI ADIMA GEÇ - Sadece valid ise!
     if (isValid) {
       console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
@@ -3520,7 +3937,7 @@ class KeepnetAssistant {
       await this.nextStep()
     } else if (step.criticalStep) {
       // Kritik adımda validation başarısızsa uyar
-      this.panel.showError(`Lütfen ${step.title} alanını doldurun!`)
+      this.panel.showError(`${i18n('pleaseComplete')} ${i18n(step.title)}`)
     } else {
       // Kritik olmayan adımda da geç
       await Utils.sleep(500)
@@ -3679,8 +4096,8 @@ class KeepnetAssistant {
     
     let html = `
       <div class="keepnet-summary">
-        <h2 style="margin: 0 0 16px 0; font-size: 16px; color: #111827;">
-          📊 Özet Rapor - ${this.workflowName}
+        <h2 style="margin: 0 0 16px 0; font-size: 16px; color: #FFFFFF;">
+          ${i18n('summaryReport')} - ${this.workflowName}
         </h2>
         <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
     `
@@ -3700,7 +4117,7 @@ class KeepnetAssistant {
           <div style="font-size: 18px; margin-right: 10px;">${status}</div>
           <div style="flex: 1;">
             <div style="font-size: 13px; font-weight: 500; color: #111827;">
-              ${step.title}
+              ${i18n(step.title)}
             </div>
             ${screenshot ? `<div style="font-size: 11px; color: #6b7280;">Screenshot: ${step.name}.png</div>` : ''}
           </div>
@@ -3717,7 +4134,7 @@ class KeepnetAssistant {
                 border: none;
                 border-radius: 4px;
                 cursor: pointer;
-              ">Git ve Düzelt</button>
+              ">${i18n('goAndFix')}</button>
           ` : ''}
         </div>
       `
@@ -3726,7 +4143,7 @@ class KeepnetAssistant {
     html += `
         </div>
         <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px; font-size: 12px; color: #1e40af;">
-          💾 Tüm screenshot'lar chrome.storage'da kaydedildi
+          💾 ${i18n('allScreenshotsSaved')}
         </div>
     `
     
@@ -4082,11 +4499,17 @@ window.addEventListener('load', async () => {
   }
 })
 
+// Load language preference on startup
+loadLanguagePreference()
+
 // Sayfa yüklenince ayrıca kontrol et (load event'i çalışmazsa)
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   console.log("[Keepnet] Document already loaded, checking state...")
   
   setTimeout(async () => {
+    // Load language first
+    await loadLanguagePreference()
+    
     const nextWorkflow = await Storage.get('keepnet_next_workflow')
     if (nextWorkflow) {
       console.log("[Keepnet] nextWorkflow found, starting assistant...")

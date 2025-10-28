@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Keepnet Allow List Assistant for Office 365",
+  "name": "__MSG_extensionName__",
   "version": "3.1.0",
-  "description": "Office 365'te Keepnet phishing simülasyonları için otomatik allow list yapılandırma asistanı - Akıllı navigasyon, gerçek zamanlı doğrulama ve kanıt toplama",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "tr",
   "permissions": [
     "storage",
     "tabs",
@@ -30,7 +31,7 @@
     }
   ],
   "action": {
-    "default_title": "Keepnet Allow List Assistant - Click to Start"
+    "default_title": "__MSG_extensionTitle__"
   },
   "icons": {
     "16": "icons/icon16.jpg",
