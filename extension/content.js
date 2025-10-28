@@ -1265,12 +1265,16 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Do the following dropdown\'ını açın',
     autoClick: false,
+    manualStep: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    validation: () => true,
+    autoAdvanceDelay: 2500,
+    validation: () => {
+      console.log('[Keepnet] Step 11 - 2.5 saniye sonra Step 12\'ye KESIN geç')
+      return true
+    },
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 50,
+    waitAfterClick: 500,
     panelPosition: 'bottom-left'
   },
   {
