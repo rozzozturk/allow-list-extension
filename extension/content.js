@@ -1019,10 +1019,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     description: 'Exchange Admin Center Transport Rules sayfasına git.',
     navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
     isNavigation: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return document.location.href.includes('admin.exchange.microsoft.com') && 
              document.location.href.includes('transportrules')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000
   },
   {
@@ -1041,9 +1045,13 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: '+ Add a rule butonuna tıklayın',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('span.ms-ContextualMenu-itemText') || !!document.querySelector('div[role="menuitem"]')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1069,6 +1077,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return document.location.href.includes('new') || !!document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1088,11 +1098,15 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Kural adını girin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
     validation: () => {
       const input = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]') || 
                    document.querySelector('div.ms-TextField-fieldGroup input[type="text"]')
-      return input && (input.value.length > 0 || document.activeElement === input)
+      return input && input.value.length > 0
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'top-left',
     criticalStep: true
