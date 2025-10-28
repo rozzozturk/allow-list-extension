@@ -1162,8 +1162,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
   {
     id: 10,
     name: 'spambypass_step10_enter_ip',
-    title: 'IP Adreslerini Manuel Girin',
-    description: '9) IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). IP girildikten sonra otomatik ilerler, maksimum 15 saniye bekler.',
+    title: 'IP Adreslerini Girin',
+    description: '9) IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). 3 IP girildiğinde checkbox\'lar belirecek ve otomatik ilerleyecek.',
     target: {
       selector: 'input#TextField637',
       fallback: [
@@ -1177,16 +1177,17 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     manualStep: true,
     autoAdvance: true,
-    autoAdvanceDelay: 15000,
     hideCopyButton: true,
     validation: () => {
-      const input = document.querySelector('input#TextField637') || 
-                   document.querySelector('input[data-automation-id="SenderIpRanges_Input"]') ||
-                   document.querySelector('input.ms-TextField-field')
-      return input && input.value && input.value.trim().length > 10
+      // 3 tane checkbox var mı kontrolü (seçili olmasına gerek yok)
+      const checkboxes = document.querySelectorAll('div.ms-DetailsRow-check.ms-Check-checkHost[role="radio"]') ||
+                         document.querySelectorAll('div[id*="checkbox"][role="radio"]') ||
+                         document.querySelectorAll('div.ms-Check-checkHost')
+      console.log('[Keepnet] Total checkboxes found:', checkboxes.length)
+      return checkboxes && checkboxes.length >= 3
     },
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 2000,
     criticalStep: true,
     waitAfterClick: 2000
   },
