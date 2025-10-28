@@ -1359,14 +1359,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvance: true,
     autoAdvanceDelay: 5000,
     validation: () => {
-      // Spesifik Add action butonunu tam HTML ile bul
-      const addButton = document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"][title="Add action"]') ||
-                       document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]') ||
-                       document.querySelector('button[title="Add action"][aria-label="Add action"]') ||
-                       document.querySelector('button.ms-Button.ms-Button--icon[aria-label="Add action"]') ||
-                       document.querySelector('i[data-icon-name="Add"].ms-Button-icon')
-      console.log('[Keepnet] Step 16 validation - Spesifik Add Action button found:', !!addButton)
-      return !!addButton
+      // css-675 class içindeki Add icon'unu bul
+      const addIcon = document.querySelector('.css-675 i[data-icon-name="Add"]') ||
+                     document.querySelector('div.css-675 i[data-icon-name="Add"].ms-Button-icon') ||
+                     document.querySelector('.css-675 i.ms-Icon[data-icon-name="Add"]') ||
+                     document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]') ||
+                     document.querySelector('i[data-icon-name="Add"].ms-Button-icon')
+      console.log('[Keepnet] Step 16 validation - css-675 içindeki Add icon found:', !!addIcon)
+      return !!addIcon
     },
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
@@ -1377,11 +1377,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Yeni Kural Ekle',
     description: '16) "Do the following" alanının yanındaki + (artı) butonuna tıklayın.',
     target: {
-      selector: 'button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]',
+      selector: '.css-675 i[data-icon-name="Add"]',
       fallback: [
-        'button[title="Add action"]',
-        'button[aria-label="Add action"]',
-        'button.ms-Button--icon[aria-label="Add action"]',
+        'div.css-675 i[data-icon-name="Add"].ms-Button-icon',
+        '.css-675 i.ms-Icon[data-icon-name="Add"]',
+        'button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]',
         'i[data-icon-name="Add"].ms-Button-icon',
         'button:contains("+")'
       ]
