@@ -1167,6 +1167,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'IP condition için Select one dropdown\'ını açın',
     autoClick: false,
+    hideCopyButton: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
     validation: () => {
