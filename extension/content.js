@@ -1112,10 +1112,15 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Apply this rule if dropdown\'ını açın',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('button[data-index="1"] span:contains("The sender")') || 
-             !!document.querySelector('div[role="option"]:contains("The sender")')
+             !!document.querySelector('div[role="option"]:contains("The sender")') ||
+             !!document.querySelector('span:contains("The sender")')
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
