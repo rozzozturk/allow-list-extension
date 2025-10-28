@@ -1276,12 +1276,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1302,12 +1299,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1329,12 +1323,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1396,9 +1387,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return !!document.querySelector('span:contains("Modify the message properties")')
-    },
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1419,10 +1410,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return !!document.querySelector('span:contains("Select one")') || 
-             !!document.querySelector('span[id*="Dropdown675-option"]')
-    },
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1443,10 +1433,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return !!document.querySelector('button[data-automation-id*="Link_SetHeader"]') || 
-             !!document.querySelector('button:contains("Enter text")')
-    },
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1467,10 +1456,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return !!document.querySelector('input[placeholder*="header"]') || 
-             !!document.querySelector('input[aria-label*="header"]')
-    },
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
