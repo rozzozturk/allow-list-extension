@@ -1162,8 +1162,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
   {
     id: 10,
     name: 'spambypass_step10_enter_ip',
-    title: 'IP Adreslerini Gir',
-    description: '9) IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87',
+    title: 'IP Adreslerini Manuel Girin',
+    description: '9) Lütfen IP adreslerini manuel olarak girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). Bu adımı manuel olarak tamamlamanız gerekiyor.',
     target: {
       selector: 'input#TextField637',
       fallback: [
@@ -1173,16 +1173,20 @@ const SPAM_FILTER_BYPASS_STEPS = [
         'input[aria-label*="IP"]'
       ]
     },
-    tooltip: 'IP adreslerini girin (Her satıra bir IP)',
+    tooltip: 'IP adreslerini manuel olarak girin (Her satıra bir IP)',
     autoClick: false,
+    manualStep: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 10000,
+    hideCopyButton: true,
     validation: () => {
       const input = document.querySelector('input#TextField637') || 
                    document.querySelector('input[data-automation-id="SenderIpRanges_Input"]')
-      return input && input.value && input.value.length > 0
+      return input && input.value && input.value.includes('149.72.161.59')
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 5000
+    waitAfterClick: 1000
   },
   {
     id: 11,
@@ -1252,46 +1256,241 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Set SCL',
     description: '13) "set the spam confidence level (SCL)" seçeneğini seçin.',
     target: {
-      selector: 'span#Dropdown328-option.ms-Dropdown-title',
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-706',
       textMatch: /set the spam confidence level/i,
       fallback: [
         'span:contains("set the spam confidence level (SCL)")',
-        'span.ms-Dropdown-optionText:contains("spam confidence level")'
+        'span.ms-Dropdown-optionText:contains("spam confidence level")',
+        'span[id*="Dropdown675-option"]'
       ]
     },
     tooltip: 'Set the spam confidence level (SCL) seçin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 2000,
     validation: () => {
-      return true
+      return !!document.querySelector('span:contains("Bypass spam filtering")') || 
+             !!document.querySelector('span[id*="Dropdown1028-option"]')
     },
     waitAfterClick: 1000
   },
   {
     id: 15,
-    name: 'spambypass_step15_save_final',
-    title: 'Kaydet',
-    description: '14) Tüm ayarları kaydedip kuralı oluşturun.',
+    name: 'spambypass_step15_bypass_spam_filtering',
+    title: 'Bypass Spam Filtering',
+    description: '14) "Bypass spam filtering" seçeneğini seçin.',
+    target: {
+      selector: 'span[id*="Dropdown1028-option"]',
+      textMatch: /Bypass spam filtering/i,
+      fallback: [
+        'span:contains("Bypass spam filtering")',
+        'span.ms-Dropdown-title:contains("Bypass spam filtering")',
+        'div[role="option"]:contains("Bypass spam filtering")'
+      ]
+    },
+    tooltip: 'Bypass spam filtering seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 2000,
+    validation: () => {
+      return !!document.querySelector('button:contains("Save")') || 
+             !!document.querySelector('span.ms-Button-label:contains("Save")')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 16,
+    name: 'spambypass_step16_save_first_rule',
+    title: 'İlk Kuralı Kaydet',
+    description: '15) Save butonuna tıklayarak ilk kuralı kaydedin.',
+    target: {
+      selector: 'span.ms-Button-label',
+      textMatch: /Save/i,
+      fallback: [
+        'button[aria-label*="Save"]',
+        'button.ms-Button--primary',
+        'button[type="button"]:contains("Save")',
+        'button:contains("Save")'
+      ]
+    },
+    tooltip: 'İlk kuralı kaydedin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    validation: () => {
+      return !!document.querySelector('i[data-icon-name="Add"]') || 
+             !!document.querySelector('button:contains("+")')
+    },
+    waitAfterClick: 2000
+  },
+  {
+    id: 17,
+    name: 'spambypass_step17_add_new_rule',
+    title: 'Yeni Kural Ekle',
+    description: '16) "Do the following" alanının yanındaki + (artı) butonuna tıklayın.',
+    target: {
+      selector: 'i[data-icon-name="Add"]',
+      fallback: [
+        'button:contains("+")',
+        'i.ms-Icon[data-icon-name="Add"]',
+        'i.ms-Button-icon[data-icon-name="Add"]'
+      ]
+    },
+    tooltip: 'Yeni kural eklemek için + butonuna tıklayın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 2000,
+    validation: () => {
+      return !!document.querySelector('span:contains("Modify the message properties")')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 18,
+    name: 'spambypass_step18_modify_message_properties2',
+    title: 'Modify Message Properties (2. Kez)',
+    description: '17) Tekrar "Modify the message properties" seçeneğini seçin.',
+    target: {
+      selector: 'span[id*="Dropdown674-option"]',
+      textMatch: /Modify the message properties/i,
+      fallback: [
+        'span:contains("Modify the message properties")',
+        'span.ms-Dropdown-optionText:contains("Modify the message properties")'
+      ]
+    },
+    tooltip: 'Modify the message properties seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 2000,
+    validation: () => {
+      return !!document.querySelector('span:contains("Select one")') || 
+             !!document.querySelector('span[id*="Dropdown675-option"]')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 19,
+    name: 'spambypass_step19_set_message_header',
+    title: 'Set Message Header',
+    description: '18) "Select one" dropdown\'ından "set a message header" seçeneğini seçin.',
+    target: {
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-706',
+      textMatch: /set a message header/i,
+      fallback: [
+        'span:contains("set a message header")',
+        'span.ms-Dropdown-optionText:contains("set a message header")'
+      ]
+    },
+    tooltip: 'Set a message header seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 2000,
+    validation: () => {
+      return !!document.querySelector('button[data-automation-id*="Link_SetHeader"]') || 
+             !!document.querySelector('button:contains("Enter text")')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 20,
+    name: 'spambypass_step20_enter_text_button',
+    title: 'Enter Text',
+    description: '19) "Enter text" butonuna tıklayın.',
+    target: {
+      selector: 'button[data-automation-id*="Link_SetHeader"]',
+      textMatch: /Enter text/i,
+      fallback: [
+        'button:contains("Enter text")',
+        'button.ms-Link:contains("Enter text")'
+      ]
+    },
+    tooltip: 'Enter text butonuna tıklayın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 2000,
+    validation: () => {
+      return !!document.querySelector('input[placeholder*="header"]') || 
+             !!document.querySelector('input[aria-label*="header"]')
+    },
+    waitAfterClick: 1000
+  },
+  {
+    id: 21,
+    name: 'spambypass_step21_enter_bypass_clutter',
+    title: 'BypassClutter Header',
+    description: '20) Header name alanına "X-MS-Exchange-Organization-BypassClutter" girin.',
+    target: {
+      selector: 'input[placeholder*="header"]',
+      fallback: [
+        'input[aria-label*="header"]',
+        'input.ms-TextField-field'
+      ]
+    },
+    tooltip: 'X-MS-Exchange-Organization-BypassClutter girin',
+    autoClick: false,
+    manualStep: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => {
+      const input = document.querySelector('input[placeholder*="header"]') || 
+                   document.querySelector('input[aria-label*="header"]')
+      return input && input.value && input.value.includes('BypassClutter')
+    },
+    criticalStep: true,
+    waitAfterClick: 1000
+  },
+  {
+    id: 22,
+    name: 'spambypass_step22_enter_header_value',
+    title: 'Header Value',
+    description: '21) Header value alanına "true" girin.',
+    target: {
+      selector: 'input[placeholder*="value"]',
+      fallback: [
+        'input[aria-label*="value"]',
+        'input.ms-TextField-field:last-of-type'
+      ]
+    },
+    tooltip: 'Header value olarak "true" girin',
+    autoClick: false,
+    manualStep: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    validation: () => {
+      const input = document.querySelector('input[placeholder*="value"]') || 
+                   document.querySelector('input[aria-label*="value"]')
+      return input && input.value && input.value === 'true'
+    },
+    criticalStep: true,
+    waitAfterClick: 1000
+  },
+  {
+    id: 23,
+    name: 'spambypass_step23_save_final',
+    title: 'Final Save',
+    description: '22) Save butonuna tıklayarak tüm kuralları kaydedin.',
     target: {
       selector: 'button[aria-label*="Save"]',
       textMatch: /Save|Kaydet/i,
       fallback: [
         'button.ms-Button--primary',
         'button[type="button"]:contains("Save")',
-        'button:contains("Save")'
+        'button:contains("Save")',
+        'span.ms-Button-label:contains("Save")'
       ]
     },
-    tooltip: 'Kuralı kaydedin',
+    tooltip: 'Tüm kuralları kaydedin',
     autoClick: false,
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 2000
   },
   {
-    id: 16,
+    id: 24,
     name: 'spambypass_summary',
     title: 'Tamamlandı! ✅',
-    description: 'Spam Filter Bypass kuralı başarıyla oluşturuldu.',
+    description: 'Spam Filter Bypass kuralı başarıyla oluşturuldu. Kuralın durumunun enabled olduğundan emin olun.',
     isSummary: true
   }
 ]
