@@ -3527,14 +3527,18 @@ class KeepnetAssistant {
       }
       
       // Panel position control
-      if (this.workflowName === 'WORKFLOW_4' && this.currentStep >= 6) {
-        // Workflow 4'te step 6'dan itibaren hep sol tarafta kal (step'lerin kendi panelPosition'ını override et)
+      if (this.workflowName === 'WORKFLOW_4' && this.currentStep >= 5) {
+        // Workflow 4'te step 5'ten itibaren hep sol tarafta kal (step'lerin kendi panelPosition'ını override et)
+        console.log(`[Keepnet] WORKFLOW_4 Panel Override: Step ${this.currentStep} - Setting LEFT position`)
         this.panel.setPosition('left')
       } else if (step.panelPosition === 'top-left') {
+        console.log(`[Keepnet] Step Panel Position: top-left`)
         this.panel.setPosition('top-left')
       } else if (step.panelPosition === 'left') {
+        console.log(`[Keepnet] Step Panel Position: left`)
         this.panel.setPosition('left')
       } else {
+        console.log(`[Keepnet] Default Panel Position: bottom-right`)
         this.panel.setPosition('bottom-right') // default
       }
       
