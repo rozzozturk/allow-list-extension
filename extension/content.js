@@ -1328,7 +1328,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Bypass spam filtering seçin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => {
       // Save butonunu daha güçlü validation ile bul
       const saveButton = document.querySelector('button:contains("Save")') ||
