@@ -1334,6 +1334,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       console.log('[Keepnet] Step 15 - Bypass spam filtering seçildi, 5 saniye sonra step 16\'ya geç')
       return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
