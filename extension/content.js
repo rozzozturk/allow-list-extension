@@ -1387,7 +1387,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Yeni kural eklemek için + butonuna tıklayın',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('span:contains("Modify the message properties")')
     },
@@ -1410,7 +1410,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Modify the message properties seçin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('span:contains("Select one")') || 
              !!document.querySelector('span[id*="Dropdown675-option"]')
@@ -1434,7 +1434,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Set a message header seçin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('button[data-automation-id*="Link_SetHeader"]') || 
              !!document.querySelector('button:contains("Enter text")')
@@ -1458,7 +1458,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Enter text butonuna tıklayın',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return !!document.querySelector('input[placeholder*="header"]') || 
              !!document.querySelector('input[aria-label*="header"]')
@@ -1480,6 +1480,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'X-MS-Exchange-Organization-BypassClutter girin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     manualStep: true,
     autoAdvance: true,
     autoAdvanceDelay: 5000,
@@ -1506,6 +1508,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Header value olarak "true" girin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     manualStep: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
@@ -1535,6 +1539,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Tüm kuralları kaydedin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       return true
     },
