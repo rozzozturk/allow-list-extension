@@ -1632,32 +1632,20 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     tooltip: 'Kural adını girin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       const input = document.querySelector('input[placeholder*="name"]') || document.querySelector('input[aria-label*="name"]')
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 5000
+    waitAfterClick: 2000
   },
   {
     id: 4,
     name: 'atplink_step4_apply_rule_if',
-    title: 'Apply This Rule If',
-    description: '"Apply this rule if..." > The sender > IP address is in any of these ranges or exactly matches',
-    target: {
-      selector: 'button[aria-label*="Apply this rule"]',
-      textMatch: /Apply this rule if/i,
-      fallback: [
-        'button:contains("Apply this rule")',
-        'button[aria-label*="condition"]'
-      ]
-    },
-    tooltip: '"Apply this rule if..." ayarlarını yapın',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1676,73 +1664,34 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     tooltip: 'IP adreslerini girin (Her satıra bir IP)',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       const input = document.querySelector('input.ms-BasePicker-input') || document.querySelector('textarea')
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 5000
+    waitAfterClick: 2000
   },
   {
     id: 6,
     name: 'atplink_step6_do_following',
-    title: 'Do The Following',
-    description: '"Do the following" > Modify the message properties > Set a message header',
-    target: {
-      selector: 'button[aria-label*="Do the following"]',
-      textMatch: /Do the following/i,
-      fallback: [
-        'button:contains("Do the following")',
-        'button[aria-label*="action"]'
-      ]
-    },
-    tooltip: '"Do the following" ayarlarını yapın',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 7,
     name: 'atplink_step7_message_header',
-    title: 'Message Header Ayarı',
-    description: 'X-MS-Exchange-Organization-SkipSafeLinksProcessing başlığını girin ve 1 değeriyle kaydedin',
-    target: {
-      selector: 'input[aria-label*="header name"]',
-      fallback: [
-        'input[placeholder*="header"]',
-        'input.ms-TextField-field'
-      ]
-    },
-    tooltip: 'Header name: X-MS-Exchange-Organization-SkipSafeLinksProcessing, Value: 1',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 8,
     name: 'atplink_step8_save',
-    title: 'Kaydet',
-    description: 'Kuralı kaydetmek için Save butonuna tıklayın',
-    target: {
-      selector: 'button[aria-label*="Save"]',
-      textMatch: /Save|Kaydet/i,
-      fallback: [
-        'button.ms-Button--primary',
-        'button[type="button"]:contains("Save")'
-      ]
-    },
-    tooltip: 'Kuralı kaydedin',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1816,32 +1765,20 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     tooltip: 'Kural adını girin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       const input = document.querySelector('input[placeholder*="name"]') || document.querySelector('input[aria-label*="name"]')
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 5000
+    waitAfterClick: 2000
   },
   {
     id: 4,
     name: 'atpattach_step4_apply_rule_if',
-    title: 'Apply This Rule If',
-    description: '"Apply this rule if..." > The sender > IP address is in any of these ranges or exactly matches',
-    target: {
-      selector: 'button[aria-label*="Apply this rule"]',
-      textMatch: /Apply this rule if/i,
-      fallback: [
-        'button:contains("Apply this rule")',
-        'button[aria-label*="condition"]'
-      ]
-    },
-    tooltip: '"Apply this rule if..." ayarlarını yapın',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1860,73 +1797,34 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     tooltip: 'IP adreslerini girin (Her satıra bir IP)',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       const input = document.querySelector('input.ms-BasePicker-input') || document.querySelector('textarea')
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
     criticalStep: true,
-    waitAfterClick: 5000
+    waitAfterClick: 2000
   },
   {
     id: 6,
     name: 'atpattach_step6_do_following',
-    title: 'Do The Following',
-    description: '"Do the following" > Modify the message properties > Set a message header',
-    target: {
-      selector: 'button[aria-label*="Do the following"]',
-      textMatch: /Do the following/i,
-      fallback: [
-        'button:contains("Do the following")',
-        'button[aria-label*="action"]'
-      ]
-    },
-    tooltip: '"Do the following" ayarlarını yapın',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 7,
     name: 'atpattach_step7_message_header',
-    title: 'Message Header Ayarı',
-    description: 'X-MS-Exchange-Organization-SkipSafeAttachmentProcessing başlığını girin ve 1 değeriyle kaydedin',
-    target: {
-      selector: 'input[aria-label*="header name"]',
-      fallback: [
-        'input[placeholder*="header"]',
-        'input.ms-TextField-field'
-      ]
-    },
-    tooltip: 'Header name: X-MS-Exchange-Organization-SkipSafeAttachmentProcessing, Value: 1',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 8,
     name: 'atpattach_step8_save',
-    title: 'Kaydet',
-    description: 'Kuralı kaydetmek için Save butonuna tıklayın',
-    target: {
-      selector: 'button[aria-label*="Save"]',
-      textMatch: /Save|Kaydet/i,
-      fallback: [
-        'button.ms-Button--primary',
-        'button[type="button"]:contains("Save")'
-      ]
-    },
-    tooltip: 'Kuralı kaydedin',
-    autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
