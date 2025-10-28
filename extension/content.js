@@ -1362,15 +1362,12 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Bypass spam filtering seçin',
     autoClick: false,
+    manualStep: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
-    validation: () => {
-      // Step 15'ten her zaman geç (5 saniye sonra)
-      console.log('[Keepnet] Step 15 - Bypass spam filtering seçildi, 5 saniye sonra step 16\'ya geç')
-      return true
-    },
+    autoAdvanceDelay: 3000,
+    validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 500,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
