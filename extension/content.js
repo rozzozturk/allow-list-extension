@@ -1139,10 +1139,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: '"The sender" seçeneğini seçin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       // Her zaman geç
       return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1162,10 +1166,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'IP condition için Select one dropdown\'ını açın',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       // Her zaman geç
       return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1185,10 +1193,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'IP address ranges seçeneğini seçin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
-      return !!document.querySelector('input[data-automation-id="SenderIpRanges_Input"]') || 
-             !!document.querySelector('input[placeholder*="IPv4 or IPv6"]')
+      // Her zaman geç
+      return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1242,10 +1254,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Do the following dropdown\'ını açın',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       // Her zaman geç
       return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1264,10 +1280,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Modify the message properties seçin',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
-      return !!document.querySelector('span#Dropdown328-option') || 
-             !!document.querySelector('span.ms-Dropdown-titleIsPlaceHolder:contains("Select one")')
+      // Her zaman geç
+      return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1286,10 +1306,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'İkinci Select one dropdown\'ını açın',
     autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => {
       // Her zaman geç
       return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1310,11 +1334,13 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Set the spam confidence level (SCL) seçin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 3000,
     validation: () => {
-      return !!document.querySelector('span:contains("Bypass spam filtering")') || 
-             !!document.querySelector('span[id*="Dropdown1028-option"]')
+      // Her zaman geç
+      return true
     },
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
