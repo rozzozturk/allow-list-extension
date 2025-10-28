@@ -1142,12 +1142,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1198,12 +1195,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1259,12 +1253,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1381,16 +1372,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 5000,
-    validation: () => {
-      // css-675 class içindeki Add icon'unu bul
-      const addIcon = document.querySelector('.css-675 i[data-icon-name="Add"]') ||
-                     document.querySelector('div.css-675 i[data-icon-name="Add"].ms-Button-icon') ||
-                     document.querySelector('.css-675 i.ms-Icon[data-icon-name="Add"]') ||
-                     document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]') ||
-                     document.querySelector('i[data-icon-name="Add"].ms-Button-icon')
-      console.log('[Keepnet] Step 16 validation - css-675 içindeki Add icon found:', !!addIcon)
-      return !!addIcon
-    },
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
   },
@@ -1506,10 +1490,10 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'X-MS-Exchange-Organization-BypassClutter girin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    manualStep: true,
-    autoAdvance: true,
     autoAdvanceDelay: 5000,
+    manualStep: true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     validation: () => {
       const input = document.querySelector('input[placeholder*="header"]') || 
                    document.querySelector('input[aria-label*="header"]')
@@ -1536,8 +1520,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvance: true,
     autoAdvanceDelay: 3000,
     manualStep: true,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     validation: () => {
       const input = document.querySelector('input[placeholder*="value"]') || 
                    document.querySelector('input[aria-label*="value"]')
