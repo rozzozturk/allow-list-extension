@@ -1205,7 +1205,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     manualStep: true,
     autoAdvance: true,
-    autoAdvanceDelay: 15000,
+    autoAdvanceDelay: 30000,
     hideCopyButton: true,
     validation: () => {
       // 3 tane checkbox var mı kontrolü (seçili olmasına gerek yok)
@@ -1216,9 +1216,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return checkboxes && checkboxes.length >= 3
     },
     realTimeValidation: true,
-    realTimeValidationInterval: 2000,
+    realTimeValidationInterval: 3000,
     criticalStep: true,
-    waitAfterClick: 2000,
+    waitAfterClick: 3000,
     panelPosition: 'bottom-left'
   },
   {
@@ -1362,14 +1362,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvance: true,
     autoAdvanceDelay: 5000,
     validation: () => {
-      // + butonunu daha güçlü validation ile bul
-      const addIcon = document.querySelector('i[data-icon-name="Add"]') ||
-                     document.querySelector('i.ms-Icon[data-icon-name="Add"]') ||
-                     document.querySelector('i.ms-Button-icon[data-icon-name="Add"]') ||
-                     document.querySelector('button:contains("+")') ||
-                     document.querySelector('[aria-label*="add"]')
-      console.log('[Keepnet] Step 16 validation - Add button found:', !!addIcon)
-      return !!addIcon
+      // Spesifik Add action butonunu bul
+      const addButton = document.querySelector('button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]') ||
+                       document.querySelector('button[title="Add action"]') ||
+                       document.querySelector('button[aria-label="Add action"]') ||
+                       document.querySelector('i[data-icon-name="Add"]') ||
+                       document.querySelector('button.ms-Button--icon[aria-label*="Add"]')
+      console.log('[Keepnet] Step 16 validation - Add Action button found:', !!addButton)
+      return !!addButton
     },
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
