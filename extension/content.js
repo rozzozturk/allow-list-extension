@@ -331,7 +331,8 @@ const WORKFLOW_STEPS = [
       const btn = document.querySelector('button[aria-label*="posta"], button[aria-label*="Email"]')
       return btn && btn.getAttribute('aria-expanded') === 'true'
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 3,
@@ -353,7 +354,8 @@ const WORKFLOW_STEPS = [
       return document.location.href.includes('/securitypoliciesandrules') || 
              document.location.href.includes('/policy')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 4,
@@ -374,7 +376,8 @@ const WORKFLOW_STEPS = [
     validation: () => {
       return document.location.href.includes('/threatpolicy')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 5,
@@ -395,7 +398,8 @@ const WORKFLOW_STEPS = [
     validation: () => {
       return document.location.href.includes('/advanceddelivery')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 6,
@@ -420,7 +424,8 @@ const WORKFLOW_STEPS = [
       )
       return tab && (tab.getAttribute('aria-selected') === 'true' || tab.classList.contains('is-selected'))
     },
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -442,7 +447,8 @@ const WORKFLOW_STEPS = [
       // Panel veya modal açıldı mı kontrol et
       return !!document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -517,7 +523,8 @@ const WORKFLOW_STEPS = [
     },
     realTimeValidation: true,
     criticalStep: false,
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 10,
@@ -539,7 +546,8 @@ const WORKFLOW_STEPS = [
       // Save işlemi başarılı mı kontrol et
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 11,
@@ -584,7 +592,8 @@ const THREAT_POLICIES_STEPS = [
       const checkedBoxes = document.querySelectorAll('div.ms-DetailsRow-cellCheck div[data-automationid="DetailsRowCheck"][aria-checked="true"]')
       return checkedBoxes.length > 0
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 3,
@@ -605,7 +614,8 @@ const THREAT_POLICIES_STEPS = [
     validation: () => {
       return !!document.querySelector('button[aria-label*="Edit connection filter"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 4,
@@ -625,7 +635,8 @@ const THREAT_POLICIES_STEPS = [
     validation: () => {
       return !!document.querySelector('textarea[aria-label*="IP"], input[aria-label*="IP"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 5,
@@ -678,7 +689,8 @@ const THREAT_POLICIES_STEPS = [
       })
       return checkbox && checkbox.checked
     },
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -699,7 +711,8 @@ const THREAT_POLICIES_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -740,7 +753,8 @@ const SAFE_LINKS_STEPS = [
       const btn = document.querySelector('button[aria-label*="posta"], button[aria-label*="Email"]')
       return btn && btn.getAttribute('aria-expanded') === 'true'
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 3,
@@ -759,7 +773,8 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return document.location.href.includes('/threatpolicy')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 4,
@@ -805,7 +820,8 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return !!document.querySelector('[role="dialog"], .ms-Panel')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 6,
@@ -826,7 +842,8 @@ const SAFE_LINKS_STEPS = [
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -846,7 +863,8 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -867,7 +885,8 @@ const SAFE_LINKS_STEPS = [
       return input && input.value && input.value.length > 0
     },
     realTimeValidation: true,
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 8,
@@ -886,7 +905,8 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 9,
@@ -905,7 +925,8 @@ const SAFE_LINKS_STEPS = [
       const checkbox = document.querySelector('input[type="checkbox"][aria-label*="Track"]')
       return checkbox && !checkbox.checked
     },
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 10,
@@ -946,7 +967,8 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 13,
@@ -966,7 +988,8 @@ const SAFE_LINKS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 14,
@@ -1021,7 +1044,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('span.ms-ContextualMenu-itemText') || !!document.querySelector('div[role="menuitem"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 4,
@@ -1046,7 +1070,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return document.location.href.includes('new') || !!document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]')
     },
     waitAfterClick: 1000,
-    panelPosition: 'top-left'
+    panelPosition: 'bottom-left'
   },
   {
     id: 5,
@@ -1092,7 +1116,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('button[data-index="1"] span:contains("The sender")') || 
              !!document.querySelector('div[role="option"]:contains("The sender")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -1114,7 +1139,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       const selectedText = document.querySelector('div[data-automation-id="EditTransportRule_GroupCondition_0_Dropdown"] span.ms-Dropdown-title')
       return selectedText && selectedText.textContent.includes('The sender')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 8,
@@ -1135,7 +1161,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('span.ms-Dropdown-optionText:contains("IP address is in any of these ranges")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 9,
@@ -1157,7 +1184,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('input[data-automation-id="SenderIpRanges_Input"]') || 
              !!document.querySelector('input[placeholder*="IPv4 or IPv6"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 10,
@@ -1177,6 +1205,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     manualStep: true,
     autoAdvance: true,
+    autoAdvanceDelay: 15000,
     hideCopyButton: true,
     validation: () => {
       // 3 tane checkbox var mı kontrolü (seçili olmasına gerek yok)
@@ -1189,7 +1218,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     realTimeValidation: true,
     realTimeValidationInterval: 2000,
     criticalStep: true,
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 11,
@@ -1210,7 +1240,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('span.ms-Dropdown-optionText:contains("Modify the message properties")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 12,
@@ -1231,7 +1262,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('span#Dropdown328-option') || 
              !!document.querySelector('span.ms-Dropdown-titleIsPlaceHolder:contains("Select one")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 13,
@@ -1251,7 +1283,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('span:contains("set the spam confidence level")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 14,
@@ -1275,7 +1308,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('span:contains("Bypass spam filtering")') || 
              !!document.querySelector('span[id*="Dropdown1028-option"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 15,
@@ -1299,7 +1333,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('button:contains("Save")') || 
              !!document.querySelector('span.ms-Button-label:contains("Save")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 16,
@@ -1324,7 +1359,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('i[data-icon-name="Add"]') || 
              !!document.querySelector('button:contains("+")')
     },
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 17,
@@ -1346,7 +1382,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('span:contains("Modify the message properties")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 18,
@@ -1369,7 +1406,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('span:contains("Select one")') || 
              !!document.querySelector('span[id*="Dropdown675-option"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 19,
@@ -1392,7 +1430,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('button[data-automation-id*="Link_SetHeader"]') || 
              !!document.querySelector('button:contains("Enter text")')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 20,
@@ -1415,7 +1454,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return !!document.querySelector('input[placeholder*="header"]') || 
              !!document.querySelector('input[aria-label*="header"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 21,
@@ -1440,7 +1480,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return input && input.value && input.value.includes('BypassClutter')
     },
     criticalStep: true,
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 22,
@@ -1465,7 +1506,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
       return input && input.value && input.value === 'true'
     },
     criticalStep: true,
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 23,
@@ -1487,7 +1529,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 2000
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 24,
@@ -1511,7 +1554,8 @@ const ATP_LINK_BYPASS_STEPS = [
       return document.location.href.includes('admin.exchange.microsoft.com') && 
              document.location.href.includes('transportrules')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 2,
@@ -1532,7 +1576,8 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 3,
@@ -1575,7 +1620,8 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 5,
@@ -1618,7 +1664,8 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -1637,7 +1684,8 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 8,
@@ -1657,7 +1705,8 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 9,
@@ -1681,7 +1730,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
       return document.location.href.includes('admin.exchange.microsoft.com') && 
              document.location.href.includes('transportrules')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 2,
@@ -1702,7 +1752,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 3,
@@ -1745,7 +1796,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 5,
@@ -1788,7 +1840,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 7,
@@ -1807,7 +1860,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 8,
@@ -1827,7 +1881,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => {
       return true
     },
-    waitAfterClick: 1000
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
   },
   {
     id: 9,
