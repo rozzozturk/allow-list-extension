@@ -1163,7 +1163,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     id: 10,
     name: 'spambypass_step10_enter_ip',
     title: 'IP Adreslerini Manuel Girin',
-    description: '9) Lütfen IP adreslerini manuel olarak girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). Bu adım 20 saniye sonra otomatik olarak ilerleyecek.',
+    description: '9) IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). IP girildikten sonra otomatik ilerler, maksimum 15 saniye bekler.',
     target: {
       selector: 'input#TextField637',
       fallback: [
@@ -1177,16 +1177,18 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     manualStep: true,
     autoAdvance: true,
-    autoAdvanceDelay: 20000,
+    autoAdvanceDelay: 15000,
     hideCopyButton: true,
     validation: () => {
       const input = document.querySelector('input#TextField637') || 
-                   document.querySelector('input[data-automation-id="SenderIpRanges_Input"]')
-      return input && input.value && input.value.includes('149.72.161.59')
+                   document.querySelector('input[data-automation-id="SenderIpRanges_Input"]') ||
+                   document.querySelector('input.ms-TextField-field')
+      return input && input.value && input.value.trim().length > 10
     },
     realTimeValidation: true,
+    realTimeValidationInterval: 1000,
     criticalStep: true,
-    waitAfterClick: 1000
+    waitAfterClick: 2000
   },
   {
     id: 11,
