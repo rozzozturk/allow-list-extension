@@ -1330,14 +1330,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvance: true,
     autoAdvanceDelay: 5000,
     validation: () => {
-      // Save butonunu daha güçlü validation ile bul
-      const saveButton = document.querySelector('button:contains("Save")') ||
-                        document.querySelector('span.ms-Button-label:contains("Save")') ||
-                        document.querySelector('button[aria-label*="Save"]') ||
-                        document.querySelector('button.ms-Button--primary') ||
-                        document.querySelector('button[type="button"]:contains("Save")')
-      console.log('[Keepnet] Step 15 validation - Save button found:', !!saveButton)
-      return !!saveButton
+      // Step 15'ten her zaman geç (5 saniye sonra)
+      console.log('[Keepnet] Step 15 - Bypass spam filtering seçildi, 5 saniye sonra step 16\'ya geç')
+      return true
     },
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
