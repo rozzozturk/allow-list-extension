@@ -1115,9 +1115,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvance: true,
     autoAdvanceDelay: 3000,
     validation: () => {
-      return !!document.querySelector('button[data-index="1"] span:contains("The sender")') || 
-             !!document.querySelector('div[role="option"]:contains("The sender")') ||
-             !!document.querySelector('span:contains("The sender")')
+      // Her zaman geç - buton basıldı mı basılmadı mı önemsiz
+      return true
     },
     realTimeValidation: true,
     realTimeValidationInterval: 1000,
@@ -1141,8 +1140,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: '"The sender" seçeneğini seçin',
     autoClick: false,
     validation: () => {
-      const selectedText = document.querySelector('div[data-automation-id="EditTransportRule_GroupCondition_0_Dropdown"] span.ms-Dropdown-title')
-      return selectedText && selectedText.textContent.includes('The sender')
+      // Her zaman geç
+      return true
     },
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1164,7 +1163,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'IP condition için Select one dropdown\'ını açın',
     autoClick: false,
     validation: () => {
-      return !!document.querySelector('span.ms-Dropdown-optionText:contains("IP address is in any of these ranges")')
+      // Her zaman geç
+      return true
     },
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1243,7 +1243,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Do the following dropdown\'ını açın',
     autoClick: false,
     validation: () => {
-      return !!document.querySelector('span.ms-Dropdown-optionText:contains("Modify the message properties")')
+      // Her zaman geç
+      return true
     },
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1286,7 +1287,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'İkinci Select one dropdown\'ını açın',
     autoClick: false,
     validation: () => {
-      return !!document.querySelector('span:contains("set the spam confidence level")')
+      // Her zaman geç
+      return true
     },
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
