@@ -1328,10 +1328,16 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'Bypass spam filtering seçin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 3000,
     validation: () => {
-      return !!document.querySelector('button:contains("Save")') || 
-             !!document.querySelector('span.ms-Button-label:contains("Save")')
+      // Save butonunu daha güçlü validation ile bul
+      const saveButton = document.querySelector('button:contains("Save")') ||
+                        document.querySelector('span.ms-Button-label:contains("Save")') ||
+                        document.querySelector('button[aria-label*="Save"]') ||
+                        document.querySelector('button.ms-Button--primary') ||
+                        document.querySelector('button[type="button"]:contains("Save")')
+      console.log('[Keepnet] Step 15 validation - Save button found:', !!saveButton)
+      return !!saveButton
     },
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
