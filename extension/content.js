@@ -1387,7 +1387,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
       ]
     },
     tooltip: 'Yeni kural eklemek için + butonuna tıklayın',
-    autoClick: false,
+    autoClick: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
     validation: () => {
