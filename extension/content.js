@@ -1116,10 +1116,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvanceDelay: 3000,
     validation: () => {
       // Her zaman geç - buton basıldı mı basılmadı mı önemsiz
+      console.log('[Keepnet] Step 6 - 3 saniye sonra Step 7\'ye kesin geç')
       return true
     },
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
+    realTimeValidationInterval: 500,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
