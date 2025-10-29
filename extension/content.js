@@ -4518,8 +4518,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
   switch (request.action) {
     case 'ping':
-      console.log("[Keepnet] Ping received, responding...")
-      sendResponse({ ok: true })
+      console.log("[Keepnet] Ping received, responding with pong...")
+      sendResponse('pong')
       return false
       
     case 'initAssistant':

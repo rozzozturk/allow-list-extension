@@ -13,10 +13,10 @@ async function safeSendMessage(tabId, message, timeout = 5000) {
     const timeoutId = setTimeout(() => {
       reject(new Error('Message timeout'))
     }, timeout)
-    
+
     chrome.tabs.sendMessage(tabId, message, (response) => {
       clearTimeout(timeoutId)
-      
+
       if (chrome.runtime.lastError) {
         reject(new Error(chrome.runtime.lastError.message))
       } else {
@@ -24,6 +24,56 @@ async function safeSendMessage(tabId, message, timeout = 5000) {
       }
     })
   })
+}
+
+// Content script hazır mı kontrol et
+async function waitForContentScript(tabId, maxRetries = 10) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const response = await safeSendMessage(tabId, { action: 'ping' }, 1000)
+      if (response && response === 'pong') {
+        console.log('[Keepnet] Content script ready!')
+        return true
+      }
+    } catch (error) {
+      console.log(`[Keepnet] Content script not ready, retry ${i + 1}/${maxRetries}`)
+    }
+
+    // Kısa bekleme
+    await new Promise(resolve => setTimeout(resolve, 500))
+  }
+
+  return false
+}
+
+// Content script'i inject et
+async function injectContentScript(tabId) {
+  try {
+    console.log('[Keepnet] Injecting content script...')
+
+    await chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      files: ['content.js']
+    })
+
+    await chrome.scripting.insertCSS({
+      target: { tabId: tabId },
+      files: ['content.css']
+    })
+
+    console.log('[Keepnet] Content script injected successfully')
+
+    // Content script'in yüklenmesini bekle
+    const isReady = await waitForContentScript(tabId)
+    if (!isReady) {
+      throw new Error('Content script failed to initialize')
+    }
+
+    return true
+  } catch (error) {
+    console.error('[Keepnet] Failed to inject content script:', error)
+    throw error
+  }
 }
 
 // Extension icon'a tıklama
@@ -103,12 +153,19 @@ async function startAssistant(tabId) {
     const response = await safeSendMessage(tabId, {
       action: 'initAssistant'
     })
-    
+
     console.log("[Keepnet] initAssistant response:", response)
   } catch (error) {
     console.error("[Keepnet] Start assistant error:", error)
-    
-    // Content script yüklü değilse inject et
+
+    // Content script hazır mı kontrol et, değilse inject et
+    const isReady = await waitForContentScript(tabId)
+    if (!isReady) {
+      console.log("[Keepnet] Content script not ready, injecting...")
+      await injectContentScript(tabId)
+    }
+
+    // Tekrar dene
     try {
       console.log("[Keepnet] Injecting content script...")
       await chrome.scripting.executeScript({
