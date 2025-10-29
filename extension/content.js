@@ -1645,7 +1645,15 @@ const ATP_LINK_BYPASS_STEPS = [
   {
     id: 4,
     name: 'atplink_step4_apply_rule_if',
+    title: 'Apply This Rule If',
+    description: '"Apply this rule if..." dropdown\'ını açın.',
+    tooltip: 'Apply this rule if dropdown\'ını açın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1677,21 +1685,48 @@ const ATP_LINK_BYPASS_STEPS = [
   {
     id: 6,
     name: 'atplink_step6_do_following',
+    title: "Do The Following",
+    description: "Do the following dropdownını açın.",
+    tooltip: "Do the following dropdownını açın",
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 7,
     name: 'atplink_step7_message_header',
+    title: "Message Header",
+    description: "Message header ayarlarını yapın.",
+    tooltip: "Message header ayarlarını yapın",
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 8,
     name: 'atplink_step8_save',
+    title: "Kaydet",
+    description: "Kuralı kaydetmek için Save butonuna tıklayın.",
+    tooltip: "Kuralı kaydedin",
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1778,7 +1813,15 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
   {
     id: 4,
     name: 'atpattach_step4_apply_rule_if',
+    title: 'Apply This Rule If',
+    description: '"Apply this rule if..." dropdown\'ını açın.',
+    tooltip: 'Apply this rule if dropdown\'ını açın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1810,21 +1853,48 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
   {
     id: 6,
     name: 'atpattach_step6_do_following',
+    title: "Do The Following",
+    description: "Do the following dropdownını açın.",
+    tooltip: "Do the following dropdownını açın",
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 7,
     name: 'atpattach_step7_message_header',
+    title: "Message Header",
+    description: "Message header ayarlarını yapın.",
+    tooltip: "Message header ayarlarını yapın",
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 8,
     name: 'atpattach_step8_save',
+    title: "Kaydet",
+    description: "Kuralı kaydetmek için Save butonuna tıklayın.",
+    tooltip: "Kuralı kaydedin",
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    
     validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
