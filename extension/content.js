@@ -1159,6 +1159,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1212,6 +1213,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1297,6 +1299,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1320,6 +1323,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1344,6 +1348,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1369,6 +1374,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1408,6 +1414,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1431,6 +1438,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1454,6 +1462,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1477,6 +1486,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1654,6 +1664,7 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1695,6 +1706,7 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1711,6 +1723,7 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1727,6 +1740,7 @@ const ATP_LINK_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1822,6 +1836,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1863,6 +1878,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1879,6 +1895,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1895,6 +1912,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
+    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
