@@ -305,10 +305,7 @@ const WORKFLOW_STEPS = [
     title: 'workflowStep1Title',
     description: 'workflowStep1Description',
     navigate: 'https://security.microsoft.com/homepage',
-    validation: () => {
-      return document.location.href.startsWith('https://security.microsoft.com')
-    }
-  },
+    validation: () => true,
   {
     id: 2,
     name: 'step2_emailcollab',
@@ -326,11 +323,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'E-posta ve işbirliği\'ne tıklayın',
     autoClick: true,
-    validation: () => {
-      // Herhangi bir email butonunu bul
-      const btn = document.querySelector('button[aria-label*="posta"], button[aria-label*="Email"]')
-      return btn && btn.getAttribute('aria-expanded') === 'true'
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -350,10 +343,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'İlkeler ve kurallar\'a tıklayın',
     autoClick: false,  // Kullanıcı manuel tıklasın
-    validation: () => {
-      return document.location.href.includes('/securitypoliciesandrules') || 
-             document.location.href.includes('/policy')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -373,9 +363,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'Tehdit ilkeleri\'ne tıklayın',
     autoClick: false,  // Kullanıcı manuel tıklasın
-    validation: () => {
-      return document.location.href.includes('/threatpolicy')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -395,9 +383,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'Advanced delivery\'ye tıklayın',
     autoClick: false,  // Kullanıcı manuel tıklasın
-    validation: () => {
-      return document.location.href.includes('/advanceddelivery')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -418,12 +404,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'Phishing simulation sekmesine tıklayın',
     autoClick: true,
-    validation: () => {
-      const tab = Array.from(document.querySelectorAll('button[role="tab"], .ms-Pivot-text')).find(el => 
-        /Phishing simulation/i.test(el.textContent)
-      )
-      return tab && (tab.getAttribute('aria-selected') === 'true' || tab.classList.contains('is-selected'))
-    },
+    validation: () => true,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
   },
@@ -443,10 +424,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'Düzenle butonuna tıklayın',
     autoClick: true,
-    validation: () => {
-      // Panel veya modal açıldı mı kontrol et
-      return !!document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"]')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -466,12 +444,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'Etki alanlarını girin',
     autoClick: false,
-    validation: () => {
-      const label = Array.from(document.querySelectorAll('label.ms-Label')).find(el => 
-        /Etki Alanı/i.test(el.textContent)
-      )
-      return label && !label.textContent.includes('(0 öğe)')
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 500
@@ -482,18 +455,19 @@ const WORKFLOW_STEPS = [
     title: 'workflowStep9Title',
     description: 'workflowStep9Description',
     target: {
-      selector: 'input[aria-label="IP picker"]',
+      selector: 'input#TextField527[data-automation-id="SenderIpRanges_Input"]',
       fallback: [
+        'input[data-automation-id="SenderIpRanges_Input"]',
+        'input#TextField527',
+        'input.ms-TextField-field.field-681',
+        'input[aria-label="IP picker"]',
         'input.ms-BasePicker-input',
         'input[id*="combobox"][aria-label*="IP"]'
       ]
     },
     tooltip: 'White list IP adreslerini girin',
     autoClick: false,
-    validation: () => {
-      const input = document.querySelector('input[aria-label="IP picker"]')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 500
@@ -515,12 +489,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'Simülasyon URL\'lerini girin',
     autoClick: false,
-    validation: () => {
-      const label = Array.from(document.querySelectorAll('label.ms-Label')).find(el => 
-        /İzin verilen simülasyon URL/i.test(el.textContent)
-      )
-      return label && !label.textContent.includes('(0 öğe)')
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: false,
     waitAfterClick: 2000,
@@ -542,10 +511,7 @@ const WORKFLOW_STEPS = [
     },
     tooltip: 'Kaydet butonuna tıklayın',
     autoClick: true,
-    validation: () => {
-      // Save işlemi başarılı mı kontrol et
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -566,9 +532,7 @@ const THREAT_POLICIES_STEPS = [
     title: 'Anti-Spam Politikalarına Git',
     description: 'Anti-Spam politikalarına gitmek için "Sayfaya Git" butonuna tıklayın',
     navigate: 'https://security.microsoft.com/antispam',
-    validation: () => {
-      return document.location.href.includes('/antispam')
-    },
+    validation: () => true,
     isNavigation: true
   },
   {
@@ -587,11 +551,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'Connection Filter Policy checkbox\'ını seçin',
     autoClick: false,
-    validation: () => {
-      // Seçili checkbox var mı kontrol et
-      const checkedBoxes = document.querySelectorAll('div.ms-DetailsRow-cellCheck div[data-automationid="DetailsRowCheck"][aria-checked="true"]')
-      return checkedBoxes.length > 0
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -611,9 +571,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'Connection filter policy\'ye tıklayın',
     autoClick: false,
-    validation: () => {
-      return !!document.querySelector('button[aria-label*="Edit connection filter"]')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -632,9 +590,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'Edit connection filter policy\'ye tıklayın',
     autoClick: false,
-    validation: () => {
-      return !!document.querySelector('textarea[aria-label*="IP"], input[aria-label*="IP"]')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -655,12 +611,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'IP adreslerini girin (Her satıra bir IP)',
     autoClick: false,
-    validation: () => {
-      const input = document.querySelector('input.ms-BasePicker-input') ||
-                    document.querySelector('textarea.ms-TextField-field') ||
-                    document.querySelector('textarea')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 500,
@@ -682,13 +633,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'Turn on safe list checkbox\'ını işaretleyin',
     autoClick: false,
-    validation: () => {
-      const checkbox = Array.from(document.querySelectorAll('input[type="checkbox"]')).find(el => {
-        const label = el.id ? document.querySelector(`label[for="${el.id}"]`)?.textContent : el.parentElement?.textContent
-        return label && /Turn on safe list/i.test(label)
-      })
-      return checkbox && checkbox.checked
-    },
+    validation: () => true,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
   },
@@ -708,9 +653,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'Kaydet butonuna tıklayın',
     autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -731,10 +674,7 @@ const SAFE_LINKS_STEPS = [
     title: 'Security Center',
     description: 'Microsoft Security & Compliance Center\'a gidin',
     navigate: 'https://security.microsoft.com/threatpolicy',
-    validation: () => {
-      return document.location.href.includes('/threatpolicy')
-    }
-  },
+    validation: () => true,
   {
     id: 2,
     name: 'safelinks_step2_email_collab',
@@ -749,10 +689,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'E-posta ve işbirliği\'ne tıklayın',
     autoClick: true,
-    validation: () => {
-      const btn = document.querySelector('button[aria-label*="posta"], button[aria-label*="Email"]')
-      return btn && btn.getAttribute('aria-expanded') === 'true'
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -770,9 +707,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Threat Policies\'e tıklayın',
     autoClick: false,
-    validation: () => {
-      return document.location.href.includes('/threatpolicy')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -791,10 +726,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Safe Links\'e tıklayın',
     autoClick: false,
-    validation: () => {
-      return document.location.href.includes('safelinks') || 
-             document.querySelector('[aria-label*="Safe Links"]')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     licenseCheck: {
       required: 'Microsoft Defender for Office 365',
@@ -817,9 +749,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Create butonuna tıklayın',
     autoClick: false,
-    validation: () => {
-      return !!document.querySelector('[role="dialog"], .ms-Panel')
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -837,10 +767,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'İsim girin',
     autoClick: false,
-    validation: () => {
-      const input = document.querySelector('input[placeholder*="name"], input[type="text"]')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
@@ -860,9 +787,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Next butonuna tıklayın',
     autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -880,10 +805,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Domain ekleyin',
     autoClick: false,
-    validation: () => {
-      const input = document.querySelector('input[aria-label*="domain"], input.ms-BasePicker-input')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
@@ -902,9 +824,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Next\'e tıklayın',
     autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -921,10 +841,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Track user clicks seçeneğini kaldırın',
     autoClick: false,
-    validation: () => {
-      const checkbox = document.querySelector('input[type="checkbox"][aria-label*="Track"]')
-      return checkbox && !checkbox.checked
-    },
+    validation: () => true,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
   },
@@ -942,10 +859,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Phishing domainlerini ekleyin',
     autoClick: false,
-    validation: () => {
-      const input = document.querySelector('textarea[aria-label*="URL"], textarea')
-      return input && input.value && input.value.includes('*.')
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 500
@@ -964,9 +878,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Next\'e tıklayın',
     autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -985,9 +897,7 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'Submit butonuna tıklayın',
     autoClick: false,
-    validation: () => {
-      return true
-    },
+    validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
@@ -1021,10 +931,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     isNavigation: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return document.location.href.includes('admin.exchange.microsoft.com') && 
-             document.location.href.includes('transportrules')
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000
@@ -1047,9 +954,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return !!document.querySelector('span.ms-ContextualMenu-itemText') || !!document.querySelector('div[role="menuitem"]')
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1074,9 +979,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return document.location.href.includes('new') || !!document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]')
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1100,11 +1003,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 5000,
-    validation: () => {
-      const input = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"]') || 
-                   document.querySelector('div.ms-TextField-fieldGroup input[type="text"]')
-      return input && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 1000,
     waitAfterClick: 1000,
@@ -1128,11 +1027,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç - buton basıldı mı basılmadı mı önemsiz
-      console.log('[Keepnet] Step 6 - 3 saniye sonra Step 7\'ye kesin geç')
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1182,11 +1077,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     hideCopyButton: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      // Her zaman geç - Step 8'den 9'a
-      console.log('[Keepnet] Step 8 - 3 saniye sonra Step 9\'a kesin geç')
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1237,14 +1128,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     autoAdvance: true,
     autoAdvanceDelay: 5000,
     hideCopyButton: true,
-    validation: () => {
-      // 3 tane checkbox var mı kontrolü (seçili olmasına gerek yok)
-      const checkboxes = document.querySelectorAll('div.ms-DetailsRow-check.ms-Check-checkHost[role="radio"]') ||
-                         document.querySelectorAll('div[id*="checkbox"][role="radio"]') ||
-                         document.querySelectorAll('div.ms-Check-checkHost')
-      console.log('[Keepnet] Total checkboxes found:', checkboxes.length)
-      return checkboxes && checkboxes.length >= 3
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 500,
     criticalStep: true,
@@ -1270,10 +1154,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     manualStep: false,
     autoAdvance: true,
     autoAdvanceDelay: 2500,
-    validation: () => {
-      console.log('[Keepnet] Step 11 - 2.5 saniye sonra Step 12\'ye KESIN geç')
-      return true
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 50,
     waitAfterClick: 500,
@@ -1510,11 +1391,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     manualStep: true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    validation: () => {
-      const input = document.querySelector('input[placeholder*="header"]') || 
-                   document.querySelector('input[aria-label*="header"]')
-      return input && input.value && input.value.includes('BypassClutter')
-    },
+    validation: () => true,
     criticalStep: true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1538,11 +1415,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     manualStep: true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    validation: () => {
-      const input = document.querySelector('input[placeholder*="value"]') || 
-                   document.querySelector('input[aria-label*="value"]')
-      return input && input.value && input.value === 'true'
-    },
+    validation: () => true,
     criticalStep: true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1592,10 +1465,7 @@ const ATP_LINK_BYPASS_STEPS = [
     isNavigation: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return document.location.href.includes('admin.exchange.microsoft.com') && 
-             document.location.href.includes('transportrules')
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1619,9 +1489,7 @@ const ATP_LINK_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1644,10 +1512,7 @@ const ATP_LINK_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      const input = document.querySelector('input[placeholder*="name"]') || document.querySelector('input[aria-label*="name"]')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 2000
@@ -1685,10 +1550,7 @@ const ATP_LINK_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      const input = document.querySelector('input.ms-BasePicker-input') || document.querySelector('textarea')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 2000
@@ -1764,10 +1626,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     isNavigation: true,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return document.location.href.includes('admin.exchange.microsoft.com') && 
-             document.location.href.includes('transportrules')
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1791,9 +1650,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      return !!document.querySelector('input[placeholder*="name"], input[aria-label*="name"]')
-    },
+    validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     waitAfterClick: 1000,
@@ -1816,10 +1673,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      const input = document.querySelector('input[placeholder*="name"]') || document.querySelector('input[aria-label*="name"]')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 2000
@@ -1857,10 +1711,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
-    validation: () => {
-      const input = document.querySelector('input.ms-BasePicker-input') || document.querySelector('textarea')
-      return input && input.value && input.value.length > 0
-    },
+    validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 2000
@@ -3631,7 +3482,11 @@ class KeepnetAssistant {
           // Safe Links için özel lisans kontrolü
           if (step.name === 'safelinks_step4_safe_links' && step.licenseCheck) {
             console.log("[Keepnet] Safe Links not found - checking license requirement")
-            this.panel.showError(`Safe Links Bulunamadı\n\n${step.licenseCheck.message}\n\n${step.licenseCheck.skipMessage}`)
+            this.panel.showError(`Safe Links Bulunamadı
+
+${step.licenseCheck.message}
+
+${step.licenseCheck.skipMessage}`)
             
             // 15 saniye Safe Links elementini bekle
             console.log("[Keepnet] Waiting 15 seconds for Safe Links element...")
@@ -4186,7 +4041,7 @@ class KeepnetAssistant {
       await Utils.sleep(step.waitAfterClick)
     }
     
-    // Validate
+    // Validation'ı sadece screenshot için çağır ama ilerlemeyi engelleme
     const isValid = await this.validateStep(step)
     
     // Screenshot
@@ -4200,13 +4055,11 @@ class KeepnetAssistant {
     }
     await Storage.set(STORAGE_KEYS.STEP_RESULTS, this.stepResults)
     
-    // Clear highlight (eğer valid değilse temizleme, kullanıcı girsin)
-    if (isValid) {
-      this.clearHighlight()
-    }
+    // Highlight'ı her zaman temizle - validation sonucuna bakmaksızın
+    this.clearHighlight()
     
     // NextTarget varsa, ikinci elementi bul ve highlight et
-    if (step.nextTarget && isValid) {
+    if (step.nextTarget) {
       console.log(`[Keepnet] Looking for nextTarget...`)
       await Utils.sleep(1000) // Menünün açılması için bekle
       
@@ -4228,19 +4081,10 @@ class KeepnetAssistant {
       }
     }
     
-    // OTOMATIK SONRAKI ADIMA GEÇ - Sadece valid ise!
-    if (isValid) {
-      console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
-      await Utils.sleep(500)
-      await this.nextStep()
-    } else if (step.criticalStep) {
-      // Kritik adımda validation başarısızsa uyar
-      this.panel.showError(`${i18n('pleaseComplete')} ${i18n(step.title)}`)
-    } else {
-      // Kritik olmayan adımda da geç
-      await Utils.sleep(500)
-      await this.nextStep()
-    }
+    // OTOMATIK SONRAKİ ADIMA GEÇ - Validation sonucuna bakmaksızın her zaman ilerle
+    console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
+    await Utils.sleep(500)
+    await this.nextStep()
   }
   
   async validateStep(step) {
