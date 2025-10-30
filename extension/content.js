@@ -20,6 +20,9 @@ let TOTAL_STEPS = 12  // Third-Party Phishing: 12 adım
 let LANGUAGE = 'tr'
 let screenshotCounter = 0
 
+// Dosya başına:
+let autoAdvanceTimer = null;
+
 /* ========== i18n SYSTEM ========== */
 // Messages for different languages
 const MESSAGES = {
@@ -305,7 +308,8 @@ const WORKFLOW_STEPS = [
     title: 'workflowStep1Title',
     description: 'workflowStep1Description',
     navigate: 'https://security.microsoft.com/homepage',
-    validation: () => true,
+    validation: () => true
+  },
   {
     id: 2,
     name: 'step2_emailcollab',
@@ -674,7 +678,8 @@ const SAFE_LINKS_STEPS = [
     title: 'Security Center',
     description: 'Microsoft Security & Compliance Center\'a gidin',
     navigate: 'https://security.microsoft.com/threatpolicy',
-    validation: () => true,
+    validation: () => true
+  },
   {
     id: 2,
     name: 'safelinks_step2_email_collab',
@@ -916,7 +921,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     id: 1,
     name: 'spambypass_step1_info',
     title: 'Başlangıç Bilgisi',
-    description: 'Spam Filter Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var.',
+    description: 'Spam Filter Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var.Bu adımda eklentiye tıklamayınız yoksa form kapanacaktır. Adımlar otomatik olarak ilerleyecektir.',
     isInfoCard: true,
     autoAdvance: true,
     autoAdvanceDelay: 2000,
@@ -1060,9 +1065,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
   },
   {
     id: 8,
-    name: 'spambypass_step8_select_one_ip',
-    title: 'IP Condition Dropdown',
-    description: '7) "Select one" dropdown\'ını açın (IP condition için).',
+    name: 'spambypass_step8_ip_address_condition',
+    title: 'IP Address Condition',
+    description: '7) "Select one" dropdown\'ını açın ve "IP address is in any of these ranges or exactly matches" seçeneğini seçin.',
     target: {
       selector: 'span[id*="Dropdown"][id*="option"].ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder',
       textMatch: /Select one/i,
@@ -1070,13 +1075,24 @@ const SPAM_FILTER_BYPASS_STEPS = [
         'span#Dropdown323-option',
         'span.ms-Dropdown-title:contains("Select one")',
         'span.ms-Dropdown-titleIsPlaceHolder'
-      ]
+      ],
+      secondaryTarget: {
+        selector: 'span.ms-Dropdown-optionText.dropdownOptionText-669',
+        textMatch: /IP address is in any of these ranges/i,
+        fallback: [
+          'span.ms-Dropdown-optionText.dropdownOptionText-617',
+          'span.ms-Dropdown-optionText:contains("IP address is in any of these ranges or exactly matches")',
+          'span.ms-Dropdown-optionText:contains("IP address")',
+          'div[role="option"]:contains("IP address")'
+        ]
+      }
     },
-    tooltip: 'IP condition için Select one dropdown\'ını açın',
-    autoClick: false,
+    tooltip: 'IP condition için dropdown\'ı açın ve IP address ranges seçeneğini seçin',
+    autoClick: true,
     hideCopyButton: true,
+    hideIPList: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 4000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -1085,48 +1101,26 @@ const SPAM_FILTER_BYPASS_STEPS = [
   },
   {
     id: 9,
-    name: 'spambypass_step9_select_ip_range',
-    title: 'IP Address Condition',
-    description: '8) "IP address is in any of these ranges or exactly matches" seçeneğini seçin.',
-    target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-617',
-      textMatch: /IP address is in any of these ranges/i,
-      fallback: [
-        'span.ms-Dropdown-optionText:contains("IP address is in any of these ranges or exactly matches")',
-        'span.ms-Dropdown-optionText:contains("IP address")',
-        'div[role="option"]:contains("IP address")'
-      ]
-    },
-    tooltip: 'IP address ranges seçeneğini seçin',
-    autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    validation: () => true,
-    realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    criticalStep: false,
-    waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
-  },
-  {
-    id: 10,
-    name: 'spambypass_step10_enter_ip',
+    name: 'spambypass_step9_enter_ip',
     title: 'IP Adreslerini Girin',
-    description: '9) IP adreslerini girin: 149.72.161.59, 149.72.42.201, 149.72.154.87 (Her satıra bir IP). 3 IP girildiğinde checkbox\'lar belirecek ve otomatik ilerleyecek.',
+    description: '9) IP adreslerini girin: ',
     target: {
-      selector: 'input#TextField637',
+      selector: 'input[data-automation-id="SenderIpRanges_Input"]',
       fallback: [
-        'input[data-automation-id="SenderIpRanges_Input"]',
+        'input#TextField1460',
+        'input#TextField313',
         'input[placeholder*="Enter an IPv4 or IPv6 address"]',
+        'input.ms-TextField-field.field-681',
         'input.ms-TextField-field',
         'input[aria-label*="IP"]'
       ]
     },
-    tooltip: 'IP adreslerini manuel olarak girin (Her satıra bir IP)',
+    tooltip: 'IP adreslerini manuel olarak girin (Her satıra bir IP) ve save butonuna tıklayınız',
     autoClick: false,
     manualStep: true,
     autoAdvance: true,
     autoAdvanceDelay: 5000,
+    showIPList: true,
     hideCopyButton: true,
     validation: () => true,
     realTimeValidation: true,
@@ -1136,8 +1130,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 11,
-    name: 'spambypass_step11_do_following_dropdown',
+    id: 10,
+    name: 'spambypass_step10_do_following_dropdown',
     title: 'Do The Following',
     description: '10) "Do the following" dropdown\'ını açın.',
     target: {
@@ -1151,29 +1145,52 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'Do the following dropdown\'ını açın',
     autoClick: false,
-    manualStep: false,
     autoAdvance: true,
-    autoAdvanceDelay: 2500,
+    autoAdvanceDelay: 3000,
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 50,
-    waitAfterClick: 500,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
-    id: 12,
-    name: 'spambypass_step12_modify_message_properties',
+    id: 11,
+    name: 'spambypass_step11_modify_message_properties',
     title: 'Modify Message Properties',
     description: '11) "Modify the message properties" seçeneğini seçin.',
     target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-617',
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-780',
       textMatch: /Modify the message properties/i,
       fallback: [
         'span.ms-Dropdown-optionText:contains("Modify the message properties")',
         'div[role="option"]:contains("Modify the message properties")'
       ]
     },
-    tooltip: 'Modify the message properties seçin',
+    tooltip: 'Modify the message properties seçeneğini seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    criticalStep: false,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 12,
+    name: 'spambypass_step12_select_one_scd',
+    title: 'Select One (SCL)',
+    description: '12) "Select one" dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown706-option.ms-Dropdown-title',
+      textMatch: /Select one/i,
+      fallback: [
+        'span#Dropdown706-option',
+        'span.ms-Dropdown-titleIsPlaceHolder:contains("Select one")'
+      ]
+    },
+    tooltip: 'Select one dropdown\'ını açın',
     autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
@@ -1186,31 +1203,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
   },
   {
     id: 13,
-    name: 'spambypass_step13_second_select_one',
-    title: 'Second Select One',
-    description: '12) İkinci "Select one" dropdown\'ını açın.',
-    target: {
-      selector: 'span#Dropdown328-option.ms-Dropdown-titleIsPlaceHolder',
-      textMatch: /Select one/i,
-      fallback: [
-        'span[id*="Dropdown328"].ms-Dropdown-title',
-        'span.ms-Dropdown-titleIsPlaceHolder:contains("Select one")'
-      ]
-    },
-    tooltip: 'İkinci Select one dropdown\'ını açın',
-    autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    validation: () => true,
-    realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    criticalStep: false,
-    waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
-  },
-  {
-    id: 14,
-    name: 'spambypass_step14_set_scl',
+    name: 'spambypass_step13_set_scl',
     title: 'Set SCL',
     description: '13) "set the spam confidence level (SCL)" seçeneğini seçin.',
     target: {
@@ -1219,7 +1212,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
       fallback: [
         'span:contains("set the spam confidence level (SCL)")',
         'span.ms-Dropdown-optionText:contains("spam confidence level")',
-        'span[id*="Dropdown675-option"]'
+        'span#Dropdown706-option'
       ]
     },
     tooltip: 'Set the spam confidence level (SCL) seçin',
@@ -1234,22 +1227,22 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 15,
-    name: 'spambypass_step15_bypass_spam_filtering',
+    id: 14,
+    name: 'spambypass_step14_bypass_spam_filtering',
     title: 'Bypass Spam Filtering',
     description: '14) "Bypass spam filtering" seçeneğini seçin.',
     target: {
-      selector: 'span[id*="Dropdown1028-option"]',
+      selector: 'span#Dropdown826-option.ms-Dropdown-title',
       textMatch: /Bypass spam filtering/i,
       fallback: [
+        'span[id*="Dropdown826"]',
         'span:contains("Bypass spam filtering")',
-        'span.ms-Dropdown-title:contains("Bypass spam filtering")',
+        'span.ms-Dropdown-optionText:contains("Bypass spam filtering")',
         'div[role="option"]:contains("Bypass spam filtering")'
       ]
     },
     tooltip: 'Bypass spam filtering seçin',
     autoClick: false,
-    manualStep: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
     validation: () => true,
@@ -1260,12 +1253,22 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 16,
-    name: 'spambypass_step16_save_first_rule',
-    title: 'İlk Kuralı Kaydet',
-    description: '15) Save butonuna manuel olarak tıklayın. 5 saniye sonra otomatik ilerleyecek.',
-    tooltip: 'Save butonuna manuel tıklayın',
-    autoClick: false,
+    id: 15,
+    name: 'spambypass_step15_save_first_rule',
+    title: 'Save',
+    description: '15) Save butonuna tıklayın.',
+    target: {
+      selector: 'span.ms-Button-label.label-722#id__891',
+      textMatch: /Save|Kaydet/i,
+      fallback: [
+        'span:contains("Save")',
+        'span.ms-Button-label:contains("Save")',
+        'button:contains("Save")',
+        'button.ms-Button--primary'
+      ]
+    },
+    tooltip: 'Save butonuna tıklayın',
+    autoClick: true,
     autoAdvance: true,
     autoAdvanceDelay: 5000,
     validation: () => true,
@@ -1275,33 +1278,34 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 17,
-    name: 'spambypass_step17_add_new_rule',
+    id: 16,
+    name: 'spambypass_step16_add_new_rule',
     title: 'Yeni Kural Ekle',
     description: '16) "Do the following" alanının yanındaki + (artı) butonuna tıklayın.',
     target: {
-      selector: 'span[data-automationid="splitbuttonprimary"] i[data-icon-name="Add"]',
+      selector: 'button[data-automation-id="AddAction_1"]',
+      textMatch: /Add action/i,
       fallback: [
-        'span.ms-Button-flexContainer i[data-icon-name="Add"]',
-        'i[data-icon-name="Add"].ms-Button-icon',
-        'button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]',
-        'button:contains("+")'
+        'button[aria-label*="Add action"]',
+        'button:contains("Add action")',
+        'button.ms-Button--icon[title*="Add"]',
+        'button[data-automation-id*="AddAction"]'
       ]
     },
-    tooltip: 'Yeni kural eklemek için + butonuna tıklayın',
-    autoClick: true,
+    tooltip: '+ (Add action) butonuna tıklayın',
+    autoClick: false,
     autoAdvance: true,
     autoAdvanceDelay: 3000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
+  
   {
-    id: 18,
-    name: 'spambypass_step18_modify_message_properties2',
+    id: 17,
+    name: 'spambypass_step17_modify_message_properties2',
     title: 'Modify Message Properties (2. Kez)',
     description: '17) Tekrar "Modify the message properties" seçeneğini seçin.',
     target: {
@@ -1313,9 +1317,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
       ]
     },
     tooltip: 'Modify the message properties seçin',
-    autoClick: false,
+    autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -1324,8 +1328,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 19,
-    name: 'spambypass_step19_set_message_header',
+    id: 18,
+    name: 'spambypass_step18_set_message_header',
     title: 'Set Message Header',
     description: '18) "Select one" dropdown\'ından "set a message header" seçeneğini seçin.',
     target: {
@@ -1337,9 +1341,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
       ]
     },
     tooltip: 'Set a message header seçin',
-    autoClick: false,
+    autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 2000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -1348,8 +1352,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 20,
-    name: 'spambypass_step20_enter_text_button',
+    id: 19,
+    name: 'spambypass_step19_enter_text_button',
     title: 'Enter Text',
     description: '19) "Enter text" butonuna tıklayın.',
     target: {
@@ -1361,9 +1365,9 @@ const SPAM_FILTER_BYPASS_STEPS = [
       ]
     },
     tooltip: 'Enter text butonuna tıklayın',
-    autoClick: false,
+    autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 2000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -1372,8 +1376,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 21,
-    name: 'spambypass_step21_enter_bypass_clutter',
+    id: 20,
+    name: 'spambypass_step24_enter_bypass_clutter',
     title: 'BypassClutter Header',
     description: '20) Header name alanına "X-MS-Exchange-Organization-BypassClutter" girin.',
     target: {
@@ -1397,8 +1401,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 22,
-    name: 'spambypass_step22_enter_header_value',
+    id: 21,
+    name: 'spambypass_step25_enter_header_value',
     title: 'Header Value',
     description: '21) Header value alanına "true" girin.',
     target: {
@@ -1421,8 +1425,8 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 23,
-    name: 'spambypass_step23_save_final',
+    id: 22,
+    name: 'spambypass_step26_save_final',
     title: 'Final Save',
     description: '22) Save butonuna tıklayarak tüm kuralları kaydedin.',
     target: {
@@ -1446,7 +1450,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 24,
+    id: 23,
     name: 'spambypass_summary',
     title: 'Tamamlandı! ✅',
     description: 'Spam Filter Bypass kuralı başarıyla oluşturuldu. Kuralın durumunun enabled olduğundan emin olun.',
@@ -1458,37 +1462,33 @@ const SPAM_FILTER_BYPASS_STEPS = [
 const ATP_LINK_BYPASS_STEPS = [
   {
     id: 1,
-    name: 'atplink_step1_navigate',
-    title: 'Exchange Admin Center',
-    description: 'Exchange Admin Center Transport Rules sayfasına git.',
-    navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
-    isNavigation: true,
+    name: 'atplink_step1_info',
+    title: 'Başlangıç Bilgisi',
+    description: 'ATP Link Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var. Bu adımda eklentiye tıklamayınız yoksa form kapanacaktır. Adımlar otomatik olarak ilerleyecektir.',
+    isInfoCard: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    validation: () => true,
-    realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
+    autoAdvanceDelay: 2000,
+    waitAfterClick: 0
   },
   {
     id: 2,
     name: 'atplink_step2_add_rule',
-    title: 'Yeni Kural Ekle',
-    description: 'Exchange Admin Rules sayfasında + Add a rule butonuna tıklayın',
+    title: 'Add a rule',
+    description: '1) Add a rule butonuna tıklayın.',
     target: {
-      selector: 'button[aria-label*="Add"]',
+      selector: 'span.ms-Button-label.label-402#id__18',
       textMatch: /Add a rule/i,
       fallback: [
-        'button[name*="Add"]',
+        'span.ms-Button-label:contains("Add a rule")',
+        'button[aria-label*="Add"]',
         'button:contains("Add a rule")',
         'button.ms-Button--primary'
       ]
     },
-    tooltip: '+ Add a rule butonuna tıklayın',
+    tooltip: 'Add a rule butonuna tıklayın',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -1497,159 +1497,411 @@ const ATP_LINK_BYPASS_STEPS = [
   },
   {
     id: 3,
-    name: 'atplink_step3_rule_name',
-    title: 'Kural İsmi',
-    description: 'Beyaz liste kuralı için bir isim girin (örn: "ATP Link Bypass")',
+    name: 'atplink_step3_create_rule',
+    title: 'Create a new rule',
+    description: '2) Create a new rule seçeneğini seçin.',
     target: {
-      selector: 'input[placeholder*="name"]',
+      selector: 'span.ms-ContextualMenu-itemText.label-606',
+      textMatch: /Create a new rule/i,
       fallback: [
-        'input[aria-label*="name"]',
-        'input[aria-label*="Name"]',
-        'input[type="text"]:first-of-type'
+        'span.ms-ContextualMenu-itemText:contains("Create a new rule")',
+        'div[role="menuitem"]:contains("Create a new rule")',
+        'button:contains("Create a new rule")',
+        'a:contains("Create a new rule")'
+      ]
+    },
+    tooltip: 'Create a new rule seçeneğini seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 4,
+    name: 'atplink_step4_rule_name',
+    title: 'Kural Adı',
+    description: '3) Kural adı girin (ör. \'ATP Link Bypass Rule\').',
+    target: {
+      selector: 'input[data-automation-id="EditTransportRule_Name_TextField"]',
+      fallback: [
+        'input#TextField238',
+        'div.ms-TextField-fieldGroup input[type="text"]',
+        'input[maxlength="64"]',
+        'input[aria-labelledby*="TextFieldLabel"]',
+        'input.ms-TextField-field'
       ]
     },
     tooltip: 'Kural adını girin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
-    criticalStep: true,
-    waitAfterClick: 2000
+    realTimeValidationInterval: 1000,
+    waitAfterClick: 1000,
+    panelPosition: 'top-left',
+    criticalStep: true
   },
   {
-    id: 4,
-    name: 'atplink_step4_apply_rule_if',
-    title: 'Apply This Rule If',
-    description: '"Apply this rule if..." dropdown\'ını açın.',
+    id: 5,
+    name: 'atplink_step5_apply_rule_if',
+    title: 'Apply this rule if',
+    description: '4) "Apply this rule if..." dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown243-option',
+      fallback: [
+        'span.ms-Dropdown-title.title-726:contains("Select one")',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'div[data-automation-id="EditTransportRule_GroupCondition_0_Dropdown"]'
+      ]
+    },
     tooltip: 'Apply this rule if dropdown\'ını açın',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
-    id: 5,
-    name: 'atplink_step5_sender_ip',
-    title: 'Gönderici IP Adresi',
-    description: 'The sender > IP address is seçeneğini ayarlayın ve IP adreslerini girin',
+    id: 6,
+    name: 'atplink_step6_select_sender',
+    title: 'The Sender',
+    description: '5) "The sender" seçeneğini seçin.',
     target: {
-      selector: 'input.ms-BasePicker-input',
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+      textMatch: /The sender/i,
       fallback: [
-        'textarea.ms-TextField-field',
-        'input[aria-label*="IP"]',
-        'textarea'
+        'span.ms-Dropdown-optionText:contains("The sender")',
+        'div[role="option"]:contains("The sender")'
       ]
     },
-    tooltip: 'IP adreslerini girin (Her satıra bir IP)',
+    tooltip: 'The sender seçeneğini seçin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    validation: () => true,
-    realTimeValidation: true,
-    criticalStep: true,
-    waitAfterClick: 2000
-  },
-  {
-    id: 6,
-    name: 'atplink_step6_do_following',
-    title: "Do The Following",
-    description: "Do the following dropdownını açın.",
-    tooltip: "Do the following dropdownını açın",
-    autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 7,
-    name: 'atplink_step7_message_header',
-    title: "Message Header",
-    description: "Message header ayarlarını yapın.",
-    tooltip: "Message header ayarlarını yapın",
-    autoClick: false,
+    name: 'atplink_step7_ip_address_condition',
+    title: 'IP Address Condition',
+    description: '6) "Select one" dropdown\'ını açın ve "IP address is in any of these ranges or exactly matches" seçeneğini seçin.',
+    target: {
+      selector: 'span#Dropdown244-option',
+      textMatch: /Select one/i,
+      fallback: [
+        'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder.title-693:contains("Select one")',
+        'span.ms-Dropdown-titleIsPlaceHolder'
+      ],
+      secondaryTarget: {
+        selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+        textMatch: /IP address is in any of these ranges/i,
+        fallback: [
+          'span.ms-Dropdown-optionText:contains("IP address is in any of these ranges or exactly matches")',
+          'span.ms-Dropdown-optionText:contains("IP address")',
+          'div[role="option"]:contains("IP address")'
+        ]
+      }
+    },
+    tooltip: 'IP condition için dropdown\'ı açın ve IP address ranges seçeneğini seçin',
+    autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 8,
-    name: 'atplink_step8_save',
-    title: "Kaydet",
-    description: "Kuralı kaydetmek için Save butonuna tıklayın.",
-    tooltip: "Kuralı kaydedin",
+    name: 'atplink_step8_ip_addresses',
+    title: 'IP Adresleri',
+    description: '7) IP adreslerini girin ve save butonuna tıklayınız. (149.72.161.59, 149.72.42.201, 149.72.154.87).',
+    target: {
+      selector: 'input[data-automation-id="SenderIpRanges_Input"]',
+      fallback: [
+        'input#TextField772',
+        'input[placeholder*="IPv4"]',
+        'textarea.ms-TextField-field',
+        'input[aria-label*="IP"]',
+        'textarea'
+      ]
+    },
+    tooltip: 'IP adreslerini girin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
+    criticalStep: true,
+    waitAfterClick: 2000,
+    panelPosition: 'top-left'
+  },
+ 
+    {
+      id: 9,
+      name: 'spambypass_step10_do_following_dropdown',
+      title: 'Do The Following',
+      description: '10) "Do the following" dropdown\'ını açın.',
+      target: {
+        selector: 'span#Dropdown327-option',
+        textMatch: /Select one/i,
+        fallback: [
+          'span[id*="Dropdown327"].ms-Dropdown-title',
+          'span.ms-Dropdown-title:contains("Select one")',
+          'button[aria-label*="Do the following"]'
+        ]
+      },
+      tooltip: 'Do the following dropdown\'ını açın',
+      autoClick: false,
+      autoAdvance: true,
+      autoAdvanceDelay: 3000,
+      validation: () => true,
+      realTimeValidation: true,
+      realTimeValidationInterval: 100,
+      waitAfterClick: 1000,
+      panelPosition: 'bottom-left'
+    },
+  {
+    id: 10,
+    name: 'atplink_step11_modify_message_properties',
+    title: 'Modify Message Properties',
+    description: '10) "Modify the message properties" seçeneğini seçin.',
+    target: {
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+      textMatch: /Modify the message properties/i,
+      fallback: [
+        'span.ms-Dropdown-optionText:contains("Modify the message properties")',
+        'div[role="option"]:contains("Modify the message properties")'
+      ]
+    },
+    tooltip: 'Modify the message properties seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
-    id: 9,
+    id: 11,
+    name: 'atplink_step12_select_one',
+    title: 'Select one',
+    description: '11) "Select one" dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown249-option',
+      fallback: [
+        'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder.title-745:contains("Select one")',
+        'span.ms-Dropdown-titleIsPlaceHolder'
+      ]
+    },
+    tooltip: 'Select one dropdown\'ını açın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 12,
+    name: 'atplink_step13_set_message_header',
+    title: 'Set a message header',
+    description: '12) "Set a message header" seçeneğini seçin.',
+    target: {
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+      textMatch: /set a message header/i,
+      fallback: [
+        'span.ms-Dropdown-optionText:contains("set a message header")',
+        'span.ms-Dropdown-optionText:contains("Set a message header")',
+        'div[role="option"]:contains("message header")'
+      ]
+    },
+    tooltip: 'Set a message header seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 13,
+    name: 'atplink_step14_enter_text_first',
+    title: 'Enter text (1. Kez)',
+    description: '13) İlk "Enter text" butonuna tıklayın.',
+    target: {
+      selector: 'button[data-automation-id="Link_SetHeader_1_0_0"]',
+      fallback: [
+        'button.ms-Link.root-748:contains("Enter text")',
+        'button:contains("Enter text")'
+      ]
+    },
+    tooltip: 'İlk Enter text butonuna tıklayın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 14,
+    name: 'atplink_step15_header_name',
+    title: 'Header Name',
+    description: '14) Header adı alanına "X-MS-Exchange-Organization-SkipSafeLinksProcessing" yazın.',
+    target: {
+      selector: 'input[data-automation-id="SetHeader_TextField"]',
+      fallback: [
+        'input#TextField1391',
+        'input[type="text"][placeholder*="header"]',
+        'input.ms-TextField-field'
+      ]
+    },
+    tooltip: 'Header adını girin: X-MS-Exchange-Organization-SkipSafeLinksProcessing',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
+    criticalStep: true,
+    waitAfterClick: 1000,
+    panelPosition: 'top-left'
+  },
+  {
+    id: 15,
+    name: 'atplink_step16_enter_text_second',
+    title: 'Enter text (2. Kez)',
+    description: '15) İkinci "Enter text" butonuna tıklayın.',
+    target: {
+      selector: 'button[data-automation-id="Link_SetHeader_1_0_1"]',
+      fallback: [
+        'button.ms-Link.root-748:contains("Enter text")',
+        'button:contains("Enter text")'
+      ]
+    },
+    tooltip: 'İkinci Enter text butonuna tıklayın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 16,
+    name: 'atplink_step17_header_value',
+    title: 'Header Value',
+    description: '16) Header değeri alanına "1" yazın.',
+    target: {
+      selector: 'input[data-automation-id="SetHeader_TextField"]',
+      fallback: [
+        'input#TextField1444',
+        'input[type="text"][placeholder*="value"]',
+        'input.ms-TextField-field'
+      ]
+    },
+    tooltip: 'Header değerini girin: 1',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
+    criticalStep: true,
+    waitAfterClick: 1000,
+    panelPosition: 'top-left'
+  },
+  {
+    id: 17,
+    name: 'atplink_step18_save_final',
+    title: 'Save (Final)',
+    description: '17) Save butonuna tıklayarak kuralı kaydedin.',
+    target: {
+      selector: 'span.ms-Button-label.label-723#id__790',
+      textMatch: /Save|Kaydet/i,
+      fallback: [
+        'span:contains("Save")',
+        'span.ms-Button-label:contains("Save")',
+        'button:contains("Save")',
+        'button.ms-Button--primary'
+      ]
+    },
+    tooltip: 'Save butonuna tıklayın',
+    autoClick: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 18,
     name: 'atplink_summary',
-    title: 'Tamamlandı! ✅',
-    description: 'ATP Link Bypass (SkipSafeLinksProcessing) kuralı başarıyla oluşturuldu.',
+    title: 'ATP Link Bypass Tamamlandı! ✅',
+    description: 'ATP Link Bypass kuralı başarıyla oluşturuldu. Şimdi Workflow 6\'ya (ATP Attachment Bypass) geçiliyor...',
     isSummary: true
   }
+  
 ]
 
 /* ========== WORKFLOW 6: ATP Attachment Bypass (SkipSafeAttachmentProcessing) ========== */
 const ATP_ATTACHMENT_BYPASS_STEPS = [
   {
     id: 1,
-    name: 'atpattach_step1_navigate',
-    title: 'Exchange Admin Center',
-    description: 'Exchange Admin Center Transport Rules sayfasına git.',
-    navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
-    isNavigation: true,
+    name: 'atpattach_step1_info',
+    title: 'Başlangıç Bilgisi',
+    description: 'ATP Attachment Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var. Bu adımda eklentiye tıklamayınız yoksa form kapanacaktır. Adımlar otomatik olarak ilerleyecektir.',
+    isInfoCard: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    validation: () => true,
-    realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
+    autoAdvanceDelay: 2000,
+    waitAfterClick: 0
   },
   {
     id: 2,
     name: 'atpattach_step2_add_rule',
-    title: 'Yeni Kural Ekle',
-    description: '+ Add a rule butonuna tıklayın',
+    title: 'Add a rule',
+    description: '1) Add a rule butonuna tıklayın.',
     target: {
-      selector: 'button[aria-label*="Add"]',
+      selector: 'span.ms-Button-label.label-402#id__18',
       textMatch: /Add a rule/i,
       fallback: [
-        'button[name*="Add"]',
+        'span.ms-Button-label:contains("Add a rule")',
+        'button[aria-label*="Add"]',
         'button:contains("Add a rule")',
         'button.ms-Button--primary'
       ]
     },
-    tooltip: '+ Add a rule butonuna tıklayın',
+    tooltip: 'Add a rule butonuna tıklayın',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -1658,120 +1910,398 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
   },
   {
     id: 3,
-    name: 'atpattach_step3_rule_name',
-    title: 'Kural İsmi',
-    description: 'Beyaz liste kuralı için bir isim girin (örn: "ATP Attachment Bypass")',
+    name: 'atpattach_step3_create_rule',
+    title: 'Create a new rule',
+    description: '2) Create a new rule seçeneğini seçin.',
     target: {
-      selector: 'input[placeholder*="name"]',
+      selector: 'span.ms-ContextualMenu-itemText.label-606',
+      textMatch: /Create a new rule/i,
       fallback: [
-        'input[aria-label*="name"]',
-        'input[aria-label*="Name"]',
-        'input[type="text"]:first-of-type'
+        'span.ms-ContextualMenu-itemText:contains("Create a new rule")',
+        'div[role="menuitem"]:contains("Create a new rule")',
+        'button:contains("Create a new rule")',
+        'a:contains("Create a new rule")'
+      ]
+    },
+    tooltip: 'Create a new rule seçeneğini seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 4,
+    name: 'atpattach_step4_rule_name',
+    title: 'Kural Adı',
+    description: '3) Kural adı girin (ör. \'ATP Attachment Bypass Rule\').',
+    target: {
+      selector: 'input[data-automation-id="EditTransportRule_Name_TextField"]',
+      fallback: [
+        'input#TextField238',
+        'div.ms-TextField-fieldGroup input[type="text"]',
+        'input[maxlength="64"]',
+        'input[aria-labelledby*="TextFieldLabel"]',
+        'input.ms-TextField-field'
       ]
     },
     tooltip: 'Kural adını girin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
-    criticalStep: true,
-    waitAfterClick: 2000
+    realTimeValidationInterval: 1000,
+    waitAfterClick: 1000,
+    panelPosition: 'top-left',
+    criticalStep: true
   },
   {
-    id: 4,
-    name: 'atpattach_step4_apply_rule_if',
-    title: 'Apply This Rule If',
-    description: '"Apply this rule if..." dropdown\'ını açın.',
+    id: 5,
+    name: 'atpattach_step5_apply_rule_if',
+    title: 'Apply this rule if',
+    description: '4) "Apply this rule if..." dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown243-option',
+      fallback: [
+        'span.ms-Dropdown-title.title-726:contains("Select one")',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'div[data-automation-id="EditTransportRule_GroupCondition_0_Dropdown"]'
+      ]
+    },
     tooltip: 'Apply this rule if dropdown\'ını açın',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
-    id: 5,
-    name: 'atpattach_step5_sender_ip',
-    title: 'Gönderici IP Adresi',
-    description: 'The sender > IP address is seçeneğini ayarlayın ve IP adreslerini girin',
+    id: 6,
+    name: 'atpattach_step6_select_sender',
+    title: 'The Sender',
+    description: '5) "The sender" seçeneğini seçin.',
     target: {
-      selector: 'input.ms-BasePicker-input',
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+      textMatch: /The sender/i,
       fallback: [
-        'textarea.ms-TextField-field',
-        'input[aria-label*="IP"]',
-        'textarea'
+        'span.ms-Dropdown-optionText:contains("The sender")',
+        'div[role="option"]:contains("The sender")'
       ]
     },
-    tooltip: 'IP adreslerini girin (Her satıra bir IP)',
+    tooltip: 'The sender seçeneğini seçin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    validation: () => true,
-    realTimeValidation: true,
-    criticalStep: true,
-    waitAfterClick: 2000
-  },
-  {
-    id: 6,
-    name: 'atpattach_step6_do_following',
-    title: "Do The Following",
-    description: "Do the following dropdownını açın.",
-    tooltip: "Do the following dropdownını açın",
-    autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 7,
-    name: 'atpattach_step7_message_header',
-    title: "Message Header",
-    description: "Message header ayarlarını yapın.",
-    tooltip: "Message header ayarlarını yapın",
-    autoClick: false,
+    name: 'atpattach_step7_ip_address_condition',
+    title: 'IP Address Condition',
+    description: '6) "Select one" dropdown\'ını açın ve "IP address is in any of these ranges or exactly matches" seçeneğini seçin.',
+    target: {
+      selector: 'span#Dropdown244-option',
+      textMatch: /Select one/i,
+      fallback: [
+        'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder.title-693:contains("Select one")',
+        'span.ms-Dropdown-titleIsPlaceHolder'
+      ],
+      secondaryTarget: {
+        selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+        textMatch: /IP address is in any of these ranges/i,
+        fallback: [
+          'span.ms-Dropdown-optionText:contains("IP address is in any of these ranges or exactly matches")',
+          'span.ms-Dropdown-optionText:contains("IP address")',
+          'div[role="option"]:contains("IP address")'
+        ]
+      }
+    },
+    tooltip: 'IP condition için dropdown\'ı açın ve IP address ranges seçeneğini seçin',
+    autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
     id: 8,
-    name: 'atpattach_step8_save',
-    title: "Kaydet",
-    description: "Kuralı kaydetmek için Save butonuna tıklayın.",
-    tooltip: "Kuralı kaydedin",
+    name: 'atpattach_step8_ip_addresses',
+    title: 'IP Adresleri',
+    description: '7) IP adreslerini girin (149.72.161.59, 149.72.42.201, 149.72.154.87).',
+    target: {
+      selector: 'input[data-automation-id="SenderIpRanges_Input"]',
+      fallback: [
+        'input#TextField772',
+        'input[placeholder*="IPv4"]',
+        'textarea.ms-TextField-field',
+        'input[aria-label*="IP"]',
+        'textarea'
+      ]
+    },
+    tooltip: 'IP adreslerini girin',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
-    
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
+    criticalStep: true,
+    waitAfterClick: 2000,
+    panelPosition: 'top-left'
+  },
+  {
+    id: 9,
+    name: 'atpattach_step9_save',
+    title: 'Save',
+    description: '8) Save butonuna tıklayın.',
+    target: {
+      selector: 'span.ms-Button-label.label-723#id__790',
+      textMatch: /Save|Kaydet/i,
+      fallback: [
+        'span:contains("Save")',
+        'span.ms-Button-label:contains("Save")',
+        'button:contains("Save")',
+        'button.ms-Button--primary'
+      ]
+    },
+    tooltip: 'Save butonuna tıklayın',
+    autoClick: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
-    criticalStep: false,
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 10,
+    name: 'atpattach_step10_do_following',
+    title: 'Do the following',
+    description: '9) "Do the following" dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown248-option',
+      fallback: [
+        'span.ms-Dropdown-title.title-726:contains("Select one")',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'div[data-automation-id*="Action"]'
+      ]
+    },
+    tooltip: 'Do the following dropdown\'ını açın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
-    id: 9,
+    id: 11,
+    name: 'atpattach_step11_modify_message_properties',
+    title: 'Modify Message Properties',
+    description: '10) "Modify the message properties" seçeneğini seçin.',
+    target: {
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+      textMatch: /Modify the message properties/i,
+      fallback: [
+        'span.ms-Dropdown-optionText:contains("Modify the message properties")',
+        'div[role="option"]:contains("Modify the message properties")'
+      ]
+    },
+    tooltip: 'Modify the message properties seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 12,
+    name: 'atpattach_step12_select_one',
+    title: 'Select one',
+    description: '11) "Select one" dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown249-option',
+      fallback: [
+        'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder.title-745:contains("Select one")',
+        'span.ms-Dropdown-titleIsPlaceHolder'
+      ]
+    },
+    tooltip: 'Select one dropdown\'ını açın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 13,
+    name: 'atpattach_step13_set_message_header',
+    title: 'Set a message header',
+    description: '12) "Set a message header" seçeneğini seçin.',
+    target: {
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
+      textMatch: /set a message header/i,
+      fallback: [
+        'span.ms-Dropdown-optionText:contains("set a message header")',
+        'span.ms-Dropdown-optionText:contains("Set a message header")',
+        'div[role="option"]:contains("message header")'
+      ]
+    },
+    tooltip: 'Set a message header seçin',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 14,
+    name: 'atpattach_step14_enter_text_first',
+    title: 'Enter text (1. Kez)',
+    description: '13) İlk "Enter text" butonuna tıklayın.',
+    target: {
+      selector: 'button[data-automation-id="Link_SetHeader_1_0_0"]',
+      fallback: [
+        'button.ms-Link.root-748:contains("Enter text")',
+        'button:contains("Enter text")'
+      ]
+    },
+    tooltip: 'İlk Enter text butonuna tıklayın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 15,
+    name: 'atpattach_step15_header_name',
+    title: 'Header Name',
+    description: '14) Header adı alanına "X-MS-Exchange-Organization-SkipSafeAttachmentProcessing" yazın.',
+    target: {
+      selector: 'input[data-automation-id="SetHeader_TextField"]',
+      fallback: [
+        'input#TextField1391',
+        'input[type="text"][placeholder*="header"]',
+        'input.ms-TextField-field'
+      ]
+    },
+    tooltip: 'Header adını girin: X-MS-Exchange-Organization-SkipSafeAttachmentProcessing',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
+    criticalStep: true,
+    waitAfterClick: 1000,
+    panelPosition: 'top-left'
+  },
+  {
+    id: 16,
+    name: 'atpattach_step16_enter_text_second',
+    title: 'Enter text (2. Kez)',
+    description: '15) İkinci "Enter text" butonuna tıklayın.',
+    target: {
+      selector: 'button[data-automation-id="Link_SetHeader_1_0_1"]',
+      fallback: [
+        'button.ms-Link.root-748:contains("Enter text")',
+        'button:contains("Enter text")'
+      ]
+    },
+    tooltip: 'İkinci Enter text butonuna tıklayın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 17,
+    name: 'atpattach_step17_header_value',
+    title: 'Header Value',
+    description: '16) Header değeri alanına "1" yazın.',
+    target: {
+      selector: 'input[data-automation-id="SetHeader_TextField"]',
+      fallback: [
+        'input#TextField1444',
+        'input[type="text"][placeholder*="value"]',
+        'input.ms-TextField-field'
+      ]
+    },
+    tooltip: 'Header değerini girin: 1',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 1000,
+    criticalStep: true,
+    waitAfterClick: 1000,
+    panelPosition: 'top-left'
+  },
+  {
+    id: 18,
+    name: 'atpattach_step18_save_final',
+    title: 'Save (Final)',
+    description: '17) Save butonuna tıklayarak kuralı kaydedin.',
+    target: {
+      selector: 'span.ms-Button-label.label-723#id__790',
+      textMatch: /Save|Kaydet/i,
+      fallback: [
+        'span:contains("Save")',
+        'span.ms-Button-label:contains("Save")',
+        'button:contains("Save")',
+        'button.ms-Button--primary'
+      ]
+    },
+    tooltip: 'Save butonuna tıklayın',
+    autoClick: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 5000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 19,
     name: 'atpattach_summary',
-    title: '🎊 Tebrikler! Tüm Adımları Tamamladınız!',
-    description: 'ATP Attachment Bypass kuralı başarıyla oluşturuldu. Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!',
+    title: '🎊 Tebrikler! Tüm Adımlar Bitti!',
+    description: 'Tüm workflow\'lar başarıyla tamamlandı! Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme, ATP Link ve ATP Attachment özelliklerini başarıyla yapılandırdınız!',
     isSummary: true
   }
 ]
@@ -3081,6 +3611,28 @@ class KeepnetAssistant {
           nextWorkflow = ATP_LINK_BYPASS_STEPS
           nextWorkflowName = 'WORKFLOW_5'
           
+          // WORKFLOW_5 -> WORKFLOW_6 gibi aynı sayfada devam et!
+          console.log("[Keepnet] WORKFLOW_5 starting on SAME PAGE...")
+          assistant.currentWorkflow = nextWorkflow
+          assistant.workflowName = nextWorkflowName
+          assistant.currentStep = 0
+          assistant.stepResults = {}
+          
+          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0)
+          await Storage.set(STORAGE_KEYS.STEP_RESULTS, {})
+          await Storage.set('keepnet_next_workflow', null)
+          
+          // Footer'ı göster
+          const footer = document.getElementById('keepnet-panel-footer')
+          if (footer) {
+            footer.style.display = 'flex'
+          }
+          
+          console.log("[Keepnet] Starting WORKFLOW_5 Step 1...")
+          await assistant.executeStep(1)
+          console.log("[Keepnet] WORKFLOW_5 started!")
+          return // Burada return et, sayfa değiştirme!
+          
         } else if (assistant.workflowName === 'WORKFLOW_5') {
           // WORKFLOW_5 -> WORKFLOW_6 AYNI SAYFADA!
           console.log("[Keepnet] Starting WORKFLOW_6 on SAME PAGE...")
@@ -3355,6 +3907,13 @@ class KeepnetAssistant {
   
   async executeStep(stepNum, customSteps = null) {
     try {
+      // Clear any existing auto-advance timer from previous step
+      if (autoAdvanceTimer) {
+        console.log('[Keepnet] Clearing previous auto-advance timer')
+        clearTimeout(autoAdvanceTimer)
+        autoAdvanceTimer = null
+      }
+      
       // Hangi steps array'ini kullanacağız?
       if (customSteps) {
         this.currentWorkflow = customSteps
@@ -3382,8 +3941,10 @@ class KeepnetAssistant {
       
       // Footer'ı göster (summary değilse)
       const footer = document.getElementById('keepnet-panel-footer')
-      if (footer && !step.isSummary) {
+      if (footer && !step.isSummary && !step.hideButtons) {
         footer.style.display = 'flex'
+      } else if (footer && step.hideButtons) {
+        footer.style.display = 'none'
       }
       
       // Clear previous highlights
@@ -3392,6 +3953,12 @@ class KeepnetAssistant {
       // Summary step?
       if (step.isSummary) {
         await this.showSummary()
+        // Sadece WORKFLOW_5 summary'sinden sonra otomatik workflow 6'ya geç
+        if (this.workflowName === 'WORKFLOW_5' && typeof window.keepnetContinueWorkflow === 'function') {
+          setTimeout(() => {
+            window.keepnetContinueWorkflow()
+          }, 2000) // 2 sn sonra otomatik devam
+        }
         return
       }
       
@@ -3401,10 +3968,13 @@ class KeepnetAssistant {
         
         // Auto advance after delay
         if (step.autoAdvance && step.autoAdvanceDelay) {
-          setTimeout(async () => {
-            console.log(`[Keepnet] Auto advancing after ${step.autoAdvanceDelay}ms`)
-            await this.nextStep()
-          }, step.autoAdvanceDelay)
+          autoAdvanceTimer = setTimeout(() => {
+            // Her durumda, step değişmediyse kesin ilerle!
+            if (window.assistant && step.id === window.assistant.currentWorkflow[window.assistant.currentStep-1]?.id) {
+              console.log('[Keepnet] Fail-safe auto-advance. Step:', step.id);
+              window.assistant.nextStep();
+            }
+          }, step.autoAdvanceDelay);
         }
         return
       }
@@ -3413,6 +3983,14 @@ class KeepnetAssistant {
       if (this.workflowName === 'WORKFLOW_4' && this.currentStep >= 3) {
         // Workflow 4'te step 3'ten 24'e kadar hep sol tarafta kal (step'lerin kendi panelPosition'ını override et)
         console.log(`[Keepnet] WORKFLOW_4 Panel Override: Step ${this.currentStep} - FORCED LEFT position`)
+        this.panel.setPosition('bottom-left')
+      } else if (this.workflowName === 'WORKFLOW_5' && this.currentStep >= 2) {
+        // Workflow 5'te step 2'den itibaren hep sol tarafta kal
+        console.log(`[Keepnet] WORKFLOW_5 Panel Override: Step ${this.currentStep} - FORCED LEFT position`)
+        this.panel.setPosition('bottom-left')
+      } else if (this.workflowName === 'WORKFLOW_6' && this.currentStep >= 2) {
+        // Workflow 6'te step 2'den itibaren hep sol tarafta kal
+        console.log(`[Keepnet] WORKFLOW_6 Panel Override: Step ${this.currentStep} - FORCED LEFT position`)
         this.panel.setPosition('bottom-left')
       } else if (step.panelPosition === 'top-left') {
         console.log(`[Keepnet] Step Panel Position: top-left`)
@@ -3476,6 +4054,19 @@ class KeepnetAssistant {
             this.autoClick.stop()
             await this.onElementClicked(step)
           }, { once: true })
+          
+          // WORKFLOW 4-5-6 için 7 saniye sonra otomatik geçiş
+          if ((this.workflowName === 'WORKFLOW_4' || this.workflowName === 'WORKFLOW_5' || this.workflowName === 'WORKFLOW_6') && !step.isSummary && !step.isInfoCard) {
+            console.log(`[Keepnet] ${this.workflowName} Step ${step.id}: Starting 7-second auto-advance timer`)
+            autoAdvanceTimer = setTimeout(async () => {
+              console.log(`[Keepnet] ${this.workflowName} Step ${step.id}: 7 seconds elapsed, auto-advancing to next step`)
+              // Clear any highlights
+              this.clearHighlight()
+              this.autoClick.stop()
+              // Advance to next step
+              await this.nextStep()
+            }, 7000) // 7 seconds
+          }
         } else {
           console.warn("[Keepnet] Element not found:", i18n(step.title))
           
@@ -3715,7 +4306,8 @@ ${step.licenseCheck.skipMessage}`)
     }
     
     // IP Adresleri için özel bölüm - Tümünü Kopyala butonu (Workflow 1 step 8 - IP Ekle)
-    if (step.id === 8 && step.name === 'step9_ip_input') {
+    // WORKFLOW_4 step 8 (spambypass_step8) için GÖSTERME
+    if (step.id === 8 && step.name === 'step9_ip_input' && !step.hideIPList) {
       const ips = ['149.72.161.59', '149.72.42.201', '149.72.154.87']
       
       html += `
@@ -3750,18 +4342,21 @@ ${step.licenseCheck.skipMessage}`)
     }
     
     // IP Adresleri için özel liste (Workflow 1 step 9 veya Workflow 2 step 5)
-    if (step.id === 9 || step.name === 'antispam_step5_add_ips') {
+    // WORKFLOW_4 step 9 için SADECE IP listesini göster, buton OLMASIN (hideCopyButton true ise)
+    if ((step.id === 9 || step.name === 'antispam_step5_add_ips') && step.name !== 'spambypass_step8_select_one_ip' && step.name !== 'spambypass_step9_select_ip_range') {
+      const showButton = !step.hideCopyButton // hideCopyButton true ise butonu gösterme
+      
       html += `
         <div style="background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(45, 45, 74, 0.8)); border: 2px solid #4a9eff; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
           <div style="font-size: 13px; font-weight: 600; color: #4a9eff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
             📋 White List IP Adresleri
           </div>
-          <div style="background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 8px; margin-bottom: 8px; font-family: 'Courier New', monospace; font-size: 13px; color: #E2E8F0;">
+          <div style="background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 8px; ${showButton ? 'margin-bottom: 8px;' : ''} font-family: 'Courier New', monospace; font-size: 13px; color: #E2E8F0;">
             <div style="padding: 4px 0;">149.72.161.59</div>
             <div style="padding: 4px 0;">149.72.42.201</div>
             <div style="padding: 4px 0;">149.72.154.87</div>
           </div>
-          <button id="keepnet-copy-ips-btn" style="
+          ${showButton ? `<button id="keepnet-copy-ips-btn" style="
             width: 100%;
             background: linear-gradient(135deg, #4a9eff 0%, #5dade2 100%);
             color: white;
@@ -3776,7 +4371,7 @@ ${step.licenseCheck.skipMessage}`)
           " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 8px rgba(124, 58, 237, 0.5)'"
              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(124, 58, 237, 0.3)'">
             📋 ${i18n('copyAll')}
-          </button>
+          </button>` : ''}
         </div>
       `
     }
@@ -3903,7 +4498,8 @@ ${step.licenseCheck.skipMessage}`)
     }
     
     // IP copy butonu için event listener ekle (Workflow 1 step 9 veya Workflow 2 step 5)
-    if (step.id === 9 || step.name === 'antispam_step5_add_ips') {
+    // WORKFLOW_4 steps için ASLA ekleme
+    if ((step.id === 9 || step.name === 'antispam_step5_add_ips') && step.name !== 'spambypass_step8_select_one_ip' && step.name !== 'spambypass_step9_select_ip_range') {
       setTimeout(() => {
         const copyBtn = document.getElementById('keepnet-copy-ips-btn')
         if (copyBtn) {
@@ -3994,6 +4590,13 @@ ${step.licenseCheck.skipMessage}`)
   async onElementClicked(step) {
     console.log(`[Keepnet] Element clicked for step ${step.id}`)
     
+    // Clear auto-advance timer if element was clicked manually
+    if (autoAdvanceTimer) {
+      console.log('[Keepnet] Clearing auto-advance timer due to manual click')
+      clearTimeout(autoAdvanceTimer)
+      autoAdvanceTimer = null
+    }
+    
     // Eğer bir LABEL'a tıklandıysa, altındaki INPUT'u bul ve focus et
     if (this.highlightedElement && this.highlightedElement.tagName === 'LABEL') {
       console.log("[Keepnet] Label clicked, finding input...")
@@ -4081,6 +4684,77 @@ ${step.licenseCheck.skipMessage}`)
       }
     }
     
+    // SecondaryTarget varsa (dropdown'dan sonra seçilecek öğe), ikinci elementi bul ve highlight et
+    if (step.target && step.target.secondaryTarget) {
+      console.log(`[Keepnet] Looking for secondaryTarget...`)
+      await Utils.sleep(1000) // Dropdown'ın açılması için bekle
+      
+      const secondaryElement = Utils.findElement(step.target.secondaryTarget)
+      if (secondaryElement) {
+        console.log(`[Keepnet] SecondaryTarget found, highlighting...`)
+        this.clearHighlight()
+        this.highlightElement(secondaryElement, `Şimdi "${step.target.secondaryTarget.textMatch?.source || 'bu seçeneği'}" seçin`)
+        
+        // SecondaryTarget'a click listener ekle
+        secondaryElement.addEventListener('click', async () => {
+          console.log(`[Keepnet] SecondaryTarget clicked`)
+          this.clearHighlight()
+          await Utils.sleep(step.waitAfterClick || 500)
+          await this.nextStep()
+        }, { once: true })
+        
+        // Auto-click için secondary target'ı da destekle
+        if (step.autoClick) {
+          this.autoClick.start(secondaryElement, AUTO_CLICK_TIMEOUT, async () => {
+            el.click()
+          await Utils.sleep(step.waitAfterClick || 500)
+          await this.nextStep()
+          }, this.workflowName)
+        }
+        
+        return // Normal nextStep'i atla
+      } else {
+        console.warn(`[Keepnet] SecondaryTarget not found, trying to find with fallback selectors...`)
+        // Fallback selector'ları dene
+        const fallbacks = step.target.secondaryTarget.fallback || []
+        for (const fallback of fallbacks) {
+          try {
+            const cleanFallback = fallback.replace(/:contains\([^)]+\)/g, '').trim()
+            if (cleanFallback) {
+              const elements = Array.from(document.querySelectorAll(cleanFallback))
+              for (const el of elements) {
+                const text = el.textContent || el.innerText || ''
+                if (/IP address is in any of these ranges/i.test(text) && Utils.isVisible(el)) {
+                  console.log(`[Keepnet] SecondaryTarget found with fallback: ${fallback}`)
+                  this.clearHighlight()
+                  this.highlightElement(el, `Şimdi "IP address is in any of these ranges" seçeneğini seçin`)
+                  
+                  el.addEventListener('click', async () => {
+                    console.log(`[Keepnet] SecondaryTarget clicked (fallback)`)
+                    this.clearHighlight()
+                    await Utils.sleep(step.waitAfterClick || 500)
+                    await this.nextStep()
+                  }, { once: true })
+                  
+                  if (step.autoClick) {
+                    this.autoClick.start(el, AUTO_CLICK_TIMEOUT, async () => {
+                      el.click()
+          await Utils.sleep(step.waitAfterClick || 500)
+          await this.nextStep()
+                    }, this.workflowName)
+                  }
+                  
+                  return
+                }
+              }
+            }
+          } catch (e) {
+            console.warn(`[Keepnet] Fallback selector error: ${fallback}`, e)
+          }
+        }
+      }
+    }
+    
     // OTOMATIK SONRAKİ ADIMA GEÇ - Validation sonucuna bakmaksızın her zaman ilerle
     console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
     await Utils.sleep(500)
@@ -4105,22 +4779,7 @@ ${step.licenseCheck.skipMessage}`)
     this.validationInterval = setInterval(async () => {
       const isValid = await this.validateStep(step)
       
-      if (step.id === 8) {
-        // IP validation
-        const panel = document.querySelector('.ms-Panel-main')
-        if (!panel) return
-        
-        const text = panel.innerText
-        const requiredIPs = step.requiredIPs || []
-        const found = requiredIPs.filter(ip => text.includes(ip))
-        const missing = requiredIPs.filter(ip => !text.includes(ip))
-        
-        if (missing.length > 0) {
-          this.panel.showError(`IP girmeyi unuttunuz: ${missing.join(', ')}`)
-        } else {
-          this.panel.showSuccess(`Tüm IP'ler eklendi! (${found.length}/3)`)
-        }
-      }
+      // Step 8 için IP validation mesajları kaldırıldı
     }, VALIDATION_INTERVAL)
   }
   
@@ -4194,6 +4853,13 @@ ${step.licenseCheck.skipMessage}`)
   
   async nextStep() {
     console.log("[Keepnet] Next step clicked")
+    
+    // Clear auto-advance timer when manually proceeding
+    if (autoAdvanceTimer) {
+      console.log('[Keepnet] Clearing auto-advance timer due to manual next step')
+      clearTimeout(autoAdvanceTimer)
+      autoAdvanceTimer = null
+    }
     
     // Current step validation (sadece uyarı, bloklama yok)
     const currentStepConfig = this.currentWorkflow[this.currentStep - 1]
@@ -4457,6 +5123,17 @@ ${step.licenseCheck.skipMessage}`)
         })
         
         console.log("[Keepnet] Click handler and hover effects attached successfully")
+        
+        // WORKFLOW_4 için otomatik geçiş (3 saniye sonra)
+        if (this.workflowName === 'WORKFLOW_4' && hasNextWorkflow) {
+          console.log("[Keepnet] WORKFLOW_4 summary - auto-advancing to WORKFLOW_5 in 3 seconds...")
+          setTimeout(async () => {
+            console.log("[Keepnet] Auto-clicking continue button for WORKFLOW_4 -> WORKFLOW_5")
+            if (continueBtn && typeof window.keepnetContinueWorkflow === 'function') {
+              await window.keepnetContinueWorkflow()
+            }
+          }, 3000)
+        }
       }
       
       // YENİ: Git ve Düzelt butonları için workflow bilgisiyle
@@ -4497,6 +5174,27 @@ ${step.licenseCheck.skipMessage}`)
       keepnetContinueWorkflow: typeof window.keepnetContinueWorkflow,
       keepnetGoToStep: typeof window.keepnetGoToStep
     })
+    
+    // --- WORKFLOW_5 bitişinde otomatik WORKFLOW_6'yı başlat ---
+    if(this.workflowName === 'WORKFLOW_5') {
+      setTimeout(async () => {
+        console.log('[Keepnet] WORKFLOW_5 tamamlandı, WORKFLOW_6 otomatik başlıyor!')
+        // Yeni workflow yükle
+        this.currentWorkflow = ATP_ATTACHMENT_BYPASS_STEPS;
+        this.workflowName = 'WORKFLOW_6';
+        this.currentStep = 0;
+        this.stepResults = {};
+        await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0);
+        await Storage.set(STORAGE_KEYS.STEP_RESULTS, {});
+        await Storage.set('keepnet_next_workflow', null);
+        // Footer'ı tekrar göster
+        const footer2 = document.getElementById('keepnet-panel-footer');
+        if(footer2){
+          footer2.style.display = 'flex';
+        }
+        await this.executeStep(1);
+      }, 2000); // 2 sn sonra başlasın, kullanıcı summary görsün
+    }
   }
   
   async waitForPageLoad() {
@@ -4562,25 +5260,13 @@ window.addEventListener('load', async () => {
   if (fixingStep) {
     console.log("[Keepnet] Fixing mode detected on page load! Auto-starting assistant...")
     
-    // NOT: Fixing flag'ini temizleme burada, init() içinde temizlenecek
-    
-    // Asistan başlat
+    // Asistan başlat - DIRECTLY initialize, don't send message to background
     setTimeout(async () => {
-      chrome.runtime.sendMessage({ action: 'initAssistant' }, (response) => {
-        console.log("[Keepnet] initAssistant response:", response)
-        
-        // Panel'i force visible et
-        setTimeout(() => {
-          const panel = document.querySelector('#keepnet-floating-panel')
-          if (panel) {
-            panel.style.display = 'flex'
-            panel.style.opacity = '1'
-            panel.style.visibility = 'visible'
-            panel.style.zIndex = '2147483647'
-            console.log("[Keepnet] Panel force visible!")
-          }
-        }, 500)
-      })
+      if (!assistantInstance) {
+        assistantInstance = new KeepnetAssistant()
+        await assistantInstance.init()
+        console.log("[Keepnet] Assistant initialized in fixing mode!")
+      }
     }, 1000)
     return
   }
@@ -4590,27 +5276,17 @@ window.addEventListener('load', async () => {
   if (nextWorkflow) {
     console.log("[Keepnet] 🚀 New workflow detected:", nextWorkflow)
     
-    // Flag'i temizle
+    // Flag'i temizle - NOTE: init() içinde de temizlenecek ama burada da temizle
     await Storage.set('keepnet_next_workflow', null)
     
-    // Kısa bekleme, sonra asistan başlat
+    // Kısa bekleme, sonra asistan başlat - DIRECTLY
     setTimeout(async () => {
       console.log("[Keepnet] Starting new workflow after page load...")
-      chrome.runtime.sendMessage({ action: 'initAssistant' }, (response) => {
-        console.log("[Keepnet] initAssistant response:", response)
-        
-        // Panel'i force visible et
-        setTimeout(() => {
-          const panel = document.querySelector('#keepnet-floating-panel')
-          if (panel) {
-            panel.style.display = 'flex'
-            panel.style.opacity = '1'
-            panel.style.visibility = 'visible'
-            panel.style.zIndex = '2147483647'
-            console.log("[Keepnet] Panel force visible!")
-          }
-        }, 500)
-      })
+      if (!assistantInstance) {
+        assistantInstance = new KeepnetAssistant()
+        await assistantInstance.init()
+        console.log("[Keepnet] Assistant initialized for new workflow!")
+      }
     }, 1000)
     return
   }
@@ -4620,23 +5296,13 @@ window.addEventListener('load', async () => {
   if (currentStep && currentStep > 0) {
     console.log("[Keepnet] 🔄 Active session detected! Restoring assistant from step:", currentStep)
     
-    // Asistan başlat
+    // Asistan başlat - DIRECTLY
     setTimeout(async () => {
-      chrome.runtime.sendMessage({ action: 'initAssistant' }, (response) => {
-        console.log("[Keepnet] initAssistant response:", response)
-        
-        // Panel'i force visible et
-        setTimeout(() => {
-          const panel = document.querySelector('#keepnet-floating-panel')
-          if (panel) {
-            panel.style.display = 'flex'
-            panel.style.opacity = '1'
-            panel.style.visibility = 'visible'
-            panel.style.zIndex = '2147483647'
-            console.log("[Keepnet] Panel force visible!")
-          }
-        }, 500)
-      })
+      if (!assistantInstance) {
+        assistantInstance = new KeepnetAssistant()
+        await assistantInstance.init()
+        console.log("[Keepnet] Assistant restored from active session!")
+      }
     }, 1000)
   }
 })
@@ -4654,9 +5320,14 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
     
     const nextWorkflow = await Storage.get('keepnet_next_workflow')
     if (nextWorkflow) {
-      console.log("[Keepnet] nextWorkflow found, starting assistant...")
+      console.log("[Keepnet] nextWorkflow found, starting assistant directly...")
       await Storage.set('keepnet_next_workflow', null)
-      chrome.runtime.sendMessage({ action: 'initAssistant' })
+      
+      if (!assistantInstance) {
+        assistantInstance = new KeepnetAssistant()
+        await assistantInstance.init()
+        console.log("[Keepnet] Assistant initialized from document ready!")
+      }
     }
   }, 500)
 }
@@ -4670,3 +5341,202 @@ setInterval(() => {
     console.log("[Keepnet] ❌ Panel NOT found in DOM!")
   }
 }, 10000)
+
+/* ==== WF4/5/6 HIZLI GEÇİŞ PATCH ==== */
+(function () {
+  const AUTO_WF = new Set(['workflow4', 'workflow5', 'workflow6']);
+
+  // Basit yardımcılar
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+  async function waitForSelector(sel, timeout = 10000) {
+    const start = performance.now();
+    while (performance.now() - start < timeout) {
+      const el = document.querySelector(sel);
+      if (el) return el;
+      await sleep(100);
+    }
+    return null;
+  }
+
+  // Metinle eşleşen öğeleri bulup en yakın kapsayıcıyı kaldır
+  function removeWhitelistBlocks() {
+    const killByTexts = ['White List IP', 'Whitelist IP', 'Tümünü Kopyala', 'IP Adresleri'];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT, null, false);
+    const toRemove = new Set();
+
+    while (walker.nextNode()) {
+      const el = /** @type {HTMLElement} */ (walker.currentNode);
+      const t = (el.innerText || '').trim();
+      if (!t) continue;
+      if (killByTexts.some(tx => t.includes(tx))) {
+        // Kart/panel benzeri en yakın kapsayıcıyı sil
+        const panel = el.closest('[role="dialog"], .panel, .card, .ms-Panel, .ms-Card, section, .modal, .callout') || el.closest('div');
+        if (panel) toRemove.add(panel);
+      }
+    }
+
+    toRemove.forEach(el => el.remove());
+    if (toRemove.size) console.log('🧹 Step 8: Whitelist/IP kopya blokları kaldırıldı.');
+  }
+
+  // Bulunduğun step'i DOM'dan okumaya çalış
+  function getCurrentStepNumber() {
+    // Sık görülen işaretlemeler
+    const active = document.querySelector('[data-step].is-active, [data-step].active');
+    if (active && active.getAttribute('data-step')) {
+      const n = parseInt(active.getAttribute('data-step') || '', 10);
+      if (!Number.isNaN(n)) return n;
+    }
+
+    // "Step 9" gibi bir başlık varsa
+    const h = Array.from(document.querySelectorAll('h1,h2,h3,.step-title'))
+      .map(x => x.textContent || '');
+    for (const txt of h) {
+      const m = txt.match(/step\s*(\d+)/i);
+      if (m) return parseInt(m[1], 10);
+    }
+
+    // Bazı projelerde global değişken tutulur
+    if (typeof window !== 'undefined') {
+      const g1 = (window).currentStepNumber;
+      if (typeof g1 === 'number') return g1;
+    }
+
+    return null;
+  }
+
+  // Projede varsa kullan; yoksa "İleri/Devam" butonuna tıkla
+  async function goToStep(stepNo) {
+    if (typeof (window).goToStep === 'function') {
+      (window).goToStep(stepNo);
+      return;
+    }
+
+    // Yedek: "Devam/Next/Continue" düğmesine tıkla
+    const candidates = [
+      'button[aria-label="Devam"]',
+      'button[aria-label="Next"]',
+      'button[aria-label="Continue"]',
+      'button.ms-Button--primary',
+      'button[type="submit"]',
+      'button:where([data-role="next"],[data-action="next"])'
+    ];
+
+    for (const sel of candidates) {
+      const btn = document.querySelector(sel);
+      if (btn) { btn.click(); return; }
+    }
+
+    console.warn('⚠️ Sonraki adıma geçiş için uygun buton bulunamadı.');
+  }
+
+  // SAĞDAKİ "Add action" butonu (workflow4 step 15 için lazım)
+  async function clickRightAddAction() {
+    const sel = 'button[data-automation-id="EditTransportRule_AddAction_0_IconButtonBtn"]';
+    const btn = await waitForSelector(sel, 8000);
+    if (btn) {
+      btn.click();
+      console.log('➕ Sağdaki "Add action" tıklandı.');
+    } else {
+      console.warn('⚠️ "Add action" butonu bulunamadı:', sel);
+    }
+  }
+
+  async function runForWorkflow(name) {
+    name = (name || '').toLowerCase();
+    if (!AUTO_WF.has(name)) return;
+
+    const step = getCurrentStepNumber();
+    if (step == null) return;
+
+    // Ortak: Step 8 görünürse whitelist bloklarını kaldır
+    if (step === 8) {
+      removeWhitelistBlocks();
+    }
+
+    // WF4 özel akışlar
+    if (name === 'workflow4') {
+      if (step === 9) {
+        console.log('⏳ WF4: Step 9\'da 20 sn bekleniyor, sonra 10\'a otomatik geçilecek…');
+        await sleep(20000);
+        await goToStep(10);
+        return;
+      }
+
+      if (step === 15) {
+        // Doğrudan sağdaki "Add action" tıkla ve hızlıca 16 & 17'ye ilerle
+        await clickRightAddAction();
+        await sleep(800);
+        await goToStep(16);
+        await sleep(800);
+        await goToStep(17);
+        return;
+      }
+
+      if (step === 16) {
+        await sleep(800);
+        await goToStep(17);
+        return;
+      }
+    }
+
+    // WF5 & WF6 genel hızlandırma: beklemeyip 800 ms sonra ilerle
+    if ((name === 'workflow5' || name === 'workflow6')) {
+      // 8'de sadece whitelist kaldır; geçişi de hızlandır
+      if (step === 8) {
+        await sleep(800);
+        await goToStep(9);
+        return;
+      }
+
+      if (step === 9) {
+        await sleep(800);
+        await goToStep(10);
+        return;
+      }
+    }
+  }
+
+  // workflow adını bul
+  function detectWorkflowName() {
+    // Projede global değişken olabilir
+    if (typeof (window).workflowName === 'string') return (window).workflowName;
+    if (typeof (window).currentWorkflowName === 'string') return (window).currentWorkflowName;
+
+    // data attribute ile işaretlenmiş olabilir
+    const host = document.querySelector('[data-workflow]');
+    if (host) return host.getAttribute('data-workflow');
+
+    // Sayfa metninden bir ipucu
+    const hint = (document.body.innerText || '').toLowerCase();
+    if (hint.includes('workflow4')) return 'workflow4';
+    if (hint.includes('workflow5')) return 'workflow5';
+    if (hint.includes('workflow6')) return 'workflow6';
+
+    return '';
+  }
+
+  async function boot() {
+    const wf = detectWorkflowName();
+    if (!wf) return;
+
+    if (!AUTO_WF.has(wf.toLowerCase())) return;
+
+    // İlk çalıştırma
+    runForWorkflow(wf);
+
+    // Step değişikliklerini yakalamak için basit gözlemci
+    const obs = new MutationObserver(() => {
+      runForWorkflow(wf);
+    });
+
+    obs.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
