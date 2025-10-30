@@ -1302,31 +1302,31 @@ const SPAM_FILTER_BYPASS_STEPS = [
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
-  
-  {
-    id: 17,
-    name: 'spambypass_step17_modify_message_properties2',
-    title: 'Modify Message Properties (2. Kez)',
-    description: '17) Tekrar "Modify the message properties" seçeneğini seçin.',
-    target: {
-      selector: 'span#Dropdown470-option',
-      fallback: [
-        'span.ms-Dropdown-title.title-725:contains("Select one")',
-        'span.ms-Dropdown-title:contains("Select one")',
-        'span[id*="Dropdown470"]:contains("Select one")'
-      ]
+    {
+      id: 17,
+      name: 'spambypass_step17_modify_message_properties2',
+      title: 'Modify Message Properties (2. Kez)',
+      description: '17) "Select one" dropdown\'ını açın ve "Modify the message properties" seçeneğini seçin.',
+      target: {
+        selector: 'span#Dropdown470-option',
+        textMatch: /Select one/i,  // BURADA DEĞİŞİKLİK: Buton metni "Select one"
+        fallback: [
+          'span.ms-Dropdown-title.title-725:contains("Select one")',
+          'span.ms-Dropdown-title:contains("Select one")',
+          'span[id*="Dropdown470"]:contains("Select one")'
+        ]
+      },
+      tooltip: '"Select one" dropdown\'ını açın',
+      autoClick: true,
+      autoAdvance: true,
+      autoAdvanceDelay: 5000,
+      validation: () => true,
+      realTimeValidation: true,
+      realTimeValidationInterval: 100,
+      criticalStep: false,
+      waitAfterClick: 1000,
+      panelPosition: 'bottom-left'
     },
-    tooltip: 'Modify the message properties seçin',
-    autoClick: true,
-    autoAdvance: true,
-    autoAdvanceDelay: 5000,
-    validation: () => true,
-    realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    criticalStep: false,
-    waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
-  },
   {
     id: 18,
     name: 'spambypass_step18_set_message_header',
@@ -1651,30 +1651,30 @@ const ATP_LINK_BYPASS_STEPS = [
     panelPosition: 'top-left'
   },
  
-    {
-      id: 9,
-      name: 'spambypass_step10_do_following_dropdown',
-      title: 'Do The Following',
-      description: '10) "Do the following" dropdown\'ını açın.',
-      target: {
-        selector: 'span#Dropdown327-option',
-        textMatch: /Select one/i,
-        fallback: [
-          'span[id*="Dropdown327"].ms-Dropdown-title',
-          'span.ms-Dropdown-title:contains("Select one")',
-          'button[aria-label*="Do the following"]'
-        ]
-      },
-      tooltip: 'Do the following dropdown\'ını açın',
-      autoClick: false,
-      autoAdvance: true,
-      autoAdvanceDelay: 3000,
-      validation: () => true,
-      realTimeValidation: true,
-      realTimeValidationInterval: 100,
-      waitAfterClick: 1000,
-      panelPosition: 'bottom-left'
+  {
+    id: 9,
+    name: 'spambypass_step10_do_following_dropdown',
+    title: 'Do The Following',
+    description: '10) "Select one" dropdown\'ını açın.',
+    target: {
+      selector: 'span#Dropdown327-option',
+      textMatch: /Select one/i,  // BURADA DEĞİŞİKLİK: Buton metni "Select one"
+      fallback: [
+        'span[id*="Dropdown327"].ms-Dropdown-title',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'button[aria-label*="Do the following"]'
+      ]
     },
+    tooltip: '"Select one" dropdown\'ını açın',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 3000,
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 100,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
   {
     id: 10,
     name: 'atplink_step11_modify_message_properties',
@@ -3095,82 +3095,35 @@ class FloatingPanel {
   }
   
   setupGlobalClickProtection() {
-    // Workflow 4-6 için global click koruması (feature flag ile kontrol edilir)
+    // Yalnızca Keepnet paneli kapsamında tıklamaları yönet; Exchange formuna müdahale etme
+    const keepnetPanel = document.getElementById('keepnet-panel')
+    if (!keepnetPanel) return
+
+    // Panel içindeki tıklamalarda balonlamayı durdurarak sadece panel içi davranışları koru
+    keepnetPanel.addEventListener('click', (e) => {
+      e.stopPropagation()
+    })
+
+    // Panel dışına tıklanırsa sadece kendi panel durumumuzu yönet (MS event'lerine dokunma)
     document.addEventListener('click', (e) => {
-      const isWorkflow4To6 = window.assistant && ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(window.assistant.workflowName)
-      
-      if (isWorkflow4To6 && this.DISABLE_OUTSIDE_CLOSE_WF_4_6) {
-        // Microsoft Exchange form'unun açık olduğunu kontrol et
-        const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
-        
-        if (exchangeForm) {
-          // Keepnet panel'i dışında bir yere tıklanıyorsa
-          const keepnetPanel = document.getElementById('keepnet-panel')
-          if (keepnetPanel && !keepnetPanel.contains(e.target)) {
-            console.log("[Keepnet] Global click protection - preventing outside click on Exchange form")
-            
-            // Log popup closure attempt
-            this.logPopupClosureReason('outsideClick', window.assistant.workflowName, {
-              targetElement: e.target.tagName,
-              targetClass: e.target.className,
-              targetId: e.target.id,
-              clickPosition: { x: e.clientX, y: e.clientY }
-            })
-            
-            // Exchange form'un kapanmasını engelle
-            e.preventDefault()
-            e.stopPropagation()
-            e.stopImmediatePropagation()
-            
-            // Form'a focus'u geri ver
-            setTimeout(() => {
-              if (exchangeForm && typeof exchangeForm.focus === 'function') {
-                exchangeForm.focus()
-              }
-            }, 10)
-            
-            return false
-          }
-        }
+      if (!keepnetPanel.contains(e.target)) {
+        this.logPopupClosureReason && this.logPopupClosureReason('outsideClickKeepnet', window.assistant?.workflowName, {
+          targetElement: e.target?.tagName,
+          targetClass: e.target?.className,
+          targetId: e.target?.id
+        })
+        // İstenirse paneli kapat: keepnetPanel.style.display = 'none'
       }
-    }, true) // Capture phase'de dinle
-    
-    // ESC tuşu koruması
+    }, false)
+
+    // ESC sadece panel odaklıyken ele alınır; Exchange event'lerine müdahale etme
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const isWorkflow4To6 = window.assistant && ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(window.assistant.workflowName)
-        
-        if (isWorkflow4To6) {
-          const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
-          
-          if (exchangeForm) {
-            console.log("[Keepnet] ESC key protection - preventing Exchange form closure")
-            
-            // Log popup closure attempt
-            this.logPopupClosureReason('esc', window.assistant.workflowName, {
-              keyCode: e.keyCode,
-              key: e.key,
-              ctrlKey: e.ctrlKey,
-              altKey: e.altKey,
-              shiftKey: e.shiftKey
-            })
-            
-            e.preventDefault()
-            e.stopPropagation()
-            e.stopImmediatePropagation()
-            
-            // Form'a focus'u geri ver
-            setTimeout(() => {
-              if (exchangeForm && typeof exchangeForm.focus === 'function') {
-                exchangeForm.focus()
-              }
-            }, 10)
-            
-            return false
-          }
-        }
-      }
-    }, true) // Capture phase'de dinle
+      if (e.key !== 'Escape') return
+      const activeInPanel = keepnetPanel.contains(document.activeElement) || keepnetPanel.matches(':hover')
+      if (!activeInPanel) return
+      e.stopPropagation()
+      // Panel içi alt katman kapanışları burada yönetilebilir
+    }, false)
   }
   
   logPopupClosureReason(reason, workflowName, additionalInfo = {}) {
@@ -4981,72 +4934,6 @@ ${step.licenseCheck.skipMessage}`)
           </div>
         </div>
       `
-    }
-    
-    // Sonraki workflow var mı kontrol et
-    let nextWorkflowText = ''
-    let hasNextWorkflow = false
-    
-    console.log("[Keepnet] Summary step - Current workflowName:", this.workflowName)
-    
-    if (this.workflowName === 'WORKFLOW_1') {
-      nextWorkflowText = 'Devam Et (Workflow 2: Anti-Spam)'
-      hasNextWorkflow = true
-    } else if (this.workflowName === 'WORKFLOW_2') {
-      nextWorkflowText = 'Devam Et (Workflow 3: Safe Links)'
-      hasNextWorkflow = true
-    } else if (this.workflowName === 'WORKFLOW_3') {
-      nextWorkflowText = 'Devam Et (Workflow 4: Spam Filter Bypass)'
-      hasNextWorkflow = true
-    } else if (this.workflowName === 'WORKFLOW_4') {
-      nextWorkflowText = 'Devam Et (Workflow 5: ATP Link Bypass)'
-      hasNextWorkflow = true
-    } else if (this.workflowName === 'WORKFLOW_5') {
-      nextWorkflowText = 'Devam Et (Workflow 6: ATP Attachment Bypass)'
-      hasNextWorkflow = true
-      console.log("[Keepnet] WORKFLOW_5 summary - hasNextWorkflow:", hasNextWorkflow, "nextWorkflowText:", nextWorkflowText)
-    } else if (this.workflowName === 'WORKFLOW_6') {
-      nextWorkflowText = '🎊 Tebrikler! Tüm Workflow\'lar Tamamlandı'
-      hasNextWorkflow = false
-    } else {
-      nextWorkflowText = '✅ Tüm Workflow\'lar Tamamlandı'
-      hasNextWorkflow = false
-    }
-    
-    html += `
-        <div style="margin-top: 12px; display: flex; gap: 8px;">
-          <button id="keepnet-continue-workflow-btn" ${!hasNextWorkflow ? 'disabled' : ''} class="keepnet-workflow-btn" style="
-            flex: 1;
-            padding: 10px 16px;
-            background: ${hasNextWorkflow ? 'linear-gradient(135deg,rgb(35, 30, 58) 0%,rgb(21, 51, 64) 100%)' : 'linear-gradient(135deg,rgb(85, 83, 223) 0%,rgb(48, 74, 221) 100%)'};
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: ${hasNextWorkflow ? 'pointer' : 'default'};
-            transition: all 0.2s;
-            box-shadow: ${hasNextWorkflow ? '0 2px 4px rgba(124, 58, 237, 0.3)' : '0 2px 8px rgba(167, 139, 250, 0.4)'};
-          ">
-            ${hasNextWorkflow ? '➡️' : '✅'} ${nextWorkflowText}
-          </button>
-        </div>
-      </div>
-    `
-    
-    this.panel.setContent(html)
-    
-    // Show confetti celebration ONLY on final workflow!
-    if (this.workflowName === 'WORKFLOW_6') {
-      console.log("[Keepnet] FINAL WORKFLOW COMPLETED! Showing confetti celebration!")
-      setTimeout(() => {
-        AnimationUtils.showConfetti(document.body)
-      }, 300)
-      
-      // Extra confetti for final workflow
-      setTimeout(() => {
-        AnimationUtils.showConfetti(document.body)
-      }, 800)
     }
     
     // Animate summary items with stagger

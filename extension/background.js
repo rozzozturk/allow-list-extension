@@ -27,20 +27,19 @@ async function safeSendMessage(tabId, message, timeout = 5000) {
 }
 
 // Content script hazır mı kontrol et
-async function waitForContentScript(tabId, maxRetries = 10) {
+async function waitForContentScript(tabId, maxRetries = 30, retryDelayMs = 500, pingTimeoutMs = 2000) {
   for (let i = 0; i < maxRetries; i++) {
     try {
-      const response = await safeSendMessage(tabId, { action: 'ping' }, 1000)
+      const response = await safeSendMessage(tabId, { action: 'ping' }, pingTimeoutMs)
       if (response && response === 'pong') {
         console.log('[Keepnet] Content script ready!')
         return true
       }
     } catch (error) {
-      console.log(`[Keepnet] Content script not ready, retry ${i + 1}/${maxRetries}`)
+      console.log(`[Keepnet] Content script not ready (attempt ${i + 1}/${maxRetries}): ${error.message || error}`)
     }
 
-    // Kısa bekleme
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, retryDelayMs))
   }
 
   return false
@@ -63,10 +62,17 @@ async function injectContentScript(tabId) {
 
     console.log('[Keepnet] Content script injected successfully')
 
-    // Content script'in yüklenmesini bekle
-    const isReady = await waitForContentScript(tabId)
+    // İçerik scriptinin düzgün yüklenmesi için kısa bekleme ve daha dayanıklı hazır kontrolü
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    let isReady = await waitForContentScript(tabId, 30, 500, 2000)
     if (!isReady) {
-      throw new Error('Content script failed to initialize')
+      console.warn('[Keepnet] First readiness check failed, retrying with extended window...')
+      // Bir kez daha dene: daha uzun bekleme ve timeout ile
+      isReady = await waitForContentScript(tabId, 20, 750, 3000)
+      if (!isReady) {
+        throw new Error('Content script failed to initialize')
+      }
     }
 
     return true
