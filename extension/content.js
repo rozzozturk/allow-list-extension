@@ -4936,6 +4936,56 @@ ${step.licenseCheck.skipMessage}`)
       `
     }
     
+    // Sonraki workflow var mı? Devam butonu metnini belirle
+    let hasNextWorkflow = false
+    let nextWorkflowText = ''
+    if (this.workflowName === 'WORKFLOW_1') {
+      nextWorkflowText = 'Devam Et (Workflow 2: Anti-Spam)'
+      hasNextWorkflow = true
+    } else if (this.workflowName === 'WORKFLOW_2') {
+      nextWorkflowText = 'Devam Et (Workflow 3: Safe Links)'
+      hasNextWorkflow = true
+    } else if (this.workflowName === 'WORKFLOW_3') {
+      nextWorkflowText = 'Devam Et (Workflow 4: Spam Filter Bypass)'
+      hasNextWorkflow = true
+    } else if (this.workflowName === 'WORKFLOW_4') {
+      nextWorkflowText = 'Devam Et (Workflow 5: ATP Link Bypass)'
+      hasNextWorkflow = true
+    } else if (this.workflowName === 'WORKFLOW_5') {
+      nextWorkflowText = 'Devam Et (Workflow 6: ATP Attachment Bypass)'
+      hasNextWorkflow = true
+    } else if (this.workflowName === 'WORKFLOW_6') {
+      nextWorkflowText = '🎊 Tebrikler! Tüm Workflow\'lar Tamamlandı'
+      hasNextWorkflow = false
+    } else {
+      nextWorkflowText = '✅ Tüm Workflow\'lar Tamamlandı'
+      hasNextWorkflow = false
+    }
+
+    // Devam butonu bloğunu ekle
+    html += `
+        <div style="margin-top: 12px; display: flex; gap: 8px;">
+          <button id="keepnet-continue-workflow-btn" ${!hasNextWorkflow ? 'disabled' : ''} class="keepnet-workflow-btn" style="
+            flex: 1;
+            padding: 10px 16px;
+            background: ${hasNextWorkflow ? 'linear-gradient(135deg,rgb(35, 30, 58) 0%,rgb(21, 51, 64) 100%)' : 'linear-gradient(135deg,rgb(85, 83, 223) 0%,rgb(48, 74, 221) 100%)'};
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: ${hasNextWorkflow ? 'pointer' : 'default'};
+            transition: all 0.2s;
+            box-shadow: ${hasNextWorkflow ? '0 2px 4px rgba(124, 58, 237, 0.3)' : '0 2px 8px rgba(167, 139, 250, 0.4)'};
+          ">
+            ${hasNextWorkflow ? '➡️ ' : ''}${nextWorkflowText}
+          </button>
+        </div>
+    `
+
+    // Oluşturulan içeriği panele yaz
+    this.panel.setContent(html)
+
     // Animate summary items with stagger
     setTimeout(() => {
       const summaryItems = this.panel.body.querySelectorAll('.keepnet-summary > div > div')
