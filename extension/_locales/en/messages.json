@@ -1,15 +1,7 @@
 {
   "extensionName": {
-    "message": "Keepnet Allow List Assistant for Office 365",
+    "message": "Keepnet Assistant",
     "description": "Extension name"
-  },
-  "extensionDescription": {
-    "message": "Automatic allowlist configuration assistant for Keepnet phishing simulations in Office 365 - Smart navigation, real-time validation and evidence collection",
-    "description": "Extension description"
-  },
-  "extensionTitle": {
-    "message": "Keepnet Allow List Assistant - Click to Start",
-    "description": "Extension action title"
   },
   "assistantTitle": {
     "message": "Keepnet Assistant",
@@ -23,220 +15,52 @@
     "message": "of",
     "description": "Separator"
   },
-  "continue": {
-    "message": "Continue",
-    "description": "Continue button"
-  },
-  "previous": {
-    "message": "Previous",
-    "description": "Previous button"
-  },
-  "summary": {
-    "message": "Summary",
-    "description": "Summary button"
-  },
-  "summaryReport": {
-    "message": "📊 Summary Report",
-    "description": "Summary report title"
-  },
-  "goToPage": {
-    "message": "🌐 Go to Page",
-    "description": "Go to page button"
-  },
-  "copyAll": {
-    "message": "Copy All",
-    "description": "Copy button"
-  },
-  "copied": {
-    "message": "Copied!",
-    "description": "Copy success message"
-  },
-  "error": {
-    "message": "Error",
-    "description": "Error message"
-  },
-  "elementNotFound": {
-    "message": "Element not found",
-    "description": "Element not found error"
-  },
-  "pleaseComplete": {
-    "message": "Please complete this field!",
-    "description": "Field completion warning"
-  },
-  "allScreenshotsSaved": {
-    "message": "All screenshots saved in chrome.storage",
-    "description": "Screenshot save message"
-  },
   "goAndFix": {
     "message": "Go & Fix",
     "description": "Go and fix button"
-  },
-  "continueWorkflow": {
-    "message": "Continue",
-    "description": "Workflow continue button"
-  },
-  "allWorkflowsCompleted": {
-    "message": "All Workflows Completed",
-    "description": "Completion message"
-  },
-  "congratulations": {
-    "message": "Congratulations! You've Completed All Steps!",
-    "description": "Congratulations message"
-  },
-  "congratulationsDesc": {
-    "message": "With these steps, you've successfully whitelisted IP addresses in your Office 365 environment and configured security simulations, spam filtering, and Advanced Threat Protection (ATP) features!",
-    "description": "Congratulations description"
-  },
-  "safeLinksWarning": {
-    "message": "If Safe Links is not visible:",
-    "description": "Safe Links warning"
-  },
-  "safeLinksWarningDesc": {
-    "message": "You can skip this step and proceed to the next steps.",
-    "description": "Safe Links warning description"
-  },
-  "licenseRequired": {
-    "message": "Information: Required Licenses for Safe Links Feature",
-    "description": "License information"
-  },
-  "licenseRequiredDesc": {
-    "message": "Safe Links feature is only active with the following licenses:",
-    "description": "License description"
-  },
-  "workflowStep1Title": {
-    "message": "Security Center Home Page",
-    "description": "Step 1 title"
-  },
-  "workflowStep1Description": {
-    "message": "Make sure you are on Microsoft Security Center and proceed.",
-    "description": "Step 1 description"
-  },
-  "workflowStep2Title": {
-    "message": "Email & Collaboration",
-    "description": "Step 2 title"
-  },
-  "workflowStep2Description": {
-    "message": "Open the Email & Collaboration menu",
-    "description": "Step 2 description"
-  },
-  "workflowStep3Title": {
-    "message": "Policies & Rules",
-    "description": "Step 3 title"
-  },
-  "workflowStep3Description": {
-    "message": "Go to Policies & Rules page",
-    "description": "Step 3 description"
-  },
-  "workflowStep4Title": {
-    "message": "Threat Policies",
-    "description": "Step 4 title"
-  },
-  "workflowStep4Description": {
-    "message": "Click on Threat Policies",
-    "description": "Step 4 description"
-  },
-  "workflowStep5Title": {
-    "message": "Advanced Delivery",
-    "description": "Step 5 title"
-  },
-  "workflowStep5Description": {
-    "message": "Click on Advanced delivery button",
-    "description": "Step 5 description"
-  },
-  "workflowStep6Title": {
-    "message": "Phishing Simulation Tab",
-    "description": "Step 6 title"
-  },
-  "workflowStep6Description": {
-    "message": "Click on Phishing simulation tab",
-    "description": "Step 6 description"
-  },
-  "workflowStep7Title": {
-    "message": "Edit Button",
-    "description": "Step 7 title"
-  },
-  "workflowStep7Description": {
-    "message": "Click on the Edit button",
-    "description": "Step 7 description"
-  },
-  "workflowStep8Title": {
-    "message": "Domains",
-    "description": "Step 8 title"
-  },
-  "workflowStep8Description": {
-    "message": "You can enter these domains: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store",
-    "description": "Step 8 description"
-  },
-  "workflowStep9Title": {
-    "message": "IP Addresses",
-    "description": "Step 9 title"
-  },
-  "workflowStep9Description": {
-    "message": "Enter white list IP addresses",
-    "description": "Step 9 description"
-  },
-  "workflowStep10Title": {
-    "message": "Simulation URLs",
-    "description": "Step 10 title"
-  },
-  "workflowStep10Description": {
-    "message": "You can enter these domains: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store",
-    "description": "Step 10 description"
-  },
-  "workflowStep11Title": {
-    "message": "Save",
-    "description": "Step 11 title"
-  },
-  "workflowStep11Description": {
-    "message": "Save the changes",
-    "description": "Step 11 description"
-  },
-  "workflowStep12Title": {
-    "message": "Completed! ✅",
-    "description": "Step 12 title"
-  },
-  "workflowStep12Description": {
-    "message": "All steps successfully completed",
-    "description": "Step 12 description"
-  },
-  "clickHere": {
-    "message": "Click here",
-    "description": "Click instruction"
-  },
-  "validationPassed": {
-    "message": "✓ Validation passed",
-    "description": "Validation success message"
-  },
-  "validationFailed": {
-    "message": "✗ Validation failed",
-    "description": "Validation failed message"
-  },
-  "waiting": {
-    "message": "Waiting...",
-    "description": "Waiting message"
-  },
-  "loading": {
-    "message": "Loading...",
-    "description": "Loading message"
-  },
-  "completed": {
-    "message": "Completed",
-    "description": "Completed status"
-  },
-  "failed": {
-    "message": "Failed",
-    "description": "Failed status"
   },
   "close": {
     "message": "Close",
     "description": "Close button"
   },
-  "minimize": {
-    "message": "Minimize",
-    "description": "Minimize button"
+  "understood": {
+    "message": "Got it",
+    "description": "Got it button"
   },
-  "refresh": {
-    "message": "Refresh", 
-    "description": "Refresh button"
+  "completed": {
+    "message": "Completed",
+    "description": "Completed status"
+  },
+  "inProgress": {
+    "message": "In Progress",
+    "description": "In progress status"
+  },
+  "summaryReport": {
+    "message": "📊 Summary Report",
+    "description": "Summary report title"
+  },
+  "congratsTitle": {
+    "message": "Congratulations! You've Completed All Steps!",
+    "description": "Congratulations title"
+  },
+  "congratsDesc": {
+    "message": "With these steps, you've successfully whitelisted IP addresses in your Office 365 environment and configured security simulations, spam filtering, and Advanced Threat Protection (ATP) features!",
+    "description": "Congratulations description"
+  },
+  "workflowsCompleted": {
+    "message": "6 Workflows",
+    "description": "Workflows completed count"
+  },
+  "stepsSuccessful": {
+    "message": "62 Steps",
+    "description": "Steps successful count"
+  },
+  "allScreenshotsSaved": {
+    "message": "All screenshots saved in chrome.storage",
+    "description": "Screenshot save message"
+  },
+  "screenshotSaved": {
+    "message": "Screenshot saved",
+    "description": "Screenshot saved"
   }
 }

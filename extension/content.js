@@ -63,7 +63,18 @@ const MESSAGES = {
     workflowStep11Title: 'Kaydet',
     workflowStep11Description: 'Değişiklikleri kaydedin',
     workflowStep12Title: 'Tamamlandı! ✅',
-    workflowStep12Description: 'Tüm adımlar başarıyla tamamlandı'
+    workflowStep12Description: 'Tüm adımlar başarıyla tamamlandı',
+    congratsTitle: 'Tebrikler! Tüm Adımları Tamamladınız!',
+    congratsDesc: 'Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve<br>güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini<br>başarıyla yapılandırdınız!',
+    workflowsCompleted: '6 Workflow',
+    stepsSuccessful: '62 Adım',
+    importantWarning: 'Önemli Uyarı',
+    warningFromStep3: '3. adımdan itibaren eklentiye TIKLAMAYINIZ',
+    warningLine1: '• Form kapandığında eklentiyi açarak devam edin',
+    warningLine2: '• Ekranda gösterilen vurgulara (highlight) dikkat edin',
+    warningLine3: '• Her adım arasında 5 saniye bekleme süresi vardır',
+    allScreenshotsSaved: 'Tüm screenshot\'lar chrome.storage\'da kaydedildi',
+    screenshotSaved: 'Screenshot kaydedildi'
   },
   en: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
@@ -102,7 +113,18 @@ const MESSAGES = {
     workflowStep11Title: 'Save',
     workflowStep11Description: 'Save the changes',
     workflowStep12Title: 'Completed! ✅',
-    workflowStep12Description: 'All steps successfully completed'
+    workflowStep12Description: 'All steps successfully completed',
+    congratsTitle: 'Congratulations! You\'ve Completed All Steps!',
+    congratsDesc: 'With these steps, you\'ve successfully whitelisted IP addresses in your Office 365 environment and<br>configured security simulations, spam filtering, and Advanced Threat Protection (ATP) features!',
+    workflowsCompleted: '6 Workflows',
+    stepsSuccessful: '62 Steps',
+    importantWarning: 'Important Warning',
+    warningFromStep3: 'Do NOT click the extension from step 3 onwards',
+    warningLine1: '• Continue by opening extension when form closes',
+    warningLine2: '• Pay attention to on-screen highlights',
+    warningLine3: '• 5 second wait between each step',
+    allScreenshotsSaved: 'All screenshots saved in chrome.storage',
+    screenshotSaved: 'Screenshot saved'
   },
   de: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
@@ -142,9 +164,17 @@ const MESSAGES = {
     workflowStep11Description: 'Speichern Sie die Änderungen',
     workflowStep12Title: 'Abgeschlossen! ✅',
     workflowStep12Description: 'Alle Schritte erfolgreich abgeschlossen',
-    elementNotFound: 'Element nicht gefunden',
-    pleaseComplete: 'Bitte füllen Sie dieses Feld aus!',
-    allScreenshotsSaved: 'Alle Screenshots in chrome.storage gespeichert'
+    congratsTitle: 'Glückwunsch! Alle Schritte abgeschlossen!',
+    congratsDesc: 'Mit diesen Schritten haben Sie IP-Adressen in Ihrer Office 365-Umgebung erfolgreich<br>auf die Whitelist gesetzt und Sicherheitssimulationen, Spamfilterung und<br>erweiterte Bedrohungsschutz-(ATP-)Funktionen konfiguriert!',
+    workflowsCompleted: '6 Workflows',
+    stepsSuccessful: '62 Schritte',
+    importantWarning: 'Wichtige Warnung',
+    warningFromStep3: 'Klicken Sie ab Schritt 3 NICHT auf die Erweiterung',
+    warningLine1: '• Fortsetzen durch Öffnen der Erweiterung wenn das Formular geschlossen wird',
+    warningLine2: '• Achten Sie auf die Bildschirmhervorhebungen',
+    warningLine3: '• 5 Sekunden Wartezeit zwischen jedem Schritt',
+    allScreenshotsSaved: 'Alle Screenshots in chrome.storage gespeichert',
+    screenshotSaved: 'Screenshot gespeichert'
   },
   fr: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
@@ -184,9 +214,17 @@ const MESSAGES = {
     workflowStep11Description: 'Enregistrez les modifications',
     workflowStep12Title: 'Terminé! ✅',
     workflowStep12Description: 'Toutes les étapes terminées avec succès',
-    elementNotFound: 'Élément non trouvé',
-    pleaseComplete: 'Veuillez compléter ce champ!',
-    allScreenshotsSaved: 'Toutes les captures d\'écran sauvegardées dans chrome.storage'
+    congratulations: 'Félicitations! Toutes les étapes terminées!',
+    congratulationsDesc: 'Avec ces étapes, vous avez réussi à mettre sur liste blanche les adresses IP<br>dans votre environnement Office 365 et configuré les simulations de sécurité,<br>le filtrage du spam et les fonctions de protection avancée contre les menaces (ATP)!',
+    congratulationsWorkflows: '6 Workflows',
+    congratulationsSteps: '62 Étapes',
+    importantWarning: 'Avertissement Important',
+    warningFromStep3: 'NE cliquez PAS sur l\'extension à partir de l\'étape 3',
+    warningLine1: '• Continuez en ouvrant l\'extension lorsque le formulaire se ferme',
+    warningLine2: '• Faites attention aux surlignages à l\'écran',
+    warningLine3: '• 5 secondes d\'attente entre chaque étape',
+    allScreenshotsSaved: 'Toutes les captures d\'écran sauvegardées dans chrome.storage',
+    screenshotSaved: 'Capture d\'écran sauvegardée'
   },
   es: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
@@ -226,9 +264,17 @@ const MESSAGES = {
     workflowStep11Description: 'Guarde los cambios',
     workflowStep12Title: '¡Completado! ✅',
     workflowStep12Description: 'Todos los pasos completados exitosamente',
-    elementNotFound: 'Elemento no encontrado',
-    pleaseComplete: '¡Por favor complete este campo!',
-    allScreenshotsSaved: 'Todas las capturas de pantalla guardadas en chrome.storage'
+    congratulations: '¡Felicidades! ¡Todos los pasos completados!',
+    congratulationsDesc: '¡Con estos pasos, ha añadido exitosamente las direcciones IP a la lista blanca<br>en su entorno de Office 365 y configurado simulaciones de seguridad,<br>filtrado de spam y funciones de Advanced Threat Protection (ATP)!',
+    congratulationsWorkflows: '6 Workflows',
+    congratulationsSteps: '62 Pasos',
+    importantWarning: 'Advertencia Importante',
+    warningFromStep3: 'NO haga clic en la extensión desde el paso 3 en adelante',
+    warningLine1: '• Continuar abriendo la extensión cuando se cierre el formulario',
+    warningLine2: '• Preste atención a los resaltados en pantalla',
+    warningLine3: '• 5 segundos de espera entre cada paso',
+    allScreenshotsSaved: 'Todas las capturas de pantalla guardadas en chrome.storage',
+    screenshotSaved: 'Captura de pantalla guardada'
   },
   it: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
@@ -268,9 +314,17 @@ const MESSAGES = {
     workflowStep11Description: 'Salva le modifiche',
     workflowStep12Title: 'Completato! ✅',
     workflowStep12Description: 'Tutti i passaggi completati con successo',
-    elementNotFound: 'Elemento non trovato',
-    pleaseComplete: 'Si prega di completare questo campo!',
-    allScreenshotsSaved: 'Tutti gli screenshot salvati in chrome.storage'
+    congratulations: 'Congratulazioni! Tutti i passaggi completati!',
+    congratulationsDesc: 'Con questi passaggi, hai aggiunto con successo gli indirizzi IP alla whitelist<br>nel tuo ambiente Office 365 e configurato simulazioni di sicurezza,<br>filtraggio dello spam e funzioni di Advanced Threat Protection (ATP)!',
+    congratulationsWorkflows: '6 Workflows',
+    congratulationsSteps: '62 Passaggi',
+    importantWarning: 'Avviso Importante',
+    warningFromStep3: 'NON cliccare sull\'estensione dal passaggio 3 in poi',
+    warningLine1: '• Continuare aprendo l\'estensione quando il modulo si chiude',
+    warningLine2: '• Prestare attenzione agli evidenziamenti sullo schermo',
+    warningLine3: '• 5 secondi di attesa tra ogni passaggio',
+    allScreenshotsSaved: 'Tutti gli screenshot salvati in chrome.storage',
+    screenshotSaved: 'Screenshot salvato'
   }
 }
 
@@ -281,22 +335,55 @@ let CURRENT_LANGUAGE = 'tr'
 async function loadLanguagePreference() {
   try {
     const result = await chrome.storage.local.get(['keepnet_language'])
-    CURRENT_LANGUAGE = result.keepnet_language || 'tr'
-    console.log('[i18n] Language loaded from storage:', CURRENT_LANGUAGE)
+    const savedLang = result.keepnet_language
+    const userLang = chrome.i18n.getUILanguage().split('-')[0] // Get 'en' from 'en-US'
+    const supportedLangs = ['tr', 'en', 'de']
+    CURRENT_LANGUAGE = savedLang || (supportedLangs.includes(userLang) ? userLang : 'tr')
+    console.log('[i18n] Language loaded:', CURRENT_LANGUAGE)
+    
+    // Update chrome.i18n locale if different
+    if (CURRENT_LANGUAGE !== chrome.i18n.getUILanguage().split('-')[0]) {
+      // Note: chrome.i18n.getUILanguage() is read-only, we'll use storage
+    }
   } catch (error) {
     console.warn('[i18n] Error loading language preference:', error)
     CURRENT_LANGUAGE = 'tr'
   }
 }
 
-// i18n helper function
+// Simple i18n helper - uses chrome.i18n API when available, falls back to MESSAGES
 function i18n(key) {
   try {
-    const message = MESSAGES[CURRENT_LANGUAGE]?.[key] || MESSAGES.tr[key] || key;
-    return message;
+    // Try chrome.i18n first (works for default locale)
+    const chromeMessage = chrome.i18n.getMessage(key)
+    if (chromeMessage) {
+      return chromeMessage
+    }
+    
+    // For dynamic language support, use MESSAGES object
+    // This allows switching languages without reload
+    const message = MESSAGES[CURRENT_LANGUAGE]?.[key] || MESSAGES.tr[key] || key
+    return message
   } catch (error) {
-    console.warn('[i18n] Error getting message for key:', key, error);
-    return key;
+    console.warn('[i18n] Error getting message for key:', key, error)
+    return key
+  }
+}
+
+// Change language function
+async function changeLanguage(newLang) {
+  try {
+    console.log('[i18n] Changing language from', CURRENT_LANGUAGE, 'to', newLang)
+    CURRENT_LANGUAGE = newLang
+    await chrome.storage.local.set({ keepnet_language: newLang })
+    console.log('[i18n] Language changed to', CURRENT_LANGUAGE)
+    
+    // Notify content script to re-render UI
+    if (window.assistant && window.assistant.updateUILanguage) {
+      await window.assistant.updateUILanguage(newLang)
+    }
+  } catch (error) {
+    console.error('[i18n] Error changing language:', error)
   }
 }
 
@@ -921,7 +1008,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     id: 1,
     name: 'spambypass_step1_info',
     title: 'Başlangıç Bilgisi',
-    description: 'Spam Filter Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var.Bu adımda eklentiye tıklamayınız yoksa form kapanacaktır. Adımlar otomatik olarak ilerleyecektir.',
+    description: 'Spam Filter Bypass adımı başlıyor. Lütfen aşağıdaki önemli uyarıları okuyunuz.',
     isInfoCard: true,
     autoAdvance: true,
     autoAdvanceDelay: 2000,
@@ -1333,17 +1420,26 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'Set Message Header',
     description: '18) "Select one" dropdown\'ından "set a message header" seçeneğini seçin.',
     target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-706',
-      textMatch: /set a message header/i,
+      selector: 'span#Dropdown510-option',
+      textMatch: /Select one/i,
       fallback: [
-        'span:contains("set a message header")',
-        'span.ms-Dropdown-optionText:contains("set a message header")'
-      ]
+        'span.ms-Dropdown-title.ms-Dropdown-titleIsPlaceHolder.title-758:contains("Select one")',
+        'span.ms-Dropdown-titleIsPlaceHolder'
+      ],
+      secondaryTarget: {
+        selector: 'span.ms-Dropdown-optionText.dropdownOptionText-772',
+        textMatch: /set a message header/i,
+        fallback: [
+          'span.ms-Dropdown-optionText:contains("set a message header")',
+          'span:contains("set a message header")',
+          'div[role="option"]:contains("message header")'
+        ]
+      }
     },
     tooltip: 'Set a message header seçin',
     autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 3000,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -1464,7 +1560,7 @@ const ATP_LINK_BYPASS_STEPS = [
     id: 1,
     name: 'atplink_step1_info',
     title: 'Başlangıç Bilgisi',
-    description: 'ATP Link Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var. Bu adımda eklentiye tıklamayınız yoksa form kapanacaktır. Adımlar otomatik olarak ilerleyecektir.',
+    description: 'ATP Link Bypass adımı başlıyor. Lütfen aşağıdaki önemli uyarıları okuyunuz.',
     isInfoCard: true,
     autoAdvance: true,
     autoAdvanceDelay: 2000,
@@ -1877,7 +1973,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     id: 1,
     name: 'atpattach_step1_info',
     title: 'Başlangıç Bilgisi',
-    description: 'ATP Attachment Bypass adımı başlıyor. Her adım arasında 5 saniye duraksama var. Bu adımda eklentiye tıklamayınız yoksa form kapanacaktır. Adımlar otomatik olarak ilerleyecektir.',
+    description: 'ATP Attachment Bypass adımı başlıyor. Lütfen aşağıdaki önemli uyarıları okuyunuz.',
     isInfoCard: true,
     autoAdvance: true,
     autoAdvanceDelay: 2000,
@@ -2065,32 +2161,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
   },
   {
     id: 9,
-    name: 'atpattach_step9_save',
-    title: 'Save',
-    description: '8) Save butonuna tıklayın.',
-    target: {
-      selector: 'span.ms-Button-label.label-723#id__790',
-      textMatch: /Save|Kaydet/i,
-      fallback: [
-        'span:contains("Save")',
-        'span.ms-Button-label:contains("Save")',
-        'button:contains("Save")',
-        'button.ms-Button--primary'
-      ]
-    },
-    tooltip: 'Save butonuna tıklayın',
-    autoClick: true,
-    autoAdvance: true,
-    autoAdvanceDelay: 5000,
-    validation: () => true,
-    realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 2000,
-    panelPosition: 'bottom-left'
-  },
-  {
-    id: 10,
-    name: 'atpattach_step10_do_following',
+    name: 'atpattach_step9_do_following',
     title: 'Do the following',
     description: '9) "Do the following" dropdown\'ını açın.',
     target: {
@@ -2112,8 +2183,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 11,
-    name: 'atpattach_step11_modify_message_properties',
+    id: 10,
+    name: 'atpattach_step10_modify_message_properties',
     title: 'Modify Message Properties',
     description: '10) "Modify the message properties" seçeneğini seçin.',
     target: {
@@ -2852,9 +2923,6 @@ class FloatingPanel {
           <option value="tr">🇹🇷 TR</option>
           <option value="en">🇬🇧 EN</option>
           <option value="de">🇩🇪 DE</option>
-          <option value="fr">🇫🇷 FR</option>
-          <option value="es">🇪🇸 ES</option>
-          <option value="it">🇮🇹 IT</option>
         </select>
         <button id="keepnet-close-btn" style="
           background: rgba(255,255,255,0.1);
@@ -3568,10 +3636,10 @@ class KeepnetAssistant {
           console.log("[Keepnet] WORKFLOW_5 starting on SAME PAGE...")
           assistant.currentWorkflow = nextWorkflow
           assistant.workflowName = nextWorkflowName
-          assistant.currentStep = 0
+          assistant.currentStep = 1
           assistant.stepResults = {}
           
-          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0)
+          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 1)
           await Storage.set(STORAGE_KEYS.STEP_RESULTS, {})
           await Storage.set('keepnet_next_workflow', null)
           
@@ -3595,10 +3663,10 @@ class KeepnetAssistant {
           // ÖNEMLI: Aynı sayfada workflow değiştir!
           assistant.currentWorkflow = nextWorkflow
           assistant.workflowName = nextWorkflowName
-          assistant.currentStep = 0
+          assistant.currentStep = 1
           assistant.stepResults = {}
           
-          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0)
+          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 1)
           await Storage.set(STORAGE_KEYS.STEP_RESULTS, {})
           await Storage.set('keepnet_next_workflow', null)
           
@@ -3661,8 +3729,8 @@ class KeepnetAssistant {
           
           assistant.currentWorkflow = nextWorkflow
           assistant.workflowName = nextWorkflowName
-          assistant.currentStep = 0
-          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0)
+          assistant.currentStep = 1
+          await Storage.set(STORAGE_KEYS.CURRENT_STEP, 1)
           
           console.log("[Keepnet] Starting", nextWorkflowName, "...")
           await assistant.executeStep(1)
@@ -3701,6 +3769,14 @@ class KeepnetAssistant {
           break
         case 'WORKFLOW_4':
           stepsArray = SPAM_FILTER_BYPASS_STEPS
+          baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
+          break
+        case 'WORKFLOW_5':
+          stepsArray = ATP_LINK_BYPASS_STEPS
+          baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
+          break
+        case 'WORKFLOW_6':
+          stepsArray = ATP_ATTACHMENT_BYPASS_STEPS
           baseUrl = 'https://admin.exchange.microsoft.com/#/transportrules'
           break
       }
@@ -3854,12 +3930,30 @@ class KeepnetAssistant {
         }
       }
       
+      // Language selector handler
+      const langSelector = document.getElementById('keepnet-language-selector')
+      if (langSelector) {
+        langSelector.value = CURRENT_LANGUAGE
+        langSelector.onchange = async (e) => {
+          const newLang = e.target.value
+          console.log('[Keepnet] Language selector changed to:', newLang)
+          await changeLanguage(newLang)
+          // Re-render current step with new language
+          if (this.currentStep > 0) {
+            await this.executeStep(this.currentStep)
+          }
+        }
+        console.log('[Keepnet] Language selector handler attached')
+      }
+      
       console.log("[Keepnet] Button handlers attached")
     }, 100)
   }
   
   async executeStep(stepNum, customSteps = null) {
     try {
+      console.log(`[Keepnet] 📍 executeStep called: step=${stepNum}, workflow=${this.workflowName}`)
+      
       // Clear any existing auto-advance timer from previous step
       if (autoAdvanceTimer) {
         console.log('[Keepnet] Clearing previous auto-advance timer')
@@ -3873,6 +3967,12 @@ class KeepnetAssistant {
         this.workflowName = customSteps === THREAT_POLICIES_STEPS ? 'WORKFLOW_2' : 
                            customSteps === SAFE_LINKS_STEPS ? 'WORKFLOW_3' : 'WORKFLOW_1'
         console.log(`[Keepnet] Switching to ${this.workflowName}`)
+      }
+      
+      // Eğer ATP_ATTACHMENT_BYPASS_STEPS kullanılıyorsa, workflow ismini güncelle
+      if (this.currentWorkflow === ATP_ATTACHMENT_BYPASS_STEPS && this.workflowName !== 'WORKFLOW_6') {
+        console.log('[Keepnet] ⚠️ Detected ATP_ATTACHMENT_BYPASS_STEPS but workflow name mismatch, fixing...')
+        this.workflowName = 'WORKFLOW_6'
       }
       
       const stepsArray = this.currentWorkflow
@@ -3906,12 +4006,6 @@ class KeepnetAssistant {
       // Summary step?
       if (step.isSummary) {
         await this.showSummary()
-        // Sadece WORKFLOW_5 summary'sinden sonra otomatik workflow 6'ya geç
-        if (this.workflowName === 'WORKFLOW_5' && typeof window.keepnetContinueWorkflow === 'function') {
-          setTimeout(() => {
-            window.keepnetContinueWorkflow()
-          }, 2000) // 2 sn sonra otomatik devam
-        }
         return
       }
       
@@ -4112,6 +4206,80 @@ ${step.licenseCheck.skipMessage}`)
           ${i18n(step.description)}
         </p>
     `
+    
+    // Premium warning for workflow 4, 5, 6 - step 1
+    const needsWarning = (step.id === 1) && 
+                         (step.name === 'spambypass_step1_info' || 
+                          step.name === 'atplink_step1_info' || 
+                          step.name === 'atpattach_step1_info')
+    
+    if (needsWarning) {
+      html += `
+        <div style="
+          background: rgba(251, 191, 36, 0.15);
+          border: 2px solid rgba(251, 191, 36, 0.5);
+          border-radius: 8px;
+          padding: 16px;
+          margin-bottom: 16px;
+          animation: keepnet-warning-pulse 3s ease-in-out infinite;
+        ">
+          <!-- Warning Header -->
+          <div style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+          ">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span style="
+              font-size: 14px;
+              font-weight: 600;
+              color: #fbbf24;
+              letter-spacing: 0.3px;
+            ">${i18n('importantWarning')}</span>
+          </div>
+          
+          <!-- Main Warning -->
+          <div style="
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+            line-height: 1.5;
+          ">
+            ${i18n('warningFromStep3')}
+          </div>
+          
+          <!-- Bullet Points -->
+          <div style="
+            font-size: 12px;
+            color: #fef3c7;
+            line-height: 1.6;
+          ">
+            <div style="margin-bottom: 6px;">${i18n('warningLine1')}</div>
+            <div style="margin-bottom: 6px;">${i18n('warningLine2')}</div>
+            <div>${i18n('warningLine3')}</div>
+          </div>
+        </div>
+        
+        <style>
+          @keyframes keepnet-warning-pulse {
+            0%, 100% {
+              border-color: rgba(251, 191, 36, 0.5);
+              box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+            }
+            50% {
+              border-color: rgba(251, 191, 36, 0.8);
+              box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1);
+            }
+          }
+        </style>
+      `
+    }
     
     // Navigation step için "Sayfaya Git" butonu
     if (step.isNavigation && step.navigate) {
@@ -4832,10 +5000,19 @@ ${step.licenseCheck.skipMessage}`)
     
     // Next
     const totalSteps = this.currentWorkflow.length
-    if (this.currentStep >= totalSteps) {
+    const nextStepNum = this.currentStep + 1
+    console.log(`[Keepnet] Current step: ${this.currentStep}, Next step: ${nextStepNum}, Total steps: ${totalSteps}`)
+    
+    // Eğer sonraki adım summary adımıysa direkt summary göster
+    const nextStep = this.currentWorkflow[nextStepNum - 1]
+    if (nextStep && nextStep.isSummary) {
+      console.log('[Keepnet] Next step is summary, showing summary directly')
+      await this.showSummary()
+    } else if (this.currentStep >= totalSteps) {
+      console.log('[Keepnet] All steps completed, showing summary')
       await this.showSummary()
     } else {
-      await this.executeStep(this.currentStep + 1)
+      await this.executeStep(nextStepNum)
     }
   }
   
@@ -4857,10 +5034,37 @@ ${step.licenseCheck.skipMessage}`)
     
     let html = `
       <div class="keepnet-summary">
-        <h2 style="margin: 0 0 16px 0; font-size: 16px; color: #FFFFFF;">
-          ${i18n('summaryReport')} - ${this.workflowName}
-        </h2>
-        <div style="background: white; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+        <!-- Clean Header (Linear style) -->
+        <div style="
+          margin-bottom: 20px;
+        ">
+          <h2 style="
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+          ">
+            ${i18n('summaryReport')}
+          </h2>
+          <div style="
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+          ">
+            ${this.workflowName}
+          </div>
+        </div>
+        
+        <!-- Task List Container (Notion style) -->
+        <div style="
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+          padding: 8px;
+          margin-bottom: 16px;
+        ">
     `
     
     // Summary adımını hariç tut
@@ -4871,16 +5075,109 @@ ${step.licenseCheck.skipMessage}`)
       const result = this.stepResults[step.id]
       const screenshot = screenshots[step.name]
       
-      const status = result?.valid ? '✅' : (result ? '❌' : '⏳')
+      // SVG Status Icons (clean icons instead of emojis)
+      let statusIcon = ''
+      if (result?.valid) {
+        statusIcon = `
+          <div style="
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 10px;
+          ">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        `
+      } else if (result) {
+        statusIcon = `
+          <div style="
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: rgba(239, 68, 68, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 10px;
+          ">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </div>
+        `
+      } else {
+        statusIcon = `
+          <div style="
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 10px;
+          ">
+            <div style="
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.5);
+            "></div>
+          </div>
+        `
+      }
       
+      const isLast = i === stepsToShow.length - 1
+      const itemBackground = !result?.valid ? 'rgba(255, 255, 255, 0.03)' : 'transparent'
+      const marginBottom = !isLast ? 'margin-bottom: 4px;' : ''
       html += `
-        <div style="display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f3f4f6;">
-          <div style="font-size: 18px; margin-right: 10px;">${status}</div>
-          <div style="flex: 1;">
-            <div style="font-size: 13px; font-weight: 500; color: #111827;">
+        <div style="
+          display: flex;
+          align-items: center;
+          padding: 10px 12px;
+          ${marginBottom}
+          border-radius: 6px;
+          transition: all 0.15s ease;
+          background: ${itemBackground};
+        " class="keepnet-summary-item" 
+        onmouseover="this.style.background='rgba(255, 255, 255, 0.05)'"
+        onmouseout="this.style.background='${itemBackground}'">
+          ${statusIcon}
+          <div style="flex: 1; min-width: 0;">
+            <div style="
+              font-size: 13px;
+              font-weight: 500;
+              color: #FFFFFF;
+              line-height: 1.4;
+              margin-bottom: ${screenshot ? '2px' : '0'};
+            ">
               ${i18n(step.title)}
             </div>
-            ${screenshot ? `<div style="font-size: 11px; color: #6b7280;">Screenshot: ${step.name}.png</div>` : ''}
+            ${screenshot ? `
+              <div style="
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.5);
+                display: flex;
+                align-items: center;
+                gap: 4px;
+              ">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span>${i18n('screenshotSaved')}</span>
+              </div>
+            ` : ''}
           </div>
           ${!result?.valid ? `
             <button 
@@ -4888,14 +5185,29 @@ ${step.licenseCheck.skipMessage}`)
               data-step-id="${step.id}" 
               data-workflow="${this.workflowName}"
               style="
-                padding: 4px 8px;
+                padding: 6px 12px;
                 font-size: 11px;
-                background: #667eea;
-                color: white;
-                border: none;
-                border-radius: 4px;
+                font-weight: 500;
+                background: rgba(255, 255, 255, 0.1);
+                color: #FFFFFF;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 6px;
                 cursor: pointer;
-              ">${i18n('goAndFix')}</button>
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                transition: all 0.2s ease;
+                flex-shrink: 0;
+                font-family: inherit;
+              "
+              onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.borderColor='rgba(255, 255, 255, 0.3)'; this.style.transform='translateY(-1px)'"
+              onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'; this.style.transform='translateY(0)'"
+            >
+              <span>${i18n('goAndFix')}</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </button>
           ` : ''}
         </div>
       `
@@ -4903,8 +5215,25 @@ ${step.licenseCheck.skipMessage}`)
     
     html += `
         </div>
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px; font-size: 12px; color: #1e40af;">
-          💾 ${i18n('allScreenshotsSaved')}
+        <!-- Screenshot Notification (Stripe style) -->
+        <div style="
+          background: rgba(59, 130, 246, 0.1);
+          border: 1px solid rgba(59, 130, 246, 0.2);
+          border-radius: 8px;
+          padding: 12px 14px;
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.9);
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        ">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span style="font-weight: 500;">${i18n('allScreenshotsSaved')}</span>
         </div>
     `
     
@@ -4912,27 +5241,138 @@ ${step.licenseCheck.skipMessage}`)
     if (this.workflowName === 'WORKFLOW_6') {
       html += `
         <div style="
-          background: linear-gradient(135deg,rgb(49, 47, 54) 0%,rgb(144, 177, 234) 100%);
-          border-radius: 12px;
-          padding: 20px;
+          background: linear-gradient(135deg, #1e293b 0%, #312e81 100%);
+          border-radius: 16px;
+          padding: 48px 32px;
           margin-top: 16px;
           color: white;
           text-align: center;
-          box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          position: relative;
+          overflow: hidden;
         ">
-          <div style="font-size: 48px; margin-bottom: 12px;">🎊</div>
-          <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">
-            Tebrikler! Tüm Adımları Tamamladınız!
+          <!-- Subtle background glow -->
+          <div style="
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+          "></div>
+          
+          <!-- Success Icon with Animation -->
+          <div style="
+            position: relative;
+            z-index: 1;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+            animation: keepnet-pulse-success 2s ease-in-out infinite;
+          ">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 16.17L5.53 12.7a1 1 0 00-1.42 0 1 1 0 000 1.41l4.18 4.18a1 1 0 001.42 0L20.41 7.59a1 1 0 00-1.41-1.41L9 16.17z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-          <div style="font-size: 13px; line-height: 1.6; opacity: 0.95;">
-            Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve<br>
-            güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini<br>
-            başarıyla yapılandırdınız!
+          
+          <!-- Heading -->
+          <div style="
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+          ">
+            ${i18n('congratsTitle')}
           </div>
-          <div style="font-size: 14px; font-weight: 600; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.3);">
-            ✅ 6 Workflow Tamamlandı • 62 Adım Başarılı • 🎉
+          
+          <!-- Body Text -->
+          <div style="
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+          ">
+            ${i18n('congratsDesc')}
+          </div>
+          
+          <!-- Status Badges -->
+          <div style="
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+          ">
+            <div style="
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(10px);
+              border-radius: 12px;
+              padding: 8px 16px;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              font-size: 13px;
+              font-weight: 500;
+            ">
+              <span style="color: #10b981; font-size: 16px;">✓</span>
+              <span>${i18n('workflowsCompleted')}</span>
+            </div>
+            <div style="
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(10px);
+              border-radius: 12px;
+              padding: 8px 16px;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              font-size: 13px;
+              font-weight: 500;
+            ">
+              <span style="color: #3b82f6; font-size: 16px;">✓</span>
+              <span>${i18n('stepsSuccessful')}</span>
+            </div>
+            <div style="
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(10px);
+              border-radius: 12px;
+              padding: 8px 16px;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              font-size: 13px;
+              font-weight: 500;
+            ">
+              <span style="color: #a855f7; font-size: 16px;">✓</span>
+              <span>Başarılı</span>
+            </div>
           </div>
         </div>
+        
+        <!-- Add CSS animation -->
+        <style>
+          @keyframes keepnet-pulse-success {
+            0%, 100% {
+              transform: scale(1);
+              box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+            }
+            50% {
+              transform: scale(1.05);
+              box-shadow: 0 12px 32px rgba(16, 185, 129, 0.6);
+            }
+          }
+        </style>
       `
     }
     
@@ -4955,33 +5395,35 @@ ${step.licenseCheck.skipMessage}`)
       nextWorkflowText = 'Devam Et (Workflow 6: ATP Attachment Bypass)'
       hasNextWorkflow = true
     } else if (this.workflowName === 'WORKFLOW_6') {
-      nextWorkflowText = '🎊 Tebrikler! Tüm Workflow\'lar Tamamlandı'
+      // WORKFLOW_6 için buton gösterme
       hasNextWorkflow = false
     } else {
       nextWorkflowText = '✅ Tüm Workflow\'lar Tamamlandı'
       hasNextWorkflow = false
     }
 
-    // Devam butonu bloğunu ekle
-    html += `
+    // Devam butonu bloğunu ekle (sadece hasNextWorkflow true ise)
+    if (hasNextWorkflow) {
+      html += `
         <div style="margin-top: 12px; display: flex; gap: 8px;">
-          <button id="keepnet-continue-workflow-btn" ${!hasNextWorkflow ? 'disabled' : ''} class="keepnet-workflow-btn" style="
+          <button id="keepnet-continue-workflow-btn" class="keepnet-workflow-btn" style="
             flex: 1;
             padding: 10px 16px;
-            background: ${hasNextWorkflow ? 'linear-gradient(135deg,rgb(35, 30, 58) 0%,rgb(21, 51, 64) 100%)' : 'linear-gradient(135deg,rgb(85, 83, 223) 0%,rgb(48, 74, 221) 100%)'};
+            background: linear-gradient(135deg,rgb(35, 30, 58) 0%,rgb(21, 51, 64) 100%);
             color: white;
             border: none;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
-            cursor: ${hasNextWorkflow ? 'pointer' : 'default'};
+            cursor: pointer;
             transition: all 0.2s;
-            box-shadow: ${hasNextWorkflow ? '0 2px 4px rgba(124, 58, 237, 0.3)' : '0 2px 8px rgba(167, 139, 250, 0.4)'};
+            box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           ">
-            ${hasNextWorkflow ? '➡️ ' : ''}${nextWorkflowText}
+            ➡️ ${nextWorkflowText}
           </button>
         </div>
-    `
+      `
+    }
 
     // Oluşturulan içeriği panele yaz
     this.panel.setContent(html)
@@ -5060,17 +5502,6 @@ ${step.licenseCheck.skipMessage}`)
         })
         
         console.log("[Keepnet] Click handler and hover effects attached successfully")
-        
-        // WORKFLOW_4 için otomatik geçiş (3 saniye sonra)
-        if (this.workflowName === 'WORKFLOW_4' && hasNextWorkflow) {
-          console.log("[Keepnet] WORKFLOW_4 summary - auto-advancing to WORKFLOW_5 in 3 seconds...")
-          setTimeout(async () => {
-            console.log("[Keepnet] Auto-clicking continue button for WORKFLOW_4 -> WORKFLOW_5")
-            if (continueBtn && typeof window.keepnetContinueWorkflow === 'function') {
-              await window.keepnetContinueWorkflow()
-            }
-          }, 3000)
-        }
       }
       
       // YENİ: Git ve Düzelt butonları için workflow bilgisiyle
@@ -5111,27 +5542,6 @@ ${step.licenseCheck.skipMessage}`)
       keepnetContinueWorkflow: typeof window.keepnetContinueWorkflow,
       keepnetGoToStep: typeof window.keepnetGoToStep
     })
-    
-    // --- WORKFLOW_5 bitişinde otomatik WORKFLOW_6'yı başlat ---
-    if(this.workflowName === 'WORKFLOW_5') {
-      setTimeout(async () => {
-        console.log('[Keepnet] WORKFLOW_5 tamamlandı, WORKFLOW_6 otomatik başlıyor!')
-        // Yeni workflow yükle
-        this.currentWorkflow = ATP_ATTACHMENT_BYPASS_STEPS;
-        this.workflowName = 'WORKFLOW_6';
-        this.currentStep = 0;
-        this.stepResults = {};
-        await Storage.set(STORAGE_KEYS.CURRENT_STEP, 0);
-        await Storage.set(STORAGE_KEYS.STEP_RESULTS, {});
-        await Storage.set('keepnet_next_workflow', null);
-        // Footer'ı tekrar göster
-        const footer2 = document.getElementById('keepnet-panel-footer');
-        if(footer2){
-          footer2.style.display = 'flex';
-        }
-        await this.executeStep(1);
-      }, 2000); // 2 sn sonra başlasın, kullanıcı summary görsün
-    }
   }
   
   async waitForPageLoad() {

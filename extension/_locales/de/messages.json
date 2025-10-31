@@ -8,59 +8,60 @@
     "description": "Panel title"
   },
   "step": {
-    "message": "Adım",
+    "message": "Schritt",
     "description": "Step word"
   },
   "of": {
-    "message": "/",
+    "message": "von",
     "description": "Separator"
   },
   "goAndFix": {
-    "message": "Git ve Düzelt",
+    "message": "Gehen & Reparieren",
     "description": "Go and fix button"
   },
   "close": {
-    "message": "Kapat",
+    "message": "Schließen",
     "description": "Close button"
   },
   "understood": {
-    "message": "Anladım",
+    "message": "Verstanden",
     "description": "Got it button"
   },
   "completed": {
-    "message": "Tamamlandı",
+    "message": "Abgeschlossen",
     "description": "Completed status"
   },
   "inProgress": {
-    "message": "Devam Ediyor",
+    "message": "In Bearbeitung",
     "description": "In progress status"
   },
   "summaryReport": {
-    "message": "📊 Özet Rapor",
+    "message": "📊 Zusammenfassungsbericht",
     "description": "Summary report title"
   },
   "congratsTitle": {
-    "message": "Tebrikler! Tüm Adımları Tamamladınız!",
+    "message": "Glückwunsch! Alle Schritte abgeschlossen!",
     "description": "Congratulations title"
   },
   "congratsDesc": {
-    "message": "Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!",
+    "message": "Mit diesen Schritten haben Sie IP-Adressen in Ihrer Office 365-Umgebung erfolgreich auf die Whitelist gesetzt und Sicherheitssimulationen, Spamfilterung und erweiterte Bedrohungsschutz-(ATP-)Funktionen konfiguriert!",
     "description": "Congratulations description"
   },
   "workflowsCompleted": {
-    "message": "6 Workflow",
+    "message": "6 Workflows",
     "description": "Workflows completed count"
   },
   "stepsSuccessful": {
-    "message": "62 Adım",
+    "message": "62 Schritte",
     "description": "Steps successful count"
   },
   "allScreenshotsSaved": {
-    "message": "Tüm screenshot'lar chrome.storage'da kaydedildi",
+    "message": "Alle Screenshots in chrome.storage gespeichert",
     "description": "Screenshot save message"
   },
   "screenshotSaved": {
-    "message": "Screenshot kaydedildi",
+    "message": "Screenshot gespeichert",
     "description": "Screenshot saved"
   }
 }
+
