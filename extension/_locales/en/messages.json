@@ -3,6 +3,14 @@
     "message": "Keepnet Assistant",
     "description": "Extension name"
   },
+  "extensionDescription": {
+    "message": "Automatic allow list configuration assistant for Keepnet phishing simulations in Office 365 - Smart navigation, real-time validation and evidence collection",
+    "description": "Extension description"
+  },
+  "extensionTitle": {
+    "message": "Keepnet Assistant - Click to start",
+    "description": "Extension action title"
+  },
   "assistantTitle": {
     "message": "Keepnet Assistant",
     "description": "Panel title"
