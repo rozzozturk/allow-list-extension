@@ -1,50 +1,50 @@
 # Privacy Policy - Keepnet Assistant
 
-**Last Updated:** 2025-01-30
+**Last Updated:** January 30, 2025
 
-## Veri Toplama ve Kullanım
+## Data Collection and Usage
 
-Keepnet Assistant Chrome Extension ("Extension"), kullanıcı gizliliğine saygı gösterir ve kişisel veri toplamaz.
+Keepnet Assistant Chrome Extension ("Extension") respects user privacy and does not collect personal data.
 
-### Toplanan Veriler
+### Collected Data
 
-Extension şu verileri **yalnızca yerel olarak** (kullanıcının cihazında) saklar:
+The Extension stores the following data **locally only** (on the user's device):
 
-- **Workflow Durumu**: Tamamlanan adımların kaydı (extension'un local storage'ında)
-- **Screenshot'lar**: Kullanıcı tarafından otomatik olarak alınan ekran görüntüleri (yalnızca local storage'da)
-- **Yapılandırma Verileri**: Kullanıcının Office 365 yapılandırma tercihleri (local storage'da)
+- **Workflow Status**: Records of completed steps (in the extension's local storage)
+- **Screenshots**: Screenshots automatically captured by the user (stored locally only)
+- **Configuration Data**: User's Office 365 configuration preferences (stored locally)
 
-### Veri Paylaşımı
+### Data Sharing
 
-- Extension **hiçbir veriyi** harici sunuculara göndermez
-- Extension **hiçbir veriyi** üçüncü taraflarla paylaşmaz
-- Extension **hiçbir analytics** veya tracking kodu içermez
+- The Extension **does not send** any data to external servers
+- The Extension **does not share** any data with third parties
+- The Extension **does not contain** any analytics or tracking code
 
-### İzinler ve Kullanımı
+### Permissions and Usage
 
-Extension şu izinleri kullanır:
+The Extension uses the following permissions:
 
-- **storage**: Yerel olarak workflow durumunu ve screenshot'ları saklamak için
-- **tabs**: Aktif sekme bilgisini almak için
-- **activeTab**: Sadece kullanıcı extension'a tıkladığında aktif sekmede çalışmak için
-- **scripting**: Microsoft Security Center ve Exchange Admin Portal sayfalarında otomatik navigasyon için
-- **host_permissions**: Sadece Microsoft Office 365 sayfalarında (`security.microsoft.com`, `admin.exchange.microsoft.com`, `admin.microsoft.com`) çalışmak için
+- **storage**: To store workflow status and screenshots locally
+- **tabs**: To get active tab information
+- **activeTab**: To work on the active tab only when the user clicks the extension
+- **scripting**: For automatic navigation on Microsoft Security Center and Exchange Admin Portal pages
+- **host_permissions**: To work only on Microsoft Office 365 pages (`security.microsoft.com`, `admin.exchange.microsoft.com`, `admin.microsoft.com`)
 
-### Veri Güvenliği
+### Data Security
 
-- Tüm veriler kullanıcının cihazında kalır
-- Veriler şifrelenmiş bağlantılar (HTTPS) üzerinden aktarılır
-- Extension kaynak kodu açık ve incelenebilir
+- All data remains on the user's device
+- Data is transmitted over encrypted connections (HTTPS)
+- Extension source code is open and reviewable
 
-### Kullanıcı Hakları
+### User Rights
 
-Kullanıcılar extension'u istediği zaman kaldırabilir ve tüm yerel veriler otomatik olarak silinir.
+Users can remove the extension at any time and all local data will be automatically deleted.
 
-### Değişiklikler
+### Changes
 
-Bu gizlilik politikası güncellendiğinde, bu sayfada "Last Updated" tarihi güncellenecektir.
+When this privacy policy is updated, the "Last Updated" date on this page will be updated accordingly.
 
-### İletişim
+### Contact
 
-Sorularınız için: [Keepnet Labs](https://keepnetlabs.com) ile iletişime geçin.
+For questions, please contact [Keepnet Labs](https://keepnetlabs.com).
 
