@@ -29,6 +29,7 @@ const MESSAGES = {
   tr: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
     assistantTitle: 'Keepnet Assistant',
+    assistantSubtitle: 'Kurumsal Güvenlik Yapılandırması',
     step: 'Adım',
     of: '/',
     continue: 'Devam',
@@ -347,6 +348,7 @@ const MESSAGES = {
   en: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
     assistantTitle: 'Keepnet Assistant',
+    assistantSubtitle: 'Enterprise Security Configuration',
     step: 'Step',
     of: 'of',
     continue: 'Continue',
@@ -3482,8 +3484,9 @@ class FloatingPanel {
       <div style="display: flex; align-items: center; gap: 12px;">
         <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e 0%, #4a9eff 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">K</div>
         <div>
-          <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">${i18n('assistantTitle')}</div>
-          <div style="font-size: 11px; opacity: 0.8;" id="keepnet-step-indicator">Enterprise Security Configuration</div>
+          <div id="keepnet-assistant-title" style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">${i18n('assistantTitle')}</div>
+          <div id="keepnet-subtitle" style="font-size: 11px; opacity: 0.8;">${i18n('assistantSubtitle')}</div>
+          <div style="font-size: 11px; opacity: 0.8;" id="keepnet-step-indicator"></div>
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 8px;">
@@ -4063,6 +4066,39 @@ class KeepnetAssistant {
     this.currentTimerInterval = null  // Manual timer için interval
   }
   
+  async updateUILanguage(newLang) {
+    try {
+      // Header texts
+      const titleEl = document.getElementById('keepnet-assistant-title')
+      const subtitleEl = document.getElementById('keepnet-subtitle')
+      if (titleEl) titleEl.textContent = i18n('assistantTitle')
+      if (subtitleEl) subtitleEl.textContent = i18n('assistantSubtitle')
+      
+      // Footer buttons
+      const prevBtn = document.getElementById('keepnet-prev-btn')
+      const nextBtn = document.getElementById('keepnet-next-btn')
+      const summaryBtn = document.getElementById('keepnet-summary-btn')
+      if (prevBtn) prevBtn.textContent = i18n('previous')
+      if (nextBtn) nextBtn.textContent = i18n('continue')
+      if (summaryBtn) summaryBtn.textContent = i18n('summary')
+      
+      // Step indicator
+      if (this.currentStep && this.currentWorkflow?.length) {
+        this.panel.updateProgress(this.currentStep, this.currentWorkflow.length)
+      }
+      
+      // Body content re-render without repositioning/clearing highlights
+      const step = this.currentWorkflow?.[this.currentStep - 1]
+      if (step && !step.isSummary) {
+        this.renderStepContent(step)
+      }
+      
+      console.log('[Keepnet] UI language refreshed for:', newLang)
+    } catch (e) {
+      console.warn('[Keepnet] updateUILanguage error:', e)
+    }
+  }
+  
   async init() {
     try {
       console.log("[Keepnet] Initializing assistant...")
@@ -4561,6 +4597,18 @@ class KeepnetAssistant {
       })
       console.log('[Keepnet] ✅ Summary button handler attached')
       console.log('[Keepnet] ✅✅✅ ALL BUTTON HANDLERS ATTACHED SUCCESSFULLY!')
+      
+      // Language selector dynamic change (no reload)
+      const langSelector = document.getElementById('keepnet-language-selector')
+      if (langSelector) {
+        langSelector.value = CURRENT_LANGUAGE
+        langSelector.addEventListener('change', async (e) => {
+          const newLang = e.target.value
+          console.log('[Keepnet] Language selector changed to:', newLang)
+          await changeLanguage(newLang) // this will call assistant.updateUILanguage internally
+        })
+        console.log('[Keepnet] Language selector handler attached')
+      }
     }, 500)
   }
   
