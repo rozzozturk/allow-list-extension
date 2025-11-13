@@ -4162,7 +4162,8 @@ class KeepnetAssistant {
       this.screenshots = new ScreenshotManager()
       await this.screenshots.init()
       
-      // Attach button handlers
+      // ÖNEMLİ: Button handler'ları BURADA attach et
+      console.log('[Keepnet] Calling attachButtonHandlers()...')
       this.attachButtonHandlers()
       
       // Global fonksiyonları tanımla (summary ekranı için)
@@ -4486,133 +4487,80 @@ class KeepnetAssistant {
   }
   
   attachButtonHandlers() {
-    // setTimeout ile bekle ki DOM hazır olsun
+    console.log('[Keepnet] attachButtonHandlers() called')
+    // DOM tam hazır olmayabilir, biraz bekleyip tekrar dene
     setTimeout(() => {
+      console.log('[Keepnet] Looking for buttons...')
       const nextBtn = document.getElementById('keepnet-next-btn')
       const prevBtn = document.getElementById('keepnet-prev-btn')
       const summaryBtn = document.getElementById('keepnet-summary-btn')
       
-      if (nextBtn) {
-        nextBtn.onclick = (e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          e.stopImmediatePropagation()
-          
-          console.log("[Keepnet] Next button clicked")
-          console.log("[Keepnet] Current workflow:", this.workflowName)
-          
-          // Workflow 4-6 için popup kapanma koruması
-          const isWorkflow4To6 = ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(this.workflowName)
-          if (isWorkflow4To6) {
-            console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure on next step`)
-            
-            // Log next button click (NOT a closure reason - just tracking)
-            this.panel?.logPopupClosureReason('nextBtn', this.workflowName, {
-              buttonId: 'keepnet-next-btn',
-              currentStep: this.currentStep,
-              totalSteps: this.currentWorkflow.length,
-              note: 'Next button click - popup should NOT close'
-            })
-            
-            // Microsoft Exchange form'unun açık olduğunu kontrol et
-            const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
-            if (exchangeForm) {
-              console.log("[Keepnet] Exchange form detected - maintaining focus")
-              // Form'a focus'u geri ver
-              setTimeout(() => {
-                if (exchangeForm && typeof exchangeForm.focus === 'function') {
-                  exchangeForm.focus()
-                }
-              }, 50)
-            }
-          }
-          
+      console.log('[Keepnet] Button search results:', {
+        nextBtn: !!nextBtn,
+        prevBtn: !!prevBtn,
+        summaryBtn: !!summaryBtn,
+        footer: !!document.getElementById('keepnet-panel-footer')
+      })
+      
+      if (!nextBtn || !prevBtn || !summaryBtn) {
+        console.error('[Keepnet] ❌ BUTTONS NOT FOUND! Retrying in 500ms...')
+        setTimeout(() => this.attachButtonHandlers(), 500)
+        return
+      }
+      
+      // NEXT
+      console.log('[Keepnet] Attaching Next button handler...')
+      const newNextBtn = nextBtn.cloneNode(true)
+      nextBtn.parentNode.replaceChild(newNextBtn, nextBtn)
+      newNextBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('[Keepnet] ✅ NEXT BUTTON CLICKED!')
+        console.log('[Keepnet] Current workflow:', this.workflowName)
+        try {
           this.nextStep()
+        } catch (err) {
+          console.error('[Keepnet] nextStep error:', err)
+          alert('Hata: ' + (err?.message || err))
         }
-      }
+      })
+      console.log('[Keepnet] ✅ Next button handler attached')
       
-      if (prevBtn) {
-        prevBtn.onclick = (e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          e.stopImmediatePropagation()
-          
-          console.log("[Keepnet] Prev button clicked")
-          console.log("[Keepnet] Current workflow:", this.workflowName)
-          
-          // Workflow 4-6 için popup kapanma koruması
-          const isWorkflow4To6 = ['WORKFLOW_4', 'WORKFLOW_5', 'WORKFLOW_6'].includes(this.workflowName)
-          if (isWorkflow4To6) {
-            console.log(`[Keepnet] Workflow ${this.workflowName} - preventing popup closure on prev step`)
-            
-            // Log prev button click (NOT a closure reason - just tracking)
-            this.panel?.logPopupClosureReason('prevBtn', this.workflowName, {
-              buttonId: 'keepnet-prev-btn',
-              currentStep: this.currentStep,
-              totalSteps: this.currentWorkflow.length,
-              note: 'Previous button click - popup should NOT close'
-            })
-            
-            // Microsoft Exchange form'unun açık olduğunu kontrol et
-            const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
-            if (exchangeForm) {
-              console.log("[Keepnet] Exchange form detected - maintaining focus")
-              // Form'a focus'u geri ver
-              setTimeout(() => {
-                if (exchangeForm && typeof exchangeForm.focus === 'function') {
-                  exchangeForm.focus()
-                }
-              }, 50)
-            }
-          }
-          
+      // PREVIOUS
+      console.log('[Keepnet] Attaching Previous button handler...')
+      const newPrevBtn = prevBtn.cloneNode(true)
+      prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn)
+      newPrevBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('[Keepnet] ✅ PREVIOUS BUTTON CLICKED!')
+        try {
           this.prevStep()
+        } catch (err) {
+          console.error('[Keepnet] prevStep error:', err)
+          alert('Hata: ' + (err?.message || err))
         }
-      }
+      })
+      console.log('[Keepnet] ✅ Previous button handler attached')
       
-      if (summaryBtn) {
-        summaryBtn.onclick = (e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          console.log("[Keepnet] Summary button clicked - jumping to summary")
+      // SUMMARY
+      console.log('[Keepnet] Attaching Summary button handler...')
+      const newSummaryBtn = summaryBtn.cloneNode(true)
+      summaryBtn.parentNode.replaceChild(newSummaryBtn, summaryBtn)
+      newSummaryBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('[Keepnet] ✅ SUMMARY BUTTON CLICKED!')
+        try {
           this.showSummary()
+        } catch (err) {
+          console.error('[Keepnet] showSummary error:', err)
+          alert('Hata: ' + (err?.message || err))
         }
-      }
-      
-      // Language selector handler
-      const langSelector = document.getElementById('keepnet-language-selector')
-      if (langSelector) {
-        langSelector.value = CURRENT_LANGUAGE
-        langSelector.addEventListener('change', async (e) => {
-          const newLang = e.target.value
-          console.log('[Keepnet] Language selector changed to:', newLang)
-          await changeLanguage(newLang)
-          
-          // Dil değiştiğinde footer butonlarını güncelle
-          const footerPrevBtn = document.getElementById('keepnet-prev-btn')
-          const footerNextBtn = document.getElementById('keepnet-next-btn')
-          const footerSummaryBtn = document.getElementById('keepnet-summary-btn')
-          
-          if (footerPrevBtn) {
-            footerPrevBtn.textContent = i18n('previous')
-          }
-          if (footerNextBtn) {
-            footerNextBtn.textContent = i18n('continue')
-          }
-          if (footerSummaryBtn) {
-            footerSummaryBtn.textContent = i18n('summary')
-          }
-          
-          // Re-render current step with new language
-          if (this.currentStep > 0) {
-            await this.executeStep(this.currentStep)
-          }
-        })
-        console.log('[Keepnet] Language selector handler attached')
-      }
-      
-      console.log("[Keepnet] Button handlers attached")
-    }, 100)
+      })
+      console.log('[Keepnet] ✅ Summary button handler attached')
+      console.log('[Keepnet] ✅✅✅ ALL BUTTON HANDLERS ATTACHED SUCCESSFULLY!')
+    }, 500)
   }
   
   async executeStep(stepNum, customSteps = null) {
