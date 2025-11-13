@@ -4208,6 +4208,11 @@ class KeepnetAssistant {
       this.screenshots = new ScreenshotManager()
       await this.screenshots.init()
       
+      // Global reference for language updates and diagnostics
+      try {
+        window.assistant = this
+      } catch (e) {}
+      
       // ÖNEMLİ: Button handler'ları BURADA attach et
       console.log('[Keepnet] Calling attachButtonHandlers()...')
       this.attachButtonHandlers()
