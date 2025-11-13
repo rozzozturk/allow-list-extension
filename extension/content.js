@@ -4605,23 +4605,33 @@ class KeepnetAssistant {
       console.log('[Keepnet] ✅✅✅ ALL BUTTON HANDLERS ATTACHED SUCCESSFULLY!')
       
       // Language selector dynamic change (no reload)
+      this.attachLanguageChangeHandler()
+    }, 500)
+  }
+  
+  attachLanguageChangeHandler() {
       const langSelector = document.getElementById('keepnet-language-selector')
-      if (langSelector) {
-        langSelector.value = CURRENT_LANGUAGE
-        langSelector.addEventListener('change', async (e) => {
+    if (!langSelector) {
+      console.warn('[Keepnet] Language selector not found for handler attachment')
+      return
+    }
+    
+    // Önceki dinleyicileri kaldırmak için clone tekniği
+    const cloned = langSelector.cloneNode(true)
+    langSelector.parentNode.replaceChild(cloned, langSelector)
+    
+    cloned.value = CURRENT_LANGUAGE
+    cloned.addEventListener('change', async (e) => {
           const newLang = e.target.value
           console.log('[Keepnet] Language selector changed to:', newLang)
-          
-          // Kullanıcının fare takılmasını önlemek için select'i blur et
-          if (typeof langSelector.blur === 'function') {
-            langSelector.blur()
-          }
-          
-          await changeLanguage(newLang) // this will call assistant.updateUILanguage internally
-        })
-        console.log('[Keepnet] Language selector handler attached')
+      
+      if (typeof cloned.blur === 'function') {
+        cloned.blur()
       }
-    }, 500)
+      
+      await changeLanguage(newLang)
+    })
+        console.log('[Keepnet] Language selector handler attached')
   }
   
   async executeStep(stepNum, customSteps = null) {
