@@ -3601,6 +3601,9 @@ class FloatingPanel {
     // Dragging
     this.header.addEventListener('mousedown', (e) => {
       if (e.target.id === 'keepnet-close-btn') return
+      // Dil seçim dropdown'ı tıklanıyorsa sürüklemeyi başlatma
+      const inLangSelector = (e.target && (e.target.id === 'keepnet-language-selector' || (e.target.closest && e.target.closest('#keepnet-language-selector'))))
+      if (inLangSelector) return
       if (!this.isDraggingEnabled) return  // Dragging devre dışıysa çık
       this.isDragging = true
       this.dragOffset = {
@@ -3662,6 +3665,16 @@ class FloatingPanel {
         const currentLang = result.keepnet_language || CURRENT_LANGUAGE || 'tr'
         langSelector.value = currentLang
         console.log("[Keepnet] Current language loaded:", currentLang)
+      })
+      
+      // Dropdown fokuslandığında sürüklemeyi geçici kapat, bırakıldığında aç
+      langSelector.addEventListener('focus', () => {
+        this.isDraggingEnabled = false
+        this.header.style.cursor = 'default'
+      })
+      langSelector.addEventListener('blur', () => {
+        this.isDraggingEnabled = true
+        this.header.style.cursor = 'move'
       })
     }
   }
