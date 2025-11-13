@@ -34,8 +34,8 @@ const MESSAGES = {
     continue: 'Devam',
     previous: 'Önceki',
     summary: 'Özet',
-    summaryReport: '📊 Özet Rapor',
-    goToPage: '🌐 Sayfaya Git',
+    summaryReport: 'Özet Rapor',
+    goToPage: 'Sayfaya Git',
     copyAll: 'Tümünü Kopyala',
     copied: 'Kopyalandı!',
     error: 'Hata',
@@ -62,7 +62,7 @@ const MESSAGES = {
     workflowStep10Description: 'Bu URL\'leri girebilirsiniz:',
     workflowStep11Title: 'Kaydet',
     workflowStep11Description: 'Değişiklikleri kaydedin',
-    workflowStep12Title: 'Tamamlandı! ✅',
+    workflowStep12Title: 'Tamamlandı!',
     workflowStep12Description: 'Tüm adımlar başarıyla tamamlandı',
     congratsTitle: 'Tebrikler! Tüm Adımları Tamamladınız!',
     congratsDesc: 'Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve<br>güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini<br>başarıyla yapılandırdınız!',
@@ -141,14 +141,14 @@ const MESSAGES = {
     continueToWorkflow4: 'Devam Et (Workflow 4: Spam Filter Bypass)',
     continueToWorkflow5: 'Devam Et (Workflow 5: ATP Link Bypass)',
     continueToWorkflow6: 'Devam Et (Workflow 6: ATP Attachment Bypass)',
-    allWorkflowsCompleted: '🎊 Tebrikler! Tüm Workflow\'lar Tamamlandı',
+    allWorkflowsCompleted: 'Tebrikler! Tüm Workflow\'lar Tamamlandı',
     // Summary
     congratulations: 'Tebrikler! Tüm Adımları Tamamladınız!',
     summaryDescription: 'Bu adımlar ile Office 365 ortamında IP adreslerini allow list\'e eklediniz ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!',
     // Timer
     timeForThisStep: 'Bu adım için süreniz',
-    timeUp: '⏰ Süre doldu! Lütfen devam edin.',
-    timeUpReady: '⏰ Süre doldu! Hazır olduğunuzda Continue\'ya basın.',
+    timeUp: 'Süre doldu! Lütfen devam edin.',
+    timeUpReady: 'Süre doldu! Hazır olduğunuzda Continue\'ya basın.',
     // IP/Domain
     whiteListIPs: 'Allow List IP Adresleri',
     domainList: 'Domain Listesi',
@@ -173,7 +173,7 @@ const MESSAGES = {
     antispamStep6Description: '"Turn on safe list" checkbox\'ını işaretleyin',
     antispamStep7Title: 'Kaydet',
     antispamStep7Description: 'Save (Kaydet) butonuna tıklayarak işlemi tamamlayın',
-    antispamSummaryTitle: 'Tamamlandı! ✅',
+    antispamSummaryTitle: 'Tamamlandı!',
     antispamSummaryDescription: 'Anti-Spam yapılandırması başarıyla tamamlandı',
     // Workflow 3 - Safe Links Steps
     safelinksStep1Title: 'Security Center',
@@ -202,7 +202,7 @@ const MESSAGES = {
     safelinksStep12Description: 'Next butonuna tıklayın',
     safelinksStep13Title: 'Submit',
     safelinksStep13Description: 'Submit diyerek işlemi tamamlayın',
-    safelinksSummaryTitle: 'Tamamlandı! ✅',
+    safelinksSummaryTitle: 'Tamamlandı!',
     safelinksSummaryDescription: 'Safe Links yapılandırması tamamlandı. Birkaç saat içinde etkili olacaktır.',
     // Safe Links License Messages
     safelinksLicenseInfoTitle: 'Bilgilendirme: Safe Links Özelliği için Gerekli Lisanslar',
@@ -261,7 +261,7 @@ const MESSAGES = {
     spambypassStep23Description: '23) Tekrar Next butonuna basın.',
     spambypassStep24Title: 'Finish',
     spambypassStep24Description: '24) Finish butonuna basın.',
-    spambypassSummaryTitle: 'Tamamlandı! ✅',
+    spambypassSummaryTitle: 'Tamamlandı!',
     spambypassSummaryDescription: 'Spam Filter Bypass kuralı başarıyla oluşturuldu. Kuralın durumunun enabled olduğundan emin olun.',
     // Workflow 5 - ATP Link Bypass Steps
     atplinkStep1Title: 'Başlangıç Bilgisi',
@@ -302,7 +302,7 @@ const MESSAGES = {
     atplinkStep18Description: '18) Tekrar Next butonuna basın.',
     atplinkStep19Title: 'Finish',
     atplinkStep19Description: '19) Finish butonuna basın.',
-    atplinkSummaryTitle: 'ATP Link Bypass Tamamlandı! ✅',
+    atplinkSummaryTitle: 'ATP Link Bypass Tamamlandı!',
     atplinkSummaryDescription: 'ATP Link Bypass kuralı başarıyla oluşturuldu. Şimdi Workflow 6\'ya (ATP Attachment Bypass) geçiliyor...',
     // Workflow 6 - ATP Attachment Bypass Steps
     atpattachStep1Title: 'Başlangıç Bilgisi',
@@ -341,7 +341,7 @@ const MESSAGES = {
     atpattachStep18Description: '18) Tekrar Next butonuna basın.',
     atpattachStep19Title: 'Finish',
     atpattachStep19Description: '19) Finish butonuna basın.',
-    atpattachSummaryTitle: '🎊 Tebrikler! Tüm Adımlar Bitti!',
+    atpattachSummaryTitle: 'Tebrikler! Tüm Adımlar Bitti!',
     atpattachSummaryDescription: 'Tüm workflow\'lar başarıyla tamamlandı! Office 365 ortamında IP adreslerini allow list\'e eklediniz ve güvenlik simülasyonları, spam filtreleme, ATP Link ve ATP Attachment özelliklerini başarıyla yapılandırdınız!',
   },
   en: {
@@ -352,8 +352,8 @@ const MESSAGES = {
     continue: 'Continue',
     previous: 'Previous',
     summary: 'Summary',
-    summaryReport: '📊 Summary Report',
-    goToPage: '🌐 Go to Page',
+    summaryReport: 'Summary Report',
+    goToPage: 'Go to Page',
     copyAll: 'Copy All',
     copied: 'Copied!',
     error: 'Error',
@@ -380,7 +380,7 @@ const MESSAGES = {
     workflowStep10Description: 'You can enter these URLs:',
     workflowStep11Title: 'Save',
     workflowStep11Description: 'Save the changes',
-    workflowStep12Title: 'Completed! ✅',
+    workflowStep12Title: 'Completed!',
     workflowStep12Description: 'All steps successfully completed',
     congratsTitle: 'Congratulations! You\'ve Completed All Steps!',
     congratsDesc: 'With these steps, you\'ve successfully added IP addresses to your Office 365 allow list and<br>configured security simulations, spam filtering, and Advanced Threat Protection (ATP) features!',
@@ -459,14 +459,14 @@ const MESSAGES = {
     continueToWorkflow4: 'Continue (Workflow 4: Spam Filter Bypass)',
     continueToWorkflow5: 'Continue (Workflow 5: ATP Link Bypass)',
     continueToWorkflow6: 'Continue (Workflow 6: ATP Attachment Bypass)',
-    allWorkflowsCompleted: '🎊 Congratulations! All Workflows Completed',
+    allWorkflowsCompleted: 'Congratulations! All Workflows Completed',
     // Summary
     congratulations: 'Congratulations! You Have Completed All Steps!',
     summaryDescription: 'With these steps, you have added IP addresses to your Office 365 allow list and successfully configured security simulations, spam filtering, and Advanced Threat Protection (ATP) features!',
     // Timer
     timeForThisStep: 'Time for this step',
-    timeUp: '⏰ Time is up! Please continue.',
-    timeUpReady: '⏰ Time is up! Click Continue when ready.',
+    timeUp: 'Time is up! Please continue.',
+    timeUpReady: 'Time is up! Click Continue when ready.',
     // IP/Domain
     whiteListIPs: 'Allow List IP Addresses',
     domainList: 'Domain List',
@@ -491,7 +491,7 @@ const MESSAGES = {
     antispamStep6Description: 'Check the "Turn on safe list" checkbox',
     antispamStep7Title: 'Save',
     antispamStep7Description: 'Complete the process by clicking Save button',
-    antispamSummaryTitle: 'Completed! ✅',
+    antispamSummaryTitle: 'Completed!',
     antispamSummaryDescription: 'Anti-Spam configuration successfully completed',
     // Workflow 3 - Safe Links Steps
     safelinksStep1Title: 'Security Center',
@@ -520,7 +520,7 @@ const MESSAGES = {
     safelinksStep12Description: 'Click on Next button',
     safelinksStep13Title: 'Submit',
     safelinksStep13Description: 'Complete the process by clicking Submit',
-    safelinksSummaryTitle: 'Completed! ✅',
+    safelinksSummaryTitle: 'Completed!',
     safelinksSummaryDescription: 'Safe Links configuration completed. It will be effective within a few hours.',
     // Safe Links License Messages
     safelinksLicenseInfoTitle: 'Information: Required Licenses for Safe Links Feature',
@@ -579,7 +579,7 @@ const MESSAGES = {
     spambypassStep23Description: '23) Click Next button again.',
     spambypassStep24Title: 'Finish',
     spambypassStep24Description: '24) Click Finish button.',
-    spambypassSummaryTitle: 'Completed! ✅',
+    spambypassSummaryTitle: 'Completed!',
     spambypassSummaryDescription: 'Spam Filter Bypass rule successfully created. Make sure the rule status is enabled.',
     // Workflow 5 - ATP Link Bypass Steps
     atplinkStep1Title: 'Getting Started',
@@ -620,7 +620,7 @@ const MESSAGES = {
     atplinkStep18Description: '18) Click Next button again.',
     atplinkStep19Title: 'Finish',
     atplinkStep19Description: '19) Click Finish button.',
-    atplinkSummaryTitle: 'ATP Link Bypass Completed! ✅',
+    atplinkSummaryTitle: 'ATP Link Bypass Completed!',
     atplinkSummaryDescription: 'ATP Link Bypass rule successfully created. Now proceeding to Workflow 6 (ATP Attachment Bypass)...',
     // Workflow 6 - ATP Attachment Bypass Steps
     atpattachStep1Title: 'Getting Started',
@@ -659,7 +659,7 @@ const MESSAGES = {
     atpattachStep18Description: '18) Click Next button again.',
     atpattachStep19Title: 'Finish',
     atpattachStep19Description: '19) Click Finish button.',
-    atpattachSummaryTitle: '🎊 Congratulations! All Steps Completed!',
+    atpattachSummaryTitle: 'Congratulations! All Steps Completed!',
     atpattachSummaryDescription: 'All workflows successfully completed! You have added IP addresses to your Office 365 allow list and successfully configured security simulations, spam filtering, ATP Link and ATP Attachment features!',
   }
 }
@@ -4635,7 +4635,7 @@ class KeepnetAssistant {
       
       // Biraz bekle ki DOM temizlensin
       await Utils.sleep(100)
-      console.log(`[Keepnet] ✅ Cleaned, now executing step ${stepNum}`)
+      console.log(`[Keepnet] Cleaned, now executing step ${stepNum}`)
       
       console.log(`[Keepnet] 📍 executeStep called: step=${stepNum}, workflow=${this.workflowName}`)
       
@@ -5306,7 +5306,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
               font-size: 12px;
               border: 1px solid rgba(74, 158, 255, 0.3);
               flex-shrink: 0;
-            ">🌐</div>
+            "></div>
             <div style="
               font-size: 11px;
               font-weight: 700;
@@ -5383,7 +5383,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       html += `
         <div style="background: #f9fafb; border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
           <div style="font-size: 14px; font-weight: 600; color: #1e40af; margin-bottom: 12px;">
-            📋 Domain Listesi (${domains.length} domain)
+            Domain Listesi (${domains.length} domain)
           </div>
           <div style="background: white; border-radius: 8px; padding: 12px; max-height: 200px; overflow-y: auto; margin-bottom: 12px;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px; font-family: monospace; font-size: 12px;">
@@ -5428,7 +5428,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
               font-size: 13px;
               border: 1px solid rgba(74, 158, 255, 0.3);
               flex-shrink: 0;
-            ">📌</div>
+            "></div>
             <div style="
               font-size: 12px;
               font-weight: 700;
@@ -5509,7 +5509,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
               font-size: 13px;
               border: 1px solid rgba(74, 158, 255, 0.3);
               flex-shrink: 0;
-            ">📌</div>
+            "></div>
             <div style="
               font-size: 12px;
               font-weight: 700;
@@ -5590,7 +5590,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
               font-size: 12px;
               border: 1px solid rgba(74, 158, 255, 0.3);
               flex-shrink: 0;
-            ">📌</div>
+            "></div>
             <div style="
               font-size: 11px;
               font-weight: 700;
@@ -6913,7 +6913,7 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 setInterval(() => {
   const panel = document.querySelector('#keepnet-floating-panel')
   if (panel) {
-    console.log("[Keepnet] ✅ Panel exists! Display:", panel.style.display, "Size:", panel.offsetWidth, "x", panel.offsetHeight)
+    console.log("[Keepnet] Panel exists! Display:", panel.style.display, "Size:", panel.offsetWidth, "x", panel.offsetHeight)
   } else {
     console.log("[Keepnet] ❌ Panel NOT found in DOM!")
   }
