@@ -3324,7 +3324,7 @@ class AutoClickEngine {
       this.timeout = null
     }
     if (this.countdown) {
-      clearInterval(this.countdown)
+      window.clearInterval(this.countdown)
       this.countdown = null
     }
   }
@@ -4171,7 +4171,7 @@ class KeepnetAssistant {
       this.setupGlobalFunctions()
       
       // Güvenlik ağı: Eski highlight'ları sürekli kontrol et ve temizle
-      this.highlightCleaner = setInterval(() => {
+      this.highlightCleaner = window.setInterval(() => {
         try {
           const allHighlighted = document.querySelectorAll('.keepnet-highlight')
           const allTooltips = document.querySelectorAll('.keepnet-tooltip')
@@ -4201,7 +4201,7 @@ class KeepnetAssistant {
       // Cleanup fonksiyonu
       this.cleanup = () => {
         if (this.highlightCleaner) {
-          clearInterval(this.highlightCleaner)
+          window.clearInterval(this.highlightCleaner)
           this.highlightCleaner = null
         }
         this.clearHighlight()
@@ -4803,7 +4803,7 @@ class KeepnetAssistant {
         let remainingTime = step.manualTimer / 1000
         const totalTime = step.manualTimer / 1000
         
-        const timerInterval = setInterval(() => {
+      const timerInterval = window.setInterval(() => {
           remainingTime--
           
           // Timer text güncelle
@@ -4843,7 +4843,7 @@ class KeepnetAssistant {
           }
           
           if (remainingTime <= 0) {
-            clearInterval(timerInterval)
+            window.clearInterval(timerInterval)
             this.currentTimerInterval = null
             console.log(`[Keepnet] Manual timer finished for step ${step.id}`)
             
@@ -4966,12 +4966,12 @@ ${i18n(step.licenseCheck.skipMessage)}`)
             let safeLinksFound = false
             
             // 15 saniye boyunca Safe Links elementini kontrol et
-            const checkInterval = setInterval(() => {
+          const checkInterval = window.setInterval(() => {
               const safeLinksElement = document.querySelector('a:contains("Safe Links"), a[href*="safelinks"], [aria-label*="Safe Links"]')
               if (safeLinksElement) {
                 console.log("[Keepnet] Safe Links element found! Continuing with current step.")
                 safeLinksFound = true
-                clearInterval(checkInterval)
+            window.clearInterval(checkInterval)
                 // Element bulundu, normal akışa devam et
                 this.highlightElement(safeLinksElement, i18n(step.tooltip))
                 
@@ -6089,7 +6089,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
   startRealTimeValidation(step) {
     this.stopRealTimeValidation()
     
-    this.validationInterval = setInterval(async () => {
+    this.validationInterval = window.setInterval(async () => {
       const isValid = await this.validateStep(step)
       
       // Step 8 için IP validation mesajları kaldırıldı
@@ -6176,7 +6176,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       autoAdvanceTimer = null
     }
     if (this.currentTimerInterval) {
-      clearInterval(this.currentTimerInterval)
+      window.clearInterval(this.currentTimerInterval)
       this.currentTimerInterval = null
     }
     
@@ -6232,8 +6232,8 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       clearTimeout(autoAdvanceTimer)
       autoAdvanceTimer = null
     }
-    if (this.currentTimerInterval) {
-      clearInterval(this.currentTimerInterval)
+      if (this.currentTimerInterval) {
+        window.clearInterval(this.currentTimerInterval)
       this.currentTimerInterval = null
     }
     
@@ -6910,7 +6910,7 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 }
 
 // TEST: Panel var mı kontrol et (10 saniyede bir)
-setInterval(() => {
+window.setInterval(() => {
   const panel = document.querySelector('#keepnet-floating-panel')
   if (panel) {
     console.log("[Keepnet] Panel exists! Display:", panel.style.display, "Size:", panel.offsetWidth, "x", panel.offsetHeight)
