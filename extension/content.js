@@ -4074,6 +4074,10 @@ class KeepnetAssistant {
       if (titleEl) titleEl.textContent = i18n('assistantTitle')
       if (subtitleEl) subtitleEl.textContent = i18n('assistantSubtitle')
       
+      // Language selector value
+      const langSelector = document.getElementById('keepnet-language-selector')
+      if (langSelector) langSelector.value = CURRENT_LANGUAGE
+      
       // Footer buttons
       const prevBtn = document.getElementById('keepnet-prev-btn')
       const nextBtn = document.getElementById('keepnet-next-btn')
@@ -4091,6 +4095,11 @@ class KeepnetAssistant {
       const step = this.currentWorkflow?.[this.currentStep - 1]
       if (step && !step.isSummary) {
         this.renderStepContent(step)
+      }
+      
+      // Re-apply panel coordinates to avoid any drift after DOM changes
+      if (this.panel && typeof this.panel.updatePosition === 'function') {
+        this.panel.updatePosition()
       }
       
       console.log('[Keepnet] UI language refreshed for:', newLang)
