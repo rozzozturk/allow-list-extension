@@ -3734,12 +3734,10 @@ class FloatingPanel {
 
     // Panel içindeki tıklamalarda balonlamayı durdurarak sadece panel içi davranışları koru
     const stop = (e) => {
+      // Sadece bubbling aşamasında durdur; hedef üzerindeki handler'lar çalışsın
       e.stopPropagation()
-      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation()
     }
     ;['click','mousedown','mouseup','pointerdown','pointerup','touchstart','touchend'].forEach(evt => {
-      // Capture ve bubble fazlarında da durdur
-      keepnetPanel.addEventListener(evt, stop, true)
       keepnetPanel.addEventListener(evt, stop, false)
     })
 
