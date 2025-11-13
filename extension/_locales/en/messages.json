@@ -52,7 +52,7 @@
     "description": "Congratulations title"
   },
   "congratsDesc": {
-    "message": "With these steps, you've successfully whitelisted IP addresses in your Office 365 environment and configured security simulations, spam filtering, and Advanced Threat Protection (ATP) features!",
+    "message": "With these steps, you've successfully added IP addresses to your Office 365 allow list and configured security simulations, spam filtering, and Advanced Threat Protection (ATP) features!",
     "description": "Congratulations description"
   },
   "workflowsCompleted": {

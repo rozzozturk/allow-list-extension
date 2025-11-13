@@ -1,6 +1,6 @@
-# Keepnet Office 365 White List Asistanı v3.0
+# Keepnet Office 365 Allow List Asistanı v3.0
 
-**Müşterilere Office 365'te Keepnet phishing simülasyonu white list yapılandırmasını adım adım öğreten, gerçek zamanlı doğrulama yapan ve kanıt toplayan interaktif Chrome Extension.**
+**Müşterilere Office 365'te Keepnet phishing simülasyonu allow list yapılandırmasını adım adım öğreten, gerçek zamanlı doğrulama yapan ve kanıt toplayan interaktif Chrome Extension.**
 
 ---
 

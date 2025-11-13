@@ -27,7 +27,7 @@
         "id": "advanced_delivery",
         "site": "security.microsoft.com",
         "name": "Third-party Phishing Simulations (Advanced Delivery)",
-        "description": "PDF Sayfa 4-5: Advanced delivery özelliği ile white list yapılandırması",
+        "description": "PDF Sayfa 4-5: Advanced delivery özelliği ile allow list yapılandırması",
         "steps": [
           {
             "id": 1,
@@ -162,7 +162,7 @@
         "id": "connection_filter",
         "site": "security.microsoft.com",
         "name": "Threat Policies - Connection Filter (Anti-Spam)",
-        "description": "PDF Sayfa 5-6: Connection Filter ile IP white list yapılandırması",
+        "description": "PDF Sayfa 5-6: Connection Filter ile IP allow list yapılandırması",
         "steps": [
           {
             "id": 10,

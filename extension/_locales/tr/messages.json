@@ -4,7 +4,7 @@
     "description": "Extension name"
   },
   "extensionDescription": {
-    "message": "Office 365'te Keepnet phishing simülasyonları için otomatik allow list yapılandırma asistanı - Akıllı navigasyon, gerçek zamanlı doğrulama ve kanıt toplama",
+    "message": "Office 365'te Keepnet phishing simülasyonları için otomatik allow list asistanı - Akıllı navigasyon ve kanıt toplama",
     "description": "Extension description"
   },
   "extensionTitle": {
@@ -52,7 +52,7 @@
     "description": "Congratulations title"
   },
   "congratsDesc": {
-    "message": "Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!",
+    "message": "Bu adımlar ile Office 365 ortamında IP adreslerini allow list'e eklediniz ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!",
     "description": "Congratulations description"
   },
   "workflowsCompleted": {
