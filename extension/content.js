@@ -29,7 +29,7 @@ const MESSAGES = {
   tr: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
     assistantTitle: 'Keepnet Assistant',
-    assistantSubtitle: 'Kurumsal Güvenlik Yapılandırması',
+    assistantSubtitle: '',
     step: 'Adım',
     of: '/',
     continue: 'Devam',
@@ -348,7 +348,7 @@ const MESSAGES = {
   en: {
     extensionName: 'Keepnet Allow List Assistant for Office 365',
     assistantTitle: 'Keepnet Assistant',
-    assistantSubtitle: 'Enterprise Security Configuration',
+    assistantSubtitle: '',
     step: 'Step',
     of: 'of',
     continue: 'Continue',
@@ -3485,7 +3485,6 @@ class FloatingPanel {
         <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e 0%, #4a9eff 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">K</div>
         <div>
           <div id="keepnet-assistant-title" style="font-size: 14px; font-weight: 600; margin-bottom: 2px;">${i18n('assistantTitle')}</div>
-          <div id="keepnet-subtitle" style="font-size: 11px; opacity: 0.8;">${i18n('assistantSubtitle')}</div>
           <div style="font-size: 11px; opacity: 0.8;" id="keepnet-step-indicator"></div>
         </div>
       </div>
@@ -3595,6 +3594,8 @@ class FloatingPanel {
         this.container.style.visibility = 'visible'
       }
     }, 100)
+
+    // Design demo removed
   }
   
   attachEventListeners() {
@@ -4084,9 +4085,7 @@ class KeepnetAssistant {
     try {
       // Header texts
       const titleEl = document.getElementById('keepnet-assistant-title')
-      const subtitleEl = document.getElementById('keepnet-subtitle')
       if (titleEl) titleEl.textContent = i18n('assistantTitle')
-      if (subtitleEl) subtitleEl.textContent = i18n('assistantSubtitle')
       
       // Language selector value
       const langSelector = document.getElementById('keepnet-language-selector')
@@ -6686,7 +6685,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
             transition: all 0.2s;
             box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
           ">
-            ➡️ ${nextWorkflowText}
+            ${nextWorkflowText}
           </button>
         </div>
       `
@@ -6819,8 +6818,12 @@ ${i18n(step.licenseCheck.skipMessage)}`)
         window.addEventListener('load', resolve, { once: true })
       }
     })
+    
+    // Dark mode removed
   }
 }
+
+// Toasts and design demo removed
 
 /* ========== MESSAGE HANDLERS ========== */
 let assistantInstance = null
