@@ -5210,33 +5210,6 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       `
     }
     
-    // Step 1 Workflow 1 için eski buton (geriye dönük uyumluluk)
-    if (step.id === 1 && step.name === 'step1_home') {
-      html += `
-        <div style="background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(45, 45, 74, 0.8)); border: 2px solid #4a9eff; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-          <div style="font-size: 13px; font-weight: 600; color: #4a9eff; margin-bottom: 8px;">
-            Microsoft Security Center'a git
-          </div>
-          <button id="keepnet-go-to-security-btn" style="
-            width: 100%;
-            background: linear-gradient(135deg, #4a9eff 0%, #5dade2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
-          " onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 8px rgba(124, 58, 237, 0.5)'"
-             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(124, 58, 237, 0.3)'">
-            ${i18n('goToPage')}
-          </button>
-        </div>
-      `
-    }
-    
     // Safe Links lisans bilgilendirmesi için özel bölüm (Workflow 3 step 4)
     if (step.id === 4 && step.name === 'safelinks_step4_safe_links') {
       html += `
@@ -5785,13 +5758,6 @@ ${i18n(step.licenseCheck.skipMessage)}`)
         })
       }
       
-        const goBtn = document.getElementById('keepnet-go-to-security-btn')
-        if (goBtn) {
-          goBtn.addEventListener('click', () => {
-            console.log('[Keepnet] Sayfaya Git clicked')
-            window.location.href = 'https://security.microsoft.com/homepage'
-          })
-        }
       }, 100)
     
     // Copy buttons removed globally
