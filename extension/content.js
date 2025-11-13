@@ -4611,6 +4611,12 @@ class KeepnetAssistant {
         langSelector.addEventListener('change', async (e) => {
           const newLang = e.target.value
           console.log('[Keepnet] Language selector changed to:', newLang)
+          
+          // Kullanıcının fare takılmasını önlemek için select'i blur et
+          if (typeof langSelector.blur === 'function') {
+            langSelector.blur()
+          }
+          
           await changeLanguage(newLang) // this will call assistant.updateUILanguage internally
         })
         console.log('[Keepnet] Language selector handler attached')
