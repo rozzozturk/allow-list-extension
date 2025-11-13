@@ -94,7 +94,7 @@ Console'da şunu ara:
 
 **Beklenen:**
 - ✅ Sol-alt köşede 340x520px panel
-- ✅ Header: "Keepnet White List" + "Adım 1 / 12"
+- ✅ Header: "Keepnet Allow List" + "Adım 1 / 12"
 - ✅ Body: "Security Center Ana Sayfası" açıklaması
 - ✅ Footer: "← Geri" ve "Devam Et →" butonları
 
@@ -297,7 +297,7 @@ Console:
 
 ---
 
-🛡️ **Keepnet White List Asistanı v3.1**
+🛡️ **Keepnet Allow List Asistanı v3.1**
 
 *Sol-alt köşede, tek panel, otomatik tıklama, gerçek zamanlı validation!*
 

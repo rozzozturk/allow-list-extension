@@ -179,9 +179,6 @@ export function AllowListWizard() {
           </div>
           <div>
             <h1 className="text-lg font-bold text-white">Keepnet Assistant</h1>
-            <p className="text-xs text-slate-300">
-              Enterprise Security Configuration
-            </p>
           </div>
         </div>
         <div className="flex items-center gap-2">

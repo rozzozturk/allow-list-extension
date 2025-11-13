@@ -1,242 +1,74 @@
 {
   "extensionName": {
-    "message": "Keepnet Allow List Assistant for Office 365",
-    "description": "Extension adı"
+    "message": "Keepnet Assistant",
+    "description": "Extension name"
   },
   "extensionDescription": {
-    "message": "Office 365'te Keepnet phishing simülasyonları için otomatik allow list yapılandırma asistanı - Akıllı navigasyon, gerçek zamanlı doğrulama ve kanıt toplama",
-    "description": "Extension açıklaması"
+    "message": "Office 365'te Keepnet phishing simülasyonları için otomatik allow list asistanı - Akıllı navigasyon ve kanıt toplama",
+    "description": "Extension description"
   },
   "extensionTitle": {
-    "message": "Keepnet Allow List Assistant - Başlatmak için tıklayın",
+    "message": "Keepnet Assistant - Başlatmak için tıklayın",
     "description": "Extension action title"
   },
   "assistantTitle": {
     "message": "Keepnet Assistant",
-    "description": "Panel başlığı"
+    "description": "Panel title"
   },
   "step": {
     "message": "Adım",
-    "description": "Adım kelimesi"
+    "description": "Step word"
   },
   "of": {
     "message": "/",
-    "description": "Ayırıcı"
-  },
-  "continue": {
-    "message": "Continue",
-    "description": "Devam butonu"
-  },
-  "previous": {
-    "message": "Previous",
-    "description": "Geri butonu"
-  },
-  "summary": {
-    "message": "Summary",
-    "description": "Özet butonu"
-  },
-  "summaryReport": {
-    "message": "📊 Özet Rapor",
-    "description": "Özet rapor başlığı"
-  },
-  "goToPage": {
-    "message": "🌐 Sayfaya Git",
-    "description": "Sayfaya git butonu"
-  },
-  "copyAll": {
-    "message": "Tümünü Kopyala",
-    "description": "Kopyala butonu"
-  },
-  "copied": {
-    "message": "Kopyalandı!",
-    "description": "Kopyalama başarılı mesajı"
-  },
-  "error": {
-    "message": "Hata",
-    "description": "Hata mesajı"
-  },
-  "elementNotFound": {
-    "message": "Element bulunamadı",
-    "description": "Element bulunamadı hatası"
-  },
-  "pleaseComplete": {
-    "message": "Lütfen bu alanı doldurun!",
-    "description": "Alan doldurma uyarısı"
-  },
-  "allScreenshotsSaved": {
-    "message": "Tüm screenshot'lar chrome.storage'da kaydedildi",
-    "description": "Screenshot kayıt mesajı"
+    "description": "Separator"
   },
   "goAndFix": {
     "message": "Git ve Düzelt",
-    "description": "Git ve düzelt butonu"
-  },
-  "continueWorkflow": {
-    "message": "Devam Et",
-    "description": "Workflow devam butonu"
-  },
-  "allWorkflowsCompleted": {
-    "message": "Tüm Workflow'lar Tamamlandı",
-    "description": "Tamamlanma mesajı"
-  },
-  "congratulations": {
-    "message": "Tebrikler! Tüm Adımları Tamamladınız!",
-    "description": "Tebrik mesajı"
-  },
-  "congratulationsDesc": {
-    "message": "Bu adımlar ile Office 365 ortamında IP adreslerini beyaz listeye aldınız ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!",
-    "description": "Tebrik açıklaması"
-  },
-  "safeLinksWarning": {
-    "message": "Safe Links görünmüyorsa:",
-    "description": "Safe Links uyarısı"
-  },
-  "safeLinksWarningDesc": {
-    "message": "Bu adımı atlayabilir ve sonraki adımlara geçebilirsinz.",
-    "description": "Safe Links uyarı açıklaması"
-  },
-  "licenseRequired": {
-    "message": "Bilgilendirme: Safe Links Özelliği için Gerekli Lisanslar",
-    "description": "Lisans bilgilendirmesi"
-  },
-  "licenseRequiredDesc": {
-    "message": "Safe Links özelliği yalnızca aşağıdaki lisanslarla aktif hale gelir:",
-    "description": "Lisans açıklaması"
-  },
-  "workflowStep1Title": {
-    "message": "Security Center Ana Sayfası",
-    "description": "1. adım başlığı"
-  },
-  "workflowStep1Description": {
-    "message": "Microsoft Security Center'da olduğunuzdan emin olun ve devam edin.",
-    "description": "1. adım açıklaması"
-  },
-  "workflowStep2Title": {
-    "message": "E-posta ve İşbirliği",
-    "description": "2. adım başlığı"
-  },
-  "workflowStep2Description": {
-    "message": "E-posta ve işbirliği menüsünü açın",
-    "description": "2. adım açıklaması"
-  },
-  "workflowStep3Title": {
-    "message": "İlkeler ve Kurallar",
-    "description": "3. adım başlığı"
-  },
-  "workflowStep3Description": {
-    "message": "İlkeler ve kurallar sayfasına gidin",
-    "description": "3. adım açıklaması"
-  },
-  "workflowStep4Title": {
-    "message": "Tehdit İlkeleri",
-    "description": "4. adım başlığı"
-  },
-  "workflowStep4Description": {
-    "message": "Tehdit ilkeleri'ne tıklayın",
-    "description": "4. adım açıklaması"
-  },
-  "workflowStep5Title": {
-    "message": "Advanced Delivery",
-    "description": "5. adım başlığı"
-  },
-  "workflowStep5Description": {
-    "message": "Advanced delivery butonuna tıklayın",
-    "description": "5. adım açıklaması"
-  },
-  "workflowStep6Title": {
-    "message": "Phishing Simulation Tab",
-    "description": "6. adım başlığı"
-  },
-  "workflowStep6Description": {
-    "message": "Phishing simulation sekmesine tıklayın",
-    "description": "6. adım açıklaması"
-  },
-  "workflowStep7Title": {
-    "message": "Düzenle Butonu",
-    "description": "7. adım başlığı"
-  },
-  "workflowStep7Description": {
-    "message": "Düzenle butonuna tıklayın",
-    "description": "7. adım açıklaması"
-  },
-  "workflowStep8Title": {
-    "message": "Etki Alanları",
-    "description": "8. adım başlığı"
-  },
-  "workflowStep8Description": {
-    "message": "Bu domainleri girebilirsiniz: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store",
-    "description": "8. adım açıklaması"
-  },
-  "workflowStep9Title": {
-    "message": "IP Adresleri",
-    "description": "9. adım başlığı"
-  },
-  "workflowStep9Description": {
-    "message": "White list IP adreslerini girin",
-    "description": "9. adım açıklaması"
-  },
-  "workflowStep10Title": {
-    "message": "Simülasyon URL'leri",
-    "description": "10. adım başlığı"
-  },
-  "workflowStep10Description": {
-    "message": "Bu domainleri girebilirsiniz: signin-authzone.com, verifycloudaccess.com, akibadem.org, isdestek.org, gartnerpeer.com, global-cloud-llc.com, cloudverification.online, accountaccesses.com, shoppingcenter.site, hesapdogrulama.info, banksecure.info, meetingonline-us.com, digitalsecurelogin.co, secureloginshop.net, encryptedconnections.info, trendyoll.club, kurumsalgiris.com, yoursecuregateway.com, securemygateway.com, hadisendekatil.com, updatemyinformation.com, secure-passchanges.com, swift-intel.com, hepsibureda.com, securely-logout.com, sigortacilarbirligi.com, btyardimmasasi.com, sirketiciduyuru.com, bilgilerimiguncelle.com, securelogout.com, securelinked-in.com, theconnectionsuccess.com, sigortacilikhizmetleri.me, securebankingservices.net, guvenlibankacilik.com, insurance-services.me, btservisleri.com, secureloginonline.net, insan-kaynaklari.me, getaccess.store",
-    "description": "10. adım açıklaması"
-  },
-  "workflowStep11Title": {
-    "message": "Kaydet",
-    "description": "11. adım başlığı"
-  },
-  "workflowStep11Description": {
-    "message": "Değişiklikleri kaydedin",
-    "description": "11. adım açıklaması"
-  },
-  "workflowStep12Title": {
-    "message": "Tamamlandı! ✅",
-    "description": "12. adım başlığı"
-  },
-  "workflowStep12Description": {
-    "message": "Tüm adımlar başarıyla tamamlandı",
-    "description": "12. adım açıklaması"
-  },
-  "clickHere": {
-    "message": "Buraya tıkla",
-    "description": "Tıklama yönlendirmesi"
-  },
-  "validationPassed": {
-    "message": "✓ Doğrulama başarılı",
-    "description": "Doğrulama başarılı mesajı"
-  },
-  "validationFailed": {
-    "message": "✗ Doğrulama başarısız",
-    "description": "Doğrulama başarısız mesajı"
-  },
-  "waiting": {
-    "message": "Bekleniyor...",
-    "description": "Bekleme mesajı"
-  },
-  "loading": {
-    "message": "Yükleniyor...",
-    "description": "Yükleme mesajı"
-  },
-  "completed": {
-    "message": "Tamamlandı",
-    "description": "Tamamlanma durumu"
-  },
-  "failed": {
-    "message": "Başarısız",
-    "description": "Başarısız durumu"
+    "description": "Go and fix button"
   },
   "close": {
     "message": "Kapat",
-    "description": "Kapatma butonu"
+    "description": "Close button"
   },
-  "minimize": {
-    "message": "Küçült",
-    "description": "Küçültme butonu"
+  "understood": {
+    "message": "Anladım",
+    "description": "Got it button"
   },
-  "refresh": {
-    "message": "Yenile",
-    "description": "Yenileme butonu"
+  "completed": {
+    "message": "Tamamlandı",
+    "description": "Completed status"
+  },
+  "inProgress": {
+    "message": "Devam Ediyor",
+    "description": "In progress status"
+  },
+  "summaryReport": {
+    "message": "📊 Özet Rapor",
+    "description": "Summary report title"
+  },
+  "congratsTitle": {
+    "message": "Tebrikler! Tüm Adımları Tamamladınız!",
+    "description": "Congratulations title"
+  },
+  "congratsDesc": {
+    "message": "Bu adımlar ile Office 365 ortamında IP adreslerini allow list'e eklediniz ve güvenlik simülasyonları, spam filtreleme ve tehdit öncesi (ATP) özelliklerini başarıyla yapılandırdınız!",
+    "description": "Congratulations description"
+  },
+  "workflowsCompleted": {
+    "message": "6 Workflow",
+    "description": "Workflows completed count"
+  },
+  "stepsSuccessful": {
+    "message": "62 Adım",
+    "description": "Steps successful count"
+  },
+  "allScreenshotsSaved": {
+    "message": "Tüm screenshot'lar chrome.storage'da kaydedildi",
+    "description": "Screenshot save message"
+  },
+  "screenshotSaved": {
+    "message": "Screenshot kaydedildi",
+    "description": "Screenshot saved"
   }
 }
