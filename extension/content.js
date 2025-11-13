@@ -4064,6 +4064,7 @@ class KeepnetAssistant {
     this.currentWorkflow = WORKFLOW_STEPS  // Aktif workflow
     this.workflowName = 'WORKFLOW_1'  // Workflow adı
     this.currentTimerInterval = null  // Manual timer için interval
+    this.lockPanelPosition = false    // Dil değişiminde panel pozisyonunu sabitle
   }
   
   async updateUILanguage(newLang) {
@@ -4086,21 +4087,12 @@ class KeepnetAssistant {
       if (nextBtn) nextBtn.textContent = i18n('continue')
       if (summaryBtn) summaryBtn.textContent = i18n('summary')
       
-      // Step indicator
-      if (this.currentStep && this.currentWorkflow?.length) {
-        this.panel.updateProgress(this.currentStep, this.currentWorkflow.length)
+      // Re-render current step fully but lock panel position to avoid jumps
+      this.lockPanelPosition = true
+      if (this.currentStep > 0) {
+        await this.executeStep(this.currentStep)
       }
-      
-      // Body content re-render without repositioning/clearing highlights
-      const step = this.currentWorkflow?.[this.currentStep - 1]
-      if (step && !step.isSummary) {
-        this.renderStepContent(step)
-      }
-      
-      // Re-apply panel coordinates to avoid any drift after DOM changes
-      if (this.panel && typeof this.panel.updatePosition === 'function') {
-        this.panel.updatePosition()
-      }
+      this.lockPanelPosition = false
       
       console.log('[Keepnet] UI language refreshed for:', newLang)
     } catch (e) {
@@ -4752,42 +4744,41 @@ class KeepnetAssistant {
         return
       }
       
-      // Panel position control
+      // Panel position control (skip if locked during live language switch)
       // ÖNEMLİ: Workflow 1 Step 8-9-10 ve Workflow 2 Step 4-5 kontrolü EN SONDA yapılmalı (override edilmemesi için)
-      
-      if (this.workflowName === 'WORKFLOW_4' && this.currentStep >= 3) {
+      if (!this.lockPanelPosition && this.workflowName === 'WORKFLOW_4' && this.currentStep >= 3) {
         // Workflow 4'te step 3'ten 24'e kadar hep sol tarafta kal (step'lerin kendi panelPosition'ını override et)
         console.log(`[Keepnet] WORKFLOW_4 Panel Override: Step ${this.currentStep} - FORCED LEFT position`)
         this.panel.setPosition('bottom-left')
-      } else if (this.workflowName === 'WORKFLOW_5' && this.currentStep >= 2) {
+      } else if (!this.lockPanelPosition && this.workflowName === 'WORKFLOW_5' && this.currentStep >= 2) {
         // Workflow 5'te step 2'den itibaren hep sol tarafta kal
         console.log(`[Keepnet] WORKFLOW_5 Panel Override: Step ${this.currentStep} - FORCED LEFT position`)
         this.panel.setPosition('bottom-left')
-      } else if (this.workflowName === 'WORKFLOW_6' && this.currentStep >= 2) {
+      } else if (!this.lockPanelPosition && this.workflowName === 'WORKFLOW_6' && this.currentStep >= 2) {
         // Workflow 6'te step 2'den itibaren hep sol tarafta kal
         console.log(`[Keepnet] WORKFLOW_6 Panel Override: Step ${this.currentStep} - FORCED LEFT position`)
         this.panel.setPosition('bottom-left')
-      } else if (this.workflowName === 'WORKFLOW_1' && [8, 9, 10].includes(this.currentStep)) {
+      } else if (!this.lockPanelPosition && this.workflowName === 'WORKFLOW_1' && [8, 9, 10].includes(this.currentStep)) {
         // WORKFLOW 1 Step 8-9-10 için özel panel pozisyonu - formun sol tarafında sabit kal
         // Bu kontrol EN SONDA yapılmalı, diğer kontroller override etmesin
         console.log(`[Keepnet] WORKFLOW_1 Step ${this.currentStep} - Fixing panel position to left side (dragging disabled)`)
         this.panel.setPosition('top-left')
         // Dragging devre dışı - panel sabit kalır
         this.panel.isDraggingEnabled = false
-      } else if (this.workflowName === 'WORKFLOW_2' && [4, 5].includes(this.currentStep)) {
+      } else if (!this.lockPanelPosition && this.workflowName === 'WORKFLOW_2' && [4, 5].includes(this.currentStep)) {
         // WORKFLOW 2 Step 4-5 için özel panel pozisyonu - formun sol tarafında sabit kal
         // Bu kontrol EN SONDA yapılmalı, diğer kontroller override etmesin
         console.log(`[Keepnet] WORKFLOW_2 Step ${this.currentStep} - Fixing panel position to left side (dragging disabled)`)
         this.panel.setPosition('top-left')
         // Dragging devre dışı - panel sabit kalır
         this.panel.isDraggingEnabled = false
-      } else if (step.panelPosition === 'top-left') {
+      } else if (!this.lockPanelPosition && step.panelPosition === 'top-left') {
         console.log(`[Keepnet] Step Panel Position: top-left`)
         this.panel.setPosition('top-left')
-      } else if (step.panelPosition === 'left') {
+      } else if (!this.lockPanelPosition && step.panelPosition === 'left') {
         console.log(`[Keepnet] Step Panel Position: left`)
         this.panel.setPosition('bottom-left')
-      } else {
+      } else if (!this.lockPanelPosition) {
         console.log(`[Keepnet] Default Panel Position: bottom-right`)
         this.panel.setPosition('bottom-right') // default
       }
