@@ -4531,8 +4531,8 @@ class KeepnetAssistant {
       const newPrevBtn = prevBtn.cloneNode(true)
       prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn)
       newPrevBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        e.stopPropagation()
+          e.preventDefault()
+          e.stopPropagation()
         console.log('[Keepnet] ✅ PREVIOUS BUTTON CLICKED!')
         try {
           this.prevStep()
@@ -4548,8 +4548,8 @@ class KeepnetAssistant {
       const newSummaryBtn = summaryBtn.cloneNode(true)
       summaryBtn.parentNode.replaceChild(newSummaryBtn, summaryBtn)
       newSummaryBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        e.stopPropagation()
+          e.preventDefault()
+          e.stopPropagation()
         console.log('[Keepnet] ✅ SUMMARY BUTTON CLICKED!')
         try {
           this.showSummary()
@@ -5783,7 +5783,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       setTimeout(() => {
         if (this.tooltip) {
           this.tooltip.remove()
-          this.tooltip = null
+      this.tooltip = null
         }
       }, 200)
     }
@@ -6867,6 +6867,13 @@ window.setInterval(() => {
 
 /* ==== WF4/5/6 HIZLI GEÇİŞ PATCH ==== */
 (function () {
+  // Fastpass kapalıysa hiçbir şey yapma (WF4/5/6 oto-ileri özelliğini devre dışı bırak)
+  try {
+    if (!(window && window.KEEPNET_FASTPASS === true)) {
+      console.log('[Keepnet] Fastpass disabled - skipping WF4/5/6 acceleration helpers')
+      return
+    }
+  } catch (e) {}
   const AUTO_WF = new Set(['workflow4', 'workflow5', 'workflow6']);
 
   // Basit yardımcılar
