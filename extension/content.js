@@ -6917,7 +6917,7 @@ window.setInterval(() => {
   } else {
     console.log("[Keepnet] ❌ Panel NOT found in DOM!")
   }
-}, 10000)
+}, 10000);
 
 /* ==== WF4/5/6 HIZLI GEÇİŞ PATCH ==== */
 (function () {
