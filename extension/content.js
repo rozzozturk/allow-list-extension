@@ -1001,6 +1001,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'tooltipConnectionFilterCheckbox',
     autoClick: false,
+    disableHighlight: true,
     validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -4843,7 +4844,7 @@ class KeepnetAssistant {
       // Wait a bit for page to settle
       await Utils.sleep(500)
       
-      // Find and highlight target
+      // Find and (optionally) highlight target
       if (step.target) {
         const waitOptions = {
           timeout: step.waitTimeout ?? 10000,
@@ -4854,20 +4855,28 @@ class KeepnetAssistant {
         
         if (element) {
           Utils.scrollToElement(element)
+          
+          // Bazı adımlarda highlight istenmiyor (ör. WF2 Step 2 checkbox)
+          if (!step.disableHighlight) {
           this.highlightElement(element, i18n(step.tooltip))
+          } else {
+            console.log('[Keepnet] Highlight disabled for this step. Waiting for manual user action.')
+          }
           
           // Auto-click?
-          if (step.autoClick) {
+          if (step.autoClick && !step.disableHighlight) {
             this.autoClick.start(element, AUTO_CLICK_TIMEOUT, async () => {
               await this.onElementClicked(step)
             }, this.workflowName)
           }
           
           // Manual click listener
+          if (!step.disableHighlight) {
           element.addEventListener('click', async () => {
             this.autoClick.stop()
             await this.onElementClicked(step)
           }, { once: true })
+          }
           
           // WORKFLOW 4-5-6 için 7 saniye sonra otomatik geçiş - AMA manualTimer varsa veya autoAdvance false ise ÇALIŞMA!
           // WORKFLOW 1 Step 8-9-10 için auto-advance YAPMA (manuel Continue butonu gerekli)
