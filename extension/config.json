@@ -154,7 +154,7 @@
             ],
             "textIncludes": ["Save", "Kaydet"],
             "pdfReference": "Sayfa 5, Step 9",
-            "captureScreenshot": true
+            "captureScreenshot": false
           }
         ]
       },
@@ -216,7 +216,7 @@
             "description": "'Save' ile kaydedin",
             "selectors": ["button:has-text('Save')"],
             "pdfReference": "Sayfa 6, Step 7",
-            "captureScreenshot": true
+            "captureScreenshot": false
           }
         ]
       },
@@ -309,7 +309,7 @@
               "button:has-text('Next')"
             ],
             "pdfReference": "Sayfa 7, Step 9",
-            "captureScreenshot": true
+            "captureScreenshot": false
           }
         ]
       },
@@ -392,7 +392,7 @@
               "button:has-text('Save')"
             ],
             "pdfReference": "Sayfa 8, Step 8-9",
-            "captureScreenshot": true
+            "captureScreenshot": false
           },
           {
             "id": 31,
@@ -442,7 +442,7 @@
               "button:has-text('Save')"
             ],
             "pdfReference": "Sayfa 9, Step 7-8",
-            "captureScreenshot": true
+            "captureScreenshot": false
           },
           {
             "id": 36,
@@ -492,7 +492,7 @@
               "button:has-text('Save')"
             ],
             "pdfReference": "Sayfa 11, Step 7-8",
-            "captureScreenshot": true
+            "captureScreenshot": false
           }
         ]
       },
@@ -524,7 +524,7 @@
             "description": "Teslim edilen e-postaları listeleyin ve detayları kontrol edin",
             "validate": "message_trace_delivered",
             "pdfReference": "Sayfa 12, Step 4-5",
-            "captureScreenshot": true
+            "captureScreenshot": false
           }
         ]
       }

@@ -78,6 +78,8 @@ const MESSAGES = {
     screenshotSaved: 'Screenshot kaydedildi',
     successful: 'Başarılı',
     remainingTime: 'Kalan Süre',
+    saveButton: 'SAVE Butonuna Basın',
+    clickToSave: 'Tıklayarak kaydedin',
     clickHere: 'buraya yazın',
     valueEntered: 'değeri girildi',
     nowSelect: 'Şimdi',
@@ -129,6 +131,21 @@ const MESSAGES = {
     tooltipClickFinish: 'Finish butonuna tıklayın',
     tooltipSubmit: 'Submit butonuna tıklayın',
     tooltipAddRule: '+ Add a rule butonuna tıklayın',
+    tooltipSaveButton: 'Save butonuna tıklayın',
+    tooltipAddAction: '+ (Add action) butonuna tıklayın',
+    tooltipSelectFromDropdown: 'Dropdown\'dan seçeneği seçin',
+    tooltipEnterBypassClutter: 'X-MS-Exchange-Organization-BypassClutter girin',
+    tooltipModifyProperties: 'Modify the message properties seçin',
+    tooltipSetMessageHeader: 'Set a message header seçin',
+    tooltipAddRuleButton: 'Add a rule butonuna tıklayın',
+    tooltipSelectOneDropdown: '"Select one" dropdown\'ını açın',
+    // Validation Messages
+    validationNoDomains: '⚠️ Uyarı: Hiçbir domain girmediniz!\n\nLütfen en az bir domain girin ve tekrar Continue butonuna basın.',
+    validationNoIPs: '⚠️ Uyarı: Hiçbir IP adresi girmediniz!\n\nLütfen en az bir IP adresi girin ve tekrar Continue butonuna basın.',
+    validationNoURLs: '⚠️ Uyarı: Hiçbir URL girmediniz!\n\nLütfen en az bir URL girin ve tekrar Continue butonuna basın.',
+    validationNoRuleName: '⚠️ Uyarı: Kural adı girmediniz!\n\nLütfen bir kural adı girin ve tekrar Continue butonuna basın.',
+    validationNoHeaderName: '⚠️ Uyarı: Header adı girmediniz!\n\nLütfen header adını girin (örn: X-MS-Exchange-Organization-BypassClutter) ve tekrar Continue butonuna basın.',
+    validationNoHeaderValue: '⚠️ Uyarı: Header değeri girmediniz!\n\nLütfen "1" değerini girin ve tekrar Continue butonuna basın.',
     // Workflow isimleri
     workflow1Name: 'Third-Party Phishing Simulations',
     workflow2Name: 'Anti-Spam Politikaları',
@@ -215,7 +232,7 @@ const MESSAGES = {
     safelinksCanSkip: 'Bu adımı atlayabilir ve sonraki adımlara geçebilirsiniz.',
     // Workflow 4 - Spam Filter Bypass Steps
     spambypassStep1Title: 'Başlangıç Bilgisi',
-    spambypassStep1Description: 'Spam Filter Bypass adımı başlıyor. Lütfen aşağıdaki önemli uyarıları okuyunuz.',
+    spambypassStep1Description: 'Spam Filter Bypass adımı başlıyor.',
     spambypassStep2Title: 'Exchange Admin Center',
     spambypassStep2Description: 'Exchange Admin Center Transport Rules sayfasına git.',
     spambypassStep3Title: 'Add a rule',
@@ -231,7 +248,7 @@ const MESSAGES = {
     spambypassStep8Title: 'IP Address Condition',
     spambypassStep8Description: '7) "Select one" dropdown\'ını açın ve "IP address is in any of these ranges or exactly matches" seçeneğini seçin.',
     spambypassStep9Title: 'IP Adreslerini Girin',
-    spambypassStep9Description: '9) IP adreslerini girin. Size 60 saniye verildi.',
+    spambypassStep9Description: '9) IP adreslerini girin ve kaydedin.',
     spambypassStep10Title: 'Do The Following',
     spambypassStep10Description: '10) "Do the following" dropdown\'ını açın.',
     spambypassStep11Title: 'Modify Message Properties',
@@ -253,7 +270,7 @@ const MESSAGES = {
     spambypassStep19Title: 'Enter Text',
     spambypassStep19Description: '19) "Enter text" butonuna tıklayın.',
     spambypassStep20Title: 'BypassClutter Header',
-    spambypassStep20Description: '20) Header name alanına "X-MS-Exchange-Organization-BypassClutter" girin. Size 60 saniye verildi.',
+    spambypassStep20Description: '20) Header name alanına <strong>X-MS-Exchange-Organization-BypassClutter</strong> değerini girin ve kaydet tuşuna basın.',
     spambypassStep21Title: 'Enter Text and Value',
     spambypassStep21Description: '21) "Enter text" butonuna basın ve "1" değerini girin.',
     spambypassStep22Title: 'Next (1)',
@@ -266,7 +283,7 @@ const MESSAGES = {
     spambypassSummaryDescription: 'Spam Filter Bypass kuralı başarıyla oluşturuldu. Kuralın durumunun enabled olduğundan emin olun.',
     // Workflow 5 - ATP Link Bypass Steps
     atplinkStep1Title: 'Başlangıç Bilgisi',
-    atplinkStep1Description: 'ATP Link Bypass adımı başlıyor. Lütfen aşağıdaki önemli uyarıları okuyunuz.',
+    atplinkStep1Description: 'ATP Link Bypass adımı başlıyor.',
     atplinkStep2Title: 'Add a rule',
     atplinkStep2Description: '1) Add a rule butonuna tıklayın.',
     atplinkStep3Title: 'Create a new rule',
@@ -280,7 +297,7 @@ const MESSAGES = {
     atplinkStep7Title: 'IP Address Condition',
     atplinkStep7Description: '6) "Select one" dropdown\'ını açın ve "IP address is in any of these ranges or exactly matches" seçin.',
     atplinkStep8Title: 'IP Adresleri',
-    atplinkStep8Description: '7) IP adreslerini girin ve save butonuna tıklayınız. Size 60 saniye verildi.',
+    atplinkStep8Description: '7) IP adreslerini girin ve save butonuna tıklayınız.',
     atplinkStep9Title: 'Do The Following',
     atplinkStep9Description: '10) "Select one" dropdown\'ını açın.',
     atplinkStep10Title: 'Modify Message Properties',
@@ -292,7 +309,7 @@ const MESSAGES = {
     atplinkStep13Title: 'Enter text (1. Kez)',
     atplinkStep13Description: '13) İlk "Enter text" butonuna tıklayın.',
     atplinkStep14Title: 'Header Name',
-    atplinkStep14Description: '14) Header adı alanına "X-MS-Exchange-Organization-SkipSafeLinksProcessing" yazın. Size 60 saniye verildi.',
+    atplinkStep14Description: '14) Header adı alanına <strong>X-MS-Exchange-Organization-SkipSafeLinksProcessing</strong> yazın ve kaydet tuşuna basın.',
     atplinkStep15Title: 'Enter text (2. Kez)',
     atplinkStep15Description: '15) İkinci "Enter text" butonuna tıklayın.',
     atplinkStep16Title: 'Header Value',
@@ -307,7 +324,7 @@ const MESSAGES = {
     atplinkSummaryDescription: 'ATP Link Bypass kuralı başarıyla oluşturuldu. Şimdi Workflow 6\'ya (ATP Attachment Bypass) geçiliyor...',
     // Workflow 6 - ATP Attachment Bypass Steps
     atpattachStep1Title: 'Başlangıç Bilgisi',
-    atpattachStep1Description: 'ATP Attachment Bypass adımı başlıyor. Lütfen aşağıdaki önemli uyarıları okuyunuz.',
+    atpattachStep1Description: 'ATP Attachment Bypass adımı başlıyor.',
     atpattachStep2Title: 'Add a rule',
     atpattachStep2Description: '1) Add a rule butonuna tıklayın.',
     atpattachStep3Title: 'Create a new rule',
@@ -321,7 +338,7 @@ const MESSAGES = {
     atpattachStep7Title: 'IP Address Condition',
     atpattachStep7Description: '6) "Select one" dropdown\'ını açın ve "IP address is in any of these ranges or exactly matches" seçin.',
     atpattachStep8Title: 'IP Adresleri',
-    atpattachStep8Description: '7) IP adreslerini girin ve save butonuna tıklayınız. Size 60 saniye verildi.',
+    atpattachStep8Description: '7) IP adreslerini girin ve save butonuna tıklayınız.',
     atpattachStep9Title: 'Do the following',
     atpattachStep9Description: '9) "Do the following" dropdown\'ını açın.',
     atpattachStep10Title: 'Modify Message Properties',
@@ -333,15 +350,17 @@ const MESSAGES = {
     atpattachStep13Title: 'Enter text',
     atpattachStep13Description: '13) "Enter text" butonuna tıklayın.',
     atpattachStep15Title: 'Header Name',
-    atpattachStep15Description: '14) Header adı alanına "X-MS-Exchange-Organization-SkipSafeAttachmentProcessing" yazın. Size 60 saniye verildi.',
+    atpattachStep15Description: '14) Header adı alanına <strong>X-MS-Exchange-Organization-SkipSafeAttachmentProcessing</strong> yazın ve kaydet tuşuna basın.',
     atpattachStep16Title: 'Enter text (2. Kez)',
     atpattachStep16Description: '15) İkinci "Enter text" butonuna tıklayın.',
-    atpattachStep17Title: 'Next (1)',
-    atpattachStep17Description: '17) Next butonuna basın.',
-    atpattachStep18Title: 'Next (2)',
-    atpattachStep18Description: '18) Tekrar Next butonuna basın.',
-    atpattachStep19Title: 'Finish',
-    atpattachStep19Description: '19) Finish butonuna basın.',
+    atpattachStep17Title: 'Header Value',
+    atpattachStep17Description: '16) Header value alanına <strong>1</strong> değerini girin.',
+    atpattachStep18Title: 'Next (1)',
+    atpattachStep18Description: '17) Next butonuna basın.',
+    atpattachStep19Title: 'Next (2)',
+    atpattachStep19Description: '18) Tekrar Next butonuna basın.',
+    atpattachStep20Title: 'Finish',
+    atpattachStep20Description: '19) Finish butonuna basın.',
     atpattachSummaryTitle: 'Tebrikler! Tüm Adımlar Bitti!',
     atpattachSummaryDescription: 'Tüm workflow\'lar başarıyla tamamlandı! Office 365 ortamında IP adreslerini allow list\'e eklediniz ve güvenlik simülasyonları, spam filtreleme, ATP Link ve ATP Attachment özelliklerini başarıyla yapılandırdınız!',
   },
@@ -397,6 +416,8 @@ const MESSAGES = {
     screenshotSaved: 'Screenshot saved',
     successful: 'Successful',
     remainingTime: 'Remaining Time',
+    saveButton: 'Click SAVE Button',
+    clickToSave: 'Click to save',
     clickHere: 'write here',
     valueEntered: 'value entered',
     nowSelect: 'Now',
@@ -448,6 +469,21 @@ const MESSAGES = {
     tooltipClickFinish: 'Click on Finish button',
     tooltipSubmit: 'Click on Submit button',
     tooltipAddRule: 'Click on + Add a rule button',
+    tooltipSaveButton: 'Click on Save button',
+    tooltipAddAction: 'Click on + (Add action) button',
+    tooltipSelectFromDropdown: 'Select option from dropdown',
+    tooltipEnterBypassClutter: 'Enter X-MS-Exchange-Organization-BypassClutter',
+    tooltipModifyProperties: 'Select Modify the message properties',
+    tooltipSetMessageHeader: 'Select Set a message header',
+    tooltipAddRuleButton: 'Click on Add a rule button',
+    tooltipSelectOneDropdown: 'Open "Select one" dropdown',
+    // Validation Messages
+    validationNoDomains: '⚠️ Warning: You haven\'t entered any domains!\n\nPlease enter at least one domain and click Continue again.',
+    validationNoIPs: '⚠️ Warning: You haven\'t entered any IP addresses!\n\nPlease enter at least one IP address and click Continue again.',
+    validationNoURLs: '⚠️ Warning: You haven\'t entered any URLs!\n\nPlease enter at least one URL and click Continue again.',
+    validationNoRuleName: '⚠️ Warning: You haven\'t entered a rule name!\n\nPlease enter a rule name and click Continue again.',
+    validationNoHeaderName: '⚠️ Warning: You haven\'t entered a header name!\n\nPlease enter the header name (e.g., X-MS-Exchange-Organization-BypassClutter) and click Continue again.',
+    validationNoHeaderValue: '⚠️ Warning: You haven\'t entered a header value!\n\nPlease enter "1" and click Continue again.',
     // Workflow names
     workflow1Name: 'Third-Party Phishing Simulations',
     workflow2Name: 'Anti-Spam Policies',
@@ -550,7 +586,7 @@ const MESSAGES = {
     spambypassStep8Title: 'IP Address Condition',
     spambypassStep8Description: '7) Open "Select one" dropdown and select "IP address is in any of these ranges or exactly matches" option.',
     spambypassStep9Title: 'Enter IP Addresses',
-    spambypassStep9Description: '9) Enter IP addresses. You have 60 seconds.',
+    spambypassStep9Description: '9) Enter IP addresses and save.',
     spambypassStep10Title: 'Do The Following',
     spambypassStep10Description: '10) Open "Do the following" dropdown.',
     spambypassStep11Title: 'Modify Message Properties',
@@ -572,7 +608,7 @@ const MESSAGES = {
     spambypassStep19Title: 'Enter Text',
     spambypassStep19Description: '19) Click on "Enter text" button.',
     spambypassStep20Title: 'BypassClutter Header',
-    spambypassStep20Description: '20) Enter "X-MS-Exchange-Organization-BypassClutter" in Header name field. You have 60 seconds.',
+    spambypassStep20Description: '20) Enter <strong>X-MS-Exchange-Organization-BypassClutter</strong> in Header name field and click save button.',
     spambypassStep21Title: 'Enter Text and Value',
     spambypassStep21Description: '21) Click "Enter text" button and enter "1" value.',
     spambypassStep22Title: 'Next (1)',
@@ -585,7 +621,7 @@ const MESSAGES = {
     spambypassSummaryDescription: 'Spam Filter Bypass rule successfully created. Make sure the rule status is enabled.',
     // Workflow 5 - ATP Link Bypass Steps
     atplinkStep1Title: 'Getting Started',
-    atplinkStep1Description: 'ATP Link Bypass steps starting. Please read the important warnings below.',
+    atplinkStep1Description: 'ATP Link Bypass steps starting.',
     atplinkStep2Title: 'Add a rule',
     atplinkStep2Description: '1) Click on Add a rule button.',
     atplinkStep3Title: 'Create a new rule',
@@ -599,7 +635,7 @@ const MESSAGES = {
     atplinkStep7Title: 'IP Address Condition',
     atplinkStep7Description: '6) Open "Select one" dropdown and select "IP address is in any of these ranges or exactly matches".',
     atplinkStep8Title: 'IP Addresses',
-    atplinkStep8Description: '7) Enter IP addresses and click save button. You have 60 seconds.',
+    atplinkStep8Description: '7) Enter IP addresses and click save button.',
     atplinkStep9Title: 'Do The Following',
     atplinkStep9Description: '10) Open "Select one" dropdown.',
     atplinkStep10Title: 'Modify Message Properties',
@@ -611,7 +647,7 @@ const MESSAGES = {
     atplinkStep13Title: 'Enter text (1st Time)',
     atplinkStep13Description: '13) Click on first "Enter text" button.',
     atplinkStep14Title: 'Header Name',
-    atplinkStep14Description: '14) Enter "X-MS-Exchange-Organization-SkipSafeLinksProcessing" in Header name field. You have 60 seconds.',
+    atplinkStep14Description: '14) Enter <strong>X-MS-Exchange-Organization-SkipSafeLinksProcessing</strong> in Header name field and click save button.',
     atplinkStep15Title: 'Enter text (2nd Time)',
     atplinkStep15Description: '15) Click on second "Enter text" button.',
     atplinkStep16Title: 'Header Value',
@@ -626,7 +662,7 @@ const MESSAGES = {
     atplinkSummaryDescription: 'ATP Link Bypass rule successfully created. Now proceeding to Workflow 6 (ATP Attachment Bypass)...',
     // Workflow 6 - ATP Attachment Bypass Steps
     atpattachStep1Title: 'Getting Started',
-    atpattachStep1Description: 'ATP Attachment Bypass steps starting. Please read the important warnings below.',
+    atpattachStep1Description: 'ATP Attachment Bypass steps starting.',
     atpattachStep2Title: 'Add a rule',
     atpattachStep2Description: '1) Click on Add a rule button.',
     atpattachStep3Title: 'Create a new rule',
@@ -640,7 +676,7 @@ const MESSAGES = {
     atpattachStep7Title: 'IP Address Condition',
     atpattachStep7Description: '6) Open "Select one" dropdown and select "IP address is in any of these ranges or exactly matches".',
     atpattachStep8Title: 'IP Addresses',
-    atpattachStep8Description: '7) Enter IP addresses and click save button. You have 60 seconds.',
+    atpattachStep8Description: '7) Enter IP addresses and click save button.',
     atpattachStep9Title: 'Do the following',
     atpattachStep9Description: '9) Open "Do the following" dropdown.',
     atpattachStep10Title: 'Modify Message Properties',
@@ -652,15 +688,17 @@ const MESSAGES = {
     atpattachStep13Title: 'Enter text',
     atpattachStep13Description: '13) Click on "Enter text" button.',
     atpattachStep15Title: 'Header Name',
-    atpattachStep15Description: '14) Enter "X-MS-Exchange-Organization-SkipSafeAttachmentProcessing" in Header name field. You have 60 seconds.',
+    atpattachStep15Description: '14) Enter <strong>X-MS-Exchange-Organization-SkipSafeAttachmentProcessing</strong> in Header name field and click save button.',
     atpattachStep16Title: 'Enter text (2nd Time)',
     atpattachStep16Description: '15) Click on second "Enter text" button.',
-    atpattachStep17Title: 'Next (1)',
-    atpattachStep17Description: '17) Click Next button.',
-    atpattachStep18Title: 'Next (2)',
-    atpattachStep18Description: '18) Click Next button again.',
-    atpattachStep19Title: 'Finish',
-    atpattachStep19Description: '19) Click Finish button.',
+    atpattachStep17Title: 'Header Value',
+    atpattachStep17Description: '16) Enter <strong>1</strong> in Header value field.',
+    atpattachStep18Title: 'Next (1)',
+    atpattachStep18Description: '17) Click Next button.',
+    atpattachStep19Title: 'Next (2)',
+    atpattachStep19Description: '18) Click Next button again.',
+    atpattachStep20Title: 'Finish',
+    atpattachStep20Description: '19) Click Finish button.',
     atpattachSummaryTitle: 'Congratulations! All Steps Completed!',
     atpattachSummaryDescription: 'All workflows successfully completed! You have added IP addresses to your Office 365 allow list and successfully configured security simulations, spam filtering, ATP Link and ATP Attachment features!',
   }
@@ -747,7 +785,8 @@ const WORKFLOW_STEPS = [
     title: 'workflowStep1Title',
     description: 'workflowStep1Description',
     navigate: 'https://security.microsoft.com/homepage',
-    validation: () => true
+    validation: () => true,
+    hideInSummary: true  // Summary'de gösterme
   },
   {
     id: 2,
@@ -972,63 +1011,101 @@ const WORKFLOW_STEPS = [
     isSummary: true
   }
 ]
-
 /* ========== WORKFLOW 2: Threat Policies - Anti-Spam ========== */
 const THREAT_POLICIES_STEPS = [
-  {
-    id: 1,
-    name: 'antispam_step1_navigate',
-    title: 'antispamStep1Title',
-    description: 'antispamStep1Description',
-    navigate: 'https://security.microsoft.com/antispam',
-    validation: () => true,
-    isNavigation: true
-  },
-  {
-    id: 2,
-    name: 'antispam_step2_select_checkbox',
-    title: 'antispamStep2Title',
-    description: 'antispamStep2Description',
-    target: {
-      selector: 'i.ms-Check-check',
-      fallback: [
-        'i.ms-Icon.ms-Check-check',
-        'div.ms-DetailsRow-cellCheck i.ms-Check-check',
-        'div.ms-DetailsRow-cellCheck div[role="radio"][data-automationid="DetailsRowCheck"][aria-checked="false"]',
-        'div.ms-DetailsRow-cellCheck div[role="radio"][data-automationid="DetailsRowCheck"]',
-        'div.checkCell-938 div[data-automationid="DetailsRowCheck"]',
-        'div.ms-Check-checkHost:nth-of-type(2)',
-        'div[data-automationid="DetailsRowCheck"]:not([aria-checked="true"]):first-of-type'
-      ]
+    {
+      id: 1,
+      name: 'antispam_step1_navigate',
+      title: 'antispamStep1Title',
+      description: 'antispamStep1Description',
+      navigate: 'https://security.microsoft.com/antispam',
+      validation: () => true,
+      isNavigation: true,
+      hideInSummary: true  // Summary'de gösterme
     },
-    tooltip: 'tooltipConnectionFilterCheckbox',
-    autoClick: false,
-    disableHighlight: true,
-    validation: () => true,
-    waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
-  },
-  {
-    id: 3,
-    name: 'antispam_step3_click_row',
-    title: 'antispamStep3Title',
-    description: 'antispamStep3Description',
-    target: {
-      selector: 'span.scc-list-first-column',
-      textMatch: /Bağlantı filtresi ilkesi|Connection filter policy/i,
-      fallback: [
-        'span.scc-list-first-column.css-201',
-        'div[data-automationid="DetailsRowCell"] span.scc-list-first-column',
-        'span.scc-list-first-column',
-        'div.ms-DetailsRow-cell span'
-      ]
+    {
+      id: 2,
+      name: 'antispam_step2_select_checkbox',
+      title: 'antispamStep2Title',
+      description: 'antispamStep2Description',
+      target: {
+        selector: 'span.scc-list-first-column',
+        textMatch: /Bağlantı filtresi ilkesi.*Varsayılan|Connection filter policy.*Default/i,
+        fallback: [
+          'span.scc-list-first-column.css-201',
+          'div[data-automationid="DetailsRowCell"] span.scc-list-first-column',
+          'span.scc-list-first-column',
+          'div.ms-DetailsRow-cell span'
+        ]
+      },
+      tooltip: 'tooltipConnectionFilterCheckbox',
+      autoClick: true,
+      disableHighlight: false,
+      waitForChecked: true,
+      findCheckboxFromRow: true, // Özel flag: satırdan checkbox bul
+      validation: async function() {
+        // "Bağlantı filtresi ilkesi (Varsayılan)" satırını bul
+        const rowText = Array.from(document.querySelectorAll('span.scc-list-first-column')).find(span => {
+          const text = span.textContent || span.innerText || ''
+          return /Bağlantı filtresi ilkesi.*Varsayılan|Connection filter policy.*Default/i.test(text)
+        })
+        
+        if (!rowText) {
+          console.warn('[Keepnet] Connection filter policy row not found')
+          return false
+        }
+        
+        // Satırın parent container'ını bul (DetailsRow)
+        let rowContainer = rowText.closest('div[data-automationid="DetailsRow"]') ||
+                          rowText.closest('div.ms-DetailsRow') ||
+                          rowText.closest('div[role="row"]') ||
+                          rowText.parentElement?.parentElement
+        
+        if (!rowContainer) {
+          console.warn('[Keepnet] Row container not found')
+          return false
+        }
+        
+        // Container içinde checkbox'ı bul - yeni HTML yapısına göre
+        // Checkbox artık direkt data-selection-toggle="true" attribute'una sahip
+        const checkbox = rowContainer.querySelector('div[role="radio"][data-automationid="DetailsRowCheck"][data-selection-toggle="true"]') ||
+                         rowContainer.querySelector('div[aria-label="Satır seç"][data-automationid="DetailsRowCheck"][data-selection-toggle="true"]') ||
+                         rowContainer.querySelector('div.ms-DetailsRow-check[data-automationid="DetailsRowCheck"][data-selection-toggle="true"]') ||
+                         rowContainer.querySelector('div[role="radio"][data-automationid="DetailsRowCheck"]')
+        
+        if (!checkbox) {
+          console.warn('[Keepnet] Checkbox not found in row container')
+          return false
+        }
+        
+        const isChecked = checkbox.getAttribute('aria-checked') === 'true'
+        console.log(`[Keepnet] Checkbox validation: aria-checked="${checkbox.getAttribute('aria-checked')}", isChecked=${isChecked}`)
+        return isChecked
+      },
+      waitAfterClick: 1000, // Diğer adımlar gibi 1 saniye
+      panelPosition: 'bottom-left'
     },
-    tooltip: 'tooltipConnectionFilterPolicy',
-    autoClick: false,
-    validation: () => true,
-    waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
-  },
+    {
+      id: 3,
+      name: 'antispam_step3_click_row',
+      title: 'antispamStep3Title',
+      description: 'antispamStep3Description',
+      target: {
+        selector: 'span.scc-list-first-column',
+        textMatch: /Bağlantı filtresi ilkesi|Connection filter policy/i,
+        fallback: [
+          'span.scc-list-first-column.css-201',
+          'div[data-automationid="DetailsRowCell"] span.scc-list-first-column',
+          'span.scc-list-first-column',
+          'div.ms-DetailsRow-cell span'
+        ]
+      },
+      tooltip: 'tooltipConnectionFilterPolicy',
+      autoClick: false,
+      validation: () => true,
+      waitAfterClick: 1000,
+      panelPosition: 'bottom-left'
+    },
   {
     id: 4,
     name: 'antispam_step4_edit_button',
@@ -1106,7 +1183,7 @@ const THREAT_POLICIES_STEPS = [
         'span.ms-Button-label'
       ]
     },
-    tooltip: 'Kaydet butonuna tıklayın',
+    tooltip: 'tooltipSaveButton',
     autoClick: false,
     validation: () => true,
     waitAfterClick: 1000,
@@ -1129,7 +1206,8 @@ const SAFE_LINKS_STEPS = [
     title: 'safelinksStep1Title',
     description: 'safelinksStep1Description',
     navigate: 'https://security.microsoft.com/threatpolicy',
-    validation: () => true
+    validation: () => true,
+    hideInSummary: true  // Summary'de gösterme
   },
   {
     id: 2,
@@ -1365,7 +1443,6 @@ const SAFE_LINKS_STEPS = [
     isSummary: true
   }
 ]
-
 /* ========== WORKFLOW 4: Spam Filter Bypass ========== */
 const SPAM_FILTER_BYPASS_STEPS = [
   {
@@ -1374,6 +1451,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     title: 'spambypassStep1Title',
     description: 'spambypassStep1Description',
     isInfoCard: true,
+    hideInSummary: true,  // Summary'de gösterme
     autoAdvance: true,
     autoAdvanceDelay: 2000,
     waitAfterClick: 0
@@ -1385,6 +1463,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
     description: 'spambypassStep2Description',
     navigate: 'https://admin.exchange.microsoft.com/#/transportrules',
     isNavigation: true,
+    hideInSummary: true,  // Summary'de gösterme
     autoAdvance: true,
     autoAdvanceDelay: 3000,
     validation: () => true,
@@ -1409,11 +1488,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipAddRule',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 12000,  // 6s → 12s (daha yavaş)
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 2s → 4s (daha uzun bekle)
     panelPosition: 'bottom-left'
   },
   {
@@ -1434,11 +1513,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipCreateNewRule',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 12000,  // 6s → 12s (daha yavaş)
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 2s → 4s (daha uzun bekle)
     panelPosition: 'bottom-left'
   },
   {
@@ -1458,11 +1537,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipEnterRuleName',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 15000,
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 10000,
+    waitAfterClick: 10000,
     panelPosition: 'top-left',
     criticalStep: true
   },
@@ -1482,11 +1561,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipOpenApplyRuleIf',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 6s → 10s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -1506,12 +1585,12 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipSelectTheSender',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 6s → 10s (daha yavaş)
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 500,  // 100 → 500ms
     criticalStep: false,
-    waitAfterClick: 1000,
+    waitAfterClick: 3000,  // 2s → 3s (daha uzun bekle)
     panelPosition: 'bottom-left'
   },
   {
@@ -1539,15 +1618,15 @@ const SPAM_FILTER_BYPASS_STEPS = [
       }
     },
     tooltip: 'tooltipOpenIPCondition',
-    autoClick: true,
+    autoClick: false,  // true → false (manuel yapılsın, daha kontrollü)
     hideCopyButton: true,
     hideIPList: true,
     autoAdvance: true,
-    autoAdvanceDelay: 4000,
+    autoAdvanceDelay: 12000,  // 7s → 12s (çok daha yavaş)
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 2s → 4s (daha uzun bekle)
     panelPosition: 'bottom-left'
   },
   {
@@ -1585,26 +1664,23 @@ const SPAM_FILTER_BYPASS_STEPS = [
     name: 'spambypass_step10_do_following_dropdown',
     title: 'spambypassStep10Title',
     description: 'spambypassStep10Description',
-    hideIPList: true,  // IP listesi görünmemeli
     target: {
-      selector: 'label.ms-Label',
-      textMatch: /Do the following/i,
+      selector: 'span#Dropdown327-option',
+      textMatch: /Select one/i,  // BURADA DEĞİŞİKLİK: Buton metni "Select one"
       fallback: [
-        'label.ms-Label:contains("Do the following")',
-        'button[aria-label*="Do the following"]',
         'span[id*="Dropdown327"].ms-Dropdown-title',
         'span.ms-Dropdown-title:contains("Select one")',
-        'span#Dropdown327-option'
+        'button[aria-label*="Do the following"]'
       ]
     },
-    tooltip: 'tooltipOpenDoFollowing',
+    tooltip: 'tooltipSelectOneDropdown',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 6s → 10s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -1612,23 +1688,23 @@ const SPAM_FILTER_BYPASS_STEPS = [
     name: 'spambypass_step11_modify_message_properties',
     title: 'spambypassStep11Title',
     description: 'spambypassStep11Description',
+    hideIPList: true,  // Burada da gösterme
     target: {
-      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-780',
+      selector: 'span.ms-Dropdown-optionText.dropdownOptionText-707',
       textMatch: /Modify the message properties/i,
       fallback: [
         'span.ms-Dropdown-optionText:contains("Modify the message properties")',
         'div[role="option"]:contains("Modify the message properties")'
       ]
     },
-    tooltip: 'tooltipSelectModifyMessageProperties',
+    tooltip: 'tooltipModifyProperties',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 7s → 10s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    criticalStep: false,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -1647,12 +1723,12 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipOpenSelectOne',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 6s → 10s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 500,  // 100 → 500ms
     criticalStep: false,
-    waitAfterClick: 1000,
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -1672,12 +1748,12 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipSelectSetSCL',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 6s → 10s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 500,  // 100 → 500ms
     criticalStep: false,
-    waitAfterClick: 1000,
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -1698,12 +1774,12 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipSelectBypassSpamFiltering',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 6s → 10s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 500,  // 100 → 500ms
     criticalStep: false,
-    waitAfterClick: 1000,
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -1721,14 +1797,14 @@ const SPAM_FILTER_BYPASS_STEPS = [
         'button.ms-Button--primary'
       ]
     },
-    tooltip: 'Save butonuna tıklayın',
+    tooltip: 'tooltipSaveButton',
     autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 15000,  // 10s → 15s (form kapatılıyor, daha uzun bekle)
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 2000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 5000,  // 3s → 5s (form kapanma için daha uzun bekle)
     panelPosition: 'bottom-left'
   },
   {
@@ -1746,41 +1822,49 @@ const SPAM_FILTER_BYPASS_STEPS = [
         'button[data-automation-id*="AddAction"]'
       ]
     },
-    tooltip: '+ (Add action) butonuna tıklayın',
+    tooltip: 'tooltipAddAction',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
-    {
-      id: 17,
-      name: 'spambypass_step17_modify_message_properties2',
-      title: 'spambypassStep17Title',
-      description: 'spambypassStep17Description',
-      target: {
-        selector: 'span#Dropdown470-option',
-        textMatch: /Select one/i,  // BURADA DEĞİŞİKLİK: Buton metni "Select one"
+  {
+    id: 17,
+    name: 'spambypass_step17_modify_message_properties2',
+    title: 'spambypassStep17Title',
+    description: 'spambypassStep17Description',
+    target: {
+      selector: 'span#Dropdown263-option',
+      textMatch: /Select one/i,
+      fallback: [
+        'span.ms-Dropdown-title.title-791:contains("Select one")',
+        'span.ms-Dropdown-title:contains("Select one")',
+        'span[id*="Dropdown263"]:contains("Select one")'
+      ],
+      secondaryTarget: {
+        selector: 'span.ms-Dropdown-optionText.dropdownOptionText-772',
+        textMatch: /Modify the message properties/i,
         fallback: [
-          'span.ms-Dropdown-title.title-725:contains("Select one")',
-          'span.ms-Dropdown-title:contains("Select one")',
-          'span[id*="Dropdown470"]:contains("Select one")'
+          'span.ms-Dropdown-optionText:contains("Modify the message properties")',
+          'div[role="option"]:contains("Modify the message properties")'
         ]
-      },
-    tooltip: 'tooltipOpenSelectOne',
-      autoClick: true,
-      autoAdvance: true,
-      autoAdvanceDelay: 5000,
-      validation: () => true,
-      realTimeValidation: true,
-      realTimeValidationInterval: 100,
-      criticalStep: false,
-      waitAfterClick: 1000,
-      panelPosition: 'bottom-left'
+      }
     },
+    tooltip: 'tooltipOpenSelectOne',
+    autoClick: false,  // true → false (daha kontrollü)
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    criticalStep: false,
+    waitAfterClick: 4000,  // 2s → 4s
+    panelPosition: 'bottom-left'
+  },
   {
     id: 18,
     name: 'spambypass_step18_set_message_header',
@@ -1803,15 +1887,15 @@ const SPAM_FILTER_BYPASS_STEPS = [
         ]
       }
     },
-    tooltip: 'Dropdown\'dan seçeneği seçin',
-    autoClick: true,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    tooltip: 'tooltipSelectFromDropdown',
+    autoClick: false,  // true → false (daha kontrollü)
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 500,  // 100 → 500ms
     criticalStep: false,
-    waitAfterClick: 1000,
+    waitAfterClick: 4000,  // 2s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -1822,25 +1906,25 @@ const SPAM_FILTER_BYPASS_STEPS = [
     target: {
       selector: 'button[data-automation-id="Link_SetHeader_1_1_0"]',
       fallback: [
-        'button.ms-Link.root-746:contains("Enter text")',
-        'button:contains("Enter text")',
-        'button[role="button"]:contains("Enter text")'
+        'button.ms-Link.root-809:contains("Enter text")',
+        'button.ms-Link.root-748:contains("Enter text")',
+        'button:contains("Enter text")'
       ]
     },
     tooltip: 'tooltipClickEnterText',
-    autoClick: true,
-    autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoClick: false,  // true → false (daha kontrollü)
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 500,  // 100 → 500ms
     criticalStep: false,
-    waitAfterClick: 1000,
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
     id: 20,
-    name: 'spambypass_step24_enter_bypass_clutter',
+    name: 'spambypass_step20_enter_bypass_clutter',
     title: 'spambypassStep20Title',
     description: 'spambypassStep20Description',
     manualTimer: 60000,  // 1 dakika = 60 saniye
@@ -1853,39 +1937,40 @@ const SPAM_FILTER_BYPASS_STEPS = [
         'input[placeholder*="header"]'
       ]
     },
-    tooltip: 'X-MS-Exchange-Organization-BypassClutter girin',
+    tooltip: 'tooltipEnterBypassClutter',
     autoClick: false,
     manualStep: true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
     validation: () => true,
     criticalStep: true,
-    waitAfterClick: 1000,
+    waitAfterClick: 3000,
     panelPosition: 'bottom-left'
   },
   {
     id: 21,
-    name: 'spambypass_step25_enter_text_and_value',
+    name: 'spambypass_step21_enter_text_and_value',
     title: 'spambypassStep21Title',
     description: 'spambypassStep21Description',
     target: {
       selector: 'button[data-automation-id="Link_SetHeader_1_1_1"]',
       textMatch: /Enter text/i,
       fallback: [
+        'button.ms-Link.root-809:contains("Enter text")',
         'button.ms-Link.root-812:contains("Enter text")',
         'button[role="button"]:contains("Enter text")',
         'button[data-automation-id*="Link_SetHeader"]'
       ]
     },
     tooltip: 'tooltipClickEnterTextAndValue',
-    autoClick: true,
-    autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoClick: false,  // true → false (daha kontrollü)
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 500,  // 5000 → 500ms
     criticalStep: false,
-    waitAfterClick: 1000,
+    waitAfterClick: 3000,  // 5s → 3s
     panelPosition: 'bottom-left',
     nextTarget: {
       selector: 'input[placeholder*="value"], input[aria-label*="value"]',
@@ -1898,7 +1983,7 @@ const SPAM_FILTER_BYPASS_STEPS = [
   },
   {
     id: 22,
-    name: 'spambypass_step26_next',
+    name: 'spambypass_step22_next',
     title: 'spambypassStep22Title',
     description: 'spambypassStep22Description',
     target: {
@@ -1912,17 +1997,17 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'tooltipNext',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 3000 → 500ms
+    waitAfterClick: 3000,  // 5s → 3s
     panelPosition: 'bottom-left'
   },
   {
     id: 23,
-    name: 'spambypass_step27_next2',
+    name: 'spambypass_step23_next2',
     title: 'spambypassStep23Title',
     description: 'spambypassStep23Description',
     target: {
@@ -1936,17 +2021,17 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'tooltipNext',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 3000 → 500ms
+    waitAfterClick: 3000,  // 5s → 3s
     panelPosition: 'bottom-left'
   },
   {
     id: 24,
-    name: 'spambypass_step28_finish',
+    name: 'spambypass_step24_finish',
     title: 'spambypassStep24Title',
     description: 'spambypassStep24Description',
     target: {
@@ -1960,12 +2045,12 @@ const SPAM_FILTER_BYPASS_STEPS = [
     },
     tooltip: 'tooltipClickFinish',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvance: false,  // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 2000,
+    realTimeValidationInterval: 500,  // 3000 → 500ms
+    waitAfterClick: 3000,  // 5s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -1976,7 +2061,6 @@ const SPAM_FILTER_BYPASS_STEPS = [
     isSummary: true
   }
 ]
-
 /* ========== WORKFLOW 5: ATP Link Bypass (SkipSafeLinksProcessing) ========== */
 const ATP_LINK_BYPASS_STEPS = [
   {
@@ -1985,8 +2069,9 @@ const ATP_LINK_BYPASS_STEPS = [
     title: 'atplinkStep1Title',
     description: 'atplinkStep1Description',
     isInfoCard: true,
+    hideInSummary: true,  // Summary'de gösterme
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 10000,  // 10 saniye (bilgi kartı)
     waitAfterClick: 0
   },
   {
@@ -2004,10 +2089,10 @@ const ATP_LINK_BYPASS_STEPS = [
         'button.ms-Button--primary'
       ]
     },
-    tooltip: 'Add a rule butonuna tıklayın',
+    tooltip: 'tooltipAddRuleButton',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 10000,  // 10 saniye (WF4 ile aynı)
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -2032,7 +2117,7 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipCreateNewRule',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 10000,  // 10 saniye (WF4 ile aynı)
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -2057,11 +2142,11 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipEnterRuleName',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 15000,  // 15 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 15000,
+    waitAfterClick: 10000,
     panelPosition: 'top-left',
     criticalStep: true
   },
@@ -2081,11 +2166,11 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipOpenApplyRuleIf',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 18000,  // 15s → 18s (WF4 ile tutarlı)
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 2000,  // 1s → 2s
     panelPosition: 'bottom-left'
   },
   {
@@ -2107,18 +2192,18 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipSelectTheSender',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
     id: 7,
     name: 'atplink_step7_ip_address_condition',
-    title: 'IP Address Condition',
-    description: '6) "Select one" dropdown\'ını açın ve "IP address is in any of these ranges or exactly matches" seçin.',
+    title: 'atplinkStep7Title',
+    description: 'atplinkStep7Description',
     showIPList: false,  // IP listesini gösterme
     hideIPList: true,   // IP listesini gizle
     target: {
@@ -2139,20 +2224,20 @@ const ATP_LINK_BYPASS_STEPS = [
       }
     },
     tooltip: 'tooltipOpenIPCondition',
-    autoClick: true,
+    autoClick: false,  // true → false (daha kontrollü)
     autoAdvance: true,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
     id: 8,
     name: 'atplink_step8_ip_addresses',
-    title: 'IP Adresleri',
-    description: '7) IP adreslerini girin ve save butonuna tıklayınız. Size 60 saniye verildi.',
-    manualTimer: 60000,  // 1 dakika = 60 saniye
+    title: 'atplinkStep8Title',
+    description: 'atplinkStep8Description',
     showIPList: true,    // IP listesini göster
     hideIPList: false,   // IP listesi gösterilmeli
     target: {
@@ -2167,8 +2252,8 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     tooltip: 'tooltipEnterIPsManually',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    manualTimer: 60000,       // 1 dakika manuel timer
+    autoAdvance: false,       // Timer bitene kadar otomatik geçiş yok
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 1000,
@@ -2190,14 +2275,14 @@ const ATP_LINK_BYPASS_STEPS = [
         'button[aria-label*="Do the following"]'
       ]
     },
-    tooltip: '"Select one" dropdown\'ını açın',
+    tooltip: 'tooltipSelectOneDropdown',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2214,14 +2299,14 @@ const ATP_LINK_BYPASS_STEPS = [
         'div[role="option"]:contains("Modify the message properties")'
       ]
     },
-    tooltip: 'Modify the message properties seçin',
+    tooltip: 'tooltipModifyProperties',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -2239,11 +2324,11 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipOpenSelectOne',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -2260,14 +2345,14 @@ const ATP_LINK_BYPASS_STEPS = [
         'div[role="option"]:contains("message header")'
       ]
     },
-    tooltip: 'Set a message header seçin',
+    tooltip: 'tooltipSetMessageHeader',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -2285,11 +2370,11 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipClickFirstEnterText',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 10000,  // 10 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2297,8 +2382,8 @@ const ATP_LINK_BYPASS_STEPS = [
     name: 'atplink_step15_header_name',
     title: 'atplinkStep14Title',
     description: 'atplinkStep14Description',
-    manualTimer: 60000,  // 1 dakika = 60 saniye
-    autoAdvance: false,  // Timer bitince otomatik geçme
+    manualTimer: 60000,  // 1 dakika = 60 saniye timer
+    autoAdvance: false,  // Timer bitince otomatik geçiş (false = timer göster)
     target: {
       selector: 'input[data-automation-id="SetHeader_TextField"]',
       fallback: [
@@ -2309,6 +2394,7 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     tooltip: 'tooltipEnterHeaderNameSkipSafeLinks',
     autoClick: false,
+    manualStep: true,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 1000,
@@ -2330,12 +2416,12 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     tooltip: 'tooltipClickSecondEnterText',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvance: false, // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2353,8 +2439,8 @@ const ATP_LINK_BYPASS_STEPS = [
     },
     tooltip: 'tooltipEnterHeaderValue',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvance: false, // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 1000,
@@ -2379,11 +2465,11 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipNext',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 10 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2403,11 +2489,11 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipNext',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 10 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2427,11 +2513,11 @@ const ATP_LINK_BYPASS_STEPS = [
     tooltip: 'tooltipClickFinish',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 10 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 2000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 2s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2441,9 +2527,7 @@ const ATP_LINK_BYPASS_STEPS = [
     description: 'atplinkSummaryDescription',
     isSummary: true
   }
-  
 ]
-
 /* ========== WORKFLOW 6: ATP Attachment Bypass (SkipSafeAttachmentProcessing) ========== */
 const ATP_ATTACHMENT_BYPASS_STEPS = [
   {
@@ -2452,8 +2536,9 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     title: 'atpattachStep1Title',
     description: 'atpattachStep1Description',
     isInfoCard: true,
+    hideInSummary: true,  // Summary'de gösterme
     autoAdvance: true,
-    autoAdvanceDelay: 2000,
+    autoAdvanceDelay: 10000,  // 10 saniye (bilgi kartı)
     waitAfterClick: 0
   },
   {
@@ -2471,10 +2556,10 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
         'button.ms-Button--primary'
       ]
     },
-    tooltip: 'Add a rule butonuna tıklayın',
+    tooltip: 'tooltipAddRuleButton',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 10000,  // 10 saniye (WF4 ile aynı)
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -2499,7 +2584,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipCreateNewRule',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 10000,  // 10 saniye (WF4 ile aynı)
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 100,
@@ -2524,11 +2609,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipEnterRuleName',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 15000,  // 15 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 1000,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 15000,
+    waitAfterClick: 10000,
     panelPosition: 'top-left',
     criticalStep: true
   },
@@ -2548,11 +2633,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipOpenApplyRuleIf',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 18000,  // 10s → 18s (WF4/5 ile tutarlı)
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 2000,  // 1s → 2s
     panelPosition: 'bottom-left'
   },
   {
@@ -2574,11 +2659,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipSelectTheSender',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2606,12 +2691,13 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
       }
     },
     tooltip: 'tooltipOpenIPCondition',
-    autoClick: true,
+    autoClick: false,  // true → false (daha kontrollü)
     autoAdvance: true,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -2619,7 +2705,6 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     name: 'atplink_step8_ip_addresses',
     title: 'atpattachStep8Title',
     description: 'atpattachStep8Description',
-    manualTimer: 60000,  // 1 dakika = 60 saniye
     showIPList: true,    // IP listesini göster
     hideIPList: false,   // IP listesi gösterilmeli
     target: {
@@ -2634,8 +2719,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     tooltip: 'tooltipEnterIPsManually',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    manualTimer: 60000,       // 1 dakika manuel timer
+    autoAdvance: false,       // Timer bitene kadar otomatik geçiş yok
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 1000,
@@ -2659,13 +2744,14 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
         'div[data-automation-id*="Action"] span.ms-Dropdown-title'
       ]
     },
-    tooltip: '"Do the following" dropdown\'ını açın',
-    autoClick: true,
+    tooltip: 'tooltipSelectOneDropdown',
+    autoClick: false,  // true → false (daha kontrollü)
     autoAdvance: true,
+    autoAdvanceDelay: 12000,  // Eksikti, eklendi
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2681,14 +2767,14 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
         'div[role="option"]:contains("Modify the message properties")'
       ]
     },
-    tooltip: 'Modify the message properties seçin',
+    tooltip: 'tooltipModifyProperties',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -2706,11 +2792,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipOpenSelectOne',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -2727,14 +2813,14 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
         'div[role="option"]:contains("message header")'
       ]
     },
-    tooltip: 'Set a message header seçin',
+    tooltip: 'tooltipSetMessageHeader',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 12000,  // 10s → 12s
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 4000,  // 1s → 4s
     panelPosition: 'bottom-left'
   },
   {
@@ -2752,11 +2838,11 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipClickEnterText',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvanceDelay: 10000,  // 10 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
@@ -2764,8 +2850,8 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     name: 'atpattach_step15_header_name',
     title: 'atpattachStep15Title',
     description: 'atpattachStep15Description',
-    manualTimer: 60000,  // 1 dakika = 60 saniye
-    autoAdvance: false,  // Timer bitince otomatik geçme
+    manualTimer: 60000,  // 1 dakika = 60 saniye timer
+    autoAdvance: false,  // Timer bitince otomatik geçiş (false = timer göster)
     target: {
       selector: 'input[data-automation-id="SetHeader_TextField"]',
       fallback: [
@@ -2776,6 +2862,7 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     tooltip: 'tooltipEnterHeaderNameSkipSafeAttachment',
     autoClick: false,
+    manualStep: true,
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 1000,
@@ -2797,41 +2884,41 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     },
     tooltip: 'tooltipClickSecondEnterText',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 5000,
+    autoAdvance: false, // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
     id: 17,
-    name: 'atpattach_step17_next',
+    name: 'atpattach_step17_header_value',
     title: 'atpattachStep17Title',
     description: 'atpattachStep17Description',
     target: {
-      selector: 'span.ms-Button-label.label-788#id__769',
-      textMatch: /Next/i,
+      selector: 'input[data-automation-id="SetHeader_TextField"]',
       fallback: [
-        'span.ms-Button-label:contains("Next")',
-        'button[aria-label*="Next"]',
-        'button:contains("Next")'
+        'input#TextField1444',
+        'input[type="text"][placeholder*="value"]',
+        'input.ms-TextField-field'
       ]
     },
-    tooltip: 'tooltipNext',
+    tooltip: 'tooltipEnterHeaderValue',
     autoClick: false,
-    autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvance: false, // Otomatik geçiş yok
+    manualStep: true,  // Manuel ilerleme
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
+    realTimeValidationInterval: 1000,
+    criticalStep: true,
     waitAfterClick: 1000,
-    panelPosition: 'bottom-left'
+    panelPosition: 'top-left'
   },
   {
     id: 18,
-    name: 'atpattach_step18_next2',
+    name: 'atpattach_step18_next',
     title: 'atpattachStep18Title',
     description: 'atpattachStep18Description',
     target: {
@@ -2846,20 +2933,44 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipNext',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 10 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 1000,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
     panelPosition: 'bottom-left'
   },
   {
     id: 19,
-    name: 'atpattach_step19_finish',
+    name: 'atpattach_step19_next2',
     title: 'atpattachStep19Title',
     description: 'atpattachStep19Description',
     target: {
-      selector: 'span.ms-Button-label.label-788#id__1150',
+      selector: 'span.ms-Button-label.label-788#id__769',
+      textMatch: /Next/i,
+      fallback: [
+        'span.ms-Button-label:contains("Next")',
+        'button[aria-label*="Next"]',
+        'button:contains("Next")'
+      ]
+    },
+    tooltip: 'tooltipNext',
+    autoClick: false,
+    autoAdvance: true,
+    autoAdvanceDelay: 10000,  // 10 saniye
+    validation: () => true,
+    realTimeValidation: true,
+    realTimeValidationInterval: 500,  // 100 → 500ms
+    waitAfterClick: 3000,  // 1s → 3s
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 20,
+    name: 'atpattach_step20_finish',
+    title: 'atpattachStep20Title',
+    description: 'atpattachStep20Description',
+    target: {
+      selector: 'span.ms-Button-label.label-788#id__769',
       textMatch: /Finish/i,
       fallback: [
         'span.ms-Button-label:contains("Finish")',
@@ -2870,15 +2981,15 @@ const ATP_ATTACHMENT_BYPASS_STEPS = [
     tooltip: 'tooltipClickFinish',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 3000,
+    autoAdvanceDelay: 10000,  // 10 saniye
     validation: () => true,
     realTimeValidation: true,
-    realTimeValidationInterval: 100,
-    waitAfterClick: 2000,
+    realTimeValidationInterval: 500,
+    waitAfterClick: 3000,
     panelPosition: 'bottom-left'
   },
   {
-    id: 20,
+    id: 21,
     name: 'atpattach_summary',
     title: 'atpattachSummaryTitle',
     description: 'atpattachSummaryDescription',
@@ -3063,7 +3174,6 @@ const AnimationUtils = {
     }
   }
 }
-
 /* ========== UTILITY FUNCTIONS ========== */
 const Utils = {
   async sleep(ms) {
@@ -3242,42 +3352,30 @@ const Utils = {
 /* ========== SCREENSHOT MANAGER ========== */
 class ScreenshotManager {
   constructor() {
+    // Screenshot özelliği devre dışı bırakıldı
     this.screenshots = {}
   }
   
   async init() {
-    this.screenshots = await Storage.get(STORAGE_KEYS.SCREENSHOTS) || {}
+    // Artık storage'dan screenshot okunmuyor
+    this.screenshots = {}
   }
   
   async capture(stepName) {
-    try {
-      return new Promise((resolve) => {
-        chrome.runtime.sendMessage({
-          action: 'captureScreenshot',
-          stepName: stepName
-        }, (response) => {
-          resolve(response?.dataUrl || null)
-        })
-      })
-    } catch (error) {
-      console.error("[Keepnet] Screenshot error:", error)
-      return null
-    }
+    // Screenshot alma tamamen kapalı
+    console.log('[Keepnet] Screenshot capture disabled:', stepName)
+    return null
   }
   
   async save(stepName, dataUrl, validationResult = {}) {
-    this.screenshots[stepName] = {
-      dataUrl,
-      timestamp: new Date().toISOString(),
-      validation: validationResult
-    }
-    
-    await Storage.set(STORAGE_KEYS.SCREENSHOTS, this.screenshots)
-    console.log(`[Keepnet] Screenshot saved: ${stepName}.png`)
+    // Screenshot kaydetme tamamen kapalı
+    console.log('[Keepnet] Screenshot save disabled:', stepName)
+    return
   }
   
   getAll() {
-    return this.screenshots
+    // Her zaman boş döndür
+    return {}
   }
 }
 
@@ -3398,7 +3496,6 @@ class AutoClickEngine {
     }
   }
 }
-
 /* ========== FLOATING PANEL (SOL-ALT) ========== */
 class FloatingPanel {
   constructor() {
@@ -3408,6 +3505,7 @@ class FloatingPanel {
     this.footer = null
     this.isDragging = false
     this.dragOffset = { x: 0, y: 0 }
+    this.dragButtonPressed = false
     this.position = { x: 20, y: window.innerHeight - PANEL_SIZE.height - 20 } // SOL-ALT
     this.isDraggingEnabled = true  // Dragging kontrolü için flag
     
@@ -3606,15 +3704,31 @@ class FloatingPanel {
       const inLangSelector = (e.target && (e.target.id === 'keepnet-language-selector' || (e.target.closest && e.target.closest('#keepnet-language-selector'))))
       if (inLangSelector) return
       if (!this.isDraggingEnabled) return  // Dragging devre dışıysa çık
+      
+      // Sadece sol mouse button ile sürükleme başlat
+      if (e.button !== 0) return
+      
       this.isDragging = true
       this.dragOffset = {
         x: e.clientX - this.position.x,
         y: e.clientY - this.position.y
       }
+      
+      // Mouse button'ı takip et
+      this.dragButtonPressed = true
+      
+      e.preventDefault() // Text selection'ı engelle
     })
     
-    document.addEventListener('mousemove', (e) => {
+    // Mouse move handler
+    const handleMouseMove = (e) => {
       if (!this.isDragging) return
+      
+      // Mouse button basılı değilse sürüklemeyi durdur
+      if (e.buttons === 0 || e.which === 0) {
+        this.stopDragging()
+        return
+      }
       
       this.position = {
         x: e.clientX - this.dragOffset.x,
@@ -3622,14 +3736,37 @@ class FloatingPanel {
       }
       
       this.updatePosition()
-    })
+    }
     
-    document.addEventListener('mouseup', () => {
+    document.addEventListener('mousemove', handleMouseMove)
+    
+    // Mouse up handler - capture phase'de dinle
+    const handleMouseUp = (e) => {
       if (this.isDragging) {
-        this.isDragging = false
-        this.saveState()
+        this.stopDragging()
       }
-    })
+    }
+    
+    document.addEventListener('mouseup', handleMouseUp, { capture: true })
+    
+    // Mouse leave handler - panel dışına çıkınca sürüklemeyi durdur
+    if (this.container) {
+      this.container.addEventListener('mouseleave', (e) => {
+        // Eğer mouse panel dışına çıktıysa ve sürükleme aktifse
+        if (this.isDragging && !this.container.contains(e.relatedTarget)) {
+          // Mouse button hala basılı mı kontrol et
+          // Eğer basılı değilse sürüklemeyi durdur
+          setTimeout(() => {
+            if (this.isDragging) {
+              this.stopDragging()
+            }
+          }, 100)
+        }
+      })
+    }
+    
+    // Global mouse up - her yerde mouse button bırakıldığında
+    window.addEventListener('mouseup', handleMouseUp, { capture: true })
     
     // Close button
     const closeBtn = document.getElementById('keepnet-close-btn')
@@ -3637,7 +3774,7 @@ class FloatingPanel {
       closeBtn.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()
-        console.log("[Keepnet] Close button clicked")
+        console.log("[Keepnet] Close button clicked - cleaning up...")
         
         // TÜM HIGHLIGHT'LARI TEMİZLE
         if (window.assistant) {
@@ -3654,7 +3791,20 @@ class FloatingPanel {
         const allTooltips = document.querySelectorAll('.keepnet-tooltip')
         allTooltips.forEach(t => t.remove())
         
+        // Panel'i gizle
         this.container.style.display = 'none'
+        
+        // ✅ IMPORTANT: Global assistant instance'ları temizle
+        // Bu sayede tekrar eklenti butonuna tıklayınca yeni bir instance oluşturulur
+        window.assistantInstance = null
+        window.assistant = null
+        
+        // Module-level assistantInstance'ı da temizle
+        if (typeof assistantInstance !== 'undefined') {
+          assistantInstance = null
+        }
+        
+        console.log("[Keepnet] Panel closed and all instances cleared")
       })
     }
     
@@ -3677,6 +3827,15 @@ class FloatingPanel {
         this.isDraggingEnabled = true
         this.header.style.cursor = 'move'
       })
+    }
+  }
+  
+  stopDragging() {
+    if (this.isDragging) {
+      this.isDragging = false
+      this.dragButtonPressed = false
+      this.saveState()
+      console.log('[Keepnet] Dragging stopped')
     }
   }
   
@@ -3758,6 +3917,27 @@ class FloatingPanel {
     ;['click','mousedown','mouseup','pointerdown','pointerup','touchstart','touchend'].forEach(evt => {
       keepnetPanel.addEventListener(evt, stop, false)
     })
+
+    // Exchange panel açıkken Keepnet paneline tıklanınca Exchange panel'inin kapanmasını engelle
+    // Ama Keepnet panelindeki butonların çalışmasına izin ver
+    const preventExchangePanelClose = (e) => {
+      // Eğer tıklama Keepnet panelinden geliyorsa
+      if (keepnetPanel.contains(e.target)) {
+        // Exchange panel'i açık mı kontrol et
+        const exchangeForm = document.querySelector('[role="dialog"], .ms-Panel, [data-automation-id="panel"], .ms-Modal')
+        if (exchangeForm) {
+          // Sadece Exchange panel'inin backdrop/overlay click handler'ını engelle
+          // Keepnet panelindeki butonların handler'ları çalışmaya devam etsin
+          // Capture phase'de sadece stopPropagation kullan, stopImmediatePropagation kullanma
+          e.stopPropagation()
+          console.log('[Keepnet] Prevented Exchange panel close on Keepnet panel click')
+        }
+      }
+    }
+    
+    // Capture phase'de dinle - Exchange panel'inin handler'ından önce çalışsın
+    // Ama sadece mousedown'da, click'te değil - böylece Keepnet butonları çalışır
+    document.addEventListener('mousedown', preventExchangePanelClose, true)
 
     // Panel dışına tıklanırsa sadece kendi panel durumumuzu yönet (MS event'lerine dokunma)
     document.addEventListener('click', (e) => {
@@ -3883,7 +4063,6 @@ class FloatingPanel {
     // Save new position
     this.saveState()
   }
-  
   injectStyles() {
     if (document.getElementById('keepnet-styles')) {
       console.log("[Keepnet] Styles already injected")
@@ -4299,7 +4478,6 @@ class KeepnetAssistant {
       alert("Keepnet Asistanı başlatılamadı. Lütfen sayfayı yenileyip tekrar deneyin.\n\nHata: " + error.message)
     }
   }
-  
   setupGlobalFunctions() {
     const assistant = this
     
@@ -4645,7 +4823,6 @@ class KeepnetAssistant {
     })
         console.log('[Keepnet] Language selector handler attached')
   }
-  
   async executeStep(stepNum, customSteps = null) {
     try {
       // ÖNCELİKLE HER ŞEYİ TEMİZLE!
@@ -4922,8 +5099,32 @@ class KeepnetAssistant {
         return
       }
       
-      // Wait a bit for page to settle
-      await Utils.sleep(500)
+      // ÖNEMLİ: Sayfa tam yüklenmeyi bekle!
+      console.log(`[Keepnet] Waiting for page to be fully loaded before showing highlight...`)
+      
+      // 1. Document ready kontrolü
+      if (document.readyState !== 'complete') {
+        console.log(`[Keepnet] Document not ready yet, waiting...`)
+        await new Promise(resolve => {
+          if (document.readyState === 'complete') {
+            resolve()
+          } else {
+            window.addEventListener('load', resolve, { once: true })
+            // Maximum 5 saniye bekle
+            setTimeout(resolve, 5000)
+          }
+        })
+      }
+      
+      // 2. Network idle kontrolü (daha az istekler olana kadar bekle)
+      console.log(`[Keepnet] Waiting for network to settle...`)
+      await Utils.sleep(1500)  // 500ms → 1500ms (sayfa yüklenme için daha fazla zaman)
+      
+      // 3. Angular/React rendering için ek bekle
+      console.log(`[Keepnet] Waiting for framework rendering to complete...`)
+      await Utils.sleep(1000)  // Ek 1 saniye bekle
+      
+      console.log(`[Keepnet] Page fully loaded, proceeding with step execution`)
       
       // Find and (optionally) highlight target
       if (step.target) {
@@ -4937,44 +5138,74 @@ class KeepnetAssistant {
         if (element) {
           Utils.scrollToElement(element)
           
+          // findCheckboxFromRow flag'i varsa, satırdan checkbox'ı bul
+          let clickTarget = element
+          if (step.findCheckboxFromRow) {
+            console.log('[Keepnet] findCheckboxFromRow flag active, finding checkbox from row...')
+            
+            // Satırın parent container'ını bul (DetailsRow)
+            let rowContainer = element.closest('div[data-automationid="DetailsRow"]') ||
+                              element.closest('div.ms-DetailsRow') ||
+                              element.closest('div[role="row"]') ||
+                              element.parentElement?.parentElement
+            
+            if (rowContainer) {
+              // Container içinde checkbox'ı bul - yeni HTML yapısına göre
+              const checkbox = rowContainer.querySelector('div[role="radio"][data-automationid="DetailsRowCheck"][data-selection-toggle="true"]') ||
+                               rowContainer.querySelector('div[aria-label="Satır seç"][data-automationid="DetailsRowCheck"][data-selection-toggle="true"]') ||
+                               rowContainer.querySelector('div.ms-DetailsRow-check[data-automationid="DetailsRowCheck"][data-selection-toggle="true"]') ||
+                               rowContainer.querySelector('div[role="radio"][data-automationid="DetailsRowCheck"]')
+              
+              if (checkbox) {
+                console.log('[Keepnet] Checkbox found in row, using it as click target')
+                clickTarget = checkbox
+              } else {
+                console.warn('[Keepnet] Checkbox not found in row container, using row element')
+              }
+            } else {
+              console.warn('[Keepnet] Row container not found, using row element')
+            }
+          }
+          
           // Bazı adımlarda highlight istenmiyor (ör. WF2 Step 2 checkbox)
           if (!step.disableHighlight) {
-          this.highlightElement(element, i18n(step.tooltip))
+          this.highlightElement(clickTarget, i18n(step.tooltip))
           } else {
             console.log('[Keepnet] Highlight disabled for this step. Waiting for manual user action.')
           }
           
           // Auto-click?
           if (step.autoClick && !step.disableHighlight) {
-            this.autoClick.start(element, AUTO_CLICK_TIMEOUT, async () => {
+            this.autoClick.start(clickTarget, AUTO_CLICK_TIMEOUT, async () => {
               await this.onElementClicked(step)
             }, this.workflowName)
           }
           
           // Manual click listener
           if (!step.disableHighlight) {
-          element.addEventListener('click', async () => {
+          clickTarget.addEventListener('click', async () => {
             this.autoClick.stop()
             await this.onElementClicked(step)
           }, { once: true })
           }
           
-          // WORKFLOW 4-5-6 için 7 saniye sonra otomatik geçiş - AMA manualTimer varsa veya autoAdvance false ise ÇALIŞMA!
+          // WORKFLOW 4-5-6 için otomatik geçiş - AMA manualTimer varsa veya autoAdvance false ise ÇALIŞMA!
           // WORKFLOW 1 Step 8-9-10 için auto-advance YAPMA (manuel Continue butonu gerekli)
           if ((this.workflowName === 'WORKFLOW_4' || this.workflowName === 'WORKFLOW_5' || this.workflowName === 'WORKFLOW_6') 
               && !step.isSummary 
               && !step.isInfoCard 
               && !step.manualTimer
               && step.autoAdvance !== false) {  // autoAdvance false ise auto-advance YAPMA!
-            console.log(`[Keepnet] ${this.workflowName} Step ${step.id}: Starting 7-second auto-advance timer`)
+            const autoDelay = step.autoAdvanceDelay || 12000  // 7000 → 12000 (default değer daha yavaş)
+            console.log(`[Keepnet] ${this.workflowName} Step ${step.id}: Starting auto-advance timer (${autoDelay / 1000}s)`)
             autoAdvanceTimer = setTimeout(async () => {
-              console.log(`[Keepnet] ${this.workflowName} Step ${step.id}: 7 seconds elapsed, auto-advancing to next step`)
+              console.log(`[Keepnet] ${this.workflowName} Step ${step.id}: Auto-advance timeout elapsed, going to next step`)
               // Clear any highlights
               this.clearHighlight()
               this.autoClick.stop()
               // Advance to next step
               await this.nextStep()
-            }, 7000) // 7 seconds
+            }, autoDelay)
           }
         } else {
           const missingElementDetails = {
@@ -4992,7 +5223,6 @@ class KeepnetAssistant {
           if (step.name === 'safelinks_step4_safe_links' && step.licenseCheck) {
             console.log("[Keepnet] Safe Links not found - checking license requirement")
             this.panel.showError(`${i18n('safelinksLicenseNotFoundTitle')}
-
 ${i18n(step.licenseCheck.message)}
 
 ${i18n(step.licenseCheck.skipMessage)}`)
@@ -5068,19 +5298,25 @@ ${i18n(step.licenseCheck.skipMessage)}`)
   }
   
   renderStepContent(step) {
+    // Summary adımları için küçük font, diğerleri için büyük
+    const isSummary = step.isSummary
+    const titleSize = isSummary ? '15px' : '18px'
+    const descSize = isSummary ? '13px' : '15px'
+    const titleMargin = isSummary ? '8px' : '12px'
+    const descMargin = isSummary ? '12px' : '16px'
+    
     let html = `
       <div class="keepnet-step-content">
-        <h3 style="margin: 0 0 8px 0; font-size: 15px; color: #FFFFFF;">
+        <h3 style="margin: 0 0 ${titleMargin} 0; font-size: ${titleSize}; color: #FFFFFF; font-weight: 600; line-height: 1.4;">
           ${i18n(step.title)}
         </h3>
-        <p style="margin: 0 0 12px 0; font-size: 13px; color: #E2E8F0; line-height: 1.5;">
+        <p style="margin: 0 0 ${descMargin} 0; font-size: ${descSize}; color: #E2E8F0; line-height: 1.6;">
           ${i18n(step.description)}
         </p>
     `
     
     // Manual timer görselleştirmesi - KOMPAKT ve küçük
-    // DİKKAT: Workflow 5 ve 6'da Step 6'da timer gösterilmemeli
-    if (step.manualTimer && !((this.workflowName === 'WORKFLOW_5' || this.workflowName === 'WORKFLOW_6') && step.id === 6 && (step.name === 'atplink_step6_select_sender' || step.name === 'atpattach_step6_select_sender'))) {
+    if (step.manualTimer) {
       const totalMinutes = Math.floor(step.manualTimer / 60000)
       const totalSeconds = Math.floor((step.manualTimer % 60000) / 1000)
       
@@ -5145,11 +5381,8 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       `
     }
     
-    // Premium warning for workflow 4, 5, 6 - step 1
-    const needsWarning = (step.id === 1) && 
-                         (step.name === 'spambypass_step1_info' || 
-                          step.name === 'atplink_step1_info' || 
-                          step.name === 'atpattach_step1_info')
+    // Premium warning for workflow 4, 5, 6 - step 1 - REMOVED
+    const needsWarning = false  // Uyarı mesajı kaldırıldı
     
     if (needsWarning) {
       html += `
@@ -5431,7 +5664,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       `
     }
     
-    // IP listesi gösterimi - showIPList flag'ine göre - KOMPAKT Notion-style
+    // IP listesi gösterimi - showIPList flag'ine göre - Modern Notion-style
     // DİKKAT: WORKFLOW_4 Step 9 için buraya gelmemeli (yukarıda özel kod var)
     // DİKKAT: WORKFLOW_5 Step 10 için IP listesi görünmemeli (hideIPList flag var)
     // DİKKAT: Workflow 5 ve 6'da Step 6'da IP listesi gösterilmemeli
@@ -5441,238 +5674,234 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       html += `
         <div style="
           background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%);
-          border-radius: 8px;
-          padding: 12px;
-          margin-bottom: 8px;
-          box-shadow: 0 2px 8px rgba(74, 158, 255, 0.25), 0 0 0 1px rgba(74, 158, 255, 0.2);
+          border-radius: 12px;
+          padding: 20px;
+          margin-bottom: 16px;
+          box-shadow: 0 4px 16px rgba(74, 158, 255, 0.3), 0 0 0 1px rgba(74, 158, 255, 0.2);
           border: 1px solid rgba(74, 158, 255, 0.3);
         ">
           <div style="
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 16px;
           ">
             <div style="
-              width: 22px;
-              height: 22px;
-              background: rgba(74, 158, 255, 0.2);
-              border-radius: 5px;
+              width: 36px;
+              height: 36px;
+              background: rgba(74, 158, 255, 0.25);
+              border-radius: 8px;
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 13px;
-              border: 1px solid rgba(74, 158, 255, 0.3);
+              font-size: 18px;
+              border: 1px solid rgba(74, 158, 255, 0.4);
               flex-shrink: 0;
-            "></div>
+            ">📋</div>
             <div style="
-              font-size: 12px;
+              font-size: 16px;
               font-weight: 700;
               color: white;
-              letter-spacing: 0.2px;
+              letter-spacing: 0.3px;
             ">${i18n('whiteListIPs')}</div>
           </div>
           
           <div style="
-            background: rgba(74, 158, 255, 0.1);
-            border-radius: 5px;
-            padding: 9px;
-            max-height: 95px;
-            overflow-y: auto;
+            background: rgba(74, 158, 255, 0.08);
+            border-radius: 8px;
+            padding: 16px;
             border: 1px solid rgba(74, 158, 255, 0.2);
           ">
             ${ips.map((ip, index) => `
               <div style="
                 display: flex;
                 align-items: center;
-                gap: 5px;
-                padding: 4px 6px;
-                background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.08)' : 'transparent'};
-                border-radius: 4px;
-                margin-bottom: ${index < ips.length - 1 ? '2px' : '0'};
+                gap: 12px;
+                padding: 12px 14px;
+                background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.12)' : 'rgba(74, 158, 255, 0.05)'};
+                border-radius: 8px;
+                margin-bottom: ${index < ips.length - 1 ? '8px' : '0'};
+                transition: all 0.2s ease;
+                border-left: 3px solid rgba(74, 158, 255, 0.4);
               ">
                 <div style="
-                  width: 4px;
-                  height: 4px;
+                  width: 8px;
+                  height: 8px;
                   background: #4ade80;
                   border-radius: 50%;
-                  box-shadow: 0 0 4px rgba(74, 222, 128, 0.6);
+                  box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
                   flex-shrink: 0;
                 "></div>
                 <div style="
                   font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
-                  font-size: 12px;
+                  font-size: 15px;
                   font-weight: 600;
                   color: white;
-                  letter-spacing: 0.3px;
+                  letter-spacing: 0.5px;
+                  flex: 1;
                 ">${ip}</div>
             </div>
             `).join('')}
           </div>
-          
-          
         </div>
       `
     }
     
-    // IP listesi gösterimi - SADECE Step 9 için (Workflow 1) - KOMPAKT Notion-style
+    // IP listesi gösterimi - SADECE Step 9 için (Workflow 1) - Modern Notion-style
     if (step.id === 8 && step.name === 'step9_ip_input' && this.workflowName === 'WORKFLOW_1') {
       const ips = ['149.72.161.59', '149.72.42.201', '149.72.154.87']
       
       html += `
         <div style="
           background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%);
-          border-radius: 8px;
-          padding: 12px;
-          margin-bottom: 8px;
-          box-shadow: 0 2px 8px rgba(74, 158, 255, 0.25), 0 0 0 1px rgba(74, 158, 255, 0.2);
+          border-radius: 12px;
+          padding: 20px;
+          margin-bottom: 16px;
+          box-shadow: 0 4px 16px rgba(74, 158, 255, 0.3), 0 0 0 1px rgba(74, 158, 255, 0.2);
           border: 1px solid rgba(74, 158, 255, 0.3);
         ">
           <div style="
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 16px;
           ">
             <div style="
-              width: 22px;
-              height: 22px;
-              background: rgba(74, 158, 255, 0.2);
-              border-radius: 5px;
+              width: 36px;
+              height: 36px;
+              background: rgba(74, 158, 255, 0.25);
+              border-radius: 8px;
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 13px;
-              border: 1px solid rgba(74, 158, 255, 0.3);
+              font-size: 18px;
+              border: 1px solid rgba(74, 158, 255, 0.4);
               flex-shrink: 0;
-            "></div>
+            ">📋</div>
             <div style="
-              font-size: 12px;
+              font-size: 16px;
               font-weight: 700;
               color: white;
-              letter-spacing: 0.2px;
+              letter-spacing: 0.3px;
             ">${i18n('whiteListIPs')}</div>
           </div>
           
           <div style="
-            background: rgba(74, 158, 255, 0.1);
-            border-radius: 5px;
-            padding: 9px;
-            max-height: 95px;
-            overflow-y: auto;
+            background: rgba(74, 158, 255, 0.08);
+            border-radius: 8px;
+            padding: 16px;
             border: 1px solid rgba(74, 158, 255, 0.2);
           ">
             ${ips.map((ip, index) => `
               <div style="
                 display: flex;
                 align-items: center;
-                gap: 5px;
-                padding: 4px 6px;
-                background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.08)' : 'transparent'};
-                border-radius: 4px;
-                margin-bottom: ${index < ips.length - 1 ? '2px' : '0'};
+                gap: 12px;
+                padding: 12px 14px;
+                background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.12)' : 'rgba(74, 158, 255, 0.05)'};
+                border-radius: 8px;
+                margin-bottom: ${index < ips.length - 1 ? '8px' : '0'};
+                transition: all 0.2s ease;
+                border-left: 3px solid rgba(74, 158, 255, 0.4);
               ">
                 <div style="
-                  width: 4px;
-                  height: 4px;
+                  width: 8px;
+                  height: 8px;
                   background: #4ade80;
                   border-radius: 50%;
-                  box-shadow: 0 0 4px rgba(74, 222, 128, 0.6);
+                  box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
                   flex-shrink: 0;
                 "></div>
                 <div style="
                   font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
-                  font-size: 12px;
+                  font-size: 15px;
                   font-weight: 600;
                   color: white;
-                  letter-spacing: 0.3px;
+                  letter-spacing: 0.5px;
+                  flex: 1;
                 ">${ip}</div>
             </div>
             `).join('')}
           </div>
-          
-          
         </div>
       `
     }
-    
-    // WORKFLOW 4 - Step 9: IP listesi (TEK! showIPList flag'i ile çakışmasın) - KOMPAKT
+    // WORKFLOW 4 - Step 9: IP listesi (TEK! showIPList flag'i ile çakışmasın) - Modern Notion-style
     if (this.workflowName === 'WORKFLOW_4' && step.id === 9 && step.name === 'spambypass_step9_enter_ip') {
       const ips = ['149.72.161.59', '149.72.42.201', '149.72.154.87']
       
       html += `
         <div style="
           background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%);
-          border-radius: 8px;
-          padding: 10px;
-          margin-bottom: 8px;
-          box-shadow: 0 2px 8px rgba(74, 158, 255, 0.25), 0 0 0 1px rgba(74, 158, 255, 0.2);
+          border-radius: 12px;
+          padding: 20px;
+          margin-bottom: 16px;
+          box-shadow: 0 4px 16px rgba(74, 158, 255, 0.3), 0 0 0 1px rgba(74, 158, 255, 0.2);
           border: 1px solid rgba(74, 158, 255, 0.3);
         ">
           <div style="
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 16px;
           ">
             <div style="
-              width: 20px;
-              height: 20px;
-              background: rgba(74, 158, 255, 0.2);
-              border-radius: 5px;
+              width: 36px;
+              height: 36px;
+              background: rgba(74, 158, 255, 0.25);
+              border-radius: 8px;
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 12px;
-              border: 1px solid rgba(74, 158, 255, 0.3);
+              font-size: 18px;
+              border: 1px solid rgba(74, 158, 255, 0.4);
               flex-shrink: 0;
-            "></div>
+            ">📋</div>
             <div style="
-              font-size: 11px;
+              font-size: 16px;
               font-weight: 700;
               color: white;
-              letter-spacing: 0.2px;
+              letter-spacing: 0.3px;
             ">${i18n('whiteListIPs')}</div>
           </div>
           
           <div style="
-            background: rgba(74, 158, 255, 0.1);
-            border-radius: 5px;
-            padding: 8px;
-            max-height: 85px;
-            overflow-y: auto;
+            background: rgba(74, 158, 255, 0.08);
+            border-radius: 8px;
+            padding: 16px;
             border: 1px solid rgba(74, 158, 255, 0.2);
           ">
             ${ips.map((ip, index) => `
               <div style="
                 display: flex;
                 align-items: center;
-                gap: 5px;
-                padding: 3px 5px;
-                background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.08)' : 'transparent'};
-                border-radius: 4px;
-                margin-bottom: ${index < ips.length - 1 ? '2px' : '0'};
+                gap: 12px;
+                padding: 12px 14px;
+                background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.12)' : 'rgba(74, 158, 255, 0.05)'};
+                border-radius: 8px;
+                margin-bottom: ${index < ips.length - 1 ? '8px' : '0'};
+                transition: all 0.2s ease;
+                border-left: 3px solid rgba(74, 158, 255, 0.4);
               ">
                 <div style="
-                  width: 4px;
-                  height: 4px;
+                  width: 8px;
+                  height: 8px;
                   background: #4ade80;
                   border-radius: 50%;
-                  box-shadow: 0 0 4px rgba(74, 222, 128, 0.6);
+                  box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
                   flex-shrink: 0;
                 "></div>
                 <div style="
                   font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
-                  font-size: 11px;
+                  font-size: 15px;
                   font-weight: 600;
                   color: white;
-                  letter-spacing: 0.3px;
+                  letter-spacing: 0.5px;
+                  flex: 1;
                 ">${ip}</div>
-          </div>
+            </div>
             `).join('')}
           </div>
-          
-          
         </div>
       `
     }
@@ -5718,10 +5947,10 @@ ${i18n(step.licenseCheck.skipMessage)}`)
                 border: 1px solid rgba(74, 158, 255, 0.3);
               ">📋</div>
               <div style="
-                font-size: 15px;
+                font-size: 16px;
                 font-weight: 700;
                 color: white;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.3px;
               ">${i18n('whiteListIPs')}</div>
             </div>
             
@@ -5738,24 +5967,28 @@ ${i18n(step.licenseCheck.skipMessage)}`)
                   display: flex;
                   align-items: center;
                   gap: 12px;
-                  padding: 12px;
-                  background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.1)' : 'transparent'};
+                  padding: 12px 14px;
+                  background: ${index % 2 === 0 ? 'rgba(74, 158, 255, 0.12)' : 'rgba(74, 158, 255, 0.05)'};
                   border-radius: 8px;
                   margin-bottom: ${index < ips.length - 1 ? '8px' : '0'};
+                  transition: all 0.2s ease;
+                  border-left: 3px solid rgba(74, 158, 255, 0.4);
                 ">
                   <div style="
-                    width: 6px;
-                    height: 6px;
+                    width: 8px;
+                    height: 8px;
                     background: #4ade80;
                     border-radius: 50%;
-                    box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+                    box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
+                    flex-shrink: 0;
                   "></div>
                   <div style="
                     font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
-                    font-size: 14px;
+                    font-size: 15px;
                     font-weight: 600;
                     color: white;
-                    letter-spacing: 1px;
+                    letter-spacing: 0.5px;
+                    flex: 1;
                   ">${ip}</div>
                 </div>
               `).join('')}
@@ -5912,31 +6145,46 @@ ${i18n(step.licenseCheck.skipMessage)}`)
                   container?.querySelector('textarea') ||
                   container?.querySelector('input[type="text"]')
       
-      // Container'ı yukarı çıkarak bul (3 level kadar)
+      // Container'ı yukarı çıkarak bul (5 level kadar, daha fazla)
       if (!input && container) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
           container = container.parentElement
-      if (container) {
+          if (container) {
             input = container.querySelector('input.ms-BasePicker-input') || 
-                      container.querySelector('input[role="combobox"]') ||
+                    container.querySelector('input[role="combobox"]') ||
                     container.querySelector('textarea.ms-TextField-field') ||
                     container.querySelector('textarea') ||
-                      container.querySelector('input[type="text"]')
+                    container.querySelector('input[type="text"]') ||
+                    container.querySelector('input[aria-label*="IP"]') ||
+                    container.querySelector('input[aria-label*="URL"]') ||
+                    container.querySelector('input[data-automation-id*="Input"]')
             if (input) break
           }
         }
       }
+      
+      // Hala bulunamadıysa, tüm panel içinde ara
+      if (!input) {
+        const panel = document.querySelector('.ms-Panel-main, [role="dialog"]')
+        if (panel) {
+          input = panel.querySelector('input.ms-BasePicker-input') || 
+                  panel.querySelector('input[role="combobox"]') ||
+                  panel.querySelector('textarea.ms-TextField-field') ||
+                  panel.querySelector('input[type="text"]:not([type="hidden"])')
+        }
+      }
         
-        if (input) {
-          console.log("[Keepnet] Input found, focusing...")
-          input.focus()
-          input.click()
-          
-          // Highlight'ı input'a taşı
-          this.clearHighlight()
-          this.highlightElement(input, `${i18n(step.tooltip)} (${i18n('clickHere')})`)
+      if (input) {
+        console.log("[Keepnet] Input found, focusing...")
+        input.focus()
+        input.click()
+        
+        // Highlight'ı input'a taşı
+        this.clearHighlight()
+        this.highlightElement(input, `${i18n(step.tooltip)} (${i18n('clickHere')})`)
       } else {
-        console.warn("[Keepnet] Input not found for label step")
+        console.warn("[Keepnet] Input not found for label step, but continuing...")
+        // Input bulunamasa bile devam et (hata mesajı gösterme)
       }
     }
     
@@ -6199,7 +6447,6 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       console.log(`[Keepnet] Screenshot saved: ${stepName}.png`)
     }
   }
-  
   async nextStep() {
     console.log("[Keepnet] Next step clicked")
     
@@ -6225,6 +6472,214 @@ ${i18n(step.licenseCheck.skipMessage)}`)
     
     // Current step validation (sadece uyarı, bloklama yok)
     const currentStepConfig = this.currentWorkflow[this.currentStep - 1]
+    
+    // ÖNEMLİ: Workflow 1 için Domain, IP ve URL input validation (ZORUNLU)
+    if (this.workflowName === 'WORKFLOW_1' && currentStepConfig) {
+      const stepName = currentStepConfig.name
+      
+      // Step 8: Domain girişi kontrolü
+      if (stepName === 'step8_domains_input') {
+        console.log('[Keepnet] Checking domain input...')
+        const panel = document.querySelector('.ms-Panel-main, [role="dialog"]')
+        if (panel) {
+          // Domain picker içindeki chip/tag'leri kontrol et
+          const domainChips = panel.querySelectorAll('.ms-BasePicker-text .ms-PickerPersona-container, .ms-TagItem')
+          console.log('[Keepnet] Domain chips found:', domainChips.length)
+          
+          if (domainChips.length === 0) {
+            alert(i18n('validationNoDomains'))
+            return // Bir sonraki adıma geçme!
+          }
+        }
+      }
+      
+      // Step 9: IP girişi kontrolü
+      if (stepName === 'step9_ip_input') {
+        console.log('[Keepnet] Checking IP input...')
+        const panel = document.querySelector('.ms-Panel-main, [role="dialog"]')
+        if (panel) {
+          // IP picker içindeki chip/tag'leri kontrol et - daha geniş selector
+          const ipChips = panel.querySelectorAll('.ms-BasePicker-text .ms-PickerPersona-container, .ms-TagItem, .ms-Persona-primaryText, [data-automation-id="FieldRendererAnchor-SenderIpRanges"] .ms-BasePicker-text > div')
+          console.log('[Keepnet] IP chips found:', ipChips.length)
+          
+          // Alternatif: Text content kontrolü
+          const ipText = panel.textContent || panel.innerText || ''
+          const hasIPs = /149\.72\.\d+\.\d+/.test(ipText) || ipChips.length > 0
+          
+          if (!hasIPs) {
+            alert(i18n('validationNoIPs'))
+            return // Bir sonraki adıma geçme!
+          }
+        }
+      }
+      
+      // Step 10: URL girişi kontrolü
+      if (stepName === 'step10_simulation_urls_input') {
+        console.log('[Keepnet] Checking URL input...')
+        const panel = document.querySelector('.ms-Panel-main, [role="dialog"]')
+        if (panel) {
+          // URL picker içindeki chip/tag'leri kontrol et - daha geniş selector
+          const urlChips = panel.querySelectorAll('.ms-BasePicker-text .ms-PickerPersona-container, .ms-TagItem, .ms-Persona-primaryText, [data-automation-id="FieldRendererAnchor-AllowedUrls"] .ms-BasePicker-text > div')
+          console.log('[Keepnet] URL chips found:', urlChips.length)
+          
+          // Alternatif: Text content kontrolü
+          const urlText = panel.textContent || panel.innerText || ''
+          const hasURLs = /https?:\/\//.test(urlText) || urlChips.length > 0
+          
+          if (!hasURLs) {
+            alert(i18n('validationNoURLs'))
+            return // Bir sonraki adıma geçme!
+          }
+        }
+      }
+    }
+    
+    // ÖNEMLİ: Workflow 4 için IP ve Header girişi validation (ZORUNLU)
+    if (this.workflowName === 'WORKFLOW_4' && currentStepConfig) {
+      const stepName = currentStepConfig.name
+      
+      // Step 5: Rule Name kontrolü
+      if (stepName === 'spambypass_step5_rule_name') {
+        console.log('[Keepnet] Checking rule name input...')
+        const ruleNameInput = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"], input[maxlength="64"]')
+        if (ruleNameInput && ruleNameInput.value.trim() === '') {
+          alert(i18n('validationNoRuleName'))
+          return
+        }
+      }
+      
+      // Step 9: IP girişi kontrolü
+      if (stepName === 'spambypass_step9_enter_ip') {
+        console.log('[Keepnet] Checking IP input...')
+        // IP'lerin eklenmiş olup olmadığını kontrol et (form içinde)
+        const ipContainer = document.querySelector('[data-automation-id="SenderIpRanges"], .ms-TextField-wrapper')
+        if (ipContainer) {
+          // Eklenmiş IP chip/tag'lerini bul
+          const ipTags = ipContainer.querySelectorAll('.ms-TagItem, [class*="tagItem"]')
+          console.log('[Keepnet] IP tags found:', ipTags.length)
+          
+          if (ipTags.length === 0) {
+            alert(i18n('validationNoIPs'))
+            return
+          }
+        }
+      }
+      
+      // Step 20: Header Name kontrolü (X-MS-Exchange-Organization-BypassClutter)
+      if (stepName === 'spambypass_step20_enter_bypass_clutter') {
+        console.log('[Keepnet] Checking header name input...')
+        const headerInput = document.querySelector('input[data-automation-id="SetHeader_TextField"], input[placeholder*="header"]')
+        if (headerInput && headerInput.value.trim() === '') {
+          alert(i18n('validationNoHeaderName'))
+          return
+        }
+      }
+    }
+    
+    // ÖNEMLİ: Workflow 5 için IP ve Header girişi validation (ZORUNLU)
+    if (this.workflowName === 'WORKFLOW_5' && currentStepConfig) {
+      const stepName = currentStepConfig.name
+      
+      // Step 4: Rule Name kontrolü
+      if (stepName === 'atplink_step4_rule_name') {
+        console.log('[Keepnet] Checking rule name input...')
+        const ruleNameInput = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"], input[maxlength="64"]')
+        if (ruleNameInput && ruleNameInput.value.trim() === '') {
+          alert(i18n('validationNoRuleName'))
+          return
+        }
+      }
+      
+      // Step 8: IP girişi kontrolü
+      if (stepName === 'atplink_step8_enter_ip') {
+        console.log('[Keepnet] Checking IP input...')
+        const ipContainer = document.querySelector('[data-automation-id="SenderIpRanges"], .ms-TextField-wrapper')
+        if (ipContainer) {
+          const ipTags = ipContainer.querySelectorAll('.ms-TagItem, [class*="tagItem"]')
+          console.log('[Keepnet] IP tags found:', ipTags.length)
+          
+          if (ipTags.length === 0) {
+            alert(i18n('validationNoIPs'))
+            return
+          }
+        }
+      }
+      
+      // Step 14: Header Name kontrolü (X-MS-Exchange-Organization-SkipSafeLinksProcessing)
+      if (stepName === 'atplink_step14_header_name') {
+        console.log('[Keepnet] Checking header name input...')
+        const headerInput = document.querySelector('input[data-automation-id="SetHeader_TextField"], input[placeholder*="header"]')
+        if (headerInput && headerInput.value.trim() === '') {
+          alert(i18n('validationNoHeaderName'))
+          return
+        }
+      }
+      
+      // Step 16: Header Value kontrolü (1)
+      if (stepName === 'atplink_step16_header_value') {
+        console.log('[Keepnet] Checking header value input...')
+        const headerValueInputs = document.querySelectorAll('input[data-automation-id="SetHeader_TextField"], input[placeholder*="value"]')
+        // İkinci input'u al (value için)
+        const headerValueInput = headerValueInputs[1] || headerValueInputs[0]
+        if (headerValueInput && headerValueInput.value.trim() === '') {
+          alert(i18n('validationNoHeaderValue'))
+          return
+        }
+      }
+    }
+    
+    // ÖNEMLİ: Workflow 6 için IP ve Header girişi validation (ZORUNLU)
+    if (this.workflowName === 'WORKFLOW_6' && currentStepConfig) {
+      const stepName = currentStepConfig.name
+      
+      // Step 4: Rule Name kontrolü
+      if (stepName === 'atpattach_step4_rule_name') {
+        console.log('[Keepnet] Checking rule name input...')
+        const ruleNameInput = document.querySelector('input[data-automation-id="EditTransportRule_Name_TextField"], input[maxlength="64"]')
+        if (ruleNameInput && ruleNameInput.value.trim() === '') {
+          alert(i18n('validationNoRuleName'))
+          return
+        }
+      }
+      
+      // Step 8: IP girişi kontrolü
+      if (stepName === 'atpattach_step8_enter_ip') {
+        console.log('[Keepnet] Checking IP input...')
+        const ipContainer = document.querySelector('[data-automation-id="SenderIpRanges"], .ms-TextField-wrapper')
+        if (ipContainer) {
+          const ipTags = ipContainer.querySelectorAll('.ms-TagItem, [class*="tagItem"]')
+          console.log('[Keepnet] IP tags found:', ipTags.length)
+          
+          if (ipTags.length === 0) {
+            alert(i18n('validationNoIPs'))
+            return
+          }
+        }
+      }
+      
+      // Step 15: Header Name kontrolü (X-MS-Exchange-Organization-SkipSafeAttachmentProcessing)
+      if (stepName === 'atpattach_step15_header_name') {
+        console.log('[Keepnet] Checking header name input...')
+        const headerInput = document.querySelector('input[data-automation-id="SetHeader_TextField"], input[placeholder*="header"]')
+        if (headerInput && headerInput.value.trim() === '') {
+          alert(i18n('validationNoHeaderName'))
+          return
+        }
+      }
+      
+      // Step 17: Header Value kontrolü (1)
+      if (stepName === 'atpattach_step17_header_value') {
+        console.log('[Keepnet] Checking header value input...')
+        const headerValueInputs = document.querySelectorAll('input[data-automation-id="SetHeader_TextField"], input[placeholder*="value"]')
+        // İkinci input'u al (value için)
+        const headerValueInput = headerValueInputs[1] || headerValueInputs[0]
+        if (headerValueInput && headerValueInput.value.trim() === '') {
+          alert(i18n('validationNoHeaderValue'))
+          return
+        }
+      }
+    }
+    
     if (currentStepConfig && currentStepConfig.validation) {
       const isValid = await this.validateStep(currentStepConfig)
       if (!isValid && currentStepConfig.criticalStep) {
@@ -6333,8 +6788,8 @@ ${i18n(step.licenseCheck.skipMessage)}`)
         ">
     `
     
-    // Summary adımını hariç tut
-    const stepsToShow = this.currentWorkflow.filter(s => !s.isSummary)
+    // Summary adımını ve hideInSummary olan adımları hariç tut
+    const stepsToShow = this.currentWorkflow.filter(s => !s.isSummary && !s.hideInSummary)
     
     for (let i = 0; i < stepsToShow.length; i++) {
       const step = stepsToShow[i]
@@ -6480,26 +6935,6 @@ ${i18n(step.licenseCheck.skipMessage)}`)
     }
     
     html += `
-        </div>
-        <!-- Screenshot Notification (Stripe style) -->
-        <div style="
-          background: rgba(59, 130, 246, 0.1);
-          border: 1px solid rgba(59, 130, 246, 0.2);
-          border-radius: 8px;
-          padding: 12px 14px;
-          font-size: 12px;
-          color: rgba(255, 255, 255, 0.9);
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        ">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-          </svg>
-          <span style="font-weight: 500;">${i18n('allScreenshotsSaved')}</span>
         </div>
     `
     
@@ -6822,7 +7257,6 @@ ${i18n(step.licenseCheck.skipMessage)}`)
     // Dark mode removed
   }
 }
-
 // Toasts and design demo removed
 
 /* ========== MESSAGE HANDLERS ========== */
@@ -6854,6 +7288,52 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ ok: true })
         return false
       }
+      
+    case 'isPanelOpen':
+      console.log("[Keepnet] Checking if panel is open...")
+      const panel = document.getElementById('keepnet-floating-panel')
+      const isOpen = panel && panel.style.display !== 'none'
+      console.log("[Keepnet] Panel open status:", isOpen)
+      sendResponse({ isOpen: isOpen })
+      return false
+      
+    case 'togglePanel':
+      console.log("[Keepnet] Toggle panel requested")
+      const panelToToggle = document.getElementById('keepnet-floating-panel')
+      if (panelToToggle) {
+        if (panelToToggle.style.display === 'none') {
+          // Panel kapalıydı, açılıyor
+          // Eğer assistant instance yoksa, yeniden başlat
+          if (!assistantInstance && !window.assistant) {
+            console.log("[Keepnet] Panel açılıyor ama assistant yok, yeniden başlatılıyor...")
+            assistantInstance = new KeepnetAssistant()
+            assistantInstance.init().then(() => {
+              console.log("[Keepnet] Assistant re-initialized after panel reopen")
+              sendResponse({ ok: true })
+            }).catch((error) => {
+              console.error("[Keepnet] Re-init failed:", error)
+              sendResponse({ ok: false, error: error.message })
+            })
+            return true // Async response
+          } else {
+            // Assistant varsa sadece panel'i göster
+            panelToToggle.style.display = 'block'
+            console.log("[Keepnet] Panel opened")
+            sendResponse({ ok: true })
+          }
+        } else {
+          // Panel açıktı, kapanıyor - instance'ı da temizle
+          panelToToggle.style.display = 'none'
+          window.assistantInstance = null
+          window.assistant = null
+          assistantInstance = null
+          console.log("[Keepnet] Panel closed and instances cleared")
+          sendResponse({ ok: true })
+        }
+      } else {
+        sendResponse({ ok: false, error: 'Panel not found' })
+      }
+      return false
       
     case 'screenshotCaptured':
       console.log("[Keepnet] Screenshot captured notification received")
