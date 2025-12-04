@@ -1,152 +1,152 @@
-# 🎨 Keepnet Assistant - Animation System
+# 🎨 Keepnet Assistant – Animation System
 
-## ✨ Framer Motion Benzeri Animasyon Sistemi
+## ✨ Framer Motion–Style Animation System
 
-Bu eklenti, **Vanilla JavaScript** kullanarak **Framer Motion** kalitesinde profesyonel animasyonlar sunmaktadır.
+This extension uses **Vanilla JavaScript** to deliver professional-quality animations inspired by **Framer Motion**.
 
 ---
 
-## 📋 Animasyon Kategorileri
+## 📋 Animation Categories
 
-### 1. **Entrance Animations** (Giriş Animasyonları)
-Elementler ekrana ilk kez geldiğinde kullanılır.
+### 1. **Entrance Animations**
+Used when elements first appear on the screen.
 
-#### Mevcut Animasyonlar:
-- `fadeIn` - Yumuşak görünme efekti
-- `fadeInUp` - Aşağıdan yukarı doğru kayarak görünme
-- `slideInRight` - Sağdan içeri kayma
-- `slideInBottom` - Alttan yukarı kayma
-- `scaleIn` - Merkezden büyüyerek açılma
-- `rotateIn` - Dönerek ve büyüyerek açılma
+#### Available Animations:
+- `fadeIn` – Smooth fade-in effect  
+- `fadeInUp` – Fade-in while sliding up  
+- `slideInRight` – Slide in from the right  
+- `slideInBottom` – Slide in from the bottom  
+- `scaleIn` – Scale up from the center  
+- `rotateIn` – Rotate and scale in  
 
-**Kullanım:**
+**Usage:**
 ```javascript
 AnimationUtils.animate(element, 'fadeInUp', 400)
 ```
 
 ---
 
-### 2. **Attention Animations** (Dikkat Çekme Animasyonları)
-Kullanıcının dikkatini çekmek için kullanılır.
+### 2. **Attention Animations**
+Used to draw the user’s attention to a specific element.
 
-#### Mevcut Animasyonlar:
-- `pulse` - Nabız efekti (büyüme-küçülme)
-- `pulse-glow` - Işıltılı nabız efekti
-- `bounce` - Zıplama efekti
-- `shake` - Sallama efekti
+#### Available Animations:
+- `pulse` – Pulse effect (grow/shrink)  
+- `pulse-glow` – Glowing pulse effect  
+- `bounce` – Bounce effect  
+- `shake` – Shake effect  
 
-**Kullanım:**
+**Usage:**
 ```javascript
 AnimationUtils.animate(element, 'pulse', 600)
 ```
 
 ---
 
-### 3. **Progress Animations** (İlerleme Animasyonları)
-Progress bar ve sayaç animasyonları.
+### 3. **Progress Animations**
+Used for progress bars and counters.
 
-#### Fonksiyonlar:
+#### Functions:
 ```javascript
-// Progress bar animasyonu (0-100%)
+// Progress bar animation (0–100%)
 AnimationUtils.animateProgressBar(progressBar, fromPercent, toPercent, 500)
 
-// Counter animasyonu
+// Counter animation
 AnimationUtils.animateCounter(element, from, to, duration, suffix)
 ```
 
-**Örnek:**
+**Example:**
 ```javascript
-// 0%'den 75%'e animasyonlu geçiş
+// Animate from 0% to 75%
 AnimationUtils.animateProgressBar(progressBar, 0, 75, 600)
 
-// 0'dan 100'e sayma
+// Count from 0 to 100
 AnimationUtils.animateCounter(counterEl, 0, 100, 1000, '%')
 ```
 
 ---
 
-### 4. **Exit Animations** (Çıkış Animasyonları)
-Elementler ekrandan çıkarken kullanılır.
+### 4. **Exit Animations**
+Used when elements leave the screen.
 
-#### Mevcut Animasyonlar:
-- `fadeOut` - Yumuşak kaybolma
-- `slideOutRight` - Sağa doğru kayarak kaybolma
+#### Available Animations:
+- `fadeOut` – Smooth fade-out  
+- `slideOutRight` – Slide out to the right  
 
 ---
 
-### 5. **Interactive Animations** (Etkileşim Animasyonları)
+### 5. **Interactive Animations**
 
-#### Highlight Sistemi:
+#### Highlight System:
 ```javascript
-// Element'i vurgula ve animasyon yap
+// Highlight an element and animate it
 AnimationUtils.highlightElement(element)
 
-// Vurguyu kaldır (animasyonlu)
+// Remove the highlight (with animation)
 AnimationUtils.removeHighlight(element)
 
-// Element'e smooth scroll
+// Smooth scroll to an element
 AnimationUtils.scrollToElement(element, offsetY)
 ```
 
 ---
 
-### 6. **Stagger Animations** (Kademeli Animasyonlar)
-Çocuk elementleri sırayla animasyon yapar.
+### 6. **Stagger Animations**
+Animates child elements one by one.
 
 ```javascript
-// Parent içindeki tüm çocukları 50ms aralıklarla animasyon yap
+// Animate all children inside the parent with a 50ms delay
 AnimationUtils.staggerChildren(parentElement, 'fadeInUp', 50)
 ```
 
-**Kullanıldığı Yerler:**
-- Summary ekranındaki adım listesi
-- Footer butonları
-- Tooltip'ler
+**Used in:**
+- Step list on the summary screen  
+- Footer buttons  
+- Tooltips  
 
 ---
 
-### 7. **Celebration Effects** (Kutlama Efektleri)
+### 7. **Celebration Effects**
 
 #### Confetti Effect:
 ```javascript
-// 50 adet renkli confetti fırlat! 🎉
+// Fire 50 colorful confetti particles! 🎉
 AnimationUtils.showConfetti(containerElement)
 ```
 
-**Özellikleri:**
-- 50 adet parçacık
-- Mor tonlarda renkler (#7c3aed, #6366f1, #8b5cf6, #a78bfa, #c4b5fd)
-- 360° rastgele dağılım
-- 1-1.5 saniye süre
-- Otomatik temizlenme
+**Properties:**
+- 50 particles  
+- Purple tones (#7c3aed, #6366f1, #8b5cf6, #a78bfa, #c4b5fd)  
+- 360° random spread  
+- 1–1.5 second duration  
+- Automatic cleanup  
 
 ---
 
-## 🎯 Animasyon Parametreleri
+## 🎯 Animation Parameters
 
 ### Easing Functions:
 ```javascript
-// Spring-based cubic-bezier (Framer Motion benzeri)
+// Spring-based cubic-bezier (Framer Motion–like)
 'cubic-bezier(0.34, 1.56, 0.64, 1)'  // Default spring easing
 
-// Diğer easing'ler
+// Other easing functions
 'ease-in-out'
 'ease-out'
 'linear'
 ```
 
-### Duration (Süre):
-- **Fast**: 200-300ms (Buton hover, tooltip)
-- **Normal**: 400-500ms (Standart animasyonlar)
-- **Slow**: 600-1000ms (Büyük elementler, progress)
+### Duration:
+- **Fast**: 200–300ms (button hover, tooltips)  
+- **Normal**: 400–500ms (standard animations)  
+- **Slow**: 600–1000ms (large elements, progress)  
 
 ---
 
-## 📍 Kullanım Yerleri
+## 📍 Usage Locations
 
-### 1. **Panel Animasyonları**
+### 1. **Panel Animations**
 ```javascript
-// Panel açılış
+// Panel entrance
 this.container.style.animation = 'keepnet-slide-in-right 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
 ```
 
@@ -202,10 +202,10 @@ showSummary() {
 
 ---
 
-## 🎨 CSS Animasyonları
+## 🎨 CSS Animations
 
 ### Keyframe Animations:
-Tüm animasyonlar `content.css` dosyasında tanımlıdır:
+All animations are defined in `content.css`:
 
 ```css
 @keyframes keepnet-fade-in-up {
@@ -234,17 +234,17 @@ button:active:not(:disabled) {
 
 ---
 
-## ⚡ Performans Optimizasyonu
+## ⚡ Performance Optimization
 
 ### 1. **Hardware Acceleration**
-Tüm transform ve opacity değişiklikleri GPU'da işlenir:
+All `transform` and `opacity` changes are processed on the GPU:
 ```css
 transform: translateX(0) scale(1);
 opacity: 1;
 ```
 
-### 2. **RequestAnimationFrame**
-Smooth 60fps için `requestAnimationFrame` kullanılır:
+### 2. **requestAnimationFrame**
+`requestAnimationFrame` is used for smooth 60fps animations:
 ```javascript
 const animate = (currentTime) => {
   // Animation logic
@@ -256,33 +256,33 @@ requestAnimationFrame(animate)
 ```
 
 ### 3. **Will-Change**
-Performans için kritik elementlere `will-change` eklenir:
+`will-change` is used on critical elements to improve performance:
 ```css
 transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 ```
 
 ---
 
-## 🚀 Gelecek Geliştirmeler
+## 🚀 Future Improvements
 
-- [ ] Parallax scroll effects
-- [ ] Morphing transitions
-- [ ] Particle systems
-- [ ] Gesture-based animations
-- [ ] Physics-based springs
-- [ ] Lottie animation support
-
----
-
-## 📚 Referanslar
-
-- **Framer Motion**: https://www.framer.com/motion/
-- **Cubic-bezier**: https://cubic-bezier.com/
-- **Web Animations API**: https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API
+- [ ] Parallax scroll effects  
+- [ ] Morphing transitions  
+- [ ] Particle systems  
+- [ ] Gesture-based animations  
+- [ ] Physics-based springs  
+- [ ] Lottie animation support  
 
 ---
 
-**Versiyon:** 4.0  
-**Son Güncelleme:** 2025  
-**Lisans:** Keepnet Labs  
+## 📚 References
+
+- **Framer Motion**: https://www.framer.com/motion/  
+- **Cubic-bezier**: https://cubic-bezier.com/  
+- **Web Animations API**: https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API  
+
+---
+
+**Version:** 4.0  
+**Last Updated:** 2025  
+**License:** Keepnet Labs  
 

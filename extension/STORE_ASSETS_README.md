@@ -1,97 +1,97 @@
-# Chrome Web Store Görselleri Hazırlama Kılavuzu
+# Chrome Web Store Artwork Guide
 
-Bu klasör Chrome Web Store'a yüklemek için gerekli görselleri içerir.
+This folder contains the images required for uploading to the Chrome Web Store.
 
-## Gerekli Görseller
+## Required Assets
 
-### 1. Small Promotional Tile (ZORUNLU)
-- **Boyut**: 440x280 piksel
-- **Format**: PNG veya JPG
-- **Açıklama**: Store listing'de gösterilecek küçük promosyon görseli
-- **İçerik Önerisi**: 
-  - Extension ikonu ve adı
-  - Kısa bir slogan veya özellik
-  - Temiz ve profesyonel tasarım
+### 1. Small Promotional Tile (REQUIRED)
+- **Size**: 440x280 pixels  
+- **Format**: PNG or JPG  
+- **Description**: Small promotional image shown in the store listing  
+- **Content Suggestions**: 
+  - Extension icon and name  
+  - Short slogan or key benefit  
+  - Clean and professional design  
 
-### 2. Marquee Promotional Tile (ÖNERİLİR)
-- **Boyut**: 1400x560 piksel
-- **Format**: PNG veya JPG
-- **Açıklama**: Store sayfasının üst kısmında gösterilecek büyük promosyon görseli
-- **İçerik Önerisi**:
-  - Extension'un ana özelliklerini gösteren görsel
-  - "Keepnet Assistant" başlığı
-  - Office 365 logosu veya Microsoft logosu referansı
+### 2. Marquee Promotional Tile (RECOMMENDED)
+- **Size**: 1400x560 pixels  
+- **Format**: PNG or JPG  
+- **Description**: Large promotional image displayed at the top of the store page  
+- **Content Suggestions**:
+  - Visual representation of the extension’s core features  
+  - “Keepnet Assistant” headline  
+  - Office 365 or Microsoft logo reference (if allowed by brand guidelines)  
 
-### 3. Screenshots (EN AZ 1, MAKSİMUM 5)
-- **Boyut**: 1280x800 veya 640x400 piksel
-- **Format**: PNG veya JPG
-- **Açıklama**: Extension'un kullanımını gösteren ekran görüntüleri
-- **Önerilen Screenshot'lar**:
-  1. **Welcome Screen**: Assistant panelinin açılış ekranı
-  2. **Workflow Selection**: Workflow seçim ekranı
-  3. **Step Navigation**: Adım navigasyonu gösteren ekran
-  4. **Completion Screen**: Tamamlanma ekranı ve özet rapor
-  5. **Office 365 Integration**: Microsoft Security Center'da çalışırken görünüm
+### 3. Screenshots (MIN 1, MAX 5)
+- **Size**: 1280x800 or 640x400 pixels  
+- **Format**: PNG or JPG  
+- **Description**: Screenshots showing the extension in action  
+- **Recommended Screenshots**:
+  1. **Welcome Screen**: Initial assistant panel view  
+  2. **Workflow Selection**: Workflow selection screen  
+  3. **Step Navigation**: Step-by-step navigation view  
+  4. **Completion Screen**: Completion screen and summary report  
+  5. **Office 365 Integration**: View while running in Microsoft Security Center  
 
-## Görsel Hazırlama İpuçları
+## Design Tips
 
-### Tasarım Prensipleri
-- **Tutarlılık**: Tüm görsellerde aynı renk paleti ve tipografi kullanın
-- **Netlik**: Yüksek çözünürlükte görseller kullanın
-- **Basitlik**: Görselleri karmaşık hale getirmeyin
-- **Branding**: Keepnet marka renklerini kullanın
+### Design Principles
+- **Consistency**: Use a consistent color palette and typography across all assets  
+- **Clarity**: Use high-resolution images with clear text  
+- **Simplicity**: Avoid cluttered or overly complex visuals  
+- **Branding**: Use Keepnet brand colors where appropriate  
 
-### Renk Paleti Önerileri
-- Ana Renk: #1E40AF (Mavi)
-- İkincil Renk: #10B981 (Yeşil - tamamlanma durumu için)
-- Arka Plan: #FFFFFF (Beyaz) veya #F3F4F6 (Açık gri)
-- Metin: #111827 (Koyu gri)
+### Recommended Color Palette
+- Primary: `#1E40AF` (Blue)  
+- Secondary: `#10B981` (Green – for completion/success states)  
+- Background: `#FFFFFF` (White) or `#F3F4F6` (Light gray)  
+- Text: `#111827` (Dark gray)  
 
-### Tipografi
-- Başlık: Bold, 24-32px
-- Alt Başlık: Medium, 18-24px
-- Metin: Regular, 14-16px
+### Typography
+- Headline: Bold, 24–32px  
+- Subheadline: Medium, 18–24px  
+- Body Text: Regular, 14–16px  
 
-## Görselleri Hazırlama Adımları
+## Steps to Prepare Assets
 
-1. **Ekran Görüntüleri Alın**:
-   - Extension'u Microsoft Security Center'da çalıştırın
-   - Her önemli ekranı yakalayın
-   - Chrome DevTools ile yüksek kaliteli screenshot alın
+1. **Capture Screenshots**  
+   - Run the extension in Microsoft Security Center  
+   - Capture each important screen  
+   - Use Chrome DevTools or OS tools for high-quality screenshots  
 
-2. **Görselleri Düzenleyin**:
-   - Photoshop, Figma veya benzeri bir araç kullanın
-   - Gerekli boyutlara yeniden boyutlandırın
-   - Metin ve açıklamalar ekleyin
-   - Branding elementlerini ekleyin
+2. **Edit the Images**  
+   - Use Photoshop, Figma, or a similar design tool  
+   - Resize to the required dimensions  
+   - Add copy and annotations if needed  
+   - Apply branding elements (logo, colors)  
 
-3. **Optimize Edin**:
-   - Görselleri sıkıştırın (TinyPNG veya benzeri)
-   - Dosya boyutlarını kontrol edin (mümkün olduğunca küçük)
-   - Format kontrolü yapın (PNG veya JPG)
+3. **Optimize**  
+   - Compress images (e.g., TinyPNG or similar)  
+   - Keep file sizes as small as reasonable  
+   - Verify format (PNG or JPG)  
 
-## Dosya Adlandırma
+## File Naming
 
-Görselleri şu şekilde adlandırın:
-- `promotional-tile-small.png` (440x280)
-- `promotional-tile-marquee.png` (1400x560)
-- `screenshot-1-welcome.png` (1280x800)
-- `screenshot-2-workflow.png` (1280x800)
-- `screenshot-3-steps.png` (1280x800)
-- `screenshot-4-completion.png` (1280x800)
-- `screenshot-5-integration.png` (1280x800)
+Name the assets as follows:
+- `promotional-tile-small.png` (440x280)  
+- `promotional-tile-marquee.png` (1400x560)  
+- `screenshot-1-welcome.png` (1280x800)  
+- `screenshot-2-workflow.png` (1280x800)  
+- `screenshot-3-steps.png` (1280x800)  
+- `screenshot-4-completion.png` (1280x800)  
+- `screenshot-5-integration.png` (1280x800)  
 
-## Store'a Yükleme
+## Uploading to the Store
 
-1. Chrome Web Store Developer Dashboard'a gidin
-2. Yeni extension oluşturun veya mevcut extension'ı düzenleyin
-3. "Store listing" sekmesine gidin
-4. Görselleri ilgili bölümlere yükleyin
-5. Her görsel için uygun açıklama ekleyin
+1. Go to the Chrome Web Store Developer Dashboard  
+2. Create a new extension or edit the existing one  
+3. Open the **Store listing** tab  
+4. Upload each image to the appropriate section  
+5. Add a short, clear description for each image  
 
-## Notlar
+## Notes
 
-- Tüm görseller İngilizce ve Türkçe olarak hazırlanmalı (veya her iki dilde de anlaşılır olmalı)
-- Görsellerde kişisel bilgi veya hassas veri gösterilmemeli
-- Görseller Chrome Web Store'un içerik politikasına uygun olmalı
+- All images should be fully in **English** for the global Chrome Web Store listing  
+- Do not display any personal or sensitive data in screenshots  
+- Ensure all assets comply with the Chrome Web Store content policies  
 
