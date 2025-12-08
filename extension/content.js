@@ -1,7 +1,7 @@
 // Keepnet Allow List Assistant v3.1 - Third-Party Phishing Simulations Only
 // Tek panel (sol-alt), otomatik tıklama, gerçek zamanlı validation, screenshot kanıt sistemi
 
-console.log("[Keepnet v3.1] Content script loaded on", location.href)
+console.log("[Keepnet v3.1.8] Content script loaded on", location.href)
 
 /* ========== CONSTANTS & GLOBALS ========== */
 const STORAGE_KEYS = {
@@ -17,7 +17,7 @@ const VALIDATION_INTERVAL = 1000 // 1 saniye
 
 let CURRENT_STEP = 0
 let TOTAL_STEPS = 12  // Third-Party Phishing: 12 adım
-let LANGUAGE = 'tr'
+let LANGUAGE = 'en'
 let screenshotCounter = 0
 
 // Dosya başına:
@@ -49,10 +49,10 @@ const MESSAGES = {
     workflowStep3Description: 'İlkeler ve kurallar sayfasına gidin',
     workflowStep4Title: 'Tehdit İlkeleri',
     workflowStep4Description: 'Tehdit ilkeleri\'ne tıklayın',
-    workflowStep5Title: 'Advanced Delivery',
-    workflowStep5Description: 'Advanced delivery butonuna tıklayın',
-    workflowStep6Title: 'Phishing Simulation Tab',
-    workflowStep6Description: 'Phishing simulation sekmesine tıklayın',
+    workflowStep5Title: 'Gelişmiş Teslim',
+    workflowStep5Description: '"Gelişmiş teslim" butonuna tıklayın',
+    workflowStep6Title: 'Kimlik Avı Simülasyonları',
+    workflowStep6Description: '"Kimlik avı simülasyonları" sekmesine tıklayın',
     workflowStep7Title: 'Düzenle Butonu',
     workflowStep7Description: 'Düzenle butonuna tıklayın',
     workflowStep8Title: 'Etki Alanları',
@@ -89,8 +89,8 @@ const MESSAGES = {
     tooltipEmailCollab: 'E-posta ve işbirliği\'ne tıklayın',
     tooltipPolicies: 'İlkeler ve kurallar\'a tıklayın',
     tooltipThreatPolicies: 'Tehdit ilkeleri\'ne tıklayın',
-    tooltipAdvancedDelivery: 'Advanced delivery\'ye tıklayın',
-    tooltipPhishingSim: 'Phishing simulation sekmesine tıklayın',
+    tooltipAdvancedDelivery: '"Gelişmiş teslim" butonuna tıklayın',
+    tooltipPhishingSim: '"Kimlik avı simülasyonları" sekmesine tıklayın',
     tooltipEdit: 'Düzenle butonuna tıklayın',
     tooltipDomains: 'Etki alanlarını girin',
     tooltipIPs: 'Allow list IP adreslerini girin',
@@ -705,7 +705,7 @@ const MESSAGES = {
 }
 
 // Current language (will be loaded from storage)
-let CURRENT_LANGUAGE = 'tr'
+let CURRENT_LANGUAGE = 'en'
 
 // Load language preference from storage
 async function loadLanguagePreference() {
@@ -714,7 +714,7 @@ async function loadLanguagePreference() {
     const savedLang = result.keepnet_language
     const userLang = chrome.i18n.getUILanguage().split('-')[0] // Get 'en' from 'en-US'
     const supportedLangs = ['tr', 'en']
-    CURRENT_LANGUAGE = savedLang || (supportedLangs.includes(userLang) ? userLang : 'tr')
+    CURRENT_LANGUAGE = savedLang || (supportedLangs.includes(userLang) ? userLang : 'en')
     console.log('[i18n] Language loaded:', CURRENT_LANGUAGE)
     
     // Update chrome.i18n locale if different
@@ -726,9 +726,9 @@ async function loadLanguagePreference() {
     return CURRENT_LANGUAGE
   } catch (error) {
     console.warn('[i18n] Error loading language preference:', error)
-    CURRENT_LANGUAGE = 'tr'
-    LANGUAGE = 'tr'
-    return 'tr'
+    CURRENT_LANGUAGE = 'en'
+    LANGUAGE = 'en'
+    return 'en'
   }
 }
 
@@ -1021,6 +1021,7 @@ const THREAT_POLICIES_STEPS = [
       navigate: 'https://security.microsoft.com/antispam',
       validation: () => true,
       isNavigation: true,
+      autoAdvance: false, // Workflow 2: adım geçişi her zaman manuel olsun
       hideInSummary: true  // Summary'de gösterme
     },
     {
@@ -1040,6 +1041,7 @@ const THREAT_POLICIES_STEPS = [
       },
       tooltip: 'tooltipConnectionFilterCheckbox',
       autoClick: true,
+      autoAdvance: false, // Kullanıcı panelden Continue ile ilerlesin
       disableHighlight: false,
       waitForChecked: true,
       findCheckboxFromRow: true, // Özel flag: satırdan checkbox bul
@@ -1102,6 +1104,7 @@ const THREAT_POLICIES_STEPS = [
       },
       tooltip: 'tooltipConnectionFilterPolicy',
       autoClick: false,
+      autoAdvance: false,
       validation: () => true,
       waitAfterClick: 1000,
       panelPosition: 'bottom-left'
@@ -1122,6 +1125,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'tooltipEditConnectionFilter',
     autoClick: false,
+    autoAdvance: false,
     validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1143,6 +1147,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'tooltipAddIPs',
     autoClick: false,
+    autoAdvance: false,
     validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
@@ -1165,6 +1170,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'tooltipSafeList',
     autoClick: false,
+    autoAdvance: false,
     validation: () => true,
     waitAfterClick: 2000,
     panelPosition: 'bottom-left'
@@ -1185,6 +1191,7 @@ const THREAT_POLICIES_STEPS = [
     },
     tooltip: 'tooltipSaveButton',
     autoClick: false,
+    autoAdvance: false,
     validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1561,11 +1568,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipOpenApplyRuleIf',
     autoClick: false,
     autoAdvance: true,
-    autoAdvanceDelay: 10000,  // 6s → 10s
+    autoAdvanceDelay: 7000,  // 10s → 7s (daha hızlı geçiş)
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 500,  // 100 → 500ms
-    waitAfterClick: 3000,  // 2s → 3s
+    waitAfterClick: 1200,  // 3s → 1.2s (kullanıcı tıkladıktan sonra daha az bekle)
     panelPosition: 'bottom-left'
   },
   {
@@ -1800,11 +1807,11 @@ const SPAM_FILTER_BYPASS_STEPS = [
     tooltip: 'tooltipSaveButton',
     autoClick: true,
     autoAdvance: true,
-    autoAdvanceDelay: 15000,  // 10s → 15s (form kapatılıyor, daha uzun bekle)
+    autoAdvanceDelay: 9000,  // 15s → 9s (form kapanması için ama daha kısa)
     validation: () => true,
     realTimeValidation: true,
     realTimeValidationInterval: 500,  // 100 → 500ms
-    waitAfterClick: 5000,  // 3s → 5s (form kapanma için daha uzun bekle)
+    waitAfterClick: 2000,  // 5s → 2s (kullanıcı tıkladıktan sonra bekleme kısaltıldı)
     panelPosition: 'bottom-left'
   },
   {
@@ -6189,8 +6196,20 @@ ${i18n(step.licenseCheck.skipMessage)}`)
     }
     
     // Wait if specified
+    // Workflow 4-5-6 için highlight'ın biraz daha uzun görünmesi önemli,
+    // diğer workflow'larda ise gereksiz uzun beklemeleri 1 saniye ile sınırlıyoruz.
     if (step.waitAfterClick) {
-      await Utils.sleep(step.waitAfterClick)
+      let safeDelay = step.waitAfterClick
+      
+      if (this.workflowName === 'WORKFLOW_4' || this.workflowName === 'WORKFLOW_5' || this.workflowName === 'WORKFLOW_6') {
+        // Bu workflow'larda adımlar arasındaki görsel geri bildirim daha uzun kalsın ama makul sınırda olsun
+        safeDelay = Math.min(step.waitAfterClick, 3000)
+      } else {
+        // Diğer tüm workflow'larda uzun beklemeleri 1 saniye ile sınırla
+        safeDelay = Math.min(step.waitAfterClick, 1000)
+      }
+      
+      await Utils.sleep(safeDelay)
     }
     
     // Validation'ı sadece screenshot için çağır ama ilerlemeyi engelleme
@@ -6352,9 +6371,8 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       return // Kullanıcı Continue butonuna basmalı
     }
     
-    // Normal adımlar için otomatik geçiş
+    // Normal adımlar için otomatik geçiş - kullanıcı zaten elemente tıkladıktan sonra ek bekleme yok
     console.log(`[Keepnet] Step ${step.id} tamamlandı, otomatik sonraki adıma geçiliyor...`)
-    await Utils.sleep(500)
     await this.nextStep()
   }
   
@@ -6556,9 +6574,25 @@ ${i18n(step.licenseCheck.skipMessage)}`)
         if (ipContainer) {
           // Eklenmiş IP chip/tag'lerini bul
           const ipTags = ipContainer.querySelectorAll('.ms-TagItem, [class*="tagItem"]')
-          console.log('[Keepnet] IP tags found:', ipTags.length)
-          
-          if (ipTags.length === 0) {
+          const containerText = ipContainer.textContent || ''
+          // Hem eski chip/tag yapısını hem de sadece metin olarak girilmiş IP'leri destekle
+          const hasIPText = /\b\d{1,3}(?:\.\d{1,3}){3}\b/.test(containerText)
+          console.log('[Keepnet] IP tags found:', ipTags.length, 'hasIPText:', hasIPText)
+
+          let hasIPs = ipTags.length > 0 || hasIPText
+
+          // Ek olarak, dialog içindeki liste/grid yapısında IP var mı kontrol et (yeni Exchange UI için)
+          if (!hasIPs) {
+            const dialog = document.querySelector('[role="dialog"], .ms-Dialog-main, .ms-Callout-main, .ms-Panel-main')
+            if (dialog) {
+              const dialogText = dialog.textContent || ''
+              const hasDialogIP = /\b\d{1,3}(?:\.\d{1,3}){3}\b/.test(dialogText)
+              console.log('[Keepnet] Dialog-level IP search, hasDialogIP:', hasDialogIP)
+              hasIPs = hasDialogIP
+            }
+          }
+
+          if (!hasIPs) {
             alert(i18n('validationNoIPs'))
             return
           }
@@ -6596,9 +6630,23 @@ ${i18n(step.licenseCheck.skipMessage)}`)
         const ipContainer = document.querySelector('[data-automation-id="SenderIpRanges"], .ms-TextField-wrapper')
         if (ipContainer) {
           const ipTags = ipContainer.querySelectorAll('.ms-TagItem, [class*="tagItem"]')
-          console.log('[Keepnet] IP tags found:', ipTags.length)
-          
-          if (ipTags.length === 0) {
+          const containerText = ipContainer.textContent || ''
+          const hasIPText = /\b\d{1,3}(?:\.\d{1,3}){3}\b/.test(containerText)
+          console.log('[Keepnet] IP tags found:', ipTags.length, 'hasIPText:', hasIPText)
+
+          let hasIPs = ipTags.length > 0 || hasIPText
+
+          if (!hasIPs) {
+            const dialog = document.querySelector('[role="dialog"], .ms-Dialog-main, .ms-Callout-main, .ms-Panel-main')
+            if (dialog) {
+              const dialogText = dialog.textContent || ''
+              const hasDialogIP = /\b\d{1,3}(?:\.\d{1,3}){3}\b/.test(dialogText)
+              console.log('[Keepnet] Dialog-level IP search, hasDialogIP:', hasDialogIP)
+              hasIPs = hasDialogIP
+            }
+          }
+
+          if (!hasIPs) {
             alert(i18n('validationNoIPs'))
             return
           }
@@ -6648,9 +6696,23 @@ ${i18n(step.licenseCheck.skipMessage)}`)
         const ipContainer = document.querySelector('[data-automation-id="SenderIpRanges"], .ms-TextField-wrapper')
         if (ipContainer) {
           const ipTags = ipContainer.querySelectorAll('.ms-TagItem, [class*="tagItem"]')
-          console.log('[Keepnet] IP tags found:', ipTags.length)
-          
-          if (ipTags.length === 0) {
+          const containerText = ipContainer.textContent || ''
+          const hasIPText = /\b\d{1,3}(?:\.\d{1,3}){3}\b/.test(containerText)
+          console.log('[Keepnet] IP tags found:', ipTags.length, 'hasIPText:', hasIPText)
+
+          let hasIPs = ipTags.length > 0 || hasIPText
+
+          if (!hasIPs) {
+            const dialog = document.querySelector('[role="dialog"], .ms-Dialog-main, .ms-Callout-main, .ms-Panel-main')
+            if (dialog) {
+              const dialogText = dialog.textContent || ''
+              const hasDialogIP = /\b\d{1,3}(?:\.\d{1,3}){3}\b/.test(dialogText)
+              console.log('[Keepnet] Dialog-level IP search, hasDialogIP:', hasDialogIP)
+              hasIPs = hasDialogIP
+            }
+          }
+
+          if (!hasIPs) {
             alert(i18n('validationNoIPs'))
             return
           }

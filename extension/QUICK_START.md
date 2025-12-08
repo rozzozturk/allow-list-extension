@@ -1,38 +1,36 @@
-# 🚀 Keepnet Extension - Hızlı Başlangıç
+## 🚀 Keepnet Extension – Quick Start
 
-## ⚡ 3 Adımda Başlat
+### ⚡ Start in 3 Steps
 
-### 1️⃣ Extension'ı Yükle
-
-```bash
-1. Chrome'da chrome://extensions aç
-2. "Developer mode" açık olsun (sağ üst)
-3. "Load unpacked" tıkla
-4. Bu klasörü seç: /Users/rozerinozturk/Desktop/white v/extension
-5. ✅ Extension yüklendi!
-```
-
-### 2️⃣ Security Center'a Git
+#### 1️⃣ Load the Extension
 
 ```bash
-1. https://security.microsoft.com/homepage aç
-2. Extension icon'una (🛡️) tıkla
-3. SOL-ALT köşede panel açılacak
+1. Open chrome://extensions in Chrome
+2. Make sure "Developer mode" is enabled (top-right)
+3. Click "Load unpacked"
+4. Select the extension folder (e.g. /path/to/extension)
+5. ✅ Extension is loaded!
 ```
 
-### 3️⃣ Asistan Çalışıyor!
+#### 2️⃣ Go to Security Center
 
-Panel açıldı ve **Adım 1: Security Center Ana Sayfası** gösterildi ✅
+```bash
+1. Open https://security.microsoft.com/homepage
+2. Click the extension icon (🛡️)
+3. The panel will open in the bottom-left or bottom-right corner
+```
+
+#### 3️⃣ Assistant is Running
+
+The panel opens and **Step 1: Security Center Home Page** is displayed ✅
 
 ---
 
-## 🐛 Sorun Giderme
+### 🐛 Troubleshooting
 
-### Panel Açılmıyor?
+#### Panel Does Not Open
 
-**Konsolu aç** (F12 veya Sağ tık → İncele → Console)
-
-Şu mesajları ara:
+Open **DevTools Console** (F12 or Right click → Inspect → Console) and look for:
 
 ```javascript
 [Keepnet v3.1] Content script loaded
@@ -40,96 +38,101 @@ Panel açıldı ve **Adım 1: Security Center Ana Sayfası** gösterildi ✅
 [Keepnet] Assistant ready!
 ```
 
-**Eğer hiç mesaj yoksa:**
+If you don’t see any of these messages:
+
 ```bash
-1. Extension sayfasına git (chrome://extensions)
-2. Keepnet Extension'ı bul
-3. "Reload" (🔄) butonu tıkla
-4. Sayfayı yenile (F5)
-5. Extension icon'una tekrar tıkla
+1. Go to the extensions page (chrome://extensions)
+2. Find the Keepnet extension
+3. Click the "Reload" (🔄) button
+4. Refresh the page (F5)
+5. Click the extension icon again
 ```
 
-**Eğer hata mesajı varsa:**
+If you see an error message:
+
 ```bash
-Hatayı kopyala ve bana gönder!
+Copy the error from the Console and share it with the developer/support team.
 ```
 
-### Panel Açılıp Kapanıyor?
+#### Panel Opens and Closes Repeatedly
 
-**Console'da hata ara:**
+Check Console for errors:
 
 ```javascript
 [Keepnet] executeStep error: ...
-// veya
+// or
 [Keepnet] Init error: ...
 ```
 
-**Çözüm:**
+Then:
+
 ```bash
-1. Chrome DevTools Console'da hatayı bul
-2. Hatanın tam metnini kopyala
-3. Bana gönder
+1. Find the error in Chrome DevTools Console
+2. Copy the full error text
+3. Share it with the developer/support team
 ```
 
-### Butonlar Çalışmıyor?
+#### Buttons Not Working
 
-**"Devam Et" butonu çalışmıyor mu?**
+If the **Continue** button does not work, check Console for:
 
-Console'da şunu ara:
 ```javascript
 [Keepnet] Next button clicked
 ```
 
-**Eğer bu mesaj yoksa:**
+If this message does not appear:
+
 ```bash
-1. Paneli kapatıp tekrar aç
-2. Veya sayfayı yenile
+1. Close and reopen the panel
+2. Or refresh the page and try again
 ```
 
 ---
 
-## 📋 Test Adımları
+### 📋 Test Steps
 
-### Adım 1: Panel Görünümü Test
+#### Step 1: Panel Rendering Test
 
-**Beklenen:**
-- ✅ Sol-alt köşede 340x520px panel
-- ✅ Header: "Keepnet Allow List" + "Adım 1 / 12"
-- ✅ Body: "Security Center Ana Sayfası" açıklaması
-- ✅ Footer: "← Geri" ve "Devam Et →" butonları
+**Expected:**
+- ✅ Panel visible (approx. 340x520px)  
+-,✅ Header: "Keepnet Allow List" + "Step 1 / 12"  
+- ✅ Body: "Security Center Home Page" description  
+- ✅ Footer: "← Back" and "Continue →" buttons  
 
 **Test:**
+
 ```bash
-1. Paneli sürükle → konum kaydediliyor mu?
-2. Sayfayı yenile → panel aynı yerde mi?
-3. X butonuna tıkla → panel kapanıyor mu?
-4. Extension icon'una tıkla → panel tekrar açılıyor mu?
+1. Drag the panel → position should be remembered
+2. Refresh the page → panel should appear in the same position
+3. Click the X button → panel should close
+4. Click the extension icon → panel should open again
 ```
 
-### Adım 2: "Devam Et" Butonu Test
+#### Step 2: Continue Button Test
 
-**Console açık olsun!**
+Keep Console open:
 
 ```bash
-1. "Devam Et" butonuna tıkla
-2. Console'da "Next button clicked" görünmeli
-3. Adım 2'ye geçmeli: "Email and collaboration"
-4. Sayfa yüklenince element highlight olmalı
+1. Click the "Continue" button
+2. Console should show "Next button clicked"
+3. It should move to Step 2: "Email and collaboration"
+4. Once the page loads, the target element should be highlighted
 ```
 
-### Adım 3: Auto-Click Test
+#### Step 3: Auto-Click Test
 
-**Adım 2'de:**
+On Step 2:
+
 ```bash
-1. 5 saniye bekle
-2. Console'da "Auto-click in 4s..." countdown görmeli
-3. 5 saniye sonunda otomatik tıklama yapmalı
-4. "Email and collaboration" menüsü açılmalı
+1. Wait 5 seconds
+2. Console should show "Auto-click in 4s..." countdown logs
+3. After the countdown, auto-click should trigger
+4. "Email and collaboration" menu should open
 ```
 
 ---
 
-## 🔍 Console Mesajları (Normal Akış)
+### 🔍 Normal Console Flow
 
 ```javascript
 [Keepnet v3.1] Content script loaded on https://security.microsoft.com/homepage
@@ -138,10 +141,10 @@ Console'da şunu ara:
 [Keepnet] Starting assistant on tab: 123456
 [Keepnet] Initializing assistant...
 [Keepnet] Button handlers attached
-[Keepnet] Executing step 1: Security Center Ana Sayfası
+[Keepnet] Executing step 1: Security Center Home Page
 [Keepnet] Assistant ready!
 
-// Devam Et tıklanınca:
+// When Continue is clicked:
 [Keepnet] Next button clicked
 [Keepnet] Executing step 2: Email and Collaboration
 [Keepnet] Auto-click in 5s...
@@ -157,147 +160,106 @@ Console'da şunu ara:
 
 ---
 
-## 🎯 Beklenen Davranış
+### 🎯 Expected Behaviour
 
-### Her Adımda:
+#### For Each Step
 
-1. ✅ Panel içeriği güncellenir
-2. ✅ Progress bar ilerler (0% → 8% → 17% ...)
-3. ✅ Element yeşil border ile highlight edilir
-4. ✅ Tooltip gösterilir: "📧 Email and collaboration'a tıklayın"
-5. ✅ 5 saniye içinde otomatik tıklama başlar
-6. ✅ Manuel tıklama auto-click'i iptal eder
-7. ✅ Validation yapılır
-8. ✅ Screenshot otomatik alınır
-9. ✅ Sonraki adıma geçilir
+1. ✅ Panel content updates  
+2. ✅ Progress bar moves (0% → 8% → 17% …)  
+3. ✅ Target element is highlighted with a green border  
+4. ✅ Tooltip appears (e.g. “📧 Click Email and collaboration”)  
+5. ✅ Auto-click starts within 5 seconds (unless user clicks manually)  
+6. ✅ Manual click cancels auto-click  
+7. ✅ Validation is executed  
+8. ✅ Screenshot is captured automatically  
+9. ✅ Next step starts  
 
-### Kritik Adım 8 (IP Ekleme):
+#### Critical Step 8 (IP Entry)
 
-1. ✅ Panel highlight eder IP alanını
-2. ✅ Tooltip: "🔢 IP'leri ekleyin: 149.72.161.59, ..."
-3. ✅ Kullanıcı IP girdikçe real-time validation
-4. ✅ Eksik IP varsa: "❌ IP girmeyi unuttunuz: 149.72.42.201"
-5. ✅ Tüm IP'ler girilince: "✅ Tüm IP'ler eklendi! (3/3)"
-6. ✅ 10 saniye hiç giriş yoksa: "IP'leri otomatik doldurmak ister misiniz?"
+1. ✅ Panel highlights the IP input area  
+2. ✅ Tooltip shows required IPs (e.g. `149.72.161.59` etc.)  
+3. ✅ Real-time validation runs while the user types  
+4. ✅ If any IP is missing, a warning message is shown  
+5. ✅ When all IPs are entered, success message is shown  
 
-### Adım 12 (Özet):
+---
 
+### 🆘 Common Error Messages
+
+| Message                            | Cause                                      | Action                            |
+|------------------------------------|-------------------------------------------|-----------------------------------|
+| `❌ Element not found`             | Selector incorrect or page not loaded     | Scroll / wait / retry or continue manually |
+| `⚠️ Element not found: ...`        | Element not visible                        | Scroll or change filters and retry |
+| `❌ Error: ...`                    | JavaScript exception                       | Check Console details             |
+| `❌ Missing IP addresses: ...`     | Some IPs are not entered                   | Add missing IPs                   |
+| `Keepnet assistant could not start`| Initialization error                       | Refresh the page and retry        |
+
+---
+
+### 💡 Tips
+
+#### 1. Keep DevTools Open
+
+```bash
+Press F12
+Select "Console"
+Monitor messages and errors
 ```
-📊 Özet Rapor
 
-✅ Security Center Ana Sayfası
-   Screenshot: step1_home.png
+#### 2. Panel Disappeared?
 
-✅ Email and Collaboration
-   Screenshot: step2_emailcollab.png
+```bash
+Click the extension icon again
+or
+Refresh the page (F5)
+```
 
-❌ Phishing Simulation Sekmesi
-   [Git ve Düzelt]
+#### 3. Cancel Auto-Click
 
-⏳ IP Adresleri Ekleme
-   [Git ve Düzelt]
+```bash
+Click the target element manually
+→ Auto-click timer is cancelled
+```
 
-💾 Tüm screenshot'lar chrome.storage'da kaydedildi
+#### 4. Skip a Step
+
+```bash
+Click the "Continue" button
+→ Moves to next step (even if validation fails)
+```
+
+#### 5. View Screenshots
+
+```bash
+In Console: chrome.storage.local.get(['keepnet_screenshots_v3'], console.log)
+→ All screenshots (base64) will be printed
 ```
 
 ---
 
-## 🆘 Hata Mesajları
+### 🎉 Successful Setup Checklist
 
-| Mesaj | Sebep | Çözüm |
-|-------|-------|-------|
-| `❌ Element bulunamadı` | Selector yanlış veya sayfa yüklenmedi | Manuel devam et |
-| `⚠️ Element bulunamadı: ...` | Element görünür değil | Sayfayı scroll et, tekrar dene |
-| `❌ Hata: ...` | JavaScript exception | Console'u kontrol et |
-| `❌ IP girmeyi unuttunuz: ...` | Bazı IP'ler eksik | Eksik IP'leri ekle |
-| `Keepnet Asistanı başlatılamadı` | Init hatası | Sayfayı yenile |
+If all of the following are true, setup is working correctly:
 
----
+- ✅ Panel opens in the corner of the screen  
+- ✅ "Continue" button works  
+- ✅ Messages appear in Console  
+- ✅ Progress bar moves between steps  
+- ✅ Element highlighting is visible  
 
-## 💡 İpuçları
-
-### 1. DevTools Her Zaman Açık
+You can now do a full end-to-end test:
 
 ```bash
-F12 tuşuna bas
-Console sekmesini seç
-Hataları/mesajları takip et
-```
-
-### 2. Panel Kayboldu mu?
-
-```bash
-Extension icon'una tekrar tıkla
-veya
-Sayfayı yenile (F5)
-```
-
-### 3. Auto-Click İptal Etme
-
-```bash
-Element'e manuel tıkla
-→ Auto-click countdown durur
-```
-
-### 4. Adım Atlama
-
-```bash
-"Devam Et" butonuna tıkla
-→ Mevcut adımı geç (validation olmadan)
-```
-
-### 5. Screenshot'ları Görme
-
-```bash
-Console'da: chrome.storage.local.get(['keepnet_screenshots_v3'], console.log)
-→ Tüm screenshot'lar (base64) görünür
+1. Go to https://security.microsoft.com/homepage
+2. Start the extension
+3. Follow the steps one by one
+4. Check Console messages at each step
+5. Confirm screenshots are being captured
 ```
 
 ---
 
-## 📞 Destek
+🛡️ **Keepnet Allow List Assistant v3.1**
 
-**Sorun mu yaşıyorsun?**
-
-1. ✅ Console screenshot'ı al (F12 → Console)
-2. ✅ Hata mesajını kopyala
-3. ✅ Hangi adımda olduğunu söyle
-4. ✅ Bana gönder!
-
-**Örnek Rapor:**
-
-```
-Sorun: Panel açılıp kapanıyor
-Adım: 1 (Security Center Ana Sayfası)
-Console:
-[Keepnet] Init error: Cannot read property 'updateProgress' of null
-```
-
----
-
-## 🎉 Başarılı Kurulum Testi
-
-**Tüm bunlar çalışıyorsa kurulum başarılı:**
-
-- ✅ Panel sol-alt köşede açılıyor
-- ✅ "Devam Et" butonu çalışıyor
-- ✅ Console'da mesajlar görünüyor
-- ✅ Progress bar ilerliyor
-- ✅ Element highlighting çalışıyor
-
-**Şimdi gerçek testi yap:**
-
-```bash
-1. https://security.microsoft.com/homepage sayfasına git
-2. Extension'ı başlat
-3. Adım adım ilerle
-4. Her adımda console'u kontrol et
-5. Screenshot'ların alındığını doğrula
-```
-
----
-
-🛡️ **Keepnet Allow List Asistanı v3.1**
-
-*Sol-alt köşede, tek panel, otomatik tıklama, gerçek zamanlı validation!*
+*Single floating panel, auto-click, and real-time validation for Office 365 allow list configuration.*
 

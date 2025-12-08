@@ -1,144 +1,143 @@
-# Keepnet Office 365 Allow List Asistanı v3.0
+## Keepnet Office 365 Allow List Assistant v3.0
 
-**Müşterilere Office 365'te Keepnet phishing simülasyonu allow list yapılandırmasını adım adım öğreten, gerçek zamanlı doğrulama yapan ve kanıt toplayan interaktif Chrome Extension.**
-
----
-
-## 🎯 Özellikler
-
-### ✨ v3.0 Yenilikleri
-
-1. **Tek Panel Tasarımı**
-   - Sadece küçük, zarif floating panel
-   - 3 boyut seçeneği: Küçük (320px), Orta (400px), Büyük (480px)
-   - Otomatik minimize: 45 saniye inaktiflikten sonra FAB (Floating Action Button)
-   - Sürükle-bırak ile konumlandırma
-   - Konum hafızası
-
-2. **Akıllı Navigasyon Sistemi**
-   - Her adım için otomatik URL yönlendirmesi
-   - Element bulma ve highlighting
-   - **Öğrenme sistemi**: Kullanıcı bir elementi tıklarken CSS selector'ı öğrenir
-   - Gelecek kullanımlarda otomatik element bulma
-   - Scroll ve focus yönetimi
-
-3. **Gerçek Zamanlı Doğrulama**
-   - **IP Validation**: Eksik IP'leri anında gösterir
-   - **Domain Validation**: Wildcard format kontrolü
-   - **Checkbox Validation**: Safe Links, Office 365 Apps ayarları
-   - **Header Validation**: Mail flow kurallarında header kontrolü
-   - **SCL Validation**: Spam confidence level kontrolü
-   - MutationObserver ile input field'ları dinler
-   - Her 2 saniyede periyodik kontrol
-
-4. **Ekran Görüntüsü + Kanıt Sistemi**
-   - Her adımda otomatik screenshot
-   - Validation sonuçlarıyla birlikte saklanır
-   - Base64 format, chrome.storage.local'de
-   - Özet ekranında thumbnail görüntüleme
-
-5. **Detaylı Özet Ekranı**
-   - Tüm adımların durumu: ✅ Tamamlandı / ❌ Eksik / ⏳ Bekliyor
-   - Her adım için detaylı feedback
-   - Screenshot thumbnail'ları (tıklayınca büyür)
-   - "Git ve Düzelt" butonları ile doğrudan yönlendirme
-   - Flow'lara göre gruplandırılmış görünüm
-
-6. **İlerleme Takibi**
-   - Panel header'da progress bar
-   - "Adım X / Y" göstergesi
-   - Dinamik ilerleme yüzdesi
+**An interactive Chrome Extension that teaches customers how to configure Keepnet phishing simulation allow lists in Office 365 step-by-step, with real-time validation and evidence collection.**
 
 ---
 
-## 📂 Dosya Yapısı
+### Features
 
-```
+#### v3.0 Highlights
+
+1. **Single Floating Panel Design**
+   - Small, elegant floating panel UI  
+   - 3 size options: Small (320px), Medium (400px), Large (480px)  
+   - Auto-minimize after 45 seconds of inactivity to a FAB (Floating Action Button)  
+   - Drag-and-drop positioning  
+   - Position persistence between page loads  
+
+2. **Smart Navigation Engine**
+   - Automatic URL navigation for each step  
+   - Element discovery and highlighting  
+   - **Learning system**: learns CSS selectors when the user clicks elements  
+   - Automatically reuses learned selectors on subsequent runs  
+   - Scroll and focus management  
+
+3. **Real-time Validation**
+   - **IP Validation**: shows missing IPs instantly  
+   - **Domain Validation**: wildcard format checks  
+   - **Checkbox Validation**: Safe Links and Office 365 Apps options  
+   - **Header Validation**: mail flow rule header checks  
+   - **SCL Validation**: spam confidence level checks  
+   - Uses `MutationObserver` to watch input fields  
+   - Periodic validation every 2 seconds  
+
+4. **Screenshot & Evidence System**
+   - Automatic screenshot on each step  
+   - Screenshots stored together with validation results  
+   - Saved in Base64 format in `chrome.storage.local`  
+   - Thumbnails visible in the summary view  
+
+5. **Detailed Summary View**
+   - Step status for each step: ✅ Completed / ❌ Missing / ⏳ Pending  
+   - Detailed feedback per step  
+   - Clickable screenshot thumbnails  
+   - “Go & Fix” buttons jump directly to problematic steps  
+   - Grouped by workflow for clarity  
+
+6. **Progress Tracking**
+   - Progress bar in the panel header  
+   - “Step X / Y” indicator  
+   - Dynamic completion percentage  
+
+---
+
+### Folder Structure
+
+```text
 extension/
-├── manifest.json          # Extension manifest (v3)
-├── background.js          # Service worker (navigasyon, screenshot)
-├── content.js             # Ana script (6 major class içerir)
-├── content.css            # Minimal CSS (animasyonlar)
-├── config.json            # 43 adımlık konfigürasyon (PDF referansları)
-├── steps.json             # Alternatif config (legacy)
-├── icons/                 # Extension iconları
+├── manifest.json          # Extension manifest (MV3)
+├── background.js          # Service worker (navigation, screenshots)
+├── content.js             # Main script (contains 6 major classes)
+├── content.css            # Minimal CSS (animations)
+├── config.json            # 43-step configuration (PDF references)
+├── steps.json             # Legacy/alternative config
+├── icons/                 # Extension icons
 │   ├── icon16.jpg
 │   ├── icon48.jpg
 │   └── icon128.jpg
-└── README.md              # Bu dosya
+└── README.md              # This file
 ```
 
 ---
 
-## 🔧 Mimari
+### Architecture
 
-### content.js Ana Sınıflar
+#### Main Classes in `content.js`
 
-1. **FloatingPanel** (Part 2)
-   - Tek panel yönetimi
-   - Auto-minimize logic
-   - FAB (Floating Action Button)
-   - Drag & drop konumlandırma
+1. **FloatingPanel** (Part 2)  
+   - Single panel management  
+   - Auto-minimize logic  
+   - FAB (Floating Action Button)  
+   - Drag & drop positioning  
 
-2. **RealTimeValidator** (Part 3)
-   - MutationObserver ile input dinleme
-   - IP, domain, wildcard validation
-   - Checkbox, header, SCL kontrolü
-   - Callback sistem ile anlık feedback
+2. **RealTimeValidator** (Part 3)  
+   - Listens to inputs with `MutationObserver`  
+   - IP, domain, wildcard validation  
+   - Checkbox, header, SCL checks  
+   - Callback-based real-time feedback  
 
-3. **NavigationEngine** (Part 4)
-   - Akıllı sayfa geçişi
-   - Element bulma (selector matching)
-   - Öğrenme sistemi (learned selectors)
-   - Highlight & tooltip
+3. **NavigationEngine** (Part 4)  
+   - Smart page transitions  
+   - Element matching via selectors  
+   - Selector learning system (`learned selectors`)  
+   - Highlight & tooltip rendering  
 
-4. **ScreenshotManager** (Part 5)
-   - chrome.tabs.captureVisibleTab
-   - Storage yönetimi
-   - Validation sonuçlarıyla eşleştirme
+4. **ScreenshotManager** (Part 5)  
+   - Uses `chrome.tabs.captureVisibleTab`  
+   - Handles storage of screenshots  
+   - Links screenshots with validation results  
 
-5. **SummaryView** (Part 6)
-   - Detaylı özet rendering
-   - Step status (completed/missing/pending)
-   - Screenshot thumbnail display
-   - "Go & Fix" aksiyon butonları
+5. **SummaryView** (Part 6)  
+   - Renders the detailed summary  
+   - Shows step status (completed / missing / pending)  
+   - Renders screenshot thumbnails  
+   - Provides “Go & Fix” action buttons  
 
-6. **KeepnetAssistant** (Orchestrator)
-   - Tüm sınıfları koordine eder
-   - Step transition
-   - Message handling
-   - Global state management
-
----
-
-## 🚀 Kullanım
-
-### Kurulum
-
-1. Chrome'da `chrome://extensions` aç
-2. "Developer mode" aktif et
-3. "Load unpacked" → `extension/` klasörünü seç
-4. Extension yüklendi ✅
-
-### Başlatma
-
-1. [Microsoft Security Center](https://security.microsoft.com) veya [Exchange Admin](https://admin.exchange.microsoft.com) sayfasına git
-2. Extension icon'una tıkla 🛡️
-3. Floating panel açılır → Adım 1 başlar
-
-### İş Akışı
-
-1. **Panel** sağ-alt köşede açılır
-2. **Adım açıklaması** gösterilir
-3. **Otomatik navigasyon**: Doğru URL'ye yönlendirilirsin
-4. **Element highlighting**: İlgili buton/input yeşil border ile vurgulanır
-5. **Gerçek zamanlı validation**: IP/domain girerken anlık feedback
-6. **"Devam Et"** butonuna tıkla → Screenshot alınır + sonraki adıma geçilir
-7. **Özet** butonuna tıkla → Tüm adımların durumunu gör
+6. **KeepnetAssistant** (Orchestrator)  
+   - Coordinates all classes  
+   - Manages step transitions  
+   - Handles messages and global state  
 
 ---
 
-## 📖 Config Yapısı (config.json)
+### Usage
+
+#### Installation (Developer Mode)
+
+1. Open `chrome://extensions` in Chrome.  
+2. Enable **Developer mode** (top-right).  
+3. Click **Load unpacked**.  
+4. Select the `extension/` folder.  
+
+#### Starting the Assistant
+
+1. Go to [Microsoft Security Center](https://security.microsoft.com) or [Exchange Admin](https://admin.exchange.microsoft.com).  
+2. Click the Keepnet extension icon 🛡️.  
+3. The floating panel opens and **Step 1** starts.  
+
+#### Workflow
+
+1. The **panel** opens in the bottom-right corner.  
+2. A **step description** is shown.  
+3. **Automatic navigation** moves you to the correct URL when needed.  
+4. **Element highlighting** draws a green border around the relevant control.  
+5. **Real-time validation** gives feedback while you type IPs/domains.  
+6. Click **Continue** → a screenshot is captured and the next step starts.  
+7. Click **Summary** to see the status of all steps.  
+
+---
+
+### `config.json` Structure
 
 ```json
 {
@@ -156,15 +155,15 @@ extension/
       "steps": [
         {
           "id": 6,
-          "title": "Sending IP Ekleme",
-          "description": "Keepnet IP adreslerini ekleyin",
+          "title": "Sending IP Entry",
+          "description": "Enter Keepnet IP addresses",
           "navigate": { "url": "https://security.microsoft.com/advanceddelivery" },
           "validate": "sending_ip",
           "required": ["meta.critical.ips"],
           "selectors": ["input[aria-label*='Sending IP']"],
           "realTimeValidation": true,
           "expectedValues": ["149.72.161.59", "149.72.42.201", "149.72.154.87"],
-          "pdfReference": "Sayfa 5, Step 6"
+          "pdfReference": "Page 5, Step 6"
         }
       ]
     }
@@ -178,23 +177,23 @@ extension/
 }
 ```
 
-### Step Config Özellikleri
+#### Step Config Fields
 
-- `id`: Adım numarası
-- `title`: Adım başlığı
-- `description`: Açıklama
-- `navigate.url`: Otomatik yönlendirme URL'i
-- `selectors[]`: Element bulma CSS selector'ları
-- `validate`: Validation tipi (sending_ip, domains_mail_from, vb.)
-- `realTimeValidation`: true ise anlık validation başlar
-- `expectedValues[]`: Beklenen değerler (IP, domain listesi)
-- `pdfReference`: PDF kaynak referansı
+- `id`: Step number.  
+- `title`: Step title.  
+- `description`: Explanation shown in the panel.  
+- `navigate.url`: URL for automatic navigation.  
+- `selectors[]`: CSS selectors used to find the relevant element.  
+- `validate`: Validation type (`sending_ip`, `domains_mail_from`, etc.).  
+- `realTimeValidation`: When `true`, starts real-time validation.  
+- `expectedValues[]`: Expected IPs/domains.  
+- `pdfReference`: Reference to the PDF documentation.  
 
 ---
 
-## 🎨 UI/UX Detayları
+### UI/UX Details
 
-### Panel Boyutları
+#### Panel Sizes
 
 ```javascript
 const PANEL_SIZES = {
@@ -204,111 +203,111 @@ const PANEL_SIZES = {
 }
 ```
 
-### Renkler
+#### Colors
 
-- **Primary Gradient**: `#667eea → #764ba2` (Header, buttons)
-- **Success**: `#22c55e` (Validation OK, highlight)
-- **Error**: `#dc2626` (Validation fail)
-- **Warning**: `#f59e0b`
-- **Background**: `#f9fafb`
+- **Primary Gradient**: `#667eea → #764ba2` (header, buttons)  
+- **Success**: `#22c55e` (validation OK, highlight)  
+- **Error**: `#dc2626` (validation failed)  
+- **Warning**: `#f59e0b`  
+- **Background**: `#f9fafb`  
 
-### Animasyonlar
+#### Animations
 
-- **Slide In**: Panel açılış (cubic-bezier bounce)
-- **Pulse**: Element highlighting (2s infinite)
-- **Fade In**: Screenshot modal
-- **Highlight**: Yeşil glow effect (3x iteration)
-
----
-
-## 🔍 Validation Tipleri
-
-| Tip | Açıklama | Kontrol Edilen |
-|-----|----------|----------------|
-| `sending_ip` | IP listesi | 3 Keepnet IP'si var mı? |
-| `domains_mail_from` | Domain | Keepnet domain'i var mı? |
-| `simulation_urls_wildcard` | Wildcard domain | `*.domain.com/*` formatı |
-| `track_clicks_off` | Checkbox | "Track user clicks" OFF mu? |
-| `scl_minus_one` | SCL değeri | SCL = -1 ayarlanmış mı? |
-| `bypass_clutter_header` | Mail header | X-MS-Exchange-Organization-BypassClutter = true |
-| `skip_safe_links_header` | Mail header | X-MS-Exchange-Organization-SkipSafeLinksProcessing = 1 |
+- **Slide In**: Panel entry animation (cubic-bezier bounce).  
+- **Pulse**: Element highlighting (2s infinite).  
+- **Fade In**: Screenshot modal.  
+- **Highlight**: Green glow effect (3 iterations).  
 
 ---
 
-## 💾 Storage Yapısı
+### Validation Types
+
+| Type                      | Description              | Checked Value                                 |
+|---------------------------|--------------------------|-----------------------------------------------|
+| `sending_ip`              | IP list                  | Are all 3 Keepnet IPs present?                |
+| `domains_mail_from`       | Domain                   | Is the Keepnet domain present?                |
+| `simulation_urls_wildcard`| Wildcard domain          | `*.domain.com/*` format                       |
+| `track_clicks_off`        | Checkbox                 | Is “Track user clicks” turned off?            |
+| `scl_minus_one`           | SCL value                | Is SCL set to -1?                             |
+| `bypass_clutter_header`   | Mail header              | `X-MS-Exchange-Organization-BypassClutter`    |
+| `skip_safe_links_header`  | Mail header              | `X-MS-Exchange-Organization-SkipSafeLinksProcessing` |
+
+---
+
+### Storage Layout
 
 ```javascript
 STORAGE_KEYS = {
-  PANEL_STATE: 'keepnet_panel_state_v3',      // Panel konumu, minimize durumu
-  STEP_RESULTS: 'keepnet_step_results_v3',    // Her adımın validation sonucu
-  LEARNED_SELECTORS: 'keepnet_learned_selectors_v3', // Öğrenilen CSS selector'lar
-  SCREENSHOTS: 'keepnet_screenshots_v3',      // Screenshot'lar (base64)
-  PROGRESS: 'keepnet_progress_v3',            // Mevcut adım
-  SETTINGS: 'keepnet_settings_v3'             // Panel boyutu, auto-minimize ayarı
+  PANEL_STATE: 'keepnet_panel_state_v3',          // Panel position, minimize state
+  STEP_RESULTS: 'keepnet_step_results_v3',        // Validation result per step
+  LEARNED_SELECTORS: 'keepnet_learned_selectors_v3', // Learned CSS selectors
+  SCREENSHOTS: 'keepnet_screenshots_v3',          // Screenshots (base64)
+  PROGRESS: 'keepnet_progress_v3',                // Current step index
+  SETTINGS: 'keepnet_settings_v3'                 // Panel size, auto-minimize setting
 }
 ```
 
 ---
 
-## 🧪 Test Senaryosu
+### Example Test Scenario
 
-1. **Extension'ı başlat**
-   - Icon'a tıkla
-   - Panel açılır, Adım 1 görünür
+1. **Start the extension**
+   - Click the icon.  
+   - Panel opens and Step 1 is visible.  
 
-2. **Adım 6'ya git** (Sending IP)
-   - Otomatik olarak Advanced Delivery sayfasına yönlendirilir
-   - IP input field'ı yeşil border ile highlight edilir
-   - Tooltip gösterilir
+2. **Go to Step 6 (Sending IP)**
+   - Automatically navigates to the Advanced Delivery page.  
+   - IP input field is highlighted with a green border.  
+   - Tooltip is shown.  
 
-3. **IP girmeye başla**
-   - İlk IP'yi gir: `149.72.161.59`
-   - Anlık feedback: "⚠️ Eksik IP'ler: 149.72.42.201, 149.72.154.87"
-   - Kalan IP'leri ekle
-   - Feedback: "✅ Tüm IP'ler eklendi"
+3. **Start entering IPs**
+   - Enter first IP: `149.72.161.59`.  
+   - Real-time feedback: “⚠️ Missing IPs: 149.72.42.201, 149.72.154.87”.  
+   - Add remaining IPs.  
+   - Feedback: “✅ All IPs added”.  
 
-4. **"Devam Et" tıkla**
-   - Screenshot otomatik alınır
-   - Adım 7'ye geçilir
+4. **Click Continue**
+   - Screenshot is captured automatically.  
+   - Moves to Step 7.  
 
-5. **Özet'e tıkla**
-   - Tüm adımların listesi gösterilir
-   - Adım 6: ✅ Tamamlandı (screenshot thumbnail)
-   - Adım 7: ⏳ Bekliyor
-   - "Git ve Düzelt" butonu → o adıma yönlendirir
-
----
-
-## 📝 PDF Referansları
-
-Config dosyasındaki her adım, Keepnet'in "white.pdf" dökümanındaki ilgili sayfa ve adıma referans verir:
-
-- **Sayfa 4-5**: Advanced Delivery
-- **Sayfa 5-6**: Connection Filter
-- **Sayfa 6-7**: Safe Links Policy
-- **Sayfa 7-8**: Mail Flow Rules - Bypass Spam
-- **Sayfa 8-9**: Skip Safe Links Processing
-- **Sayfa 10-11**: Skip Safe Attachments Processing
-- **Sayfa 11-12**: Troubleshooting - Message Trace
+5. **Open Summary**
+   - All steps are listed.  
+   - Step 6: ✅ Completed (with screenshot thumbnail).  
+   - Step 7: ⏳ Pending.  
+   - “Go & Fix” button navigates back to the selected step.  
 
 ---
 
-## 🛠️ Geliştirme Notları
+### PDF References
 
-### Öğrenme Sistemi
+Each step in `config.json` is mapped to the corresponding page and step in Keepnet’s `white.pdf`:
+
+- **Pages 4–5**: Advanced Delivery  
+- **Pages 5–6**: Connection Filter  
+- **Pages 6–7**: Safe Links Policy  
+- **Pages 7–8**: Mail Flow Rules – Bypass Spam  
+- **Pages 8–9**: Skip Safe Links Processing  
+- **Pages 10–11**: Skip Safe Attachments Processing  
+- **Pages 11–12**: Troubleshooting – Message Trace  
+
+---
+
+### Development Notes
+
+#### Learning System
 
 ```javascript
-// Kullanıcı bir elemente tıkladığında:
+// When the user clicks an element:
 const selector = Utils.buildUniqueSelector(element)
 navigationEngine.learnSelector(stepId, selector)
 
-// Sonraki kullanımda:
+// On the next run:
 const learnedSelector = this.learnedSelectors[stepId]
 const element = document.querySelector(learnedSelector)
 if (element) highlightElement(element)
 ```
 
-### Screenshot Akışı
+#### Screenshot Flow
 
 ```javascript
 // 1. Content script → Background
@@ -317,37 +316,37 @@ chrome.runtime.sendMessage({ action: 'captureScreenshot', step: 6 })
 // 2. Background → chrome.tabs.captureVisibleTab
 const dataUrl = await chrome.tabs.captureVisibleTab(null, { format: 'png' })
 
-// 3. Background → Content (mesaj geri gönder)
+// 3. Background → Content (send message back)
 chrome.tabs.sendMessage(tabId, { action: 'screenshotCaptured', dataUrl })
 
-// 4. Content → Storage'a kaydet
+// 4. Content → Save to storage
 screenshotManager.save(stepId, dataUrl, validationResult)
 ```
 
 ---
 
-## 🚧 Gelecek Geliştirmeler
+### Roadmap
 
-- [ ] Çoklu dil desteği (EN, TR dinamik değişimi)
-- [ ] Dark mode
-- [ ] Export summary as PDF/HTML rapor
-- [ ] Keyboard shortcuts (N: Next, P: Prev, S: Summary)
-- [ ] Candidate element selection UI (birden fazla element bulunduğunda)
-- [ ] Undo/Redo navigation
-- [ ] Session replay (adımları tekrar göster)
-
----
-
-## 📄 Lisans
-
-© 2025 Keepnet Labs. Tüm hakları saklıdır.
+- [ ] Multi-language UI switching (EN / TR at runtime).  
+- [ ] Dark mode.  
+- [ ] Export summary as PDF/HTML report.  
+- [ ] Keyboard shortcuts (N: Next, P: Previous, S: Summary).  
+- [ ] Candidate element selection UI when multiple candidates are found.  
+- [ ] Undo/Redo navigation.  
+- [ ] Session replay (replay steps).  
 
 ---
 
-## 👨‍💻 Geliştirici
+### License
 
-**Versiyon**: 3.0.0  
-**Son Güncelleme**: 22 Ekim 2025  
-**Gereksinimler**: Chrome 88+, Manifest v3  
+© 2025 Keepnet Labs. All rights reserved.
 
-**Not**: Bu extension Microsoft 365 Security Center ve Exchange Admin Center'da çalışır. Keepnet IP'leri ve domain'leri config.json dosyasında tanımlıdır.
+---
+
+### Developer Info
+
+- **Version**: 3.0.0  
+- **Last Update**: 22 October 2025  
+- **Requirements**: Chrome 88+, Manifest v3  
+
+**Note**: This extension works on Microsoft 365 Security Center and Exchange Admin Center. Keepnet IPs and domains are defined in `config.json`.
