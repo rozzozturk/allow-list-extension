@@ -14,8 +14,12 @@ const STORAGE_KEYS = {
 const PANEL_SIZE = { width: 340, height: 520 }
 const AUTO_CLICK_TIMEOUT = 10000 // 10 saniye
 const VALIDATION_INTERVAL = 1000 // 1 saniye
-const AUTO_MODE = true
-const AUTO_MODE_ADVANCE_DELAY = 5000 // Varsayılan otomatik ilerleme bekleme süresi
+// Otomasyon varsayılanını KAPALI tutuyoruz:
+// - Kullanıcı kontrolü + yanlış input riskini azaltır
+// - "Keepnet Auto" gibi otomatik yazmaları engeller
+const AUTO_MODE = false
+const AUTO_MODE_ADVANCE_DELAY = 8000 // Otomatik mod açılırsa kullanılacak varsayılan bekleme
+const AUTO_AGENT = false // Tam otonom ajan (varsayılan kapalı)
 
 let CURRENT_STEP = 0
 let TOTAL_STEPS = 12  // Third-Party Phishing: 12 adım
@@ -109,11 +113,17 @@ const MESSAGES = {
     tooltipSafeLinks: 'Safe Links\'e tıklayın',
     tooltipCreate: 'Create butonuna tıklayın',
     tooltipName: 'İsim girin',
+    tooltipPolicyName: 'Politika adını girin',
+    tooltipDescription: 'Açıklama girin',
     tooltipNext: 'Next butonuna tıklayın',
     tooltipAddDomain: 'Domain ekleyin',
     tooltipClickNext: 'Next\'e tıklayın',
     tooltipRemoveTrack: 'Track user clicks seçeneğini kaldırın',
     tooltipAddPhishingDomains: 'Phishing domain\'lerini ekleyin',
+    tooltipDisableOfficeApps: '"Office 365 Apps" seçeneğini kaldırın',
+    tooltipManageUrls: '"URL\'sini yönet" butonuna tıklayın',
+    tooltipAddUrls: '"URL\'leri ekleyin" butonuna tıklayın',
+    tooltipDone: '"Bitti" butonuna tıklayın',
     // Workflow 4, 5, 6 tooltips
     tooltipCreateNewRule: 'Create a new rule seçeneğini seçin',
     tooltipEnterRuleName: 'Kural adını girin',
@@ -204,27 +214,43 @@ const MESSAGES = {
     safelinksStep2Title: 'E-posta ve İşbirliği',
     safelinksStep2Description: 'E-posta ve İşbirliği sekmesini açın',
     safelinksStep3Title: 'İlkeler ve Kurallar',
-    safelinksStep3Description: 'İlkeler ve Kurallar > Tehdit İlkeleri bölümüne gidin',
-    safelinksStep4Title: 'Safe Links',
-    safelinksStep4Description: 'Safe Links\'e tıklayın. Eğer Safe Links görünmüyorsa, Microsoft Defender for Office 365 lisansı eksik olabilir.',
-    safelinksStep5Title: 'Create Butonu',
-    safelinksStep5Description: 'Create butonuna tıklayın',
-    safelinksStep6Title: 'İsim ve Açıklama',
-    safelinksStep6Description: 'Bir isim ve açıklama ekleyin',
-    safelinksStep7Title: 'Next (1)',
-    safelinksStep7Description: 'Next butonuna tıklayın',
-    safelinksStep8Title: 'Domain Ekle',
-    safelinksStep8Description: 'Şirket domaininizi ekleyin',
-    safelinksStep9Title: 'Next (2)',
-    safelinksStep9Description: 'Next butonuna tıklayın',
-    safelinksStep10Title: 'Seçenekleri Kaldır',
-    safelinksStep10Description: '"Track user clicks" ve "Office 365 Apps" seçeneklerini deselect edin',
-    safelinksStep11Title: 'Phishing Domain Ekle',
-    safelinksStep11Description: 'Do not rewrite the following URLs kısmına *.domain.com/* formatında ekleyin',
-    safelinksStep12Title: 'Next (3)',
-    safelinksStep12Description: 'Next butonuna tıklayın',
-    safelinksStep13Title: 'Submit',
-    safelinksStep13Description: 'Submit diyerek işlemi tamamlayın',
+    safelinksStep3Description: 'İlkeler ve Kurallar\'a tıklayın',
+    safelinksStep4Title: 'Tehdit İlkeleri',
+    safelinksStep4Description: 'Tehdit İlkeleri\'ne tıklayın',
+    safelinksStep5Title: 'Güvenli Bağlantılar',
+    safelinksStep5Description: 'Güvenli Bağlantılar\'a tıklayın. Eğer görünmüyorsa, Microsoft Defender for Office 365 lisansı eksik olabilir.',
+    safelinksStep6Title: 'Oluştur',
+    safelinksStep6Description: 'Oluştur (Create) butonuna tıklayın',
+    safelinksStep7Title: 'Politika Adı',
+    safelinksStep7Description: 'Güvenli bağlantılar politikası için bir ad girin',
+    safelinksStep8Title: 'Açıklama',
+    safelinksStep8Description: 'Politika için açıklama girin',
+    safelinksStep9Title: 'Sonraki',
+    safelinksStep9Description: 'Sonraki (Next) butonuna tıklayın',
+    safelinksStep10Title: 'Şirket Etki Alanı',
+    safelinksStep10Description: 'Bu politikaya dahil edilecek şirket etki alanını seçin',
+    safelinksStep11Title: 'Sonraki (2)',
+    safelinksStep11Description: 'Sonraki (Next) butonuna tıklayın',
+    safelinksStep12Title: 'Office 365 Apps',
+    safelinksStep12Description: '"Office 365 Apps" seçeneğini KAPATIN',
+    safelinksStep13Title: 'Kullanıcı Tıklamalarını İzle',
+    safelinksStep13Description: '"Kullanıcı tıklamalarını izle" seçeneğini KAPATIN',
+    safelinksStep14Title: 'URL\'sini Yönet',
+    safelinksStep14Description: '"0 URL\'sini yönet" butonuna tıklayın',
+    safelinksStep15Title: 'URL\'leri Ekleyin',
+    safelinksStep15Description: '"URL\'leri ekleyin" butonuna tıklayın',
+    safelinksStep16Title: 'URL Listesi',
+    safelinksStep16Description: 'Whitelist edilecek phishing domain URL\'lerini *.domain.com/* formatında ekleyin',
+    safelinksStep17Title: 'Kaydet',
+    safelinksStep17Description: 'Kaydet (Save) butonuna tıklayın',
+    safelinksStep18Title: 'Bitti',
+    safelinksStep18Description: 'Bitti (Done) butonuna tıklayın',
+    safelinksStep19Title: 'Sonraki (3)',
+    safelinksStep19Description: 'Sonraki (Next) butonuna tıklayın',
+    safelinksStep20Title: 'Sonraki (4)',
+    safelinksStep20Description: 'Sonraki (Next) butonuna tıklayın',
+    safelinksStep21Title: 'Gönder',
+    safelinksStep21Description: 'Gönder (Submit) butonuna tıklayarak işlemi tamamlayın',
     safelinksSummaryTitle: 'Tamamlandı!',
     safelinksSummaryDescription: 'Safe Links yapılandırması tamamlandı. Birkaç saat içinde etkili olacaktır.',
     // Safe Links License Messages
@@ -450,11 +476,17 @@ const MESSAGES = {
     tooltipSafeLinks: 'Click on Safe Links',
     tooltipCreate: 'Click on Create button',
     tooltipName: 'Enter name',
+    tooltipPolicyName: 'Enter policy name',
+    tooltipDescription: 'Enter description',
     tooltipNext: 'Click on Next button',
     tooltipAddDomain: 'Add domain',
     tooltipClickNext: 'Click Next',
     tooltipRemoveTrack: 'Remove Track user clicks option',
     tooltipAddPhishingDomains: 'Add phishing domains',
+    tooltipDisableOfficeApps: 'Turn OFF "Office 365 Apps" option',
+    tooltipManageUrls: 'Click on "Manage URLs" button',
+    tooltipAddUrls: 'Click on "Add URLs" button',
+    tooltipDone: 'Click on "Done" button',
     // Workflow 4, 5, 6 tooltips
     tooltipCreateNewRule: 'Select Create a new rule option',
     tooltipEnterRuleName: 'Enter rule name',
@@ -545,27 +577,43 @@ const MESSAGES = {
     safelinksStep2Title: 'Email & Collaboration',
     safelinksStep2Description: 'Open Email & Collaboration tab',
     safelinksStep3Title: 'Policies & Rules',
-    safelinksStep3Description: 'Go to Policies and rules > Threat Policies section',
-    safelinksStep4Title: 'Safe Links',
-    safelinksStep4Description: 'Click on Safe Links. If Safe Links is not visible, Microsoft Defender for Office 365 license may be missing.',
-    safelinksStep5Title: 'Create Button',
-    safelinksStep5Description: 'Click on Create button',
-    safelinksStep6Title: 'Name and Description',
-    safelinksStep6Description: 'Add a name and description',
-    safelinksStep7Title: 'Next (1)',
-    safelinksStep7Description: 'Click on Next button',
-    safelinksStep8Title: 'Add Domain',
-    safelinksStep8Description: 'Add your company domain',
-    safelinksStep9Title: 'Next (2)',
+    safelinksStep3Description: 'Click on Policies and rules',
+    safelinksStep4Title: 'Threat Policies',
+    safelinksStep4Description: 'Click on Threat Policies',
+    safelinksStep5Title: 'Safe Links',
+    safelinksStep5Description: 'Click on Safe Links. If it is not visible, Microsoft Defender for Office 365 license may be missing.',
+    safelinksStep6Title: 'Create',
+    safelinksStep6Description: 'Click on Create button',
+    safelinksStep7Title: 'Policy Name',
+    safelinksStep7Description: 'Enter a name for your Safe Links policy',
+    safelinksStep8Title: 'Description',
+    safelinksStep8Description: 'Enter a description for the policy',
+    safelinksStep9Title: 'Next',
     safelinksStep9Description: 'Click on Next button',
-    safelinksStep10Title: 'Remove Options',
-    safelinksStep10Description: 'Deselect "Track user clicks" and "Office 365 Apps" options',
-    safelinksStep11Title: 'Add Phishing Domain',
-    safelinksStep11Description: 'Add in *.domain.com/* format to "Do not rewrite the following URLs" section',
-    safelinksStep12Title: 'Next (3)',
-    safelinksStep12Description: 'Click on Next button',
-    safelinksStep13Title: 'Submit',
-    safelinksStep13Description: 'Complete the process by clicking Submit',
+    safelinksStep10Title: 'Company Domain',
+    safelinksStep10Description: 'Select the company domain to include in this policy',
+    safelinksStep11Title: 'Next (2)',
+    safelinksStep11Description: 'Click on Next button',
+    safelinksStep12Title: 'Office 365 Apps',
+    safelinksStep12Description: 'TURN OFF "Office 365 Apps" option',
+    safelinksStep13Title: 'Track User Clicks',
+    safelinksStep13Description: 'TURN OFF "Track user clicks" option',
+    safelinksStep14Title: 'Manage URLs',
+    safelinksStep14Description: 'Click on "Manage URLs" button',
+    safelinksStep15Title: 'Add URLs',
+    safelinksStep15Description: 'Click on "Add URLs" button',
+    safelinksStep16Title: 'URL List',
+    safelinksStep16Description: 'Add phishing domains in *.domain.com/* wildcard format',
+    safelinksStep17Title: 'Save',
+    safelinksStep17Description: 'Click on Save button',
+    safelinksStep18Title: 'Done',
+    safelinksStep18Description: 'Click on Done button',
+    safelinksStep19Title: 'Next (3)',
+    safelinksStep19Description: 'Click on Next button',
+    safelinksStep20Title: 'Next (4)',
+    safelinksStep20Description: 'Click on Next button',
+    safelinksStep21Title: 'Submit',
+    safelinksStep21Description: 'Complete the process by clicking Submit',
     safelinksSummaryTitle: 'Completed!',
     safelinksSummaryDescription: 'Safe Links configuration completed. It will be effective within a few hours.',
     // Safe Links License Messages
@@ -794,7 +842,13 @@ const WORKFLOW_STEPS = [
     description: 'workflowStep1Description',
     navigate: 'https://security.microsoft.com/homepage',
     validation: () => true,
-    hideInSummary: true  // Summary'de gösterme
+    hideInSummary: true,  // Summary'de gösterme
+    // Açılış ekranını göstermeden otomatik ilerle
+    skipUI: true,
+    autoClick: true,
+    autoAdvance: true,
+    autoAdvanceDelay: 1000,
+    hideButtons: true
   },
   {
     id: 2,
@@ -1230,7 +1284,8 @@ const SAFE_LINKS_STEPS = [
     description: 'safelinksStep1Description',
     navigate: 'https://security.microsoft.com/threatpolicy',
     validation: () => true,
-    hideInSummary: true  // Summary'de gösterme
+    isNavigation: true,
+    hideInSummary: true
   },
   {
     id: 2,
@@ -1238,14 +1293,17 @@ const SAFE_LINKS_STEPS = [
     title: 'safelinksStep2Title',
     description: 'safelinksStep2Description',
     target: {
-      selector: 'button[aria-label*="E-posta"]',
+      selector: 'button[aria-label="E-posta ve işbirliği"]',
       fallback: [
+        'button[aria-label*="E-posta"]',
         'button[aria-label*="Email"]',
+        'button#Group_200_id12',
+        'button#Group_150_id12',
         'button[data-icon-name="Mail"]'
       ]
     },
     tooltip: 'tooltipEmailCollab',
-    autoClick: true,
+    autoClick: false,
     validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
@@ -1256,10 +1314,32 @@ const SAFE_LINKS_STEPS = [
     title: 'safelinksStep3Title',
     description: 'safelinksStep3Description',
     target: {
-      selector: 'a[href*="threatpolicy"]',
-      textMatch: /Threat policies/i,
+      selector: 'a[href*="securitypoliciesandrules"]',
+      textMatch: /İlkeler ve kurallar|Policies & rules/i,
       fallback: [
-        'a[href*="policy"]'
+        'a[data-automation-id*="securitypoliciesandrules"]',
+        'a[href*="policy"]',
+        'span:contains("İlkeler")'
+      ]
+    },
+    tooltip: 'tooltipPolicies',
+    autoClick: false,
+    validation: () => true,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 4,
+    name: 'safelinks_step4_threat_policies',
+    title: 'safelinksStep4Title',
+    description: 'safelinksStep4Description',
+    target: {
+      selector: 'a[href*="threatpolicy"]',
+      textMatch: /Tehdit ilkeleri|Threat policies/i,
+      fallback: [
+        'a[data-automation-id*="threatpolicy"]',
+        'span:contains("Tehdit ilkeleri")',
+        'a:contains("Threat")'
       ]
     },
     tooltip: 'tooltipThreatPolicies',
@@ -1269,16 +1349,18 @@ const SAFE_LINKS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 4,
-    name: 'safelinks_step4_safe_links',
-    title: 'safelinksStep4Title',
-    description: 'safelinksStep4Description',
+    id: 5,
+    name: 'safelinks_step5_safe_links',
+    title: 'safelinksStep5Title',
+    description: 'safelinksStep5Description',
     target: {
-      selector: 'a:contains("Safe Links")',
-      textMatch: /Safe Links/i,
+      // TR UI örneği: <button aria-label="Link Icon, Güvenli Bağlantılar" class="ms-Link ...">Güvenli Bağlantılar</button>
+      selector: 'button[aria-label*="Güvenli Bağlantılar"], button[aria-label*="Safe Links"], button.ms-Link, a.ms-Link',
+      textMatch: /Güvenli Bağlantılar|Safe Links/i,
       fallback: [
+        'a[href*="safelinksv2"]',
         'a[href*="safelinks"]',
-        'button:contains("Safe Links")'
+        'button[aria-label*="Link Icon"]'
       ]
     },
     tooltip: 'tooltipSafeLinks',
@@ -1292,14 +1374,16 @@ const SAFE_LINKS_STEPS = [
     }
   },
   {
-    id: 5,
-    name: 'safelinks_step5_create',
-    title: 'safelinksStep5Title',
-    description: 'safelinksStep5Description',
+    id: 6,
+    name: 'safelinks_step6_create',
+    title: 'safelinksStep6Title',
+    description: 'safelinksStep6Description',
     target: {
-      selector: 'button:contains("Create")',
-      textMatch: /Create/i,
+      // TR UI örneği: <span class="ms-Button-label">Oluştur</span>
+      selector: 'span.ms-Button-label',
+      textMatch: /Oluştur|Create/i,
       fallback: [
+        'button[aria-label*="Oluştur"]',
         'button[aria-label*="Create"]',
         'button.ms-Button--primary'
       ]
@@ -1311,18 +1395,21 @@ const SAFE_LINKS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 6,
-    name: 'safelinks_step6_name',
-    title: 'safelinksStep6Title',
-    description: 'safelinksStep6Description',
+    id: 7,
+    name: 'safelinks_step7_policy_name',
+    title: 'safelinksStep7Title',
+    description: 'safelinksStep7Description',
     target: {
-      selector: 'input[placeholder*="name"], input[aria-label*="Name"]',
+      // TR UI örneği: <input id="policyNameId" ... />
+      selector: '#policyNameId, input#policyNameId',
       fallback: [
-        'input[type="text"]',
-        'textarea'
+        'input[type="text"][aria-required="true"]',
+        'input.ms-TextField-field',
+        'input[aria-label*="Ad"]',
+        'input[aria-label*="Name"]'
       ]
     },
-    tooltip: 'tooltipName',
+    tooltip: 'tooltipPolicyName',
     autoClick: false,
     validation: () => true,
     realTimeValidation: true,
@@ -1330,34 +1417,57 @@ const SAFE_LINKS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 7,
-    name: 'safelinks_step7_next1',
-    title: 'safelinksStep7Title',
-    description: 'safelinksStep7Description',
+    id: 8,
+    name: 'safelinks_step8_policy_description',
+    title: 'safelinksStep8Title',
+    description: 'safelinksStep8Description',
     target: {
-      selector: 'button:contains("Next")',
-      textMatch: /Next/i,
+      // TR UI örneği: <textarea aria-label="Açıklama" ...></textarea>
+      selector: 'textarea[aria-label="Açıklama"], textarea[aria-label*="Description"], textarea[id^="TextField"]',
       fallback: [
+        'textarea.ms-TextField-field',
+        'textarea'
+      ]
+    },
+    tooltip: 'tooltipDescription',
+    autoClick: false,
+    validation: () => true,
+    realTimeValidation: true,
+    waitAfterClick: 2000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 9,
+    name: 'safelinks_step9_next1',
+    title: 'safelinksStep9Title',
+    description: 'safelinksStep9Description',
+    target: {
+      // TR UI örneği: <span class="ms-Button-label">Sonraki</span>
+      selector: 'span.ms-Button-label',
+      textMatch: /Sonraki|Next/i,
+      fallback: [
+        'button[aria-label*="Sonraki"]',
         'button[aria-label*="Next"]',
         'button.ms-Button--primary'
       ]
     },
-    tooltip: 'tooltipNext',
+    tooltip: 'tooltipClickNext',
     autoClick: false,
     validation: () => true,
     waitAfterClick: 1000,
     panelPosition: 'bottom-left'
   },
   {
-    id: 7,
-    name: 'safelinks_step8_domain',
-    title: 'safelinksStep8Title',
-    description: 'safelinksStep8Description',
+    id: 10,
+    name: 'safelinks_step10_domain_select',
+    title: 'safelinksStep10Title',
+    description: 'safelinksStep10Description',
     target: {
-      selector: 'input[aria-label*="domain"]',
+      // TR UI örneği: <input aria-label="Ve Etki alanları" class="ms-BasePicker-input" role="combobox" ... />
+      selector: 'input.ms-BasePicker-input[role="combobox"][aria-label*="Etki alan"], input.ms-BasePicker-input[role="combobox"][aria-label*="Domain"], input[aria-label*="Etki alan"], input[aria-label*="Domain"]',
       fallback: [
         'input.ms-BasePicker-input',
-        'input[type="text"]'
+        'input[role="combobox"]'
       ]
     },
     tooltip: 'tooltipAddDomain',
@@ -1368,14 +1478,15 @@ const SAFE_LINKS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 8,
-    name: 'safelinks_step9_next2',
-    title: 'safelinksStep9Title',
-    description: 'safelinksStep9Description',
+    id: 11,
+    name: 'safelinks_step11_next2',
+    title: 'safelinksStep11Title',
+    description: 'safelinksStep11Description',
     target: {
-      selector: 'button:contains("Next")',
-      textMatch: /Next/i,
+      selector: 'span.ms-Button-label',
+      textMatch: /Sonraki|Next/i,
       fallback: [
+        'button[aria-label*="Sonraki"]',
         'button[aria-label*="Next"]'
       ]
     },
@@ -1386,27 +1497,87 @@ const SAFE_LINKS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 9,
-    name: 'safelinks_step10_deselect_options',
-    title: 'safelinksStep10Title',
-    description: 'safelinksStep10Description',
+    id: 12,
+    name: 'safelinks_step12_office_apps_toggle',
+    title: 'safelinksStep12Title',
+    description: 'safelinksStep12Description',
     target: {
-      selector: 'input[type="checkbox"][aria-label*="Track"]',
+      selector: 'span.ms-Checkbox-text',
+      textMatch: /Microsoft Office uygulamalar|Office 365 Apps/i,
       fallback: [
+        'input[type="checkbox"]'
+      ]
+    },
+    tooltip: 'tooltipDisableOfficeApps',
+    autoClick: false,
+    validation: () => true,
+    waitAfterClick: 1500,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 13,
+    name: 'safelinks_step13_track_user_clicks_toggle',
+    title: 'safelinksStep13Title',
+    description: 'safelinksStep13Description',
+    target: {
+      selector: 'span.ms-Checkbox-text',
+      textMatch: /Kullanıcı tıklamalarını izle|Track user clicks/i,
+      fallback: [
+        'input[type="checkbox"][aria-label*="Track"]',
         'input[type="checkbox"]'
       ]
     },
     tooltip: 'tooltipRemoveTrack',
     autoClick: false,
     validation: () => true,
-    waitAfterClick: 2000,
+    waitAfterClick: 1500,
     panelPosition: 'bottom-left'
   },
   {
-    id: 10,
-    name: 'safelinks_step11_add_urls',
-    title: 'safelinksStep11Title',
-    description: 'safelinksStep11Description',
+    id: 14,
+    name: 'safelinks_step14_manage_urls',
+    title: 'safelinksStep14Title',
+    description: 'safelinksStep14Description',
+    target: {
+      // TR UI örneği: <button class="ms-Link ...">0 URL'sini yönet</button>
+      selector: 'button.ms-Link',
+      textMatch: /URL.?sini yönet|Manage.*URL|0\s*URL/i,
+      fallback: [
+        'button[aria-label*="URL"]',
+        'button:contains("URL")'
+      ]
+    },
+    tooltip: 'tooltipManageUrls',
+    autoClick: false,
+    validation: () => true,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 15,
+    name: 'safelinks_step15_add_urls',
+    title: 'safelinksStep15Title',
+    description: 'safelinksStep15Description',
+    target: {
+      // TR UI örneği: <span class="ms-Button-label">URL’leri ekleyin</span>
+      selector: 'span.ms-Button-label',
+      textMatch: /URL.?leri ekleyin|Add URLs/i,
+      fallback: [
+        '[data-automationid="splitbuttonprimary"]',
+        'button[aria-label*="URL"]'
+      ]
+    },
+    tooltip: 'tooltipAddUrls',
+    autoClick: false,
+    validation: () => true,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 16,
+    name: 'safelinks_step16_urls_input',
+    title: 'safelinksStep16Title',
+    description: 'safelinksStep16Description',
     target: {
       selector: 'textarea[aria-label*="URL"], input[aria-label*="URL"]',
       fallback: [
@@ -1416,20 +1587,65 @@ const SAFE_LINKS_STEPS = [
     },
     tooltip: 'tooltipAddPhishingDomains',
     autoClick: false,
+    // URL alanına tıklamak adımı "tamamlandı" gibi algılanmasın.
+    // Kullanıcı URL'leri ekledikten sonra panelden Continue ile ilerlesin.
+    disableClickListener: true,
+    autoAdvance: false,
     validation: () => true,
     realTimeValidation: true,
     criticalStep: true,
     waitAfterClick: 500
   },
   {
-    id: 11,
-    name: 'safelinks_step12_next3',
-    title: 'safelinksStep12Title',
-    description: 'safelinksStep12Description',
+    id: 17,
+    name: 'safelinks_step17_save',
+    title: 'safelinksStep17Title',
+    description: 'safelinksStep17Description',
     target: {
-      selector: 'button:contains("Next")',
-      textMatch: /Next/i,
+      selector: 'span.ms-Button-label',
+      textMatch: /Kaydet|Save/i,
       fallback: [
+        'button[aria-label*="Kaydet"]',
+        'button[aria-label*="Save"]',
+        'button.ms-Button--primary'
+      ]
+    },
+    tooltip: 'tooltipSave',
+    autoClick: false,
+    validation: () => true,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 18,
+    name: 'safelinks_step18_done',
+    title: 'safelinksStep18Title',
+    description: 'safelinksStep18Description',
+    target: {
+      selector: 'span.ms-Button-label',
+      textMatch: /Bitti|Done/i,
+      fallback: [
+        'button[aria-label*="Bitti"]',
+        'button[aria-label*="Done"]',
+        '[data-automationid="splitbuttonprimary"] span.ms-Button-label'
+      ]
+    },
+    tooltip: 'tooltipDone',
+    autoClick: false,
+    validation: () => true,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 19,
+    name: 'safelinks_step19_next3',
+    title: 'safelinksStep19Title',
+    description: 'safelinksStep19Description',
+    target: {
+      selector: 'span.ms-Button-label',
+      textMatch: /Sonraki|Next/i,
+      fallback: [
+        'button[aria-label*="Sonraki"]',
         'button[aria-label*="Next"]'
       ]
     },
@@ -1440,14 +1656,35 @@ const SAFE_LINKS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 13,
-    name: 'safelinks_step13_submit',
-    title: 'safelinksStep13Title',
-    description: 'safelinksStep13Description',
+    id: 20,
+    name: 'safelinks_step20_next4',
+    title: 'safelinksStep20Title',
+    description: 'safelinksStep20Description',
     target: {
-      selector: 'button:contains("Submit")',
-      textMatch: /Submit/i,
+      selector: 'span.ms-Button-label',
+      textMatch: /Sonraki|Next/i,
       fallback: [
+        'button[aria-label*="Sonraki"]',
+        'button[aria-label*="Next"]'
+      ]
+    },
+    tooltip: 'tooltipClickNext',
+    autoClick: false,
+    validation: () => true,
+    waitAfterClick: 1000,
+    panelPosition: 'bottom-left'
+  },
+  {
+    id: 21,
+    name: 'safelinks_step21_submit',
+    title: 'safelinksStep21Title',
+    description: 'safelinksStep21Description',
+    target: {
+      // TR UI örneği: <span class="ms-Button-label">Gönder</span>
+      selector: 'span.ms-Button-label',
+      textMatch: /Gönder|Submit/i,
+      fallback: [
+        'button[aria-label*="Gönder"]',
         'button[aria-label*="Submit"]',
         'button.ms-Button--primary'
       ]
@@ -1459,7 +1696,7 @@ const SAFE_LINKS_STEPS = [
     panelPosition: 'bottom-left'
   },
   {
-    id: 14,
+    id: 22,
     name: 'safelinks_summary',
     title: 'safelinksSummaryTitle',
     description: 'safelinksSummaryDescription',
@@ -5138,7 +5375,7 @@ class KeepnetAssistant {
     }
     
     // Domain girme adımları
-    if (['step8_domains_input'].includes(step.name)) {
+    if (['step8_domains_input', 'safelinks_step10_domain_select'].includes(step.name)) {
       const joined = domainList.join('\n')
       if (fillText('textarea, input[type="text"]', joined)) return
       fillAnyInput(joined)
@@ -5154,21 +5391,15 @@ class KeepnetAssistant {
     }
     
     // URL girme adımı
-    if (['step10_simulation_urls_input'].includes(step.name)) {
+    if (['step10_simulation_urls_input', 'safelinks_step16_urls_input'].includes(step.name)) {
       const joined = urlList.join('\n')
       if (fillText('textarea, input[type="text"]', joined)) return
       fillAnyInput(joined)
       return
     }
     
-    // Kural adı / metin adımları
-    if (step.name?.includes('rule_name') || step.name?.includes('header') || step.name?.includes('name')) {
-      fillAnyInput('Keepnet Auto')
-      return
-    }
-    
-    // Genel fallback: ilk boş input'u doldur
-    fillAnyInput('Keepnet Auto')
+    // NOT: Genel amaçlı otomatik doldurma YOK.
+    // Sadece yukarıdaki açıkça tanımlı IP/Domain/URL adımlarında otomatik doldurma yapılır.
   }
   
   async executeStep(stepNum, customSteps = null) {
@@ -5221,6 +5452,12 @@ class KeepnetAssistant {
       
       // Otomatik mod ayarlarını uygula
       step = this.applyAutoMode(step)
+      
+      // Otonom ajan: navigation adımlarında otomatik git
+      if (AUTO_AGENT && step.isNavigation && step.navigate) {
+        console.log(`[Keepnet] AUTO_AGENT navigating to ${step.navigate}`)
+        window.location.href = step.navigate
+      }
       
       console.log(`[Keepnet] Executing step ${stepNum}: ${i18n(step.title)}`)
       
@@ -5347,6 +5584,17 @@ class KeepnetAssistant {
       // Workflow 2 diğer adımlarında dragging aktif olsun (Step 4-5 hariç)
       if (this.workflowName === 'WORKFLOW_2' && ![4, 5].includes(this.currentStep)) {
         this.panel.isDraggingEnabled = true
+      }
+      
+      // Skip UI steps (ör. ilk girişte mesaj göstermemek için)
+      if (step.skipUI) {
+        this.panel.setContent('')
+        this.clearHighlight()
+        // Eğer navigation tanımlıysa bekle, sonra otomatik ilerle
+        setTimeout(() => {
+          this.nextStep()
+        }, step.autoAdvanceDelay ?? AUTO_MODE_ADVANCE_DELAY)
+        return
       }
       
       // Render step content
@@ -5550,8 +5798,8 @@ class KeepnetAssistant {
             console.log('[Keepnet] Highlight disabled for this step. Waiting for manual user action.')
           }
           
-          // Auto-click?
-          const allowAutoClick = (AUTO_MODE || step.autoClick) && !step.disableHighlight
+          // Auto-click? (AUTO_AGENT modunda highlight engellense bile tıklamaya devam et)
+          const allowAutoClick = !step.disableClickListener && (AUTO_MODE || step.autoClick || AUTO_AGENT)
           if (allowAutoClick) {
             this.autoClick.start(clickTarget, AUTO_CLICK_TIMEOUT, async () => {
               await this.onElementClicked(step)
@@ -5559,7 +5807,7 @@ class KeepnetAssistant {
           }
           
           // Manual click listener
-          if (!step.disableHighlight) {
+          if (!step.disableHighlight && !step.disableClickListener) {
           clickTarget.addEventListener('click', async () => {
             this.autoClick.stop()
             await this.onElementClicked(step)
@@ -5883,7 +6131,7 @@ ${i18n(step.licenseCheck.skipMessage)}`)
       `
     }
     
-        // Simülasyon URL'leri için özel bölüm (Workflow 1 step 10) - Modern Notion-style liste
+    // Simülasyon URL'leri için özel bölüm (Workflow 1 step 10) - Modern Notion-style liste
     if (step.id === 9 && step.name === 'step10_simulation_urls_input') {
       const domains = [
         'signin-authzone.com',
@@ -6047,6 +6295,176 @@ ${i18n(step.licenseCheck.skipMessage)}`)
             </div>
           </div>
           
+        </div>
+      `
+    }
+
+    // Safe Links URL listesi için özel bölüm (Workflow 3 - URL ekleme adımı)
+    // Kullanıcı Safe Links ekranında "*.domain.com/*" formatında URL eklediği için,
+    // burada kopyalanabilir wildcard liste gösteriyoruz.
+    if (step.name === 'safelinks_step16_urls_input' && this.workflowName === 'WORKFLOW_3') {
+      const domains = [
+        'signin-authzone.com',
+        'verifycloudaccess.com',
+        'akibadem.org',
+        'isdestek.org',
+        'gartnerpeer.com',
+        'global-cloud-llc.com',
+        'cloudverification.online',
+        'accountaccesses.com',
+        'shoppingcenter.site',
+        'hesapdogrulama.info',
+        'banksecure.info',
+        'meetingonline-us.com',
+        'digitalsecurelogin.co',
+        'secureloginshop.net',
+        'encryptedconnections.info',
+        'trendyoll.club',
+        'kurumsalgiris.com',
+        'yoursecuregateway.com',
+        'securemygateway.com',
+        'hadisendekatil.com',
+        'updatemyinformation.com',
+        'secure-passchanges.com',
+        'swift-intel.com',
+        'hepsibureda.com',
+        'securely-logout.com',
+        'sigortacilarbirligi.com',
+        'btyardimmasasi.com',
+        'sirketiciduyuru.com',
+        'bilgilerimiguncelle.com',
+        'securelogout.com',
+        'securelinked-in.com',
+        'theconnectionsuccess.com',
+        'sigortacilikhizmetleri.me',
+        'securebankingservices.net',
+        'guvenlibankacilik.com',
+        'insurance-services.me',
+        'btservisleri.com',
+        'secureloginonline.net',
+        'insan-kaynaklari.me',
+        'getaccess.store'
+      ]
+      const urlList = domains
+
+      html += `
+        <div style="
+          background: linear-gradient(160deg, #0f172a 0%, #111827 50%, #0b1020 100%);
+          border-radius: 14px;
+          padding: 16px;
+          margin-bottom: 16px;
+          border: 1px solid rgba(59, 130, 246, 0.35);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.05);
+          color: #e8edff;
+          font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        ">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 12px;">
+            <div style="
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              padding: 8px 12px;
+              border-radius: 10px;
+              background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(99,102,241,0.18));
+              border: 1px solid rgba(59,130,246,0.35);
+              color: #e8edff;
+              font-weight: 700;
+              font-size: 13px;
+            ">
+              <span style="
+                width: 10px;
+                height: 10px;
+                border-radius: 999px;
+                background: #22c55e;
+                box-shadow: 0 0 8px rgba(34,197,94,0.8);
+              "></span>
+              Safe Links URL Listesi (${urlList.length} item)
+            </div>
+            <button
+              class="keepnet-copy-all-btn"
+              data-copy-text="${urlList.map(d => d.replace(/'/g, "&apos;")).join('\\n')}"
+              data-original-text="${i18n('copyAllDomains')}"
+              style="
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 12px;
+                border-radius: 10px;
+                border: 1px solid rgba(59,130,246,0.45);
+                background: rgba(59,130,246,0.15);
+                color: #e8edff;
+                font-weight: 600;
+                font-size: 12px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+              "
+            >
+              ${i18n('copyAllDomains')}
+            </button>
+          </div>
+
+          <div style="
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 10px;
+            max-height: 320px;
+            overflow-y: auto;
+            border: 1px solid rgba(148,163,184,0.25);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+          ">
+            <div style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+              gap: 8px;
+            ">
+              ${urlList.map((d, idx) => `
+                <div style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 10px;
+                  padding: 10px 12px;
+                  background: ${idx % 2 === 0 ? 'rgba(59,130,246,0.12)' : 'rgba(17,24,39,0.65)'};
+                  border: 1px solid rgba(59,130,246,0.35);
+                  border-radius: 10px;
+                  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+                ">
+                  <div style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    color: #eef2ff;
+                    font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+                    font-size: 12px;
+                    word-break: break-all;
+                    flex: 1;
+                  ">
+                    <span style="width: 6px; height: 6px; border-radius: 999px; background: #34d399; box-shadow: 0 0 8px rgba(52,211,153,0.8);"></span>
+                    ${d}
+                  </div>
+                  <button
+                    class="keepnet-copy-btn"
+                    data-copy-text="${d.replace(/'/g, "&apos;")}"
+                    data-original-text="${i18n('copyDomain')}"
+                    style="
+                      padding: 7px 10px;
+                      border-radius: 8px;
+                      border: 1px solid rgba(148,163,184,0.35);
+                      background: rgba(255,255,255,0.06);
+                      color: #eef2ff;
+                      font-weight: 600;
+                      font-size: 11px;
+                      cursor: pointer;
+                      transition: all 0.15s ease;
+                      white-space: nowrap;
+                    "
+                  >
+                    ${i18n('copyDomain')}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
         </div>
       `
     }

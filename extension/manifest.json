@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "Keepnet Assistant",
   "short_name": "Keepnet Assistant",
-  "version": "3.1.9",
-  "description": "Automatic allow list configuration assistant for Keepnet phishing simulations in Office 365 – smart navigation and evidence collection.",
+  "version": "3.2.1",
+  "description": "Automatic allow list configuration assistant for Keepnet phishing simulations in Office 365.",
   "default_locale": "en",
   "author": "Keepnet Labs",
   "permissions": [
@@ -33,7 +33,12 @@
     }
   ],
   "action": {
-    "default_title": "Keepnet Assistant – Click to start"
+    "default_title": "Keepnet Assistant – Click to start",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
   },
   "icons": {
     "16": "icons/icon16.png",
